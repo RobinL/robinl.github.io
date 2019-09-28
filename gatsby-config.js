@@ -7,9 +7,9 @@
 
 
 module.exports = {
-  pathPrefix: "/gasby_observable_blog",
+  pathPrefix: "/robinlinacre",
   siteMetadata: {
-    title: "Gatsby Observable Notebooks Site",
+    title: "Robin Linacre",
   },
   plugins: [
     `gatsby-transformer-json`,
