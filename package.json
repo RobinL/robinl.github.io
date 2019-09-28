@@ -14,13 +14,17 @@
   },
   "dependencies": {
     "@observablehq/runtime": "^4.4.4",
-    "gatsby": "^2.15.26",
-    "gatsby-source-filesystem": "^2.1.22",
     "@robinl/gatsby-test": "https://api.observablehq.com/@robinl/gatsby-test.tgz?v=3",
     "@robinl/gatsby-test-2": "https://api.observablehq.com/@robinl/gatsby-test-2.tgz?v=3",
+    "gatsby": "^2.15.26",
+    "gatsby-plugin-typography": "^2.3.10",
+    "gatsby-source-filesystem": "^2.1.22",
     "gatsby-transformer-json": "^2.2.8",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "react-typography": "^0.16.19",
+    "typography": "^0.16.19",
+    "typography-theme-st-annes": "^0.16.19"
   },
   "devDependencies": {
     "prettier": "^1.18.2"
