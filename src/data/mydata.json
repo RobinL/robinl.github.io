@@ -1,0 +1,10 @@
+[
+    {   "myid": "1",
+        "p": "Page 1 content",
+        "path": "page1"
+    },
+    {   "myid": "2",
+        "p": "Page 2 content",
+        "path": "page2"
+    }
+]
