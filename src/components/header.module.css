@@ -1,23 +1,24 @@
 .header {
-  background-color: rgb(133, 133, 133);
+  background-color: white;
   margin-bottom: 0em;
 }
 
 .robin {
-    font-weight: bold
+    font-weight: bold;
 }
 
 ul {
-  padding: 0;
+
   list-style: none;
   display: flex;
+  margin-bottom: 0;
+
 
 }
 
 li {
     padding-left: 1em;
     padding-right: 1em;
-    margin-bottom: 0em;
 }
 
 .navbar {
@@ -28,3 +29,4 @@ li {
   margin-left: auto;
   margin-right: auto
 }
+
