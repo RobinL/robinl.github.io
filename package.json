@@ -13,10 +13,14 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \""
   },
   "dependencies": {
+    "@emotion/core": "^10.0.17",
+    "@emotion/styled": "^10.0.17",
     "@observablehq/runtime": "^4.4.4",
     "@robinl/gatsby-test": "https://api.observablehq.com/@robinl/gatsby-test.tgz?v=3",
     "@robinl/gatsby-test-2": "https://api.observablehq.com/@robinl/gatsby-test-2.tgz?v=3",
     "gatsby": "^2.15.26",
+    "gatsby-design-tokens": "^1.0.8",
+    "gatsby-plugin-emotion": "^4.1.9",
     "gatsby-plugin-typography": "^2.3.10",
     "gatsby-source-filesystem": "^2.1.22",
     "gatsby-transformer-json": "^2.2.8",
