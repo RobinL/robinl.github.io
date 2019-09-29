@@ -1,9 +1,6 @@
 .header {
-
-  overflow: hidden;
   background-color: rgb(133, 133, 133);
-
-
+  margin-bottom: 0em;
 }
 
 .robin {
@@ -14,11 +11,13 @@ ul {
   padding: 0;
   list-style: none;
   display: flex;
+
 }
 
 li {
     padding-left: 1em;
     padding-right: 1em;
+    margin-bottom: 0em;
 }
 
 .navbar {
@@ -26,6 +25,6 @@ li {
 }
 
 .middlespace {
-    margin-left: auto;
+  margin-left: auto;
   margin-right: auto
 }
