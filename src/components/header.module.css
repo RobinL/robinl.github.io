@@ -1,0 +1,31 @@
+.header {
+
+  overflow: hidden;
+  background-color: rgb(133, 133, 133);
+
+
+}
+
+.robin {
+    font-weight: bold
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+
+li {
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.navbar {
+  display: flex;
+}
+
+.middlespace {
+    margin-left: auto;
+  margin-right: auto
+}
