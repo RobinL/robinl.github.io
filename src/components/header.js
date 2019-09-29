@@ -1,24 +1,24 @@
 import React from "react"
 import { StaticQuery, graphql } from "gatsby"
 
-// https://stackoverflow.com/questions/52780033/uncaught-typeerror-cannot-read-property-data-of-undefined-with-gatsby-and-gra
+// https://news.ycombinator.com/item?id=21050501
+// https://codeburst.io/flexbox-building-a-navigation-part-2-2-6cc58b9d4173
+import headerStyles from "./header.module.css"
 
-export default () => (
-    <StaticQuery
-        query={graphql`
-      query HeadingQuery {
-        site {
-          siteMetadata {
-            title
-          }
-        }
-      }
-    `}
-        render={data => (
-            <header>
-                <h2>{data.site.siteMetadata.title}</h2>
-                <div>This is part of the site header</div>
-            </header>
-        )}
-    />
+
+const Header = () => (
+  <header className={headerStyles.header}>
+
+    <nav>
+      <ul>
+        <li className={headerStyles.robin}>> Robin Linacre</li>
+      <li className={headerStyles.middlespace}></li>
+      <li >About</li>
+      <li >Medium</li>
+      <li >Twitter</li>
+      </ul>
+    </nav>
+  </header>
 )
+
+export default Header
