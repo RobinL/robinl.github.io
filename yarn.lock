@@ -901,6 +901,10 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
+"@robinl/energy-usage-calculator-for-everyday-activities@https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3":
+  version "456.0.0"
+  resolved "https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3#1f569ba91721be3618880e5b3d69b4b268729b19"
+
 "@robinl/gatsby-test-2@https://api.observablehq.com/@robinl/gatsby-test-2.tgz?v=3":
   version "41.0.0"
   resolved "https://api.observablehq.com/@robinl/gatsby-test-2.tgz?v=3#09eca76d66b1f5ba928dd2bc0d7203362837cb0a"

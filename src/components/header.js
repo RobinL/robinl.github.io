@@ -3,6 +3,7 @@ import styled from "@emotion/styled"
 import { css } from "@emotion/core"
 import { colors, fonts } from "gatsby-design-tokens"
 import { rhythm } from "../utils/typography"
+import { Link } from "gatsby"
 
 
 // https://news.ycombinator.com/item?id=21050501
@@ -26,7 +27,7 @@ const Header = () => (
 
     <nav>
       <ul>
-      <NavLiItem css ={mono} className={headerStyles.robin}>~ robinlinacre</NavLiItem>
+        <NavLiItem css={mono} className={headerStyles.robin}><Link to="/">>robinlinacre</Link></NavLiItem>
       <NavLiItem className={headerStyles.middlespace}></NavLiItem>
       <NavLiItem >About</NavLiItem>
       <NavLiItem >Medium</NavLiItem>
