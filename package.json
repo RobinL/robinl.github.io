@@ -27,6 +27,7 @@
     "gatsby-transformer-json": "^2.2.8",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
+    "react-icons": "^3.7.0",
     "react-typography": "^0.16.19",
     "typography": "^0.16.19",
     "typography-theme-st-annes": "^0.16.19"
