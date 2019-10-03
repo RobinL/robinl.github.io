@@ -30,7 +30,7 @@ function NotebookCells(props) {
 
             {props.output_order.map((output_name) => (<div id={get_output_id_from_name(output_name)}
             key={get_output_id_from_name(output_name)}
-            className={obsdivStyles.parent}>hi</div>))}
+            className={obsdivStyles.parent}></div>))}
         </StyledDiv>
     )
 
@@ -44,20 +44,6 @@ class ObeservableNotebookDiv extends Component {
         const define = this.props.define;
         const output_order = this.props.output_order;
 
-
-
-
-        // output_order.forEach(d => {
-        //     let div = document.createElement("div");
-
-
-        //     let output_id = get_output_id_from_name(d)
-        //     let div = <StyledDiv id={output_id} />
-        //     div.setAttribute("id", output_id)
-        //     mount_node.append(div);
-
-
-        // })
 
         // See https://github.com/observablehq/runtime  for more info about the following code
 

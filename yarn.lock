@@ -904,11 +904,8 @@
 "@robinl/energy-usage-calculator-for-everyday-activities@https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3":
   version "483.0.0"
 
-"@robinl/gatsby-test-2@https://api.observablehq.com/@robinl/gatsby-test-2.tgz?v=3":
-  version "43.0.0"
-
-"@robinl/gatsby-test@https://api.observablehq.com/@robinl/gatsby-test.tgz?v=3":
-  version "21.0.0"
+"@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
+  version "186.0.0"
 
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
