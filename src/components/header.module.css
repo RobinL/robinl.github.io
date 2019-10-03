@@ -5,6 +5,16 @@
 
 .robin {
     font-weight: bold;
+    color: black
+}
+
+.robin a {
+    font-weight: bold;
+    color: black
+}
+
+.black_link {
+  color: black
 }
 
 ul {
