@@ -25,15 +25,15 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     result.data.allMydataJson.nodes.forEach((mynode) => {
         const pagepath = mynode.path
         const myid = mynode.myid
-        createPage({
-            path: pagepath,
-            component: path.resolve(`./src/templates/mypages.js`),
-            // In your blog post template's graphql query, you can use path
-            // as a GraphQL variable to query for data from the markdown file.
-            context: {
-                myid: myid
-            },
-        })
+        // createPage({
+        //     path: pagepath,
+        //     component: path.resolve(`./src/templates/mypages.js`),
+        //     // In your blog post template's graphql query, you can use path
+        //     // as a GraphQL variable to query for data from the markdown file.
+        //     context: {
+        //         myid: myid
+        //     },
+        // })
     })
 }
 
