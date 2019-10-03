@@ -12,10 +12,11 @@ import headerStyles from "./header.module.css"
 
 
 const NavLiItem = styled(`li`)`
-  color: ${colors.black};
-  margin-bottom:  ${rhythm(1 / 8)};
-  margin-top:  ${rhythm(1 / 8)};
+  color: ${colors.purple[50]};
+  margin-bottom:  ${rhythm(1 / 2)};
+  margin-top:  ${rhythm(1 / 2)};
   font-family: ${fonts.monospace.join(", ")};
+
 `
 
 const mono = css`
@@ -27,7 +28,7 @@ const Header = () => (
 
     <nav>
       <ul>
-        <NavLiItem css={mono} className={headerStyles.robin}><Link to="/">>robinlinacre</Link></NavLiItem>
+      <NavLiItem css={mono} className={headerStyles.robin}><Link to="/">>robinlinacre</Link></NavLiItem>
       <NavLiItem className={headerStyles.middlespace}></NavLiItem>
       <NavLiItem >About</NavLiItem>
       <NavLiItem >Medium</NavLiItem>

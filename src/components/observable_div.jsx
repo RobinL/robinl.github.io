@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 
+import obsdivStyles from "./obsdiv.module.css"
+
+import styled from "@emotion/styled"
+// import { rhythm } from "../utils/typography"
+
 import { Runtime, Inspector } from '@observablehq/runtime';
 
 const mountId = 'observable-mount';
@@ -9,22 +14,50 @@ function get_output_id_from_name(name) {
     return "output__" + name2
 }
 
+
+const MountDiv = styled(`div`)`
+    margin-bottom: 0.2rem;
+`
+
+const StyledDiv = styled(`div`)`
+margin-bottom: 0.2rem;
+`
+
+function NotebookCells(props) {
+
+    return (
+        <StyledDiv>
+
+            {props.output_order.map((output_name) => (<div id={get_output_id_from_name(output_name)}
+            key={get_output_id_from_name(output_name)}
+            className={obsdivStyles.parent}>hi</div>))}
+        </StyledDiv>
+    )
+
+}
+
+
+
 class ObeservableNotebookDiv extends Component {
 
     componentDidMount() {
-
         const define = this.props.define;
         const output_order = this.props.output_order;
-        const mount_node = document.getElementById(mountId);
 
-        // Add a div for each output cell in the order specified in output_order
 
-        output_order.forEach(d => {
-            let div = document.createElement("div");
-            let output_id = get_output_id_from_name(d)
-            div.setAttribute("id", output_id)
-            mount_node.append(div);
-        })
+
+
+        // output_order.forEach(d => {
+        //     let div = document.createElement("div");
+
+
+        //     let output_id = get_output_id_from_name(d)
+        //     let div = <StyledDiv id={output_id} />
+        //     div.setAttribute("id", output_id)
+        //     mount_node.append(div);
+
+
+        // })
 
         // See https://github.com/observablehq/runtime  for more info about the following code
 
@@ -37,6 +70,7 @@ class ObeservableNotebookDiv extends Component {
             runtime.module(define, name => {
 
                 function get_output_node(name) {
+                    // debugger;
                     let output_id = get_output_id_from_name(name)
                     let output_node = document.getElementById(output_id);
                     return output_node
@@ -77,12 +111,19 @@ class ObeservableNotebookDiv extends Component {
 
         if (output_order.length === 0) {  // If no output order specified, just dump whole notebook into mount node
             const runtime2 = new Runtime();
+            const mount_node = document.getElementById(mountId);
             runtime2.module(define, Inspector.into(mount_node));
         }
     }
 
     render() {
-        return (<div id={mountId} style={{ textAlign: 'left' }}> </div>);
+        const output_order = this.props.output_order;
+
+
+        // Add a div for each output cell in the order specified in output_order
+        return (<MountDiv id={mountId}>
+            <NotebookCells output_order={output_order} />
+        </MountDiv>);
     }
 
 }
