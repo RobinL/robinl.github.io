@@ -15,7 +15,9 @@ export default ( {data} ) => (
 
 export const  query = graphql`
 query MyQuery {
-  allSitePage {
+  allSitePage (filter: {
+           path: {ne: "/dev-404-page/"}
+         }){
     nodes {
       id
       path
