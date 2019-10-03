@@ -1,11 +1,13 @@
 import React from 'react'
-import Layout from "../layouts"
+import { LayoutPost } from "../layouts"
 import ObeservableNotebookDiv from "./observable_div"
 
+
+
 let ObservablePage = (define, output_order=[]) => (
-    <Layout>
+    <LayoutPost>
         <ObeservableNotebookDiv define={define} output_order={output_order}/>
-    </Layout>
+    </LayoutPost>
 )
 
 export default ObservablePage

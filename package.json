@@ -16,6 +16,7 @@
     "@emotion/core": "^10.0.17",
     "@emotion/styled": "^10.0.17",
     "@observablehq/runtime": "^4.4.4",
+    "@robinl/energy-usage-calculator-for-everyday-activities": "https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3",
     "@robinl/gatsby-test": "https://api.observablehq.com/@robinl/gatsby-test.tgz?v=3",
     "@robinl/gatsby-test-2": "https://api.observablehq.com/@robinl/gatsby-test-2.tgz?v=3",
     "gatsby": "^2.15.26",

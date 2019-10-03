@@ -3,6 +3,7 @@ import styled from "@emotion/styled"
 import { css } from "@emotion/core"
 import { colors, fonts } from "gatsby-design-tokens"
 import { rhythm } from "../utils/typography"
+import { Link } from "gatsby"
 
 
 // https://news.ycombinator.com/item?id=21050501
@@ -11,10 +12,11 @@ import headerStyles from "./header.module.css"
 
 
 const NavLiItem = styled(`li`)`
-  color: ${colors.black};
-  margin-bottom:  ${rhythm(1 / 8)};
-  margin-top:  ${rhythm(1 / 8)};
+  color: ${colors.purple[50]};
+  margin-bottom:  ${rhythm(1 / 2)};
+  margin-top:  ${rhythm(1 / 2)};
   font-family: ${fonts.monospace.join(", ")};
+
 `
 
 const mono = css`
@@ -26,7 +28,7 @@ const Header = () => (
 
     <nav>
       <ul>
-      <NavLiItem css ={mono} className={headerStyles.robin}>~ robinlinacre</NavLiItem>
+      <NavLiItem css={mono} className={headerStyles.robin}><Link to="/">>robinlinacre</Link></NavLiItem>
       <NavLiItem className={headerStyles.middlespace}></NavLiItem>
       <NavLiItem >About</NavLiItem>
       <NavLiItem >Medium</NavLiItem>
