@@ -905,7 +905,7 @@
   version "483.0.0"
 
 "@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
-  version "186.0.0"
+  version "430.0.0"
 
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"

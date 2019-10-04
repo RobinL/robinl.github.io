@@ -5,7 +5,7 @@ import obsdivStyles from "./obsdiv.module.css"
 import styled from "@emotion/styled"
 // import { rhythm } from "../utils/typography"
 
-import { Runtime, Inspector } from '@observablehq/runtime';
+import { Runtime, Inspector, Library } from '@observablehq/runtime';
 
 const mountId = 'observable-mount';
 
@@ -13,6 +13,25 @@ function get_output_id_from_name(name) {
     let name2 = name.replace("viewof ", "")
     return "output__" + name2
 }
+
+const stdlib = new Library;
+
+const library = Object.assign({}, stdlib, { width });
+
+function width() {
+
+    return stdlib.Generators.observe(notify => {
+        let width = notify(document.getElementById(mountId).clientWidth);
+        function resized() {
+            let width1 = document.getElementById(mountId).clientWidth;
+            if (width1 !== width) notify(width = width1);
+        }
+        debugger;
+        window.addEventListener("resize", resized);
+        return () => window.removeEventListener("resize", resized);
+    });
+}
+
 
 
 const MountDiv = styled(`div`)`
@@ -47,9 +66,7 @@ class ObeservableNotebookDiv extends Component {
 
         // See https://github.com/observablehq/runtime  for more info about the following code
 
-        const runtime = new Runtime();
-
-
+        const runtime = new Runtime(library);
 
         if (output_order.length > 0) {
 
@@ -96,7 +113,7 @@ class ObeservableNotebookDiv extends Component {
         }
 
         if (output_order.length === 0) {  // If no output order specified, just dump whole notebook into mount node
-            const runtime2 = new Runtime();
+            const runtime2 = new Runtime(library);
             const mount_node = document.getElementById(mountId);
             runtime2.module(define, Inspector.into(mount_node));
         }
