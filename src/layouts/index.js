@@ -14,9 +14,7 @@ const Layout = ({ children, data}) => (
 
 )
 
-
 const PostDiv = styled(`div`)`
-
   margin-left: auto;
   margin-right: auto;
   width: 80%;
