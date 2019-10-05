@@ -1,0 +1,24 @@
+import { Vega, VegaLite } from "react-vega";
+import mydata from './mydata.json'
+import MyData from '../components/dat.jsx'
+
+
+# My first MDX Page
+some awesome content 3
+
+<MyData mydata={mydata} />
+
+```
+def hello():
+    python = 1
+```
+
+<VegaLite data={mydata} spec={{
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "mark": "bar",
+  "data": {"url": "https://gist.githubusercontent.com/RobinL/39d07d801a6f00d857cfafdcdc229898/raw/4f57875bc19b64763efaaf50044210d7c93a5c3d/life-expectancy.csv"},
+  "encoding": {
+    "x": {"field": "year", "type": "ordinal"},
+    "y": {"field": "life_expectancy", "type": "quantitative"}
+  }
+}} />

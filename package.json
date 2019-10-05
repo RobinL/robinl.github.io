@@ -15,12 +15,15 @@
   "dependencies": {
     "@emotion/core": "^10.0.17",
     "@emotion/styled": "^10.0.17",
+    "@mdx-js/mdx": "^1.5.0",
+    "@mdx-js/react": "^1.5.0",
     "@observablehq/runtime": "^4.4.4",
     "@robinl/energy-usage-calculator-for-everyday-activities": "https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3",
     "@robinl/my-flights": "https://api.observablehq.com/@robinl/my-flights.tgz?v=3",
     "gatsby": "^2.15.26",
     "gatsby-design-tokens": "^1.0.8",
     "gatsby-plugin-emotion": "^4.1.9",
+    "gatsby-plugin-mdx": "^1.0.47",
     "gatsby-plugin-typography": "^2.3.10",
     "gatsby-source-filesystem": "^2.1.22",
     "gatsby-transformer-json": "^2.2.8",
@@ -28,8 +31,11 @@
     "react-dom": "^16.9.0",
     "react-icons": "^3.7.0",
     "react-typography": "^0.16.19",
+    "react-vega": "^7.0.1",
     "typography": "^0.16.19",
-    "typography-theme-st-annes": "^0.16.19"
+    "typography-theme-st-annes": "^0.16.19",
+    "vega": "^5.7.0",
+    "vega-lite": "^4.0.0-beta.9"
   },
   "devDependencies": {
     "prettier": "^1.18.2"
