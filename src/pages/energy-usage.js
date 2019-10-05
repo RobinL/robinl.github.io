@@ -2,6 +2,10 @@
 import define from "@robinl/energy-usage-calculator-for-everyday-activities"
 import ObservablePage from "../components/obs_page"
 
+const post_frontmatter = {
+    post_date: "2019-10-05",
+    code_url: "https://observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities"
+}
 
 let output_order = [
     "title",
@@ -37,12 +41,13 @@ let output_order = [
     "summary_chart_output",
     "summary_text_output_2",
     "treemap_output"
-
 ]
 
 
+
+
 export default ({ data }) => (
-    ObservablePage(define, output_order)
+    ObservablePage(define, output_order, post_frontmatter)
 )
 
 
