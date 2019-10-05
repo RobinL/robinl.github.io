@@ -1,0 +1,17 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+    "mark": "bar",
+    "data": {
+        "name": "table"
+    },
+    "encoding": {
+        "x": {
+            "field": "x",
+            "type": "ordinal"
+        },
+        "y": {
+            "field": "y",
+            "type": "quantitative"
+        }
+    }
+}
