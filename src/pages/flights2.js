@@ -1,7 +1,11 @@
 import React from 'react'
 import define from "@robinl/my-flights"
-import ObservablePage from "../components/obs_page"
+import ObsMdxPage from "../components/mdx_obs_page"
 
+const post_frontmatter = {
+    post_date: "2019-10-05",
+    code_url: "https://observablehq.com/@robinl/my-flights/"
+}
 
 let output_order = [
     "title",
@@ -9,13 +13,8 @@ let output_order = [
     "chart"
 ]
 
-const post_frontmatter = {
-    post_date: "2019-10-05",
-    code_url: "https://observablehq.com/@robinl/my-flights/"
-}
-
 export default ({ data }) => (
-    <ObservablePage
+    <ObsMdxPage
         define={define}
         output_order={output_order}
         post_frontmatter={post_frontmatter}/>
