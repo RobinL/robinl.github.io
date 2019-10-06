@@ -1,15 +1,14 @@
 import React from 'react'
 import Layout from "../layouts/layout"
-import ObeservableNotebookDiv from "./observable_div"
 import PostFrontMatter from "./post_frontmatter"
 
-const ObservablePage = (props) => (
 
+// How to do children data and props
+const MDXPage = (props) => (
     <Layout>
         <PostFrontMatter post_frontmatter={props.post_frontmatter} />
-        <ObeservableNotebookDiv define={props.define} output_order={props.output_order} />
+        {props.children}
     </Layout>
-
 )
 
-export default ObservablePage
+export default MDXPage

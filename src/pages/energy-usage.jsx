@@ -1,6 +1,6 @@
-
+import React from "react"
 import define from "@robinl/energy-usage-calculator-for-everyday-activities"
-import ObservablePage from "../components/obs_page"
+import ObsMdxPage from "../components/mdx_obs_page"
 
 const post_frontmatter = {
     post_date: "2019-10-05",
@@ -43,11 +43,10 @@ let output_order = [
     "treemap_output"
 ]
 
-
-
-
 export default ({ data }) => (
-    ObservablePage(define, output_order, post_frontmatter)
+    <ObsMdxPage
+        define={define}
+        output_order={output_order}
+        post_frontmatter={post_frontmatter} />
+
 )
-
-

@@ -15,12 +15,7 @@ module.exports = {
     `gatsby-transformer-json`,
     `gatsby-plugin-emotion`,
     {
-      resolve: `gatsby-plugin-mdx`,
-      options: {
-        defaultLayouts: {
-          default: require.resolve("./src/layouts/index.js"),
-        },
-      },
+      resolve: `gatsby-plugin-mdx`
     },
     {
       resolve: `gatsby-source-filesystem`,
