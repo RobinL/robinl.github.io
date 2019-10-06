@@ -2,6 +2,7 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 
 import Layout from "../layouts/layout"
+import PostList from "../components/post_list"
 
 export default ( {data} ) => (
   <Layout>
@@ -9,6 +10,7 @@ export default ( {data} ) => (
     <div>
           {data.allSitePage.nodes.map((node) => (<p><Link to={node.path}>{node.path} </Link></p>))}
     </div>
+    <PostList />
   </Layout>
 
 )
