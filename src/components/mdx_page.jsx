@@ -3,10 +3,11 @@ import Layout from "../layouts/layout"
 import PostFrontMatter from "./post_frontmatter"
 
 
-let MDXPage = (Mdx, post_frontmatter = {}) => (
+// How to do children data and props
+const MDXPage = (props) => (
     <Layout>
-        <PostFrontMatter post_frontmatter={post_frontmatter} />
-        <Mdx />
+        <PostFrontMatter post_frontmatter={props.post_frontmatter} />
+        {props.children}
     </Layout>
 )
 

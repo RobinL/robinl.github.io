@@ -7,8 +7,8 @@ const post_frontmatter = {
     code_url: "https://observablehq.com/@robinl/my-flights/"
 }
 
-export default ( {data }) => (
-    MDXPage(MDXDocument, post_frontmatter)
-
-
+export default (props) => (
+    <MDXPage post_frontmatter={post_frontmatter}>
+        <MDXDocument />
+    </MDXPage>
 )

@@ -1,4 +1,4 @@
-
+import React from 'react'
 import define from "@robinl/my-flights"
 import ObservablePage from "../components/obs_page"
 
@@ -15,7 +15,9 @@ const post_frontmatter = {
 }
 
 export default ({ data }) => (
-    ObservablePage(define, output_order, post_frontmatter)
+    <ObservablePage
+        define={define}
+        output_order={output_order}
+        post_frontmatter={post_frontmatter}/>
+
 )
-
-

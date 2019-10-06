@@ -1,4 +1,4 @@
-
+import React from "react"
 import define from "@robinl/energy-usage-calculator-for-everyday-activities"
 import ObservablePage from "../components/obs_page"
 
@@ -47,7 +47,12 @@ let output_order = [
 
 
 export default ({ data }) => (
-    ObservablePage(define, output_order, post_frontmatter)
+    <ObservablePage
+        define={define}
+        output_order={output_order}
+        post_frontmatter={post_frontmatter} />
 )
+
+
 
 
