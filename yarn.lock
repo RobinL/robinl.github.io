@@ -960,11 +960,9 @@
 
 "@robinl/energy-usage-calculator-for-everyday-activities@https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3":
   version "483.0.0"
-  resolved "https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3#dd2db6605330ef08b5621f8b69ec36d7de8a0ff5"
 
 "@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
   version "511.0.0"
-  resolved "https://api.observablehq.com/@robinl/my-flights.tgz?v=3#d4b0958ae00881f2813c207350c55888127af3ea"
 
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
