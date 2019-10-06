@@ -52,7 +52,3 @@ export default ({ data }) => (
         output_order={output_order}
         post_frontmatter={post_frontmatter} />
 )
-
-
-
-
