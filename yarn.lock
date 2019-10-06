@@ -959,12 +959,10 @@
     warning "^3.0.0"
 
 "@robinl/energy-usage-calculator-for-everyday-activities@https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3":
-  version "483.0.0"
-  resolved "https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3#9b6e1f3697e1148521124e24c8a27653d8505b6b"
+  version "484.0.0"
 
 "@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
   version "511.0.0"
-  resolved "https://api.observablehq.com/@robinl/my-flights.tgz?v=3#cfcc40030c0474afe4ddc8213fd1228210d152d3"
 
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"

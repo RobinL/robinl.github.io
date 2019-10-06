@@ -3,11 +3,12 @@ import define from "@robinl/my-flights"
 import ObsMdxPage from "../components/mdx_obs_page"
 
 export const frontmatter = {
-    post_date: "2019-10-05",
-    code_url: "https://observablehq.com/@robinl/my-flights/",
-    post_type: "obs",
-    post_category: "energy"
-}
+         title: "My flights",
+         post_date: "2019-10-05",
+         code_url: "https://observablehq.com/@robinl/my-flights/",
+         post_type: "obs",
+         post_category: "energy",
+       }
 
 let output_order = [
     "title",
