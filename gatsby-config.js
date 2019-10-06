@@ -12,10 +12,18 @@ module.exports = {
     title: "Robin Linacre",
   },
   plugins: [
+    `gatsby-transformer-javascript-frontmatter`,
     `gatsby-transformer-json`,
     `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-mdx`
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: "javascript-pages",
+        path: `${__dirname}/src/pages`
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
