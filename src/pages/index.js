@@ -1,15 +1,15 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
 
-import { LayoutPost } from "../layouts/"
+import Layout from "../layouts/layout"
 
 export default ( {data} ) => (
-  <LayoutPost>
+  <Layout>
     <div>Hello world!</div>
     <div>
           {data.allSitePage.nodes.map((node) => (<p><Link to={node.path}>{node.path} </Link></p>))}
     </div>
-  </LayoutPost>
+  </Layout>
 
 )
 
