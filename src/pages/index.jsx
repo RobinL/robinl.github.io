@@ -8,6 +8,7 @@ function Index() {
 
   let cats = [
     { header: "Energy and climate change", code: "energy" },
+    { header: "Data science and engineering", code: "data" },
     { header: "Curiosities", code: "curiosities" },
   ]
 
