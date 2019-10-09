@@ -961,8 +961,8 @@
 "@robinl/energy-usage-calculator-for-everyday-activities@https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3":
   version "484.0.0"
 
-"@robinl/flight-distance-calculator-working@https://api.observablehq.com/@robinl/flight-distance-calculator-working.tgz?v=3":
-  version "332.0.0"
+"@robinl/flight-distance-calculator-working@https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3":
+  version "918.0.0"
 
 "@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
   version "511.0.0"
