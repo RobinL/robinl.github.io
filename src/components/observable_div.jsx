@@ -26,7 +26,7 @@ function width() {
             let width1 = document.getElementById(mountId).clientWidth;
             if (width1 !== width) notify(width = width1);
         }
-        debugger;
+
         window.addEventListener("resize", resized);
         return () => window.removeEventListener("resize", resized);
     });
@@ -73,7 +73,6 @@ class ObeservableNotebookDiv extends Component {
             runtime.module(define, name => {
 
                 function get_output_node(name) {
-                    // debugger;
                     let output_id = get_output_id_from_name(name)
                     let output_node = document.getElementById(output_id);
                     return output_node
