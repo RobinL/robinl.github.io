@@ -19,7 +19,7 @@
     "@mdx-js/react": "^1.5.0",
     "@observablehq/runtime": "^4.4.4",
     "@robinl/energy-usage-calculator-for-everyday-activities": "https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3",
-    "@robinl/flight-distance-calculator-working": "https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3",
+    "@robinl/flight-distance-calculator": "https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3",
     "@robinl/my-flights": "https://api.observablehq.com/@robinl/my-flights.tgz?v=3",
     "gatsby": "^2.15.26",
     "gatsby-design-tokens": "^1.0.8",
