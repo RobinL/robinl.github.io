@@ -12,12 +12,14 @@ export const frontmatter = {
        }
 
 let output_order = [
-    "title",
-   "viewof flights_list",
+  "title",
+  "viewof flights_list",
+  "blurb",
   "table_of_distances",
   "download_as_csv",
   "flights_chart",
-
+  "file_upload_blurb",
+  "viewof upload",
 ]
 
 export default ({ data }) => (
