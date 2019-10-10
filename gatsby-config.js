@@ -16,7 +16,23 @@ module.exports = {
     `gatsby-transformer-json`,
     `gatsby-plugin-emotion`,
     {
-      resolve: `gatsby-plugin-mdx`
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        extensions: ['.mdx'],
+        gatsbyRemarkPlugins: [
+          { resolve: 'gatsby-remark-prismjs' }
+        ]
+      }
+    },
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: 'gatsby-remark-prismjs'
+          },
+        ]
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
