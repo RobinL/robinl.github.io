@@ -4,7 +4,7 @@ import { css } from "@emotion/core"
 import { colors, fonts } from "gatsby-design-tokens"
 import { rhythm } from "../utils/typography"
 import { Link } from "gatsby"
-import { FaMedium, FaTwitter, FaGithub, FaLinkedin, FaLink } from 'react-icons/fa';
+import { FaMedium, FaTwitter, FaGithub, FaLinkedin,  FaHome } from 'react-icons/fa';
 
 // https://news.ycombinator.com/item?id=21050501
 // https://codeburst.io/flexbox-building-a-navigation-part-2-2-6cc58b9d4173
@@ -33,20 +33,13 @@ const Header = () => (
       <ul>
       <NavLiItem css={mono} className={headerStyles.robin}><Link to="/">>robinlinacre</Link></NavLiItem>
       <NavLiItem className={headerStyles.middlespace}></NavLiItem>
-
-
-        <NavLiItem >
-          <BlackA href="https://github.com/robinl/"><FaGithub /></BlackA>
-        </NavLiItem>
-        <NavLiItem >
-          <BlackA href="https://medium.com/@robin.linacre"><FaMedium /></BlackA>
-        </NavLiItem>
-        <NavLiItem >
-          <BlackA href="https://www.linkedin.com/in/robinlinacre/"><FaLinkedin /></BlackA>
-        </NavLiItem>
         <NavLiItem >
           <BlackA href="https://twitter.com/RobinLinacre"><FaTwitter /></BlackA>
         </NavLiItem>
+        <NavLiItem >
+          <BlackA href="https://github.com/robinl/"><FaGithub /></BlackA>
+        </NavLiItem>
+        <NavLiItem ><Link to="/"><BlackA href=""><FaHome /></BlackA></Link></NavLiItem>
 
       </ul>
     </nav>
