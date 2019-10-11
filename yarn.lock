@@ -972,6 +972,7 @@
 
 "@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
   version "511.0.0"
+  resolved "https://api.observablehq.com/@robinl/my-flights.tgz?v=3#1ffa6b94c230022c1f588f7235d9766fe7b75f05"
 
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
@@ -4370,6 +4371,12 @@ gatsby-plugin-emotion@^4.1.9:
   dependencies:
     "@babel/runtime" "^7.6.2"
     "@emotion/babel-preset-css-prop" "^10.0.17"
+
+gatsby-plugin-google-analytics@^2.1.21:
+  version "2.1.21"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-google-analytics/-/gatsby-plugin-google-analytics-2.1.21.tgz#1023b5355e3d991027f879f16fcf032853505d82"
+  dependencies:
+    "@babel/runtime" "^7.6.3"
 
 gatsby-plugin-mdx@^1.0.47:
   version "1.0.47"
