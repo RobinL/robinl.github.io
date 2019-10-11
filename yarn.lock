@@ -972,7 +972,6 @@
 
 "@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
   version "511.0.0"
-  resolved "https://api.observablehq.com/@robinl/my-flights.tgz?v=3#1ffa6b94c230022c1f588f7235d9766fe7b75f05"
 
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
