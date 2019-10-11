@@ -5,7 +5,7 @@ function PostList(props) {
   const data = useStaticQuery(
     graphql`
       {
-        allJavascriptFrontmatter {
+        allJavascriptFrontmatter(sort: { fields: [frontmatter___post_date], order: DESC }) {
           edges {
             node {
               frontmatter {
