@@ -7,7 +7,7 @@ const foot = css`
 margin-left: auto;
   margin-right: auto;
   width: 80%;
-  max-width: 1000px;
+  max-width: 640px;
   `
 
 const cen = css`
