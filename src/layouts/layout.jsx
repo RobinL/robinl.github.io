@@ -8,7 +8,7 @@ const post_css = css`
   margin-left: auto;
   margin-right: auto;
   width: 90%;
-  max-width: 1000px;
+  max-width: 640px;
 `
 
 const Layout = ({ children, data}) => (
