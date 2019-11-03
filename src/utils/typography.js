@@ -14,6 +14,13 @@ stAnnesTheme.overrideThemeStyles = ({rhythm}, options) => ({
     },
     'p': {
         marginBottom: rhythm(1 / 2),
+    },
+    'table' : {
+        width: null
+    },
+    'td, th': {
+        padding: rhythm(1/8)
+
     }
 })
 
