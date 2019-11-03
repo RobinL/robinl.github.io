@@ -1073,9 +1073,8 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
-"@robinl/energy-usage-calculator-for-everyday-activities@file:./tgz/energy-usage-calculator-for-everyday-activities.tgz":
-  version "501.0.0"
-  resolved "file:./tgz/energy-usage-calculator-for-everyday-activities.tgz#b72c773ee88ad9ff5e4603f55fd0ca60ebefb644"
+"@robinl/energy-usage-calculator-for-everyday-activities@https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3":
+  version "551.0.0"
 
 "@robinl/flight-distance-calculator@https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3":
   version "1067.0.0"
