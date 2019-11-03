@@ -24,6 +24,7 @@ let output_order = [
   "heating_title",
   "heating_text_output",
   "heating_chart_output",
+  "showers_baths_title",
   "showers_baths_text_output",
   "showers_bath_chart_output",
   "electricity_title",
