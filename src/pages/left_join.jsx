@@ -18,8 +18,8 @@ let output_order = [
   "parallelisation",
   "other_parts",
   "references",
-  "mystyles"
-
+  "mystyles",
+  "metadata"
 ]
 
 export default ({ data }) => (
