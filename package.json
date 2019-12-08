@@ -24,6 +24,7 @@
     "@robinl/interactive-blogging-with-observable-notebooks-and-gatsb": "https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3",
     "@robinl/my-flights": "https://api.observablehq.com/@robinl/my-flights.tgz?v=3",
     "@robinl/spark-explain": "https://api.observablehq.com/@robinl/spark-explain.tgz?v=3",
+    "@robinl/understanding-the-spark-ui-by-example-sorting-data": "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3",
     "@robinl/understanding-the-spark-ui-by-example-the-left-join": "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3",
     "@robinl/unsupervised-probabalistic-data-matching-using-the-expec": "https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3",
     "gatsby": "^2.15.26",
