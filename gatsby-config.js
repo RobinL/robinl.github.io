@@ -10,6 +10,12 @@ module.exports = {
   pathPrefix: "/robinlinacre",
   siteMetadata: {
     title: "Robin Linacre",
+    titleTemplate: "%s",
+    description: "Robin Linacre's personal blog.  Data science, data engineering, and the environment.",
+    url: "http://robinl.github.io/robinlinacre",
+    twitterUsername: "@robinl",
+    image: "/images/favicon-32x32.png"
+
   },
   plugins: [
     `gatsby-transformer-javascript-frontmatter`,
