@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../components/header';
 import Footer from '../components/footer';
-
+import SEO from "../components/seo"
 import { css } from "@emotion/core"
 
 const post_css = css`
@@ -11,14 +11,13 @@ const post_css = css`
   max-width: 640px;
 `
 
-const Layout = ({ children, data}) => (
-    <div>
+const Layout = ({ children, data }) => (
+  <div>
+    <SEO title="Post list"/>
     <Header />
-        <div css={post_css}>
-        {children}
-    </div>
+    <div css={post_css}>{children}</div>
     <Footer />
-    </div>
+  </div>
 )
 
 export default Layout

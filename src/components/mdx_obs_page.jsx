@@ -2,8 +2,11 @@ import React from 'react'
 import Layout from "../layouts/layout"
 import ObeservableNotebookDiv from "./observable_div"
 import PostFrontMatter from "./post_frontmatter"
+import SEO from "../components/seo"
 
 function ObsMdxPage(props){
+
+
     let post
 
     if (props.define) {
@@ -13,10 +16,12 @@ function ObsMdxPage(props){
     }
 
     return (
-    <Layout>
+      <Layout>
+          <SEO title={props.post_frontmatter.title}/>
         <PostFrontMatter post_frontmatter={props.post_frontmatter} />
         {post}
-    </Layout>)
+      </Layout>
+    )
 
 }
 
