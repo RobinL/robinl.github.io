@@ -13,7 +13,7 @@ const post_css = css`
 
 const Layout = ({ children, data }) => (
   <div>
-    <SEO title="Post list"/>
+    <SEO title="Robin Linacre"/>
     <Header />
     <div css={post_css}>{children}</div>
     <Footer />

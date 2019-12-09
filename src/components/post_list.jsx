@@ -1,5 +1,6 @@
 import React from "react"
 import { useStaticQuery, graphql, Link } from "gatsby"
+import SEO from "../components/seo"
 
 function PostList(props) {
   const data = useStaticQuery(
@@ -57,6 +58,7 @@ function PostList(props) {
 
   return (
     <div>
+      <SEO title="Robin Linacre's blog: Post list" />
       <h2>{props.post_header}</h2>
       {simpledata.map(function(d) {
         return (
