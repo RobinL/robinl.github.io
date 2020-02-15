@@ -1,0 +1,65 @@
+# Why you should open source your analytical work
+
+Working in the open improves the quality of analytical work and multiplies its impact.
+
+Some benefits, such as greater transparency, are obvious. But there are many others advantages which are less obvious but probably more important.
+
+This post makes the case for open sourcing the non-sensitive parts of analytical projects - which is often the majority of the code.  My motivation from writing this post comes from my recent experience contributing to `sparklink`, a data linkage and deduplication package.
+
+## The benefits of open source
+
+Open working promotes analytical best practice, resulting in projects which are easy to understand and improve and have high standards of quality assurance.  It also has wider benefits, improving job satisfaction, promoting collaboration and skills development.
+
+### Re-use, collaboration and documentation
+
+An obvious benefit of open source code is that work is easier to reuse, reducing the duplication of work, and benefitting others.
+
+Less obviously, the benefits of reuse are realised quickly within a team itself, for several reasons:
+
+- *Collaboration and feedback*.  It is much easier to tap into the expertise of the wider community of analysts, because work can be shared in the open.  In my experience, people outside of your team are much more likely to 'pay it forward' and be helpful if they know they're helping with open source work.
+
+It's also enormously easier for analysts in different teams (or even different countries!) to contribute to and use the same project if there is a single open source codebase.  This can often lead to iterative improvements as different teams find ways of improving the code, which everyone benefits from.
+
+- *Bug finding*  Many users make light work of QA, because they are quick to tell you when things aren't right.  It's not uncommon to get bug reports from all over the world.
+
+- *Documentation* Open sourcing helps to quickly identify areas of weak documentation, because if the documentation is lacking, you'll quickly receive questions.  If you're lucky, your users will even contribute to the documentation themselves.
+
+### Managing complexity and corporate knowledge retention
+
+A defining characteristic of high quality analytical work is that complexity is managed effectively.
+
+At a basic level, this involves separating out data, assumptions, and modelling work, and ensuring results are reproducible.
+
+In more complex projects, this usually means breaking down the problem into simpler parts, each of which has a clear responsibility with limited scope (a good 'separation of concerns').  These parts can then be run and quality assured separately.
+
+If a project is to be open sourced, this approach to model building is essential from the outset because sensitive data and assumptions must be kept separate from the code.
+
+It also encourages the analyst to consider the general version of the problem, rather than writing highly specific code that is capable only of solving the problem at hand.  This usually results in code that is better abstracted and easier to understand, because it requires clearer thinking about the problem.
+
+In turn, generalised code increases agility, because it requires small modifications rather than a complete rewrite when requirements change.
+
+The overall result is projects that are easier to understand and maintain.  New members of staff can see how the problem has been split out into smaller, simpler parts, and  do not have to understand the whole before they can usefully contribute.
+
+### Quality assurance (QA)
+
+Over time, authors of open source have established a widely-adopted convention for quality assurance that allows external users to trust the work, despite the fact they usually have no direct contact with the authors.
+
+Trust is established because the convention involves high standards of transparency and robustness - specifically automated and self-documenting tests of the correctness of the code which run automatically whenever changes are made.
+
+Open sourcing code encourages analysts to build an understanding of this process, and to begin to follow this convention themselves.
+
+An additional benefit is that many of the tools required for automated testing are costly services if code is private, but are offered for free to open-source projects.
+
+Finally, a the more diverse your users, the more likely problems with the project will be spotted early.
+
+### Job satisfaction and learning and development
+
+Speaking for myself, I find working on open source projects incredibly motivating.  I use other people's open source work every day, and so it feels good to be able to contribute something back to the community.  It also means I feel like the value of my work extends beyond the immediate project - and it's very satisfying to hear about other people using your work (or even just small parts of it) to achieve interesting things.
+
+Familiarity with open source ways of working also uncovers huge opportunities for learning and development.  Rather than solving new problems from scratch, there's always a wealth of existing open source work to learn from and copy from.  By referring to the code of some of the most widely-used packages, you can learn from some of the best analysts in the world.
+
+## How to get started
+
+Release your own code on Github.
+Improve the documentation
+Raise an issue describing a bug
