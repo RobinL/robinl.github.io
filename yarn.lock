@@ -1082,39 +1082,30 @@
 
 "@robinl/energy-usage-calculator-for-everyday-activities@https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3":
   version "557.0.0"
-  resolved "https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3#8cd7d3a43c6d97d3eff434778ccaf7a5df3fae75"
 
 "@robinl/flight-distance-calculator@https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3":
   version "1067.0.0"
-  resolved "https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3#72f40cf9b2ede6619cc30ce61e9939a3df69f772"
 
 "@robinl/how-much-should-carbon-offsetting-cost@https://api.observablehq.com/@robinl/how-much-should-carbon-offsetting-cost.tgz?v=3":
   version "472.0.0"
-  resolved "https://api.observablehq.com/@robinl/how-much-should-carbon-offsetting-cost.tgz?v=3#30be7789d0079183d663f99b1a936fdcf4588cc7"
 
 "@robinl/interactive-blogging-with-observable-notebooks-and-gatsb@https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3":
   version "518.0.0"
-  resolved "https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3#0e5f5d113c53651590b56544e82bbd71039e15b4"
 
 "@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
   version "511.0.0"
-  resolved "https://api.observablehq.com/@robinl/my-flights.tgz?v=3#2fc3d1e2535aa7386a6c20eac0c5c137697aa0b6"
 
 "@robinl/spark-explain@https://api.observablehq.com/@robinl/spark-explain.tgz?v=3":
   version "647.0.0"
-  resolved "https://api.observablehq.com/@robinl/spark-explain.tgz?v=3#e20247e4c11fb96a2f0631dbff8b022633d8851c"
 
 "@robinl/understanding-the-spark-ui-by-example-sorting-data@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3":
   version "269.0.0"
-  resolved "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3#7b10256494318f10c156044ef8b4867504032e41"
 
 "@robinl/understanding-the-spark-ui-by-example-the-left-join@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3":
   version "221.0.0"
-  resolved "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3#c5d0aae769b9ce06e88121637cbec5dc861d2c9c"
 
 "@robinl/unsupervised-probabalistic-data-matching-using-the-expec@https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3":
   version "1040.0.0"
-  resolved "https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3#eb60f22fea56459b6372cd6dbad8f0663bf5e859"
 
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
