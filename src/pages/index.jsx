@@ -7,8 +7,8 @@ import PostList from "../components/post_list"
 function Index() {
 
   let cats = [
-    { header: "Energy and climate change", code: "energy" },
     { header: "Data science and engineering", code: "data" },
+    { header: "Energy and climate change", code: "energy" },
     { header: "Curiosities", code: "curiosities" },
   ]
 
