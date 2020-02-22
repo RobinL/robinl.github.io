@@ -1,6 +1,6 @@
 import React from 'react'
 import ObsMdxPage from "../components/mdx_obs_page"
-import MDXDocument from "../mdx/open_sourcing_analytical_work"
+import MDXDocument from "../mdx/open_sourcing_analytical_work.mdx"
 
 export const frontmatter = {
          title: "Why you should open source your analytical work",
