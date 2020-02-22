@@ -7,7 +7,7 @@
 
 
 module.exports = {
-  pathPrefix: "/robinlinacre",
+  pathPrefix: "",
   siteMetadata: {
     title: "Robin Linacre",
     titleTemplate: "%s",
