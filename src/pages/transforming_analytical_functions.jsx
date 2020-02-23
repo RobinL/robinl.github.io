@@ -6,7 +6,8 @@ export const frontmatter = {
   title: "Transforming analytical functions by mainstreaming data science",
   post_date: "2018-08-11",
   code_url:
-    "https://github.com/RobinL/robinlinacre/blob/dev/src/pages/transforming_analytical_functions.mdx",
+    "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/transforming_analytical_functions.mdx",
+
   post_type: "mdx",
   post_category: "data",
 }
