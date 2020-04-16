@@ -9,6 +9,7 @@ export const frontmatter = {
            "https://observablehq.com/@robinl/flight-distance-calculator/",
          post_type: "obs",
          post_category: "energy",
+         description: "Calculate the distance between airports"
        }
 
 let output_order = [

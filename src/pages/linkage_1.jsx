@@ -10,6 +10,7 @@ export const frontmatter = {
            "https://observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec/",
          post_type: "obs",
          post_category: "data",
+         description: ""
        }
 
 let output_order = [

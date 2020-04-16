@@ -17,7 +17,7 @@ function ObsMdxPage(props){
 
     return (
       <Layout>
-          <SEO title={props.post_frontmatter.title}/>
+          <SEO title={props.post_frontmatter.title} description={props.post_frontmatter.description}/>
         <PostFrontMatter post_frontmatter={props.post_frontmatter} />
         {post}
       </Layout>
