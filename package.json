@@ -13,6 +13,7 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing \""
   },
   "dependencies": {
+    "@babel/plugin-syntax-import-meta": "^7.8.3",
     "@emotion/core": "^10.0.17",
     "@emotion/styled": "^10.0.17",
     "@mdx-js/mdx": "^1.5.0",
@@ -27,6 +28,7 @@
     "@robinl/understanding-the-spark-ui-by-example-sorting-data": "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3",
     "@robinl/understanding-the-spark-ui-by-example-the-left-join": "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3",
     "@robinl/unsupervised-probabalistic-data-matching-using-the-expec": "https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3",
+    "babel-preset-gatsby": "^0.3.1",
     "gatsby": "^2.15.26",
     "gatsby-design-tokens": "^1.0.8",
     "gatsby-plugin-emotion": "^4.1.9",
