@@ -8,6 +8,7 @@ export const frontmatter = {
          code_url: "https://observablehq.com/@robinl/my-flights/",
          post_type: "obs",
          post_category: "energy",
+         description: "A history of my flights"
        }
 
 let output_order = [

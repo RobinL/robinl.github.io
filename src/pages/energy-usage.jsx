@@ -7,7 +7,8 @@ export const frontmatter = {
     post_date: "2019-10-05",
     code_url: "https://observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities",
     post_type: "obs",
-    post_category: "energy"
+    post_category: "energy",
+    description: "Energy usage calculator for everyday activities"
 }
 
 let output_order = [

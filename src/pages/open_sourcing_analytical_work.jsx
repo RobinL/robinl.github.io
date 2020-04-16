@@ -9,6 +9,7 @@ export const frontmatter = {
            "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/open_sourcing_analytical_work.mdx",
          post_type: "mdx",
          post_category: "data",
+         description: ""
        }
 
 export default ({ data }) => (

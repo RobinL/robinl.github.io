@@ -8,6 +8,7 @@ export const frontmatter = {
          code_url: "https://observablehq.com/@robinl/spark-explain/",
          post_type: "obs",
          post_category: "data",
+         description: ""
        }
 
 let output_order = [

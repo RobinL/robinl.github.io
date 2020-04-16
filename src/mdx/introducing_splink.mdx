@@ -1,0 +1,100 @@
+# Fuzzy Matching and Deduplicating Hundreds of Millions of Records using Apache Spark
+
+A common data quality problem is to have multiple different records that refer to the same entity but no unique identifier that ties these entities together.
+
+For instance, customer data may have been entered multiple times in multiple different computer systems, with different spellings of names, different addresses, and other typos. The lack of a unique customer identifier presents challenges at all stages of data analysis— from basic questions such counting the number of unique customers, to feature engineering of customers’ details for machine learning purposes.
+
+There is a large body of theoretical and empirical work into this problem. The solution usually involves computing a new unique identifier column which allows entities to be linked and grouped, using a process of statistical estimation, machine learning and/or rules-based logic.
+
+However, there is a lack of free software that can tackle this problem at the scale of millions of records — the size typically seen in large organisations. Solving the problem usually involves generating very large numbers of record comparisons and so is ill-suited to in-memory solutions in R or Python. Distributed computing frameworks like Apache Spark are a much better fit.
+
+We have recently released a free and [open source](https://github.com/moj-analytical-services/splink) library called `splink`, that implements the Fellegi-Sunter/Expectation Maximisation approach, one of the key statistical models from the data linking literature. This is an unsupervised learning algorithm which yields a match score for each pair of record comparisons.
+
+#### Introducing splink
+
+[Splink](https://github.com/moj-analytical-services/splink) is a Pyspark library available on PyPi that can be installed using `pip` . It can be run with Spark installed locally on your laptop, but for large jobs you will need access to a Spark cluster.
+
+The aims of `splink` are to:
+
+*   Work at much greater scale than existing open source libraries (100 million records +).
+*   Compute results faster than existing open source implementations — with runtimes of less than an hour even for large record linking problems.
+*   Have a transparent methodology, so the match scores can be easily explained both graphically and in words
+*   Have accuracy similar to some of the best alternatives, open source or commercial
+*   Have a simple interface that offers flexibility and customizability, so users can tackle the majority of record linking and deduplication problems
+*   Be robust, with an automated suite of unit and integration tests.
+
+We have been testing the library for several months now, tackling large-scale data linking problems with significantly improved accuracy from previous approaches.
+
+#### Try it out
+
+You can try out the library in a Jupyter notebook using our Binder link [here](https://mybinder.org/v2/gh/moj-analytical-services/splink_demos/master?urlpath=lab/tree/index.ipynb). These demos illustrate how to use the library, but note they are running in local mode on free servers, so don’t expect fast performance.
+
+#### How it works
+
+The library estimates matches using the Fellegi-Sunter/Expectation Maximisation framework.
+
+First, a large number of record comparisons (candidate pairs) are generated using an approach called [blocking](https://en.wikipedia.org/wiki/Record_linkage#Probabilistic_record_linkage), which ensures only records that plausibly may refer to the same entity are generated.
+
+Next, for each candidate pair, the fields (columns) are compared in turn — is there a match on first name, surname, date of birth, etc.
+
+Next an iterative algorithm called Expectation Maximisation is used to maximise a likelihood function. This results in estimates of the amount of information contained in each field, and how this contributes to an overall assessment of whether the pair are a match.
+
+For instance, consider a first name field:
+
+*   If first name matches, how much does this increase our confidence that the records are a match?
+*   If first name does not match, how much does this decrease our confidence that the records are a match?
+
+This will vary between fields. High quality fields with very high cardinality such as a social security number contribute a lot more information than low quality fields with low cardinality such as a person’s gender.
+
+This information is then combined into an overall score between 0 and 1 of whether the pairwise record comparison represents a match.
+
+#### Sample Code
+
+We have tried to design an interface which is simple but nevertheless can be adapted to most record linkage and deduplication problems.
+
+To illustrate how easy the library is to use with default settings, the following code could be used to deduplicate a large dataset:
+
+```python
+df = spark.read.parquet("path_to_your_data")
+
+settings = {  
+    "link_type": "dedupe_only",  
+    "blocking_rules": [  
+        "l.first_name = r.first_name",  
+        "l.surname = r.surname",  
+        "l.dob = r.dob"  
+    ],  
+    "comparison_columns": [  
+        {   
+            "col_name": "first_name",  
+            "term_frequency_adjustments": True},  
+        {  
+            "col_name": "surname",  
+            "term_frequency_adjustments": True  
+        },  
+        {  
+            "col_name": "dob"  
+        },  
+        {  
+            "col_name": "city"  
+        },  
+        {  
+            "col_name": "email"  
+        }  
+    ]  
+}
+
+from splink import Splink    
+linker = Splink(settings, spark, df=df)   
+df_e = linker.get_scored_comparisons()
+
+```
+
+The user has to configure two main parts of the problem:
+
+*   Blocking rules. These are the rules to reduce the number of comparison records down from the Cartesian product to a computationally tractable number. In this case, record comparisons will only be generated for pairs where first name, surname or date of birth matches.
+*   Comparison columns. The user must specify which columns in the input dataset contain useful information which help to identify entities.
+
+For complex record linkage problems, the `settings` object can become quite detailed. We have created an [interactive online tool](https://moj-analytical-services.github.io/splink_settings_editor/) for auto-completing and validating settings, which includes a series of examples.
+
+Please do try `splink` and let us know what you think. You can raise issues or contribute at the [Github repo](https://github.com/moj-analytical-services/splink) or I’m @robinlinacre on Twitter.

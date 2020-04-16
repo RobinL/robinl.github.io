@@ -9,6 +9,7 @@ export const frontmatter = {
     "https://observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data/",
   post_type: "obs",
   post_category: "data",
+  description: ""
 }
 
 let output_order = [

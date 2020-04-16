@@ -9,6 +9,7 @@ export const frontmatter = {
     "https://observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb",
   post_type: "obs",
   post_category: "data",
+  description: ""
 }
 
 let output_order = ["message", "md1", "md2", "md3", "md4", "md5", "md6"]

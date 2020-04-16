@@ -9,6 +9,7 @@ export const frontmatter = {
            "https://observablehq.com/@robinl/how-much-should-carbon-offsetting-cost/",
          post_type: "obs",
          post_category: "energy",
+         description: ""
        }
 
 let output_order = [
