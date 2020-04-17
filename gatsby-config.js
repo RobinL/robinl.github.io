@@ -22,6 +22,7 @@ module.exports = {
     `gatsby-transformer-json`,
     `gatsby-plugin-emotion`,
     `gatsby-plugin-sitemap`,
+    `gatsby-plugin-robots-txt`,
     {
       resolve: 'gatsby-plugin-mdx',
       options: {
