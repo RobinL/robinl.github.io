@@ -12,7 +12,7 @@ module.exports = {
     title: "Robin Linacre",
     titleTemplate: "%s",
     description: "Robin Linacre's personal blog.  Data science, data engineering, and the environment.",
-    url: "http://robinl.github.io/robinlinacre",
+    url: "https://www.robinlinacre.com",
     twitterUsername: "@robinl",
     image: "/images/favicon-32x32.png",
     siteUrl: `https://www.robinlinacre.com`
@@ -22,7 +22,15 @@ module.exports = {
     `gatsby-transformer-json`,
     `gatsby-plugin-emotion`,
     `gatsby-plugin-sitemap`,
-    `gatsby-plugin-robots-txt`,
+    
+    {
+      resolve: 'gatsby-plugin-robots-txt',
+      options: {
+        host: 'https://www.robinlinacre.com',
+        sitemap: 'https://www.robinlinacre.com/sitemap.xml',
+        policy: [{ userAgent: '*', allow: '/' }]
+      }
+    },
     {
       resolve: 'gatsby-plugin-mdx',
       options: {
