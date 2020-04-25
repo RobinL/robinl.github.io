@@ -8,7 +8,7 @@ export const frontmatter = {
   code_url:
     "https://observablehq.com/@robinlbirdsong-recordings/",
   post_type: "obs",
-  post_category: "data",
+  post_category: "other",
   description: "Listen to UK birdsong using the xeno-canto API"
 }
 
