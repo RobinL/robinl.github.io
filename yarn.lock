@@ -1906,7 +1906,7 @@
     warning "^3.0.0"
 
 "@robinl/birdsong-recordings@https://api.observablehq.com/@robinl/birdsong-recordings.tgz?v=3":
-  version "381.0.0"
+  version "397.0.0"
   
 "@robinl/energy-usage-and-goods-imports-and-exports@https://api.observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports.tgz?v=3":
   version "1207.0.0"
