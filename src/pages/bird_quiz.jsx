@@ -14,7 +14,12 @@ export const frontmatter = {
 
 let output_order = [
   "title",
-  "my_interface"
+  "tag",
+  "settings", 
+  "viewof select_your_quiz",
+  "quiz",
+  "my_interface",
+  "other_link"
 ]
 
 export default ({ data }) => (
