@@ -1906,7 +1906,7 @@
     warning "^3.0.0"
 
 "@robinl/bird-song-quiz@https://api.observablehq.com/@robinl/bird-song-quiz.tgz?v=3":
-  version "220.0.0"
+  version "617.0.0"
 
 "@robinl/birdsong-recordings@https://api.observablehq.com/@robinl/birdsong-recordings.tgz?v=3":
   version "397.0.0"
