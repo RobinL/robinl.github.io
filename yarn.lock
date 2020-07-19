@@ -1907,42 +1907,68 @@
 
 "@robinl/bird-song-quiz@https://api.observablehq.com/@robinl/bird-song-quiz.tgz?v=3":
   version "714.0.0"
+  uid "6dc944d0a703d1a57ecf8144dc07d0f6b1b2ee13"
+  resolved "https://api.observablehq.com/@robinl/bird-song-quiz.tgz?v=3#6dc944d0a703d1a57ecf8144dc07d0f6b1b2ee13"
 
 "@robinl/birdsong-recordings@https://api.observablehq.com/@robinl/birdsong-recordings.tgz?v=3":
-  version "397.0.0"
+  version "425.0.0"
+  uid "11652b3ff59bd4aea728ffaee389733620386d1e"
+  resolved "https://api.observablehq.com/@robinl/birdsong-recordings.tgz?v=3#11652b3ff59bd4aea728ffaee389733620386d1e"
 
 "@robinl/energy-usage-and-goods-imports-and-exports@https://api.observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports.tgz?v=3":
   version "1285.0.0"
+  uid "0c5ebe045ceddf8e9629dab08c78164d304f5738"
+  resolved "https://api.observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports.tgz?v=3#0c5ebe045ceddf8e9629dab08c78164d304f5738"
 
 "@robinl/energy-usage-calculator-for-everyday-activities@https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3":
   version "558.0.0"
+  uid "94e2040b0397dc562d7d596521ad0f136a089acf"
+  resolved "https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3#94e2040b0397dc562d7d596521ad0f136a089acf"
 
 "@robinl/filling-the-country-with-solar-panels@https://api.observablehq.com/@robinl/filling-the-country-with-solar-panels.tgz?v=3":
   version "64.0.0"
+  uid "7edd301bcfcbbf240c2f32a7c96ee46a24f0ec07"
+  resolved "https://api.observablehq.com/@robinl/filling-the-country-with-solar-panels.tgz?v=3#7edd301bcfcbbf240c2f32a7c96ee46a24f0ec07"
 
 "@robinl/flight-distance-calculator@https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3":
   version "1073.0.0"
+  uid "9fa47cce86144d86141e3ed50f1380191d1e60e2"
+  resolved "https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3#9fa47cce86144d86141e3ed50f1380191d1e60e2"
 
 "@robinl/how-much-should-carbon-offsetting-cost@https://api.observablehq.com/@robinl/how-much-should-carbon-offsetting-cost.tgz?v=3":
   version "472.0.0"
+  uid "072f51bedca2b2e6ecc5ac0f35c6646795399b13"
+  resolved "https://api.observablehq.com/@robinl/how-much-should-carbon-offsetting-cost.tgz?v=3#072f51bedca2b2e6ecc5ac0f35c6646795399b13"
 
 "@robinl/interactive-blogging-with-observable-notebooks-and-gatsb@https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3":
   version "518.0.0"
+  uid c945c8338b6bd9817ac70dae630a6d3d09805eae
+  resolved "https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3#c945c8338b6bd9817ac70dae630a6d3d09805eae"
 
 "@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
   version "511.0.0"
+  uid e47b1deb5af46ab7ad0bfd81b75c8db7ee72992a
+  resolved "https://api.observablehq.com/@robinl/my-flights.tgz?v=3#e47b1deb5af46ab7ad0bfd81b75c8db7ee72992a"
 
 "@robinl/spark-explain@https://api.observablehq.com/@robinl/spark-explain.tgz?v=3":
   version "647.0.0"
+  uid f12313f73d24b1121d494cc9f95a216d6ffa3934
+  resolved "https://api.observablehq.com/@robinl/spark-explain.tgz?v=3#f12313f73d24b1121d494cc9f95a216d6ffa3934"
 
 "@robinl/understanding-the-spark-ui-by-example-sorting-data@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3":
   version "269.0.0"
+  uid a62db2a9d2673fcef8e6d81116a7ab3596ff617a
+  resolved "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3#a62db2a9d2673fcef8e6d81116a7ab3596ff617a"
 
 "@robinl/understanding-the-spark-ui-by-example-the-left-join@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3":
   version "221.0.0"
+  uid d6ba84348587429188f1ed4ddbe02c1f7689f067
+  resolved "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3#d6ba84348587429188f1ed4ddbe02c1f7689f067"
 
 "@robinl/unsupervised-probabalistic-data-matching-using-the-expec@https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3":
   version "1040.0.0"
+  uid "1c1f01ddbe2ac0d1375bc5b3caced86c5f20d54f"
+  resolved "https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3#1c1f01ddbe2ac0d1375bc5b3caced86c5f20d54f"
 
 "@sindresorhus/is@^0.7.0":
   version "0.7.0"
@@ -8308,9 +8334,9 @@ lodash.uniq@4.5.0, lodash.uniq@^4.5.0:
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
 lodash@^4.11.1, lodash@^4.13.1, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+  version "4.17.19"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
+  integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
 
 log-update@^3.0.0:
   version "3.3.0"
