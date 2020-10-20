@@ -10,7 +10,7 @@ However, there is a lack of free software that can tackle this problem at the sc
 
 We have recently released a free and [open source](https://github.com/moj-analytical-services/splink) library called `splink`, that implements the Fellegi-Sunter/Expectation Maximisation approach, one of the key statistical models from the data linking literature. This is an unsupervised learning algorithm which yields a match score for each pair of record comparisons.
 
-#### Introducing splink
+## Introducing splink
 
 [Splink](https://github.com/moj-analytical-services/splink) is a Pyspark library available on PyPi that can be installed using `pip` . It can be run with Spark installed locally on your laptop, but for large jobs you will need access to a Spark cluster.
 
@@ -25,11 +25,11 @@ The aims of `splink` are to:
 
 We have been testing the library for several months now, tackling large-scale data linking problems with significantly improved accuracy from previous approaches.
 
-#### Try it out
+## Try it out
 
 You can try out the library in a Jupyter notebook using our Binder link [here](https://mybinder.org/v2/gh/moj-analytical-services/splink_demos/master?urlpath=lab/tree/index.ipynb). These demos illustrate how to use the library, but note they are running in local mode on free servers, so don’t expect fast performance.
 
-#### How it works
+## How it works
 
 The library estimates matches using the Fellegi-Sunter/Expectation Maximisation framework.
 
@@ -48,7 +48,7 @@ This will vary between fields. High quality fields with very high cardinality su
 
 This information is then combined into an overall score between 0 and 1 of whether the pairwise record comparison represents a match.
 
-#### Sample Code
+## Sample Code
 
 We have tried to design an interface which is simple but nevertheless can be adapted to most record linkage and deduplication problems.
 
@@ -57,35 +57,35 @@ To illustrate how easy the library is to use with default settings, the followin
 ```python
 df = spark.read.parquet("path_to_your_data")
 
-settings = {  
-    "link_type": "dedupe_only",  
-    "blocking_rules": [  
-        "l.first_name = r.first_name",  
-        "l.surname = r.surname",  
-        "l.dob = r.dob"  
-    ],  
-    "comparison_columns": [  
-        {   
-            "col_name": "first_name",  
-            "term_frequency_adjustments": True},  
-        {  
-            "col_name": "surname",  
-            "term_frequency_adjustments": True  
-        },  
-        {  
-            "col_name": "dob"  
-        },  
-        {  
-            "col_name": "city"  
-        },  
-        {  
-            "col_name": "email"  
-        }  
-    ]  
+settings = {
+    "link_type": "dedupe_only",
+    "blocking_rules": [
+        "l.first_name = r.first_name",
+        "l.surname = r.surname",
+        "l.dob = r.dob"
+    ],
+    "comparison_columns": [
+        {
+            "col_name": "first_name",
+            "term_frequency_adjustments": True},
+        {
+            "col_name": "surname",
+            "term_frequency_adjustments": True
+        },
+        {
+            "col_name": "dob"
+        },
+        {
+            "col_name": "city"
+        },
+        {
+            "col_name": "email"
+        }
+    ]
 }
 
-from splink import Splink    
-linker = Splink(settings, spark, df=df)   
+from splink import Splink
+linker = Splink(settings, spark, df=df)
 df_e = linker.get_scored_comparisons()
 
 ```

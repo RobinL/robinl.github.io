@@ -9,7 +9,7 @@ stAnnesTheme.overrideThemeStyles = ({rhythm}, options) => ({
     "a:hover,a:active": {
         color: null,
     },
-    'h1,h2,h3': {
+    'h1,h2,h3,h4,h5': {
         marginTop: rhythm(1)
     },
     'p': {
