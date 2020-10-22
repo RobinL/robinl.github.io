@@ -25,7 +25,10 @@ stAnnesTheme.overrideThemeStyles = ({rhythm}, options) => ({
     'blockquote': {
         borderColor: "hsla(0,0%,0%,0.19)",
         fontSize: null
-    }
+    },
+    '@media only screen and (max-width: 480px){blockquote{border-color: hsla(0,0%,0%,0.19)}}': {},
+
+
 })
 
 const typography = new Typography(stAnnesTheme)
