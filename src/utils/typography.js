@@ -21,6 +21,10 @@ stAnnesTheme.overrideThemeStyles = ({rhythm}, options) => ({
     'td, th': {
         padding: rhythm(1/8)
 
+    },
+    'blockquote': {
+        borderColor: "hsla(0,0%,0%,0.19)",
+        fontSize: null
     }
 })
 
