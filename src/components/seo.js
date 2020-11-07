@@ -6,7 +6,7 @@ import { useLocation } from "@reach/router"
 
 import favicon from '../static/favicon-32x32.png';
 
-const SEO = ({ title, description, image }) => {
+const SEO = ({ title, description, image, article }) => {
     const { pathname } = useLocation()
 
     return (< StaticQuery
