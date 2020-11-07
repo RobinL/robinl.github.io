@@ -18,11 +18,12 @@ module.exports = {
     siteUrl: `https://www.robinlinacre.com`
   },
   plugins: [
+    `gatsby-plugin-react-helmet`,
     `gatsby-transformer-javascript-frontmatter`,
     `gatsby-transformer-json`,
     `gatsby-plugin-emotion`,
     `gatsby-plugin-sitemap`,
-    
+
     {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
