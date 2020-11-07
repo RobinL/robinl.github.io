@@ -19,6 +19,7 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-force-trailing-slashes`,
     `gatsby-transformer-javascript-frontmatter`,
     `gatsby-transformer-json`,
     `gatsby-plugin-emotion`,
