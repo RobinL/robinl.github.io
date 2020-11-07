@@ -63,7 +63,7 @@ function PostList(props) {
       {simpledata.map(function (d) {
         return (
           <p>
-            {d.post_date} <Link to={d.relative_path}>{d.title}</Link>
+            {d.post_date} <Link to={'/' + d.relative_path + '/'}>{d.title}</Link>
           </p>
         )
       })}
