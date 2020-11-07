@@ -2,11 +2,14 @@ import React from "react"
 import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
+import { useLocation } from "@reach/router"
 
 import favicon from '../static/favicon-32x32.png';
 
-const SEO = ({ title, description, image, pathname, article }) => (
-    <StaticQuery
+const SEO = ({ title, description, image }) => {
+    const { pathname } = useLocation()
+
+    return (< StaticQuery
         query={query}
         render={({
             site: {
@@ -24,7 +27,7 @@ const SEO = ({ title, description, image, pathname, article }) => (
                 title: title || defaultTitle,
                 description: description || defaultDescription,
                 image: `${siteUrl}${image || defaultImage}`,
-                url: `${siteUrl}${pathname || "/"}`,
+                url: `${siteUrl}${pathname}`,
             }
 
             return (
@@ -64,7 +67,8 @@ const SEO = ({ title, description, image, pathname, article }) => (
             )
         }}
     />
-)
+    )
+}
 
 export default SEO
 

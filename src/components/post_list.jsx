@@ -31,7 +31,7 @@ function PostList(props) {
 
   // Simplify data
 
-  let simpledata = data.allJavascriptFrontmatter.edges.map(function(edge) {
+  let simpledata = data.allJavascriptFrontmatter.edges.map(function (edge) {
     let robj = {
       relative_path: edge.node.node.relativePath.name,
       code_url: edge.node.frontmatter.code_url,
@@ -48,7 +48,7 @@ function PostList(props) {
     return robj
   })
 
-  if (props.post_category)  {
+  if (props.post_category) {
     simpledata = simpledata.filter(d => d.post_category == props.post_category)
   }
 
@@ -60,7 +60,7 @@ function PostList(props) {
     <div>
       <SEO title="Robin Linacre's blog: Post list" />
       <h2>{props.post_header}</h2>
-      {simpledata.map(function(d) {
+      {simpledata.map(function (d) {
         return (
           <p>
             {d.post_date} <Link to={d.relative_path}>{d.title}</Link>
