@@ -1486,42 +1486,68 @@
 
 "@robinl/bird-song-quiz@https://api.observablehq.com/@robinl/bird-song-quiz.tgz?v=3":
   version "714.0.0"
+  uid d34bba1b7f02a53b74ee6053b2f8f7faeac39a08
+  resolved "https://api.observablehq.com/@robinl/bird-song-quiz.tgz?v=3#d34bba1b7f02a53b74ee6053b2f8f7faeac39a08"
 
 "@robinl/birdsong-recordings@https://api.observablehq.com/@robinl/birdsong-recordings.tgz?v=3":
   version "425.0.0"
+  uid "057c0906c77e10ba7c5812526cb2d4d4e514fb15"
+  resolved "https://api.observablehq.com/@robinl/birdsong-recordings.tgz?v=3#057c0906c77e10ba7c5812526cb2d4d4e514fb15"
 
 "@robinl/energy-usage-and-goods-imports-and-exports@https://api.observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports.tgz?v=3":
-  version "1285.0.0"
+  version "1294.0.0"
+  uid bb31ed8a7549fca55463e7e419a979cac1962a06
+  resolved "https://api.observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports.tgz?v=3#bb31ed8a7549fca55463e7e419a979cac1962a06"
 
 "@robinl/energy-usage-calculator-for-everyday-activities@https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3":
   version "558.0.0"
+  uid f452628dfab647f148f03f96ad9298edf9d8b4c2
+  resolved "https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3#f452628dfab647f148f03f96ad9298edf9d8b4c2"
 
 "@robinl/filling-the-country-with-solar-panels@https://api.observablehq.com/@robinl/filling-the-country-with-solar-panels.tgz?v=3":
   version "64.0.0"
+  uid fb77932a28ab7d73c786eb4ee2c6ca686458fcff
+  resolved "https://api.observablehq.com/@robinl/filling-the-country-with-solar-panels.tgz?v=3#fb77932a28ab7d73c786eb4ee2c6ca686458fcff"
 
 "@robinl/flight-distance-calculator@https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3":
   version "1073.0.0"
+  uid a3ecb7dbf8f1987d48e6b7d5eaaed541a9f6289a
+  resolved "https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3#a3ecb7dbf8f1987d48e6b7d5eaaed541a9f6289a"
 
 "@robinl/how-much-should-carbon-offsetting-cost@https://api.observablehq.com/@robinl/how-much-should-carbon-offsetting-cost.tgz?v=3":
   version "472.0.0"
+  uid "9af7faeef7b6fc7b433a67a59757c149b8689bc7"
+  resolved "https://api.observablehq.com/@robinl/how-much-should-carbon-offsetting-cost.tgz?v=3#9af7faeef7b6fc7b433a67a59757c149b8689bc7"
 
 "@robinl/interactive-blogging-with-observable-notebooks-and-gatsb@https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3":
   version "518.0.0"
+  uid eec8b42a1b1d6a7305ed2e09a16027ed9f2bcc64
+  resolved "https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3#eec8b42a1b1d6a7305ed2e09a16027ed9f2bcc64"
 
 "@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
   version "511.0.0"
+  uid fd8de77841968892eb678ed7716e283af6fd6afd
+  resolved "https://api.observablehq.com/@robinl/my-flights.tgz?v=3#fd8de77841968892eb678ed7716e283af6fd6afd"
 
 "@robinl/spark-explain@https://api.observablehq.com/@robinl/spark-explain.tgz?v=3":
   version "647.0.0"
+  uid "8359e11e6bf207d43a30b89f34ca1eff26ca289f"
+  resolved "https://api.observablehq.com/@robinl/spark-explain.tgz?v=3#8359e11e6bf207d43a30b89f34ca1eff26ca289f"
 
 "@robinl/understanding-the-spark-ui-by-example-sorting-data@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3":
   version "269.0.0"
+  uid "4d865b38d38ff8b78faeabb00882967dee34cddb"
+  resolved "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3#4d865b38d38ff8b78faeabb00882967dee34cddb"
 
 "@robinl/understanding-the-spark-ui-by-example-the-left-join@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3":
   version "221.0.0"
+  uid "57c18dd28660cd52fafc79da4a867a34c8e11e08"
+  resolved "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3#57c18dd28660cd52fafc79da4a867a34c8e11e08"
 
 "@robinl/unsupervised-probabalistic-data-matching-using-the-expec@https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3":
-  version "1040.0.0"
+  version "1041.0.0"
+  uid cc107e1c3432853fa62aed3f34258a8c7d59e199
+  resolved "https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3#cc107e1c3432853fa62aed3f34258a8c7d59e199"
 
 "@sideway/address@^4.1.0":
   version "4.1.0"
@@ -5968,13 +5994,6 @@ gatsby-plugin-react-helmet@^3.1.16:
   version "3.3.14"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-react-helmet/-/gatsby-plugin-react-helmet-3.3.14.tgz#6eac5854e24d008352742783fe68817b18e24151"
   integrity sha512-5GsIVZIVOax2V9g1UL8row1TG3p2zPY2I+8Rq52H0R5xD9QoMTPde2Q4N0Y2td+qzfRdcfkbSj/kokK2I5owPw==
-  dependencies:
-    "@babel/runtime" "^7.11.2"
-
-gatsby-plugin-remove-trailing-slashes@^2.3.13:
-  version "2.3.13"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-remove-trailing-slashes/-/gatsby-plugin-remove-trailing-slashes-2.3.13.tgz#4e57e8cb7b6f9c0f9c623a09e68d5bbad384940f"
-  integrity sha512-38HuqD5+lAaoMukCN2Q2Y5lviR41DogEsBQg9vC8Nh4OBWb3vuXXDyFgfE/oMpgbn7Mv5mUPzRerJGW6HdxCEA==
   dependencies:
     "@babel/runtime" "^7.11.2"
 
@@ -11978,9 +11997,9 @@ sprintf-js@~1.0.2:
   integrity sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=
 
 ssri@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.1.tgz#2a3c41b28dd45b62b63676ecb74001265ae9edd8"
-  integrity sha512-3Wge10hNcT1Kur4PDFwEieXSCMCJs/7WvSACcrMYrNp+b8kDL1/0wJch5Ni2WrtwEa2IO8OsVfeKIciKCDx/QA==
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.2.tgz#157939134f20464e7301ddba3e90ffa8f7728ac5"
+  integrity sha512-cepbSq/neFK7xB6A50KHN0xHDotYzq58wWCa5LeWqnPrHG8GzfEjO/4O8kpmcGW+oaxkvhEJCWgbgNk4/ZV93Q==
   dependencies:
     figgy-pudding "^3.5.1"
 
