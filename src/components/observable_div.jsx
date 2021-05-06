@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import obsdivStyles from "./obsdiv.module.css"
+import { parent } from "./obsdiv.module.css"
 
 import styled from "@emotion/styled"
 // import { rhythm } from "../utils/typography"
@@ -48,8 +48,8 @@ function NotebookCells(props) {
         <StyledDiv>
 
             {props.output_order.map((output_name) => (<div id={get_output_id_from_name(output_name)}
-            key={get_output_id_from_name(output_name)}
-            className={obsdivStyles.parent}></div>))}
+                key={get_output_id_from_name(output_name)}
+                className={parent}></div>))}
         </StyledDiv>
     )
 

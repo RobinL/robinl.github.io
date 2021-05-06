@@ -6,7 +6,7 @@ export const frontmatter = {
   title: "Birdsong recording finder",
   post_date: "2020-04-25",
   code_url:
-    "https://observablehq.com/@robinlbirdsong-recordings/",
+    "https://observablehq.com/@robinl/birdsong-recordings/",
   post_type: "obs",
   post_category: "other",
   description: "Listen to UK birdsong using the xeno-canto API"
