@@ -9,11 +9,12 @@ const post_css = css`
   margin-right: auto;
   width: 90%;
   max-width: 640px;
+
 `
 
-const Layout = ({ children, data }) => (
+const Layout = ({ children }) => (
   <div>
-    <SEO title="robinlinacre.com" description="Robin Linacre's personal homepage"/>
+    <SEO title="robinlinacre.com" description="Robin Linacre's personal homepage" />
     <Header />
     <div css={post_css}>{children}</div>
     <Footer />

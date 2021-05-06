@@ -1,6 +1,7 @@
 import React from 'react'
 import define from "@robinl/an-introduction-to-probabalistic-record-linkage-using-the"
 import ObsMdxPage from "../components/mdx_obs_page"
+import { css } from "@emotion/core"
 
 export const frontmatter = {
     title: "An Introduction to Probabalistic Record Linkage using the Fellegi Sunter model",
@@ -20,10 +21,17 @@ let output_order = [
     "para_4",
 ]
 
+
+const css_override = css`
+
+    font-size: 10pt;
+`
+
 export default ({ data }) => (
     <ObsMdxPage
         define={define}
         output_order={output_order}
-        post_frontmatter={frontmatter} />
+        post_frontmatter={frontmatter}
+        css={css_override} />
 
 )
