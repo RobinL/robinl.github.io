@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { parent } from "./obsdiv.module.css"
 
 import styled from "@emotion/styled"
-// import { rhythm } from "../utils/typography"
 
 import { Runtime, Inspector, Library } from '@observablehq/runtime';
 
@@ -64,6 +63,8 @@ class ObeservableNotebookDiv extends Component {
         const output_order = this.props.output_order;
 
 
+
+
         // See https://github.com/observablehq/runtime  for more info about the following code
 
         const runtime = new Runtime(library);
@@ -121,9 +122,10 @@ class ObeservableNotebookDiv extends Component {
     render() {
         const output_order = this.props.output_order;
 
+        const additional_css = this.props.className
 
         // Add a div for each output cell in the order specified in output_order
-        return (<MountDiv id={mountId}>
+        return (<MountDiv id={mountId} className={additional_css}>
             <NotebookCells output_order={output_order} />
         </MountDiv>);
     }

@@ -4,24 +4,24 @@ import ObeservableNotebookDiv from "./observable_div"
 import PostFrontMatter from "./post_frontmatter"
 import SEO from "../components/seo"
 
-function ObsMdxPage(props){
+function ObsMdxPage(props) {
 
 
-    let post
+  let post
 
-    if (props.define) {
-        post = <ObeservableNotebookDiv define={props.define} output_order={props.output_order} />
-    } else {
-        post = props.children
-    }
+  if (props.define) {
+    post = <ObeservableNotebookDiv define={props.define} output_order={props.output_order} />
+  } else {
+    post = props.children
+  }
 
-    return (
-      <Layout>
-          <SEO title={props.post_frontmatter.title} description={props.post_frontmatter.description}/>
-        <PostFrontMatter post_frontmatter={props.post_frontmatter} />
-        {post}
-      </Layout>
-    )
+  return (
+    <Layout css={props.className}>
+      <SEO title={props.post_frontmatter.title} description={props.post_frontmatter.description} />
+      <PostFrontMatter post_frontmatter={props.post_frontmatter} />
+      {post}
+    </Layout>
+  )
 
 }
 

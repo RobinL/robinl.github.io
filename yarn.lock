@@ -1792,44 +1792,77 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
+"@robinl/an-introduction-to-probabalistic-record-linkage-using-the@https://api.observablehq.com/@robinl/an-introduction-to-probabalistic-record-linkage-using-the@104.tgz?v=3":
+  version "104.0.0"
+  resolved "https://api.observablehq.com/@robinl/an-introduction-to-probabalistic-record-linkage-using-the@104.tgz?v=3#74fa25aa9676bd6ed4d6225618a7e7fa2fa2f616"
+
 "@robinl/bird-song-quiz@https://api.observablehq.com/@robinl/bird-song-quiz.tgz?v=3":
   version "715.0.0"
+  resolved "https://api.observablehq.com/@robinl/bird-song-quiz.tgz?v=3#38e4738f5620e3bfc412bca07e31bb478bcc6396"
 
 "@robinl/birdsong-recordings@https://api.observablehq.com/@robinl/birdsong-recordings.tgz?v=3":
   version "439.0.0"
+  resolved "https://api.observablehq.com/@robinl/birdsong-recordings.tgz?v=3#9029fd0793dca9cd75b292f6f4091ae31e2771ed"
 
 "@robinl/energy-usage-and-goods-imports-and-exports@https://api.observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports.tgz?v=3":
   version "1349.0.0"
+  resolved "https://api.observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports.tgz?v=3#e413fb7fc23cda9bb3ed13a846fda0b52f207585"
 
 "@robinl/energy-usage-calculator-for-everyday-activities@https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3":
   version "558.0.0"
+  resolved "https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities.tgz?v=3#5a05545d710eaea410390195ce814092d4c31ef2"
 
 "@robinl/filling-the-country-with-solar-panels@https://api.observablehq.com/@robinl/filling-the-country-with-solar-panels.tgz?v=3":
   version "64.0.0"
+  resolved "https://api.observablehq.com/@robinl/filling-the-country-with-solar-panels.tgz?v=3#7c36270d6dc1788d4b2bbb991126df786ae9c2d0"
 
 "@robinl/flight-distance-calculator@https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3":
   version "1073.0.0"
+  resolved "https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3#016cac4b83b36552604c901136781675f94ebe93"
 
 "@robinl/how-much-should-carbon-offsetting-cost@https://api.observablehq.com/@robinl/how-much-should-carbon-offsetting-cost.tgz?v=3":
   version "476.0.0"
+  resolved "https://api.observablehq.com/@robinl/how-much-should-carbon-offsetting-cost.tgz?v=3#ed89167a062033ccb2d1d251e60a12126e84dfdd"
 
 "@robinl/interactive-blogging-with-observable-notebooks-and-gatsb@https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3":
   version "518.0.0"
+  resolved "https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3#26e7539fd1b163921955de125cfac3369f1635be"
 
 "@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
   version "511.0.0"
+  resolved "https://api.observablehq.com/@robinl/my-flights.tgz?v=3#1e3aeab46aac179666cc7c94c675da9388f3e708"
 
 "@robinl/spark-explain@https://api.observablehq.com/@robinl/spark-explain.tgz?v=3":
   version "647.0.0"
+  resolved "https://api.observablehq.com/@robinl/spark-explain.tgz?v=3#65bd37025e2ac9d30dff8a5336426e7333cf8980"
+
+"@robinl/the-mathematics-of-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@736.tgz?v=3":
+  version "736.0.0"
+  resolved "https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@736.tgz?v=3#77637a58a86d038cca47ebcb58a5fb71c13f1dbc"
+
+"@robinl/understanding-match-weights@https://api.observablehq.com/@robinl/understanding-match-weights@628.tgz?v=3":
+  version "628.0.0"
+  resolved "https://api.observablehq.com/@robinl/understanding-match-weights@628.tgz?v=3#7900588f47e0d46c3d50cb66ed44e4b3e6b7a9c2"
+
+"@robinl/understanding-match-weights@https://api.observablehq.com/@robinl/understanding-match-weights@629.tgz?v=3":
+  version "629.0.0"
+  resolved "https://api.observablehq.com/@robinl/understanding-match-weights@629.tgz?v=3#1c561d4eb3534687b87eeaa282f83bbee060bdae"
 
 "@robinl/understanding-the-spark-ui-by-example-sorting-data@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3":
   version "269.0.0"
+  resolved "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3#47d198da56148444a0a6c3b30a5120f5a00a31d4"
 
 "@robinl/understanding-the-spark-ui-by-example-the-left-join@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3":
   version "221.0.0"
+  resolved "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3#871d54ca84c8814c814dd95477bba94be3762095"
 
 "@robinl/unsupervised-probabalistic-data-matching-using-the-expec@https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3":
   version "1041.0.0"
+  resolved "https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3#7dd9ba9cdf2dc15f84351de13ef894c152eda222"
+
+"@robinl/visualising-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@504.tgz?v=3":
+  version "504.0.0"
+  resolved "https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@504.tgz?v=3#219c550beabd54bab60ded4ce2d8f7c7e75b0335"
 
 "@sideway/address@^4.1.0":
   version "4.1.1"
