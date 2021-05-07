@@ -124,13 +124,6 @@ class ObeservableNotebookDiv extends Component {
 
         const additional_css = this.props.className
 
-        console.log("----")
-        console.log(additional_css)
-        console.log("----")
-
-
-
-
         // Add a div for each output cell in the order specified in output_order
         return (<MountDiv id={mountId} className={additional_css}>
             <NotebookCells output_order={output_order} />

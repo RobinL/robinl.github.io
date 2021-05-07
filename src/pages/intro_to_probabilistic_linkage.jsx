@@ -23,8 +23,10 @@ let output_order = [
 
 
 const css_override = css`
-
-    font-size: 10pt;
+margin-left: auto;
+margin-right: auto;
+width: 90%;
+max-width: 1000px;
 `
 
 export default ({ data }) => (

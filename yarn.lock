@@ -1836,9 +1836,13 @@
   version "647.0.0"
   resolved "https://api.observablehq.com/@robinl/spark-explain.tgz?v=3#65bd37025e2ac9d30dff8a5336426e7333cf8980"
 
-"@robinl/the-mathematics-of-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@722.tgz?v=3":
-  version "722.0.0"
-  resolved "https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@722.tgz?v=3#743af2a5fdd87208324d9fd32a37a36796b04334"
+"@robinl/the-mathematics-of-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@735.tgz?v=3":
+  version "735.0.0"
+  resolved "https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@735.tgz?v=3#2b367240bfd4f7c901dddafba56b29859bde1d07"
+
+"@robinl/the-mathematics-of-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@736.tgz?v=3":
+  version "736.0.0"
+  resolved "https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@736.tgz?v=3#77637a58a86d038cca47ebcb58a5fb71c13f1dbc"
 
 "@robinl/understanding-the-spark-ui-by-example-sorting-data@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3":
   version "269.0.0"

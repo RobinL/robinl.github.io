@@ -1,6 +1,7 @@
 import React from 'react'
 import define from "@robinl/the-mathematics-of-the-fellegi-sunter-model"
 import ObsMdxPage from "../components/mdx_obs_page"
+import { css } from "@emotion/core"
 
 export const frontmatter = {
     title: "The mathematics of the Fellegi Sunter model",
@@ -37,15 +38,27 @@ let output_order = [
     "para_17",
     "para_18",
     "para_19",
+    "css_styles"
 
 
 
 ]
 
+const css_override = css`
+margin-left: auto;
+margin-right: auto;
+width: 90%;
+max-width: 800px;
+table {font-size: 0.8rem;
+ line-height: 1rem;}
+rem;
+`
+// REMEMEBER TO IMPORT THE STYLE CELL!!
 export default ({ data }) => (
     <ObsMdxPage
         define={define}
         output_order={output_order}
-        post_frontmatter={frontmatter} />
+        post_frontmatter={frontmatter}
+        css={css_override} />
 
 )

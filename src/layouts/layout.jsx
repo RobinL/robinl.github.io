@@ -12,13 +12,18 @@ const post_css = css`
 
 `
 
-const Layout = ({ children }) => (
-  <div>
-    <SEO title="robinlinacre.com" description="Robin Linacre's personal homepage" />
-    <Header />
-    <div css={post_css}>{children}</div>
-    <Footer />
-  </div>
-)
 
+function Layout(props) {
+
+
+
+  return (
+    <div>
+      <SEO title="robinlinacre.com" description="Robin Linacre's personal homepage" />
+      <Header />
+      <div css={post_css} className={props.className}>{props.children}</div>
+      <Footer />
+    </div>
+  )
+}
 export default Layout
