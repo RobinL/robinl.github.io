@@ -1840,10 +1840,6 @@
   version "736.0.0"
   resolved "https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@736.tgz?v=3#77637a58a86d038cca47ebcb58a5fb71c13f1dbc"
 
-"@robinl/understanding-match-weights@https://api.observablehq.com/@robinl/understanding-match-weights@628.tgz?v=3":
-  version "628.0.0"
-  resolved "https://api.observablehq.com/@robinl/understanding-match-weights@628.tgz?v=3#7900588f47e0d46c3d50cb66ed44e4b3e6b7a9c2"
-
 "@robinl/understanding-match-weights@https://api.observablehq.com/@robinl/understanding-match-weights@629.tgz?v=3":
   version "629.0.0"
   resolved "https://api.observablehq.com/@robinl/understanding-match-weights@629.tgz?v=3#1c561d4eb3534687b87eeaa282f83bbee060bdae"
@@ -1863,6 +1859,10 @@
 "@robinl/visualising-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@504.tgz?v=3":
   version "504.0.0"
   resolved "https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@504.tgz?v=3#219c550beabd54bab60ded4ce2d8f7c7e75b0335"
+
+"@robinl/visualising-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@651.tgz?v=3":
+  version "651.0.0"
+  resolved "https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@651.tgz?v=3#d658bcdfbd12ab400e34171bcb081350d01c3e2c"
 
 "@sideway/address@^4.1.0":
   version "4.1.1"
