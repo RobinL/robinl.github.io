@@ -26,7 +26,10 @@ const css_override = css`
 margin-left: auto;
 margin-right: auto;
 width: 90%;
-max-width: 1000px;
+max-width: 800px;
+table {font-size: 0.8rem;
+ line-height: 1rem;}
+rem;
 `
 
 export default ({ data }) => (

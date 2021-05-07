@@ -7,10 +7,12 @@ import SEO from "../components/seo"
 function Index() {
 
   let cats = [
-    { header: "Probabilistic record linkage", code: "probabilistic_linkage" },
+
     { header: "Data science and engineering", code: "data" },
-    { header: "Other", code: "other" },
+    { header: "Probabilistic record linkage", code: "probabilistic_linkage", category_homepage: "probabilistic_linkage" },
+
     { header: "Energy and climate change", code: "energy" },
+    { header: "Other", code: "other" },
 
 
   ]
@@ -20,7 +22,7 @@ function Index() {
     <Layout>
       <SEO title="robinlinacre.com" description="Robin Linacre's personal homepage" />
       {cats.map(c => (
-        <PostList post_category={c.code} post_header={c.header} />
+        <PostList post_category={c.code} post_header={c.header} category_homepage={c.category_homepage} />
       ))}
     </Layout>
   )

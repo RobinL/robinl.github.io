@@ -2,6 +2,19 @@ import React from "react"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import SEO from "../components/seo"
 
+
+function LinkHeader(props) {
+
+  if (!(props.category_homepage == undefined)) {
+    return (<h2><Link to={'/' + props.category_homepage + '/'}>{props.post_header}</Link></h2>)
+  }
+  else {
+    return (<h2>{props.post_header}</h2>)
+  }
+
+
+}
+
 function PostList(props) {
   const data = useStaticQuery(
     graphql`
@@ -28,6 +41,8 @@ function PostList(props) {
       }
     `
   )
+
+
 
   // Simplify data
 
@@ -56,10 +71,12 @@ function PostList(props) {
     simpledata = simpledata.filter(d => d.post_type == props.post_type)
   }
 
+
+
   return (
     <div>
       <SEO title="Robin Linacre's blog: Post list" />
-      <h2>{props.post_header}</h2>
+      <LinkHeader post_header={props.post_header} category_homepage={props.category_homepage}></LinkHeader>
       {simpledata.map(function (d) {
         return (
           <p>
