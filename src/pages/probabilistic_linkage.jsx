@@ -2,15 +2,9 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 
 import Layout from "../layouts/layout"
-import PostList from "../components/post_list"
+
 import SEO from "../components/seo"
 function Index() {
-
-    let cats = [
-        { header: "Probabilistic record linkage", code: "probabilistic_linkage" },
-
-    ]
-
 
     return (
         <Layout>
@@ -26,6 +20,12 @@ function Index() {
                 <li><Link to={'/intro_to_probabilistic_linkage/'}>Introduction to Probabalistic Record Linkage using the Fellegi Sunter model</Link>
                 </li>
                 <li><Link to={'/maths_of_fellegi_sunter/'}>The mathematics of the Fellegi Sunter model</Link>
+                </li>
+                <li><Link to={'/visualising_fellegi_sunter/'}>Visualising the Fellegi Sunter model
+                </Link>
+                </li>
+                <li><Link to={'/understanding_match_weights/'}>Understanding match weights
+                </Link>
                 </li>
             </ol>
             <h2>Further reading</h2>

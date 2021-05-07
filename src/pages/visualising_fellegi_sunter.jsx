@@ -1,43 +1,43 @@
 import React from 'react'
-import define from "@robinl/the-mathematics-of-the-fellegi-sunter-model"
+import define from "@robinl/visualising-the-fellegi-sunter-model"
 import ObsMdxPage from "../components/mdx_obs_page"
 import { css } from "@emotion/core"
 
 export const frontmatter = {
-    title: "The mathematics of the Fellegi Sunter model",
+    title: "Visualising the Fellegi Sunter model",
     post_date: "2021-05-07",
-    code_url: "https://observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model",
+    code_url: "https://observablehq.com/@robinl/visualising-the-fellegi-sunter-model",
     post_type: "obs",
     post_category: "probabilistic_linkage",
-    description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article presents the maths alongside an interactive example."
+    description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article presents a way of visualising how the model works."
 }
 
 let output_order = [
+    "additional_styles",
     "title",
     "para_1",
     "para_2",
     "para_3",
+    "viewof settings_raw",
     "para_4",
-    "subhead_1",
     "para_5",
+    "subhead_1",
     "para_6",
+    "treemap_1",
     "para_7",
+    "treemap_2",
     "para_8",
-    "subhead_2",
     "para_9",
+    "treemap_3",
     "para_10",
-    "viewof splink_settings",
+    "subhead_3",
     "para_11",
-    "viewof row_index",
-    "this_row",
+    "treemap_4",
     "para_12",
     "para_13",
+    "treemap_5",
     "para_14",
-    "para_15",
-    "para_16",
-    "para_17",
-    "para_18",
-    "para_19",
+    "annex",
     "css_styles"
 
 
@@ -51,8 +51,14 @@ width: 90%;
 max-width: 800px;
 table {font-size: 0.8rem;
  line-height: 1rem;}
+ div {position: relative}
+ .wrap-info {
+     font-size: 0.7rem;
+ }
 rem;
 `
+
+
 
 export default ({ data }) => (
     <ObsMdxPage

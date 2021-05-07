@@ -1,15 +1,15 @@
 import React from 'react'
-import define from "@robinl/the-mathematics-of-the-fellegi-sunter-model"
+import define from "@robinl/understanding-match-weights"
 import ObsMdxPage from "../components/mdx_obs_page"
 import { css } from "@emotion/core"
 
 export const frontmatter = {
-    title: "The mathematics of the Fellegi Sunter model",
+    title: "Understanding match weights in the Fellegi Sunter model",
     post_date: "2021-05-07",
-    code_url: "https://observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model",
+    code_url: "https://observablehq.com/@robinl/understanding-match-weights",
     post_type: "obs",
     post_category: "probabilistic_linkage",
-    description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article presents the maths alongside an interactive example."
+    description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article discusses match weights."
 }
 
 let output_order = [
@@ -17,31 +17,33 @@ let output_order = [
     "para_1",
     "para_2",
     "para_3",
-    "para_4",
+    "viewof prior",
+    "viewof m",
+    "viewof u",
+    "bf",
+    "post",
     "subhead_1",
+    "para_4",
     "para_5",
+    "subhead_2",
     "para_6",
     "para_7",
-    "para_8",
-    "subhead_2",
-    "para_9",
-    "para_10",
     "viewof splink_settings",
+    "para_8",
+    "chart_1",
+    "para_9",
+    "chart_2",
+    "para_10",
+    "viewof fname_radio",
+    "viewof sname_radio",
+    "viewof dob_radio",
+    "viewof town_radio",
+    "chart_3",
     "para_11",
-    "viewof row_index",
-    "this_row",
+    "annex",
     "para_12",
     "para_13",
-    "para_14",
-    "para_15",
-    "para_16",
-    "para_17",
-    "para_18",
-    "para_19",
     "css_styles"
-
-
-
 ]
 
 const css_override = css`
