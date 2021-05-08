@@ -1860,6 +1860,10 @@
   version "654.0.0"
   resolved "https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@654.tgz?v=3#35274667277b8022a7a79fd6fb5bbb5001862cd5"
 
+"@robinl/visualising-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@655.tgz?v=3":
+  version "655.0.0"
+  resolved "https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@655.tgz?v=3#805f09c9dc50c46d484c3dbcb956877bc5a9bfd2"
+
 "@sideway/address@^4.1.0":
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/@sideway/address/-/address-4.1.1.tgz#9e321e74310963fdf8eebfbee09c7bd69972de4d"
