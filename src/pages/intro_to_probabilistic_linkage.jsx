@@ -18,7 +18,10 @@ let output_order = [
     "para_1",
     "para_2",
     "para_3",
+    "table_1",
     "para_4",
+    "para_5",
+    "para_6",
 ]
 
 
@@ -28,8 +31,13 @@ margin-right: auto;
 width: 90%;
 max-width: 800px;
 table {font-size: 0.8rem;
- line-height: 1rem;}
-rem;
+ line-height: 1rem;
+}
+#output__table_1 {
+    margin-bottom:10px;
+}
+
+
 `
 
 export default ({ data }) => (
