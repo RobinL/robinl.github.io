@@ -1792,10 +1792,6 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
-"@robinl/an-introduction-to-probabalistic-record-linkage-using-the@https://api.observablehq.com/@robinl/an-introduction-to-probabalistic-record-linkage-using-the@116.tgz?v=3":
-  version "116.0.0"
-  resolved "https://api.observablehq.com/@robinl/an-introduction-to-probabalistic-record-linkage-using-the@116.tgz?v=3#16481c280e889dd3e252b04407edbbeaa718c47f"
-
 "@robinl/an-introduction-to-probabalistic-record-linkage-using-the@https://api.observablehq.com/@robinl/an-introduction-to-probabalistic-record-linkage-using-the@119.tgz?v=3":
   version "119.0.0"
   resolved "https://api.observablehq.com/@robinl/an-introduction-to-probabalistic-record-linkage-using-the@119.tgz?v=3#c83970e741371ad60c1d21e5212a9613d836d274"
@@ -1840,9 +1836,9 @@
   version "647.0.0"
   resolved "https://api.observablehq.com/@robinl/spark-explain.tgz?v=3#65bd37025e2ac9d30dff8a5336426e7333cf8980"
 
-"@robinl/the-mathematics-of-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@736.tgz?v=3":
-  version "736.0.0"
-  resolved "https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@736.tgz?v=3#77637a58a86d038cca47ebcb58a5fb71c13f1dbc"
+"@robinl/the-mathematics-of-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@754.tgz?v=3":
+  version "754.0.0"
+  resolved "https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@754.tgz?v=3#482089394b38c75aa5eabeacc2a275ea5facca14"
 
 "@robinl/understanding-match-weights@https://api.observablehq.com/@robinl/understanding-match-weights@629.tgz?v=3":
   version "629.0.0"
@@ -1860,9 +1856,9 @@
   version "1041.0.0"
   resolved "https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3#7dd9ba9cdf2dc15f84351de13ef894c152eda222"
 
-"@robinl/visualising-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@651.tgz?v=3":
-  version "651.0.0"
-  resolved "https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@651.tgz?v=3#d658bcdfbd12ab400e34171bcb081350d01c3e2c"
+"@robinl/visualising-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@654.tgz?v=3":
+  version "654.0.0"
+  resolved "https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@654.tgz?v=3#35274667277b8022a7a79fd6fb5bbb5001862cd5"
 
 "@sideway/address@^4.1.0":
   version "4.1.1"
