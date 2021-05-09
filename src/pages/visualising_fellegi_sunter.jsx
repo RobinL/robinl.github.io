@@ -1,12 +1,13 @@
 import React from 'react'
-import define from "@robinl/visualising-the-fellegi-sunter-model"
+import define from "@robinl/visualising-fellegi-sunter"
+
 import ObsMdxPage from "../components/mdx_obs_page"
 import { css } from "@emotion/core"
 
 export const frontmatter = {
     title: "Visualising the Fellegi Sunter model",
     post_date: "2021-05-07",
-    code_url: "https://observablehq.com/@robinl/visualising-the-fellegi-sunter-model",
+    code_url: "https://observablehq.com/@robinl/visualising-fellegi-sunter",
     post_type: "obs",
     post_category: "probabilistic_linkage",
     description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article presents a way of visualising how the model works."
@@ -18,28 +19,42 @@ let output_order = [
     "para_1",
     "para_2",
     "para_3",
-    "viewof settings_raw",
     "para_4",
-    "para_5",
     "subhead_1",
-    "para_6",
+    "para_5",
+    "lam_view",
     "treemap_1",
+    "para_6",
+    "subhead_2",
     "para_7",
-    "treemap_2",
+    "fname_view",
     "para_8",
+    "treemap_2",
     "para_9",
-    "treemap_3",
-    "para_10",
     "subhead_3",
+    "para_10",
+    "sname_view",
     "para_11",
-    "treemap_4",
+    "treemap_3",
     "para_12",
-    "para_13",
-    "treemap_5",
-    "para_14",
-    "annex",
-    "css_styles"
 
+    "subhead_4",
+    "dob_view",
+    "para_13",
+    "treemap_4",
+    "para_14",
+
+    "subhead_4",
+    "dob_view",
+    "para_15",
+    "treemap_5",
+    "para_16",
+    "annex",
+
+
+    "additional_styles",
+    "styles2",
+    "css_styles"
 
 
 ]

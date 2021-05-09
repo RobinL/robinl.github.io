@@ -1794,7 +1794,7 @@
 
 "@robinl/an-introduction-to-probabalistic-record-linkage-using-the@https://api.observablehq.com/@robinl/an-introduction-to-probabalistic-record-linkage-using-the@119.tgz?v=3":
   version "119.0.0"
-  resolved "https://api.observablehq.com/@robinl/an-introduction-to-probabalistic-record-linkage-using-the@119.tgz?v=3#c83970e741371ad60c1d21e5212a9613d836d274"
+  resolved "https://api.observablehq.com/@robinl/an-introduction-to-probabalistic-record-linkage-using-the@119.tgz?v=3#8f7b9c8628973473a52f3ee96245534d317612d6"
 
 "@robinl/bird-song-quiz@https://api.observablehq.com/@robinl/bird-song-quiz.tgz?v=3":
   version "715.0.0"
@@ -1838,11 +1838,11 @@
 
 "@robinl/the-mathematics-of-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@754.tgz?v=3":
   version "754.0.0"
-  resolved "https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@754.tgz?v=3#482089394b38c75aa5eabeacc2a275ea5facca14"
+  resolved "https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@754.tgz?v=3#09aeb183fe4d5df14a8814621b485109722994b4"
 
 "@robinl/understanding-match-weights@https://api.observablehq.com/@robinl/understanding-match-weights@629.tgz?v=3":
   version "629.0.0"
-  resolved "https://api.observablehq.com/@robinl/understanding-match-weights@629.tgz?v=3#1c561d4eb3534687b87eeaa282f83bbee060bdae"
+  resolved "https://api.observablehq.com/@robinl/understanding-match-weights@629.tgz?v=3#58861efb64d7b413ff5ba5c81196e957b20d1a20"
 
 "@robinl/understanding-the-spark-ui-by-example-sorting-data@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3":
   version "269.0.0"
@@ -1856,13 +1856,13 @@
   version "1041.0.0"
   resolved "https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3#7dd9ba9cdf2dc15f84351de13ef894c152eda222"
 
-"@robinl/visualising-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@654.tgz?v=3":
-  version "654.0.0"
-  resolved "https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@654.tgz?v=3#35274667277b8022a7a79fd6fb5bbb5001862cd5"
+"@robinl/visualising-fellegi-sunter@https://api.observablehq.com/@robinl/visualising-fellegi-sunter@987.tgz?v=3":
+  version "987.0.0"
+  resolved "https://api.observablehq.com/@robinl/visualising-fellegi-sunter@987.tgz?v=3#75981de120e32c77be26dce2422fc30e0012ad34"
 
-"@robinl/visualising-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@655.tgz?v=3":
-  version "655.0.0"
-  resolved "https://api.observablehq.com/@robinl/visualising-the-fellegi-sunter-model@655.tgz?v=3#805f09c9dc50c46d484c3dbcb956877bc5a9bfd2"
+"@robinl/visualising-fellegi-sunter@https://api.observablehq.com/@robinl/visualising-fellegi-sunter@990.tgz?v=3":
+  version "990.0.0"
+  resolved "https://api.observablehq.com/@robinl/visualising-fellegi-sunter@990.tgz?v=3#a100a1466391bfaa48e2dad6196b3bea30823a93"
 
 "@sideway/address@^4.1.0":
   version "4.1.1"
