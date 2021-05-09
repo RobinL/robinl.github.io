@@ -45,7 +45,7 @@ let output_order = [
     "para_14",
 
     "subhead_4",
-    "dob_view",
+    "town_view",
     "para_15",
     "treemap_5",
     "para_16",
