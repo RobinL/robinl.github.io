@@ -1845,7 +1845,7 @@
 
 
 "@robinl/the-mathematics-of-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@754.tgz?v=3":
-  version "760.0.0"
+  version "763.0.0"
 
 
 "@robinl/understanding-match-weights@https://api.observablehq.com/@robinl/understanding-match-weights@629.tgz?v=3":
@@ -1865,7 +1865,7 @@
 
 
 "@robinl/visualising-fellegi-sunter@https://api.observablehq.com/@robinl/visualising-fellegi-sunter@990.tgz?v=3":
-  version "992.0.0"
+  version "996.0.0"
 
 
 "@sideway/address@^4.1.0":
