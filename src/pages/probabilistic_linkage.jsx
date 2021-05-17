@@ -19,6 +19,8 @@ function Index() {
             <ol>
                 <li><Link to={'/intro_to_probabilistic_linkage/'}>Introduction to Probabalistic Record Linkage using the Fellegi Sunter model</Link>
                 </li>
+                <li><Link to={'/interactive_fellegi_sunter/'}>Live Fellegi Sunter model</Link>
+                </li>
                 <li><Link to={'/maths_of_fellegi_sunter/'}>The mathematics of the Fellegi Sunter model</Link>
                 </li>
                 <li><Link to={'/visualising_fellegi_sunter/'}>Visualising the Fellegi Sunter model
