@@ -1848,7 +1848,15 @@
   version "764.0.0"
   resolved "https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@764.tgz?v=3#e0f175a1aad7c517c045e43c9bd51ad5c6f89f23"
 
+<<<<<<< HEAD
 "@robinl/understanding-match-weights@https://api.observablehq.com/@robinl/understanding-match-weights@644.tgz?v=3":
+=======
+"@robinl/the-mathematics-of-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@754.tgz?v=3":
+  version "764.0.0"
+
+
+"@robinl/understanding-match-weights@https://api.observablehq.com/@robinl/understanding-match-weights@629.tgz?v=3":
+>>>>>>> 66c8e8de20258ce9e593d5ed801ada0ead9d9bff
   version "644.0.0"
   resolved "https://api.observablehq.com/@robinl/understanding-match-weights@644.tgz?v=3#25ae60f535c84d1fe5fbf8e64ca8e76e505f6210"
 
