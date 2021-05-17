@@ -1,14 +1,14 @@
 import React from "react"
 import define from "@robinl/energy-usage-calculator-for-everyday-activities"
 import ObsMdxPage from "../components/mdx_obs_page"
-
+import { css } from "@emotion/core"
 export const frontmatter = {
-    title: "Energy usage ready reckoner",
-    post_date: "2019-10-05",
-    code_url: "https://observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities",
-    post_type: "obs",
-    post_category: "energy",
-    description: "Energy usage calculator for everyday activities"
+  title: "Energy usage ready reckoner",
+  post_date: "2019-10-05",
+  code_url: "https://observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities",
+  post_type: "obs",
+  post_category: "energy",
+  description: "Energy usage calculator for everyday activities"
 }
 
 let output_order = [
@@ -53,10 +53,16 @@ let output_order = [
   "energy_use_treemap"
 ]
 
+
+const css_override = css`
+input {font-size: 0.8em;}
+`
+
 export default ({ data }) => (
-    <ObsMdxPage
-        define={define}
-        output_order={output_order}
-        post_frontmatter={frontmatter} />
+  <ObsMdxPage
+    define={define}
+    output_order={output_order}
+    post_frontmatter={frontmatter}
+    css={css_override} />
 
 )
