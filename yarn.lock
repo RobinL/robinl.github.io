@@ -1828,6 +1828,14 @@
   version "518.0.0"
   resolved "https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3#26e7539fd1b163921955de125cfac3369f1635be"
 
+"@robinl/interactive-fellegi-sunter-model@https://api.observablehq.com/@robinl/interactive-fellegi-sunter-model@430.tgz?v=3":
+  version "430.0.0"
+  resolved "https://api.observablehq.com/@robinl/interactive-fellegi-sunter-model@430.tgz?v=3#e7598aefb91d5c0ed28a7411f643e196e68ca4e4"
+
+"@robinl/interactive-fellegi-sunter-model@https://api.observablehq.com/@robinl/interactive-fellegi-sunter-model@433.tgz?v=3":
+  version "433.0.0"
+  resolved "https://api.observablehq.com/@robinl/interactive-fellegi-sunter-model@433.tgz?v=3#a95bf137e7a9a2950988235e8f3e667987194b38"
+
 "@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
   version "511.0.0"
   resolved "https://api.observablehq.com/@robinl/my-flights.tgz?v=3#1e3aeab46aac179666cc7c94c675da9388f3e708"
@@ -1855,10 +1863,6 @@
 "@robinl/unsupervised-probabalistic-data-matching-using-the-expec@https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3":
   version "1041.0.0"
   resolved "https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3#7dd9ba9cdf2dc15f84351de13ef894c152eda222"
-
-"@robinl/visualising-fellegi-sunter@https://api.observablehq.com/@robinl/visualising-fellegi-sunter@987.tgz?v=3":
-  version "987.0.0"
-  resolved "https://api.observablehq.com/@robinl/visualising-fellegi-sunter@987.tgz?v=3#75981de120e32c77be26dce2422fc30e0012ad34"
 
 "@robinl/visualising-fellegi-sunter@https://api.observablehq.com/@robinl/visualising-fellegi-sunter@990.tgz?v=3":
   version "990.0.0"
