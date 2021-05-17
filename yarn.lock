@@ -1793,7 +1793,7 @@
     react-lifecycles-compat "^3.0.4"
 
 "@robinl/an-introduction-to-probabalistic-record-linkage-using-the@https://api.observablehq.com/@robinl/an-introduction-to-probabalistic-record-linkage-using-the@119.tgz?v=3":
-  version "119.0.0"
+  version "120.0.0"
 
 
 "@robinl/bird-song-quiz@https://api.observablehq.com/@robinl/bird-song-quiz.tgz?v=3":
@@ -1845,11 +1845,11 @@
 
 
 "@robinl/the-mathematics-of-the-fellegi-sunter-model@https://api.observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model@754.tgz?v=3":
-  version "754.0.0"
+  version "760.0.0"
 
 
 "@robinl/understanding-match-weights@https://api.observablehq.com/@robinl/understanding-match-weights@629.tgz?v=3":
-  version "629.0.0"
+  version "642.0.0"
 
 
 "@robinl/understanding-the-spark-ui-by-example-sorting-data@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3":
@@ -1865,7 +1865,7 @@
 
 
 "@robinl/visualising-fellegi-sunter@https://api.observablehq.com/@robinl/visualising-fellegi-sunter@990.tgz?v=3":
-  version "990.0.0"
+  version "992.0.0"
 
 
 "@sideway/address@^4.1.0":
