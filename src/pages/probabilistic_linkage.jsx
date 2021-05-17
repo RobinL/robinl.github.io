@@ -8,7 +8,7 @@ function Index() {
 
     return (
         <Layout>
-            <SEO title="Probabilistic record linkage explorable explanations " description="An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  " />
+            <SEO title="Probabilistic record linkage explorable explanations " description="An set of interactive, explorable explanations of the Fellegi Sunter model, providing an introduction to probabilistic record linkage" />
             <h1>Probabilistic record linkage</h1>
             <p>
                 These pages present some introductory training material on probabilistic record linkage using the Fellegi Sunter model.  Many of the articles are interactive.
