@@ -1808,10 +1808,6 @@
   version "1349.0.0"
   resolved "https://api.observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports.tgz?v=3#927dc138c675e6673cf737cd0ea24fd34b5d6c2b"
 
-"@robinl/energy-usage-calculator-for-everyday-activities@https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities@560.tgz?v=3":
-  version "560.0.0"
-  resolved "https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities@560.tgz?v=3#663bbc27ac03b39296bc188ca136e0f5e68bd984"
-
 "@robinl/energy-usage-calculator-for-everyday-activities@https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities@561.tgz?v=3":
   version "561.0.0"
   resolved "https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities@561.tgz?v=3#759c0c0f64f9e1543dc855cb8168137950823efc"
@@ -1835,6 +1831,10 @@
 "@robinl/interactive-fellegi-sunter-model@https://api.observablehq.com/@robinl/interactive-fellegi-sunter-model@433.tgz?v=3":
   version "433.0.0"
   resolved "https://api.observablehq.com/@robinl/interactive-fellegi-sunter-model@433.tgz?v=3#a95bf137e7a9a2950988235e8f3e667987194b38"
+
+"@robinl/interactive-fellegi-sunter-model@https://api.observablehq.com/@robinl/interactive-fellegi-sunter-model@441.tgz?v=3":
+  version "441.0.0"
+  resolved "https://api.observablehq.com/@robinl/interactive-fellegi-sunter-model@441.tgz?v=3#f348d6ef436cf696c47a5a08cfe91eafd371b1b8"
 
 "@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
   version "511.0.0"
