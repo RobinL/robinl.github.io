@@ -7,7 +7,7 @@ import { css } from "@emotion/core"
 export const frontmatter = {
     title: "An Interactive Introduction to Probabilistic Record Linkage",
     post_date: "2021-05-25",
-    code_url: "https://observablehq.com/@robinl/an-introduction-to-probabalistic-record-linkage-using-the",
+    code_url: "https://observablehq.com/@robinl/an-interactive-introduction-to-probabilistic-record-link",
     post_type: "obs",
     post_category: "probabilistic_linkage",
     description: "A set of interactive, explorable explanations of the Fellegi Sunter model, providing an introduction to probabilistic record linkage."
