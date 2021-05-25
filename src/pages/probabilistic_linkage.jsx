@@ -17,10 +17,9 @@ function Index() {
             <p>Many of the graphics presented re-use Splink's graphical output, and the representation of model parameters used is the same as Splink's <a href="https://moj-analytical-services.github.io/splink_settings_editor/">settings object</a></p>
             <h2>Training materials on probabilistic linkage</h2>
             <ol>
-                <li><Link to={'/intro_to_probabilistic_linkage/'}>Introduction to Probabalistic Record Linkage using the Fellegi Sunter model</Link>
+                <li><Link to={'/intro_to_probabilistic_linkage/'}>An Interactive Introduction to Probabilistic Record Linkage</Link>
                 </li>
-                <li><Link to={'/interactive_fellegi_sunter/'}>Live Fellegi Sunter model</Link>
-                </li>
+
                 <li><Link to={'/maths_of_fellegi_sunter/'}>The mathematics of the Fellegi Sunter model</Link>
                 </li>
                 <li><Link to={'/visualising_fellegi_sunter/'}>Visualising the Fellegi Sunter model

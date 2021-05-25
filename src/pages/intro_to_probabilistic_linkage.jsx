@@ -1,28 +1,33 @@
 import React from 'react'
-import define from "@robinl/an-introduction-to-probabalistic-record-linkage-using-the"
+import define from "@robinl/an-interactive-introduction-to-probabilistic-record-link"
 import ProbLinkagePage from "../components/prob_linkage_page"
 import { css } from "@emotion/core"
 
 
 export const frontmatter = {
-    title: "An Introduction to Probabalistic Record Linkage using the Fellegi Sunter model",
-    post_date: "2021-05-07",
+    title: "An Interactive Introduction to Probabilistic Record Linkage",
+    post_date: "2021-05-25",
     code_url: "https://observablehq.com/@robinl/an-introduction-to-probabalistic-record-linkage-using-the",
     post_type: "obs",
     post_category: "probabilistic_linkage",
-    description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage"
+    description: "A set of interactive, explorable explanations of the Fellegi Sunter model, providing an introduction to probabilistic record linkage."
 }
 
 let output_order = [
     "title",
-    "subtitle_1",
     "para_1",
     "para_2",
     "para_3",
-    "table_1",
     "para_4",
     "para_5",
+    "table",
+    "estimated_probability",
     "para_6",
+    "viewof show_complex",
+    "waterfall_chart",
+    "para_7",
+    "structure",
+    "para_8"
 ]
 
 
@@ -30,7 +35,7 @@ const css_override = css`
 margin-left: auto;
 margin-right: auto;
 width: 90%;
-max-width: 800px;
+max-width: 700px;
 table {font-size: 0.8rem;
  line-height: 1rem;
 }

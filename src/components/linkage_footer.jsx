@@ -30,7 +30,6 @@ const flex = css`
 
 const order_of_articles = [
   "/intro_to_probabilistic_linkage/",
-  "/interactive_fellegi_sunter/",
   "/maths_of_fellegi_sunter/",
   "/visualising_fellegi_sunter/",
   "/understanding_match_weights/",
