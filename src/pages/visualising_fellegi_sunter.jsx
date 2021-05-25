@@ -1,7 +1,7 @@
 import React from 'react'
 import define from "@robinl/visualising-fellegi-sunter"
 
-import ObsMdxPage from "../components/mdx_obs_page"
+import ProbLinkagePage from "../components/prob_linkage_page"
 import { css } from "@emotion/core"
 
 export const frontmatter = {
@@ -75,11 +75,17 @@ rem;
 
 
 
-export default ({ data }) => (
-    <ObsMdxPage
+
+
+export default (props) => {
+
+    return (<ProbLinkagePage
         define={define}
         output_order={output_order}
         post_frontmatter={frontmatter}
-        css={css_override} />
+        css={css_override}
+        current_path={props.path}
+    />)
 
-)
+
+}

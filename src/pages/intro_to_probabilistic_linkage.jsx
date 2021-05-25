@@ -1,7 +1,8 @@
 import React from 'react'
 import define from "@robinl/an-introduction-to-probabalistic-record-linkage-using-the"
-import ObsMdxPage from "../components/mdx_obs_page"
+import ProbLinkagePage from "../components/prob_linkage_page"
 import { css } from "@emotion/core"
+
 
 export const frontmatter = {
     title: "An Introduction to Probabalistic Record Linkage using the Fellegi Sunter model",
@@ -40,11 +41,17 @@ table {font-size: 0.8rem;
 
 `
 
-export default ({ data }) => (
-    <ObsMdxPage
+
+
+export default (props) => {
+
+    return (<ProbLinkagePage
         define={define}
         output_order={output_order}
         post_frontmatter={frontmatter}
-        css={css_override} />
+        css={css_override}
+        current_path={props.path}
+    />)
 
-)
+
+}
