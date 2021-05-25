@@ -1792,6 +1792,14 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
+"@robinl/an-interactive-introduction-to-probabilistic-record-link@https://api.observablehq.com/@robinl/an-interactive-introduction-to-probabilistic-record-link@494.tgz?v=3":
+  version "494.0.0"
+
+
+"@robinl/an-interactive-introduction-to-probabilistic-record-link@https://api.observablehq.com/@robinl/an-interactive-introduction-to-probabilistic-record-link@504.tgz?v=3":
+  version "504.0.0"
+
+
 "@robinl/an-introduction-to-probabalistic-record-linkage-using-the@https://api.observablehq.com/@robinl/an-introduction-to-probabalistic-record-linkage-using-the@119.tgz?v=3":
   version "119.0.0"
 
@@ -1826,10 +1834,6 @@
 
 "@robinl/interactive-blogging-with-observable-notebooks-and-gatsb@https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3":
   version "518.0.0"
-
-
-"@robinl/interactive-fellegi-sunter-model@https://api.observablehq.com/@robinl/interactive-fellegi-sunter-model@433.tgz?v=3":
-  version "433.0.0"
 
 
 "@robinl/interactive-fellegi-sunter-model@https://api.observablehq.com/@robinl/interactive-fellegi-sunter-model@441.tgz?v=3":
