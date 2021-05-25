@@ -1,6 +1,6 @@
 import React from 'react'
 import define from "@robinl/interactive-fellegi-sunter-model"
-import ObsMdxPage from "../components/mdx_obs_page"
+import ProbLinkagePage from "../components/prob_linkage_page"
 import { css } from "@emotion/core"
 
 export const frontmatter = {
@@ -39,12 +39,15 @@ table {font-size: 0.8rem;
 
 
 `
+export default (props) => {
 
-export default ({ data }) => (
-    <ObsMdxPage
+    return (<ProbLinkagePage
         define={define}
         output_order={output_order}
         post_frontmatter={frontmatter}
-        css={css_override} />
+        css={css_override}
+        current_path={props.path}
+    />)
 
-)
+
+}
