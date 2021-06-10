@@ -33,6 +33,8 @@ const order_of_articles = [
   "/maths_of_fellegi_sunter/",
   "/visualising_fellegi_sunter/",
   "/understanding_match_weights/",
+  "/match_weight_dependencies/",
+  "/m_u_generator/",
 ]
 
 const LinkageFooter = (props) => {
