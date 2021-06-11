@@ -28,6 +28,12 @@ function Index() {
                 <li><Link to={'/understanding_match_weights/'}>Understanding match weights
                 </Link>
                 </li>
+                <li><Link to={'/match_weight_dependencies/'}>Dependencies between match weights
+                </Link>
+                </li>
+                <li><Link to={'/m_u_generator/'}>m/u value interactive sandbox
+                </Link>
+                </li>
             </ol>
             <h2>Further reading</h2>
             <h4>Articles about Splink</h4>
