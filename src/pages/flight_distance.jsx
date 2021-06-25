@@ -3,14 +3,14 @@ import define from "@robinl/flight-distance-calculator"
 import ObsMdxPage from "../components/mdx_obs_page"
 
 export const frontmatter = {
-         title: "Flight distance calculator",
-         post_date: "2019-10-09",
-         code_url:
-           "https://observablehq.com/@robinl/flight-distance-calculator/",
-         post_type: "obs",
-         post_category: "energy",
-         description: "Calculate the distance between airports"
-       }
+  title: "Flight distance calculator",
+  post_date: "2019-10-09",
+  code_url:
+    "https://observablehq.com/@robinl/flight-distance-calculator/",
+  post_type: "obs",
+  post_category: "energy",
+  description: "Simple flight distance calculator.  Advert free.  Export data to spreadsheet."
+}
 
 let output_order = [
   "title",
