@@ -15,7 +15,6 @@ export const frontmatter = {
 let output_order = [
     "title",
     "viewof num_levels",
-    "viewof stretch_axis",
     "viewof d",
     "bf_chart",
     "para_1",
