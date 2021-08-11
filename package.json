@@ -66,7 +66,7 @@
     "react-vega": "^7.1.0",
     "typography": "^0.16.19",
     "typography-theme-st-annes": "^0.16.19",
-    "vega": "^5.7.3",
+    "vega": "^5.17.3",
     "vega-lite": "^4.0.0-beta.10"
   },
   "devDependencies": {
