@@ -1,12 +1,12 @@
 import React from 'react'
-import define from "@robinl/the-mathematics-of-the-fellegi-sunter-model"
+import define from "@robinl/86fc30325e4106c4"
 import ProbLinkagePage from "../components/prob_linkage_page"
 import { css } from "@emotion/core"
 
 export const frontmatter = {
     title: "The mathematics of the Fellegi Sunter model",
     post_date: "2021-05-07",
-    code_url: "https://observablehq.com/@robinl/the-mathematics-of-the-fellegi-sunter-model",
+    code_url: "https://observablehq.com/@robinl/86fc30325e4106c4",
     post_type: "obs",
     post_category: "probabilistic_linkage",
     description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article presents the maths alongside an interactive example."

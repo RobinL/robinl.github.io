@@ -1,12 +1,12 @@
 import React from 'react'
-import define from "@robinl/interactive-fellegi-sunter-model"
+import define from "@robinl/9534e8e74053c14e"
 import ProbLinkagePage from "../components/prob_linkage_page"
 import { css } from "@emotion/core"
 
 export const frontmatter = {
     title: "Interactive probabilistic record linkage model",
     post_date: "2021-05-17",
-    code_url: "https://observablehq.com/@robinl/interactive-fellegi-sunter-model",
+    code_url: "https://observablehq.com/@robinl/9534e8e74053c14e",
     post_type: "obs",
     post_category: "probabilistic_linkage",
     description: "A live, interactive, explorable probabilistic record linkage (Fellegi Sunter) model"
