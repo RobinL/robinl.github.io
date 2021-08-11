@@ -1793,7 +1793,7 @@
     react-lifecycles-compat "^3.0.4"
 
 "@robinl/an-interactive-introduction-to-probabilistic-record-link@https://api.observablehq.com/@robinl/an-interactive-introduction-to-probabilistic-record-link@504.tgz?v=3":
-  version "504.0.0"
+  version "510.0.0"
 
 
 "@robinl/bird-song-quiz@https://api.observablehq.com/@robinl/bird-song-quiz.tgz?v=3":
@@ -1833,7 +1833,7 @@
 
 
 "@robinl/interactive-fellegi-sunter-model@https://api.observablehq.com/@robinl/interactive-fellegi-sunter-model@441.tgz?v=3":
-  version "441.0.0"
+  version "451.0.0"
 
 
 "@robinl/m-and-u-probability-generator@https://api.observablehq.com/@robinl/m-and-u-probability-generator.tgz?v=3":
