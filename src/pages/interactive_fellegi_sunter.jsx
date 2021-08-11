@@ -30,8 +30,8 @@ margin-left: auto;
 margin-right: auto;
 width: 90%;
 max-width: 800px;
-table {font-size: 0.8rem;
- line-height: 1rem;
+table {font-size: 1.3rem;
+ line-height: 1.5rem;
 }
 #output__table_1 {
     margin-bottom:10px;
