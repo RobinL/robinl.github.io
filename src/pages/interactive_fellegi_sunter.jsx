@@ -19,8 +19,7 @@ let output_order = [
     "estimated_probability",
     "para_2",
     "viewof show_complex",
-    "waterfall_chart",
-    "notes",
+    "waterfall_chart"
 
 ]
 
