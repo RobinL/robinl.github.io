@@ -1,0 +1,151 @@
+import { Vega, VegaLite } from "react-vega"
+
+import roc_comparison from "./comparing_splink_models/roc_comparison.vl.json"
+import runtimes from "./comparing_splink_models/runtimes.vl.json"
+
+import model_01_two_levels_bf from "./comparing_splink_models/model_01_two_levels_bf.vl.json"
+import model_02_fuzzy_simple_bf from "./comparing_splink_models/model_02_fuzzy_simple_bf.vl.json"
+import model_03_fuzzy_complex_bf from "./comparing_splink_models/model_03_fuzzy_complex_bf.vl.json"
+import model_04_fuzzy_complex_and_tf_bf from "./comparing_splink_models/model_04_fuzzy_complex_and_tf_bf.vl.json"
+
+# Are more complex probabilistic linkage models more accurate?
+
+<p style="font-size: 1.2rem; color: #7c7c7c; margin-top: -10px">
+  <i>The effectiveness of feature engineering with the Fellegi Sunter model</i>
+</p>
+
+## Introduction
+
+Probabilistic linkage models generate pairwise comparisons of records and make predictions of whether the two records refer to the same entity. They are often used for deduplicating and linking datasets where unique person identifiers are not available.
+
+The linkage score is computed by comparing different columns of the dataset to assess their similarity, and then weighting the importance of these comparisons to produce a final score. For those unfamiliar with these models, you can learn more in my [introductory training material](https://www.robinlinacre.com/intro_to_probabilistic_linkage/).
+
+In the simplest models, the comparison may be a simple equality check. For example, is the first name equal or different? In this model, a match on the first name will increase the match score by a constant weighting. A non-match on first name will decrease the match score by some other constant.
+
+This is clearly a crude model of the real world, and there are a variety of ways in which it can be made more realistic. For example:
+
+- We may allow more than two match weights to be computed for a given column. For example, we may want a separate 'intermediate' match weight for the case that name is similar but not identical e.g. "Rachel" vs "Rachael".
+- We may allow different match weights for different values of a column. For example, the match weight for a match on a common name like "John" may be lower than for a match on an uncommon name like "Robin".
+- We may want to group together certain columns to avoid double counting. For instance, if postcodes match, we would probably want to avoid further increasing the final match score for a match on a 'city' field.
+
+This kind of feature engineering is dataset-specific and can be time consuming. This post considers whether it's worth it. Do more complex models have higher accuracy, and if so, how much higher? What kinds of feature engineering have the greatest impact on accuracy?
+
+These questions can only be answered if we have access to a realistic testing dataset. This dataset must be fully labelled, so that the true match status of each pairwise record comparison is known. The dataset used for this post is a synthetic dataset derived from records in WikiData. The code used to create this dataset if available [here](https://github.com/moj-analytical-services/splink_synthetic_data).
+
+In this post, I use [Splink](https://github.com/moj-analytical-services/splink) (software for probabilistic record linkage at scale) to compute match scores, and then compare these scores to the ground truth. The headline finding is that models with more complex feature engineering are substantially more accurate, with the best model being sometimes 50% more accurate than the simple model. (50% higher true positive rate for any given false positive rate)
+
+The full code to produce the accuracy comparisons can be found [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/tree/3c0f2ce0c697a7d70b612e2e30463bce611bf576).
+
+## Models compared
+
+We compare the following models, further details of which are provided below.
+
+1. Basic two-level equality checks for all columns
+2. Simple fuzzy matching
+3. More complex fuzzy matches
+4. More complex fuzzy matches and term frequency adjustments
+
+We can summarise the results using a [ROC curve](https://en.wikipedia.org/wiki/Receiver_operating_characteristic).
+
+<VegaLite spec={roc_comparison} />
+
+You can zoom into this chart using mousewheel/touchpad, and move around by dragging.
+
+This chart tells us, for example, that for a false positive rate of 1%:
+
+- Model 1 achieves recall (a true positive rate) of around 40%
+- Model 2 achieves recall (a true positive rate) of around 53%
+- Model 3 achieves recall (a true positive rate) of around 59%
+- Model 4 achieves recall (a true positive rate) of around 67%
+
+## Methodology
+
+In this section, I give a brief description of the differences between the models, and present their match weights. I then discuss how they were trained, and a few caveats.
+
+### Data
+
+The input data is a synthetic dataset obtained by scraping person records from WikiData, and then creating duplicating of these records that contain various errors corruptions.
+
+There are a total of 1,105,780 records in the dataset, with 113,232 distinct persons. Cluster sizes range from 1 to 21, with a fairly equal distribution.
+
+An example of some records is as follows, derived from [this master record](https://www.wikidata.org/wiki/Q34743).
+
+| dob        | postcode | gender | occupation | surname_std | forename1_std | forename2_std |
+| :--------- | :------- | :----- | :--------- | :---------- | :------------ | :------------ |
+| 1865-12-30 | B95 5DG  | male   | journalist | kipling     | rudyard       |               |
+| 1865-12-30 |          | male   | journalist | kipling     | rudyard       |               |
+| 1865-12-60 | B95 5DG  | male   |            | kipling     | rudyard       |               |
+| 1865-12-30 |          | male   | journalist | kipling     |               |               |
+| 1865-12-30 | B05 5DG  | male   |            | kipling     | joseph        |               |
+|            | CV37 9TW |        | author     | kipling     | rudyard       | joe           |
+| 1865-12-80 |          | female |            | kipling     | r             |               |
+
+Each model uses information from all of these columns.
+
+### Model 1
+
+The full settings for this model are [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/8daa5dbddae7079c2569609a00c57fd0c7c60559/model_training/person/uk_citizens_max_groupsize_20/compare_models/00_estimate_m_u/glue_py_resources/splink_settings.py#L62).
+
+In this model, a match weights are computed each of the seven columns using a simple two-level check of equality.
+
+The match weights are as follows:
+
+<VegaLite spec={model_01_two_levels_bf} />
+
+### Model 2
+
+The full settings for this model are [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/8daa5dbddae7079c2569609a00c57fd0c7c60559/model_training/person/uk_citizens_max_groupsize_20/compare_models/00_estimate_m_u/glue_py_resources/splink_settings.py#L89).
+
+The model is the same as model 1, except:
+
+- `forename1_std` and `surname_std` compute a separate match weight for a fuzzy match, where the name does not exactly match, but the jaro winker score is >0.88
+- `dob` and `postcode` compute a separate match weight for a fuzzy match, whereby there's a single letter typo (a levenshtein distance of 1)
+
+The match weights are as follows:
+
+<VegaLite spec={model_02_fuzzy_simple_bf} />
+
+### Model 3
+
+The full settings for this model are [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/8daa5dbddae7079c2569609a00c57fd0c7c60559/model_training/person/uk_citizens_max_groupsize_20/compare_models/00_estimate_m_u/glue_py_resources/splink_settings.py#L120).
+
+In this model, a larger number of match weights are computed for each column:
+
+- `forename1_std`, `forename2_std` and `surname_std` have four match weights, corresponding to an exact match, jaro winker score of >0.88, jaro winker score of > 0.7 and no match.
+- `dob` has an additional match weight relative to model 2, covering 'suspicious' dates of birth on 1st January. In the dataset, these occur disproportionately, presumably because when the precise dob is unknown, the 1st of January is entered as a default
+- `postcode` has 5 match weights, which are computed based on various geographic distances between postcodes, and possible typos
+- `occupation` is a simple two level equality check
+
+The match weights are as follows:
+
+<VegaLite spec={model_03_fuzzy_complex_bf} />
+
+### Model 4
+
+Model 4 is the same as model 3, but in addition term frequency adjustments are made for each column.
+
+The average match weights for model four are the same as those for model 3, above.
+
+### Model training
+
+Since our data is fully labelled, it's possible to compute match weights directly from the labels rather than estimate them. This means that any differences in accuracy can be attributed solely to the differences in how the records are compared (the feature engineering), as opposed to any problems that could occur in training.
+
+### Runtimes
+
+The more complex models involve more computation, and so they take longer to run. In practice, how much does this matter?
+
+The following chart shows that increase in runtime for the more complex models is relatively modest.
+
+<VegaLite spec={runtimes} />
+
+The term frequency adjustment used in Model 4 have the greatest impact on runtime, but even then, the runtime is only 8% longer than the simplest model.
+
+### Caveats
+
+Further experiments would be needed to determine the extent to which these results generalisable to other datasets. One particular caveat is that the synthetic dataset deliberately contains many errors: there are many records which are of such poor quality that they are difficult to match. This makes it suitable for testing different models, and finding which perform best against these hard-to-match records.
+
+However, for use cases which much higher quality datasets, most of the records will be easy to match, so the gains from using more complex models are likely to be less dramatic.
+
+## Conclusions
+
+The experiments outlined in this post suggest that more complex probabilistic linkage models dramatically outperform simpler models. For many use cases, the effort of configuring these models, and the modest addition runtimes, are likely to be worth it.
