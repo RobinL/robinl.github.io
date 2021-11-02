@@ -40,10 +40,12 @@ The full code to produce the accuracy comparisons can be found [here](https://gi
 
 We compare the following models, further details of which are provided below.
 
+0. A rules-based (deterministic) matching approach
 1. Basic two-level equality checks for all columns
-2. Simple fuzzy matching
-3. More complex fuzzy matches
-4. More complex fuzzy matches and term frequency adjustments
+1. Simple fuzzy matching
+1. More complex fuzzy matches
+1. More complex fuzzy matches and term frequency adjustments
+1. More complex fuzzy matches and term frequency adjustments, with term frequency weights for fuzzy matches
 
 We can summarise the results using a [ROC curve](https://en.wikipedia.org/wiki/Receiver_operating_characteristic).
 
@@ -53,10 +55,12 @@ You can zoom into this chart using mousewheel/touchpad, and move around by dragg
 
 This chart tells us, for example, that for a false positive rate of 1%:
 
+- Model 0 achieves recall (a true positive rate) of around 20%
 - Model 1 achieves recall (a true positive rate) of around 38%
 - Model 2 achieves recall (a true positive rate) of around 54%
 - Model 3 achieves recall (a true positive rate) of around 60%
 - Model 4 achieves recall (a true positive rate) of around 68%
+- Model 5 achieves recall (a true positive rate) of around 73%
 
 ## Methodology
 
@@ -81,6 +85,24 @@ An example of some records is as follows, derived from [this master record](http
 | 1865-12-80 |          |            | kipling     | r             |               |
 
 Each model uses information from all of these columns.
+
+### Model 0
+
+Model 0 is a rules-based (deterministic) matching algorithm. The rules used to generate matches can be found in the code [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/354682ac50a422515a65d1b0fbfbd0fd7c8d8621/edge_generation/person/uk_citizens_max_groupsize_20/compare_models_rules_based/job.py#L110) and are as follows.
+
+```
+deterministic_matching_rules = [
+    "l.postcode = r.postcode and l.dob = r.dob and l.forename1_dm = r.forename1_dm ",
+    "l.dob = r.dob and l.forename1_dm = r.forename1_dm and l.forename2_dm = r.forename2_dm and l.surname_dm = r.surname_dm",
+    "l.postcode = r.postcode and l.forename1_dm = r.forename1_dm and l.forename2_dm = r.forename2_dm and l.surname_dm = r.surname_dm",
+    "l.forename1_dm = r.forename1_dm and l.forename2_dm = r.forename2_dm and l.surname_dm = r.surname_dm and l.occupation = r.occupation",
+    "l.outward_postcode_std = r.outward_postcode_std and l.forename1_std = r.forename1_std and l.surname_std = r.surname_std",
+]
+```
+
+In these rules 'dm' stands for the dmetaphone of a variable.
+
+Since this is a rules based model, there are no match scores and thus only a single point is reachable in ROC space.
 
 ### Model 1
 
@@ -124,7 +146,15 @@ The match weights are as follows:
 
 Model 4 is the same as model 3, but in addition term frequency adjustments are made for each column.
 
-The average match weights for model four are the same as those for model 3, above.
+The average match weights for model 4 are the same as those for model 3, above.
+
+### Model 5
+
+Model 5 is the same as model 4, but we allow weighted term frequency adjustments for partial matches. The specific weights can be found [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/354682ac50a422515a65d1b0fbfbd0fd7c8d8621/model_training/person/uk_citizens_max_groupsize_20/compare_models/00_estimate_m_u/glue_py_resources/splink_settings.py#L222).
+
+For example, this allows a term-frequency adjustment to be made for a fuzzy match of `Robin` vs `Robim` (note the typo). The weight moderates the strength of this term freuqncy downwards by a fixed multiple.
+
+The average match weights for model 5 are the same as those for model 3, above.
 
 ### Model training
 
