@@ -68,7 +68,7 @@ In this section, I give a brief description of the differences between the model
 
 ### Data
 
-The input data is a synthetic dataset obtained by scraping person records from WikiData, and then creating duplicating of these records that contain various errors corruptions.
+The input data is a synthetic dataset obtained by from the [WikiData query service](https://query.wikidata.org/), and then creating duplicating of these records that contain various errors corruptions.
 
 There are a total of 1,105,780 records in the dataset, with 113,232 distinct persons. Cluster sizes range from 1 to 21, with a fairly equal distribution.
 
@@ -85,6 +85,8 @@ An example of some records is as follows, derived from [this master record](http
 | 1865-12-80 |          |            | kipling     | r             |               |
 
 Each model uses information from all of these columns.
+
+As can be seen from the table, the data quality is poor - a large number of corruptions and nulls have been introduced. This should help to expose the differences in the accuracy of different models: if the data was very high quality, then most records would be trivially matchable and even the simplest model would perform well.
 
 ### Model 0
 
@@ -152,7 +154,7 @@ The average match weights for model 4 are the same as those for model 3, above.
 
 Model 5 is the same as model 4, but we allow weighted term frequency adjustments for partial matches. The specific weights can be found [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/354682ac50a422515a65d1b0fbfbd0fd7c8d8621/model_training/person/uk_citizens_max_groupsize_20/compare_models/00_estimate_m_u/glue_py_resources/splink_settings.py#L222).
 
-For example, this allows a term-frequency adjustment to be made for a fuzzy match of `Robin` vs `Robim` (note the typo). The weight moderates the strength of this term freuqncy downwards by a fixed multiple.
+For example, this allows a term-frequency adjustment to be made for a fuzzy match of `Robin` vs `Robim` (note the typo). The weight moderates the strength of this adjustment downwards by a fixed multiple.
 
 The average match weights for model 5 are the same as those for model 3, above.
 
