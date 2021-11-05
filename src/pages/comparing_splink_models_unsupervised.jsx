@@ -1,12 +1,12 @@
 import React from 'react'
 import ObsMdxPage from "../components/mdx_obs_page"
-import MDXDocument from "../mdx/comparing_splink_models.mdx"
+import MDXDocument from "../mdx/comparing_splink_models_unsupervised.mdx"
 
 export const frontmatter = {
-         title: "Are more complex probabilistic linkage models more accurate?  Part 1, supervised learning",
-         post_date: "2021-11-01",
+         title: "Are more complex probabilistic linkage models more accurate? Part 2, unsupervised learning",
+         post_date: "2021-11-05",
          code_url:
-           "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/comparing_splink_models.mdx",
+           "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/comparing_splink_models_unsupervised.mdx",
          post_type: "mdx",
          post_category: "probabilistic_linkage",
          description: "How good is Splink: Are more complex probabilistic linkage models more accurate?"

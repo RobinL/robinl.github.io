@@ -11,7 +11,7 @@ import model_04_fuzzy_complex_and_tf_bf from "./comparing_splink_models/model_04
 # Are more complex probabilistic linkage models more accurate?
 
 <p style="font-size: 1.2rem; color: #7c7c7c; margin-top: -10px">
-  <i>The effectiveness of feature engineering with the Fellegi Sunter model</i>
+  <i>Part 1: Supervised learning</i>
 </p>
 
 ## Introduction
@@ -30,11 +30,13 @@ This is clearly a crude model of the real world, and there are a variety of ways
 
 This kind of feature engineering is dataset-specific and can be time consuming. This post considers whether it's worth it. Do more complex models have higher accuracy, and if so, how much higher? What kinds of feature engineering have the greatest impact on accuracy?
 
-These questions can only be answered if we have access to a realistic testing dataset. This dataset must be fully labelled, so that the true match status of each pairwise record comparison is known. The dataset used for this post is a synthetic dataset derived from records in WikiData. The code used to create this dataset if available [here](https://github.com/moj-analytical-services/splink_synthetic_data).
+Questions of accuracy are most easily answered if we have access to a realistic test dataset. This dataset must be fully labelled, so that the true match status of each pairwise record comparison is known. The dataset used for this post is a synthetic dataset derived from records in WikiData. The code used to create this dataset if available [here](https://github.com/moj-analytical-services/splink_synthetic_data). Please contact me if you would like access to the full data.
 
-In this post, I use [Splink](https://github.com/moj-analytical-services/splink) (software for probabilistic record linkage at scale) to compute match scores, and then compare these scores to the ground truth. The headline finding is that models with more complex feature engineering are substantially more accurate, with the best model being sometimes 50% more accurate than the simple model. (50% higher true positive rate for any given false positive rate)
+In this post, I use [Splink](https://github.com/moj-analytical-services/splink) (software for probabilistic record linkage at scale) to compute match scores, and then compare these scores to the ground truth. The headline finding is that models with more complex feature engineering are dramatically more accurate.
 
-The full code to produce the accuracy comparisons can be found [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/tree/3c0f2ce0c697a7d70b612e2e30463bce611bf576).
+Models are trained using supervised learning: that is, I use the labels to compute model parameters parameters are derived from the labelled data. In [part 2](), I present the results of the same experiment using unsupervised learning.
+
+Full reproducibility materials can be found [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/tree/3c0f2ce0c697a7d70b612e2e30463bce611bf576).
 
 ## Models compared
 
@@ -42,10 +44,12 @@ We compare the following models, further details of which are provided below.
 
 0. A rules-based (deterministic) matching approach
 1. Basic two-level equality checks for all columns
-1. Simple fuzzy matching
-1. More complex fuzzy matches
+1. Simple fuzzy matching using default Splink settings
+1. More complex fuzzy matches, using customised Splink settings
 1. More complex fuzzy matches and term frequency adjustments
 1. More complex fuzzy matches and term frequency adjustments, with term frequency weights for fuzzy matches
+
+## Summary results
 
 We can summarise the results using a [ROC curve](https://en.wikipedia.org/wiki/Receiver_operating_characteristic).
 
