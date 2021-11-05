@@ -34,9 +34,7 @@ Questions of accuracy are most easily answered if we have access to a realistic 
 
 In this post, I use [Splink](https://github.com/moj-analytical-services/splink) (software for probabilistic record linkage at scale) to compute match scores, and then compare these scores to the ground truth. The headline finding is that models with more complex feature engineering are dramatically more accurate.
 
-Models are trained using supervised learning: that is, I use the labels to compute model parameters parameters are derived from the labelled data. In [part 2](), I present the results of the same experiment using unsupervised learning.
-
-Full reproducibility materials can be found [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/tree/3c0f2ce0c697a7d70b612e2e30463bce611bf576).
+Models are trained using supervised learning: that is, I use the labels to compute model parameters parameters are derived from the labelled data. In [part 2](https://www.robinlinacre.com/comparing_splink_models_unsupervised/), I present the results of the same experiment using unsupervised learning.
 
 ## Models compared
 
@@ -69,6 +67,8 @@ This chart tells us, for example, that for a false positive rate of 1%:
 ## Methodology
 
 In this section, I give a brief description of the differences between the models, and present their match weights. I then discuss how they were trained, and a few caveats.
+
+Full reproducibility materials for all results can be found [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/tree/3c0f2ce0c697a7d70b612e2e30463bce611bf576).
 
 ### Data
 
@@ -185,3 +185,5 @@ However, for use cases which much higher quality datasets, most of the records w
 ## Conclusions
 
 The experiments outlined in this post suggest that more complex probabilistic linkage models dramatically outperform simpler models. For many use cases, the effort of configuring these models, and the modest addition runtimes, are likely to be worth it.
+
+In [part 2](https://www.robinlinacre.com/comparing_splink_models_unsupervised/) I consider whether these results change when we use unsupervised learning to estimate model parameters.
