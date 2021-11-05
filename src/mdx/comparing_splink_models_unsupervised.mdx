@@ -1,0 +1,87 @@
+import { Vega, VegaLite } from "react-vega"
+
+import roc_comparison_cluster from "./comparing_splink_models/roc_comparison_trained_block_cluster.vl.json"
+import roc_comparison_no_cluster from "./comparing_splink_models/roc_comparison_trained_block_no_cluster.vl.json"
+import iterations from "./comparing_splink_models/iterations.vl.json"
+
+import comp_1 from "./comparing_splink_models/param_comparison_model_01_two_levels.vl.json"
+import comp_2 from "./comparing_splink_models/param_comparison_model_02_fuzzy_simple.vl.json"
+import comp_3 from "./comparing_splink_models/param_comparison_model_03_fuzzy_complex.vl.json"
+import comp_4 from "./comparing_splink_models/param_comparison_model_04_fuzzy_complex_and_tf.vl.json"
+import comp_5 from "./comparing_splink_models/param_comparison_model_05_fuzzy_complex_and_tf_weights.vl.json"
+
+# Are more complex probabilistic linkage models more accurate?
+
+<p style="font-size: 1.2rem; color: #7c7c7c; margin-top: -10px">
+  <i>Part 2: Unsupervised learning </i>
+</p>
+
+## Introduction
+
+In [part 1](https://www.robinlinacre.com/comparing_splink_models/) of this post, I showed that more complex probabilistic linkage models can be dramatically more accurate than simple models. I used supervised learning to compute the model parameters directly from ground truth data to ensure a fair comparison. This meant that differences in performance could be attributed solely to the different model formulations, rather than anything to do with the process of estimation.
+
+In [part 1](https://www.robinlinacre.com/comparing_splink_models/), I used the labelled data to ensure that match scores were computed for all true matches in the ground truth, in addition to being computed for non-matching comparisons that met a [list of blocking rules](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/8daa5dbddae7079c2569609a00c57fd0c7c60559/model_training/person/uk_citizens_max_groupsize_20/compare_models/00_estimate_m_u/glue_py_resources/splink_settings.py#L52). This meant that the results were not strongly dependent on the blocking approach.
+
+In real applications of record linkage, we typically do not have ground truth data. This post explores whether the findings change if the same models are trained using unsupervised learning. Specifically, model parameters will be estimated using [Splink](https://github.com/moj-analytical-services/splink).
+
+I find that the gains in accuracy from more complex models are similar, and seem little affected by the differences between estimated parameters and their true values.
+
+I also find that convergence of the Expectation Maximisation algorithm is significantly faster for more complex models. This is not surprising: a more complex model more accurately describes the data, leading to more precise predictions on each iteration of the algorithm.
+
+I also find evidence that the more accurate models seem to have greatest advantage when predicting the match status of some of the most hard-to-find matches. This may imply that, in models where blocking rules are very tight, the more complex models have less of a comparative advantage. That would make intuitive sense, since tight blocking rules pick out easier-to-match record comparisons, many of which are likely to be easy to match even with a very simple model.
+
+## Results
+
+First I present ROC curves on the same basis as in Part 1, but using the estimated parameters. For this chart, the ground truth data has been used to ensure that all true matches are included in the ROC curve. The blocking rules for this ROC curve are [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/8daa5dbddae7079c2569609a00c57fd0c7c60559/model_training/person/uk_citizens_max_groupsize_20/compare_models/00_estimate_m_u/glue_py_resources/splink_settings.py#L52).
+
+<VegaLite spec={roc_comparison_cluster} />
+
+Second, I present a ROC curve where record comparisons are generated from a long list of blocking rules. This is a better approximation of a real-life record linkage scenario, in which we have to use blocking rules to try and recover all positive matches.
+
+<VegaLite spec={roc_comparison_no_cluster} />
+
+This second ROC curve achieves lower recall (true positive rate) because the blocking rules fail to detect a fairly large number of true matches. These records are therefore scored as certain non-matches.
+
+## Methodology
+
+Model training was performed using Splink. Specifically, I [estimated u values directly](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/61d17078fbf705f9d5c6e848efd6c50f4a5008e5/model_training/person/uk_citizens_max_groupsize_20/compare_trained_models/00_estimate_u/job.py#L121), and then used the expectation maximisation algorithm to estimate m values (e.g. [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/61d17078fbf705f9d5c6e848efd6c50f4a5008e5/model_training/person/uk_citizens_max_groupsize_20/compare_trained_models/01_block_postcode_dob/job.py#L133)) and the [proportion of matches parameter](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/61d17078fbf705f9d5c6e848efd6c50f4a5008e5/model_training/person/uk_citizens_max_groupsize_20/compare_trained_models/03_combine_blocks/job.py#L109).
+
+Exactly the same [model specifications](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/61d17078fbf705f9d5c6e848efd6c50f4a5008e5/model_training/person/uk_citizens_max_groupsize_20/compare_trained_models/00_estimate_u/glue_py_resources/splink_settings.py#L62) were used as in Part 1 of this post.
+
+## Other findings
+
+There were two other interesting findings.
+
+First, the more complex models trained in fewer iterations. That is, convergence of the Expectation Maximisation algorithm is significantly faster for the more complex models.
+
+<VegaLite spec={iterations} />
+
+Second, the m values estimated by the models were different from their true values by a fairly large margin, and this pattern was consistent across all models.
+
+What may be the cause?
+
+The m values are computed from running the expectation maximisation algorithm on a subset of blocked record comparisons. If the blocking rules select a biased sample of records, then the estimated m values will also be biased.
+
+There is good reason to believe this may be the case. For example, for estimation of the parameters on first name and surname, I [block on date of birth and postcode](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/61d17078fbf705f9d5c6e848efd6c50f4a5008e5/model_training/person/uk_citizens_max_groupsize_20/compare_trained_models/01_block_postcode_dob/job.py#L107). But records where date of birth and postcode match are likely to be higher quality records overall, and so there is less likely to be an error in forename or surname than for an average matching record. This would be expected to cause the m value for a match to be estimated too high.
+
+The following charts show a comparison of estimated parameter estimates vs their true values for all five estimated models.
+
+### Model 1
+
+<VegaLite spec={comp_1} />
+
+### Model 2
+
+<VegaLite spec={comp_2} />
+
+### Model 3
+
+<VegaLite spec={comp_3} />
+
+### Model 4
+
+<VegaLite spec={comp_4} />
+
+### Model 5
+
+<VegaLite spec={comp_5} />
