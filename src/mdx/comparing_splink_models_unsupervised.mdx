@@ -18,9 +18,9 @@ import comp_5 from "./comparing_splink_models/param_comparison_model_05_fuzzy_co
 
 ## Introduction
 
-In [part 1](https://www.robinlinacre.com/comparing_splink_models/) of this post, I showed that more complex probabilistic linkage models can be dramatically more accurate than simple models. I used supervised learning to compute the model parameters directly from ground truth data to ensure a fair comparison. This meant that differences in performance could be attributed solely to the different model formulations, rather than anything to do with the process of estimation.
+In [part 1](https://www.robinlinacre.com/comparing_splink_models/) of this post, I showed that more complex probabilistic linkage models can be dramatically more accurate than simple models. I used supervised learning to compute the model parameters directly from ground truth data to ensure a fair comparison. This meant that differences in performance could be attributed solely to the different model formulations, rather than the process of estimation.
 
-In [part 1](https://www.robinlinacre.com/comparing_splink_models/), I used the labelled data to ensure that match scores were computed for all true matches in the ground truth, in addition to being computed for non-matching comparisons that met a [list of blocking rules](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/8daa5dbddae7079c2569609a00c57fd0c7c60559/model_training/person/uk_citizens_max_groupsize_20/compare_models/00_estimate_m_u/glue_py_resources/splink_settings.py#L52). This meant that the results were not strongly dependent on the blocking approach.
+I also used the labelled data to ensure that match scores were computed for all true matches, in addition to being computed for non-matching comparisons that met a [list of blocking rules](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/8daa5dbddae7079c2569609a00c57fd0c7c60559/model_training/person/uk_citizens_max_groupsize_20/compare_models/00_estimate_m_u/glue_py_resources/splink_settings.py#L52). This meant that the results were not strongly dependent on the blocking approach.
 
 In real applications of record linkage, we typically do not have ground truth data. This post explores whether the findings change if the same models are trained using unsupervised learning. Specifically, model parameters will be estimated using [Splink](https://github.com/moj-analytical-services/splink).
 
@@ -32,11 +32,11 @@ I also find evidence that the more accurate models seem to have greatest advanta
 
 ## Results
 
-First I present ROC curves on the same basis as in Part 1, but using the estimated parameters. For this chart, the ground truth data has been used to ensure that all true matches are included in the ROC curve. The blocking rules for this ROC curve are [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/8daa5dbddae7079c2569609a00c57fd0c7c60559/model_training/person/uk_citizens_max_groupsize_20/compare_models/00_estimate_m_u/glue_py_resources/splink_settings.py#L52).
+First I present ROC curves on the same basis as in Part 1, but using estimated parameters rather than their true values. For this chart, the ground truth data has been used to ensure that all true matches are included in the ROC curve. The blocking rules for this ROC curve are [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/8daa5dbddae7079c2569609a00c57fd0c7c60559/model_training/person/uk_citizens_max_groupsize_20/compare_models/00_estimate_m_u/glue_py_resources/splink_settings.py#L52).
 
 <VegaLite spec={roc_comparison_cluster} />
 
-Second, I present a ROC curve where record comparisons are generated from a long list of blocking rules. This is a better approximation of a real-life record linkage scenario, in which we have to use blocking rules to try and recover all positive matches.
+Second, I present a ROC curve where record comparisons are generated from a [list of blocking rules](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/657785f786d5e6ae532a8da221cc0fbab2f2b017/model_training/person/uk_citizens_max_groupsize_20/compare_trained_models/03_combine_blocks/job.py#L113). This is a better approximation of a real-life record linkage scenario, in which we have to use blocking rules to try and recover all positive matches.
 
 <VegaLite spec={roc_comparison_no_cluster} />
 
@@ -47,6 +47,8 @@ This second ROC curve achieves lower recall (true positive rate) because the blo
 Model training was performed using Splink. Specifically, I [estimated u values directly](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/61d17078fbf705f9d5c6e848efd6c50f4a5008e5/model_training/person/uk_citizens_max_groupsize_20/compare_trained_models/00_estimate_u/job.py#L121), and then used the expectation maximisation algorithm to estimate m values (e.g. [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/61d17078fbf705f9d5c6e848efd6c50f4a5008e5/model_training/person/uk_citizens_max_groupsize_20/compare_trained_models/01_block_postcode_dob/job.py#L133)) and the [proportion of matches parameter](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/61d17078fbf705f9d5c6e848efd6c50f4a5008e5/model_training/person/uk_citizens_max_groupsize_20/compare_trained_models/03_combine_blocks/job.py#L109).
 
 Exactly the same [model specifications](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/blob/61d17078fbf705f9d5c6e848efd6c50f4a5008e5/model_training/person/uk_citizens_max_groupsize_20/compare_trained_models/00_estimate_u/glue_py_resources/splink_settings.py#L62) were used as in Part 1 of this post.
+
+Reproducibility materials can be found [here](https://github.com/moj-analytical-services/splink_synthetic_data_performance_comparisons/releases/tag/v0.4).
 
 ## Other findings
 
