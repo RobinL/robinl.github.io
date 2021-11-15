@@ -41,6 +41,7 @@
     "@robinl/understanding-the-spark-ui-by-example-the-left-join": "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3",
     "@robinl/unsupervised-probabalistic-data-matching-using-the-expec": "https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3",
     "@robinl/visualising-fellegi-sunter": "https://api.observablehq.com/@robinl/visualising-fellegi-sunter@1011.tgz?v=3",
+    "@robinl/m-and-u-probability-generator_starting_values": "https://api.observablehq.com/d/1d09c6cf5d576e0a@119.tgz?v=3",
     "babel-preset-gatsby": "^0.3.1",
     "gatsby": "^3.4.1",
     "gatsby-design-tokens": "^1.0.8",
