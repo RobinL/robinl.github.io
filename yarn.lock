@@ -1794,70 +1794,113 @@
 
 "@robinl/86fc30325e4106c4@https://api.observablehq.com/@robinl/86fc30325e4106c4@851.tgz?v=3":
   version "851.0.0"
+  uid "42526eee7fdfbb9e35bd38c8641074f1c73c1bd8"
+  resolved "https://api.observablehq.com/@robinl/86fc30325e4106c4@851.tgz?v=3#42526eee7fdfbb9e35bd38c8641074f1c73c1bd8"
 
 "@robinl/9534e8e74053c14e@https://api.observablehq.com/@robinl/9534e8e74053c14e@451.tgz?v=3":
   version "451.0.0"
+  uid d4f1d5cd8bf43fd196cf1d1efb1906e543e3abd6
+  resolved "https://api.observablehq.com/@robinl/9534e8e74053c14e@451.tgz?v=3#d4f1d5cd8bf43fd196cf1d1efb1906e543e3abd6"
 
 "@robinl/bird-song-quiz@https://api.observablehq.com/@robinl/bird-song-quiz.tgz?v=3":
   version "715.0.0"
+  uid f91da24048741d5914ae1be3a0a4cf7b4728835e
+  resolved "https://api.observablehq.com/@robinl/bird-song-quiz.tgz?v=3#f91da24048741d5914ae1be3a0a4cf7b4728835e"
 
 "@robinl/birdsong-recordings@https://api.observablehq.com/@robinl/birdsong-recordings.tgz?v=3":
   version "439.0.0"
+  uid f7b3331afbb2f57de9caaf1f2f6e61578935b5b0
+  resolved "https://api.observablehq.com/@robinl/birdsong-recordings.tgz?v=3#f7b3331afbb2f57de9caaf1f2f6e61578935b5b0"
 
 "@robinl/d51533bbe054b3d8@https://api.observablehq.com/@robinl/d51533bbe054b3d8@510.tgz?v=3":
   version "510.0.0"
+  uid a428523531d93351b2d0ca8e77dcf5e40fc178ba
+  resolved "https://api.observablehq.com/@robinl/d51533bbe054b3d8@510.tgz?v=3#a428523531d93351b2d0ca8e77dcf5e40fc178ba"
 
 "@robinl/dependencies-between-match-weights@https://api.observablehq.com/@robinl/dependencies-between-match-weights.tgz?v=3":
   version "158.0.0"
+  uid "37d499410c9cc18e5d9b454c4d5089e43b26ac54"
+  resolved "https://api.observablehq.com/@robinl/dependencies-between-match-weights.tgz?v=3#37d499410c9cc18e5d9b454c4d5089e43b26ac54"
 
 "@robinl/energy-usage-and-goods-imports-and-exports@https://api.observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports.tgz?v=3":
-  version "1349.0.0"
+  version "1351.0.0"
+  uid "4279987ce244b07c864dbe1ff822e7b88f257f0e"
+  resolved "https://api.observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports.tgz?v=3#4279987ce244b07c864dbe1ff822e7b88f257f0e"
 
 "@robinl/energy-usage-calculator-for-everyday-activities@https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities@561.tgz?v=3":
   version "561.0.0"
+  uid de206dab41018e94cfa783331b333a6731370c9b
+  resolved "https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities@561.tgz?v=3#de206dab41018e94cfa783331b333a6731370c9b"
 
 "@robinl/filling-the-country-with-solar-panels@https://api.observablehq.com/@robinl/filling-the-country-with-solar-panels.tgz?v=3":
-  version "64.0.0"
+  version "66.0.0"
+  uid "508c0d86be9a01f46770b450f2493f099d974d00"
+  resolved "https://api.observablehq.com/@robinl/filling-the-country-with-solar-panels.tgz?v=3#508c0d86be9a01f46770b450f2493f099d974d00"
 
 "@robinl/flight-distance-calculator@https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3":
-  version "1073.0.0"
+  version "1090.0.0"
+  uid b7c3dd936e774045b5c8b99b841643081f5fa2bb
+  resolved "https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3#b7c3dd936e774045b5c8b99b841643081f5fa2bb"
 
 "@robinl/how-much-should-carbon-offsetting-cost@https://api.observablehq.com/@robinl/how-much-should-carbon-offsetting-cost.tgz?v=3":
-  version "476.0.0"
+  version "478.0.0"
+  uid eb1bb509ab5088f6db34c66cc88d4b654e121861
+  resolved "https://api.observablehq.com/@robinl/how-much-should-carbon-offsetting-cost.tgz?v=3#eb1bb509ab5088f6db34c66cc88d4b654e121861"
 
 "@robinl/interactive-blogging-with-observable-notebooks-and-gatsb@https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3":
   version "518.0.0"
+  uid feef5782091711b4f87071280e0848e279377fa0
+  resolved "https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3#feef5782091711b4f87071280e0848e279377fa0"
 
 "@robinl/m-and-u-probability-generator@https://api.observablehq.com/@robinl/m-and-u-probability-generator.tgz?v=3":
-  version "62.0.0"
+  version "79.0.0"
+  uid "874e06b0694689a5e13ff5cacf17a04768863546"
+  resolved "https://api.observablehq.com/@robinl/m-and-u-probability-generator.tgz?v=3#874e06b0694689a5e13ff5cacf17a04768863546"
 
 "@robinl/m-and-u-probability-generator_starting_values@https://api.observablehq.com/d/1d09c6cf5d576e0a@119.tgz?v=3":
   version "119.0.0"
+  uid "3d96ecc8881e2ed590b755b5e2f4a1a6f16728b4"
+  resolved "https://api.observablehq.com/d/1d09c6cf5d576e0a@119.tgz?v=3#3d96ecc8881e2ed590b755b5e2f4a1a6f16728b4"
 
 "@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
-  version "511.0.0"
+  version "514.0.0"
+  uid "9b46198d0815f65f3cf2f5dc16a02b8d3b219f5f"
+  resolved "https://api.observablehq.com/@robinl/my-flights.tgz?v=3#9b46198d0815f65f3cf2f5dc16a02b8d3b219f5f"
 
 "@robinl/spark-explain@https://api.observablehq.com/@robinl/spark-explain.tgz?v=3":
   version "647.0.0"
+  uid "0d36e382688981e3da67447bfc3fcc0c6b85e072"
+  resolved "https://api.observablehq.com/@robinl/spark-explain.tgz?v=3#0d36e382688981e3da67447bfc3fcc0c6b85e072"
 
 "@robinl/the-carbon-impact-of-switiching-to-an-electric-car@https://api.observablehq.com/@robinl/the-carbon-impact-of-switiching-to-an-electric-car@1053.tgz?v=3":
   version "1053.0.0"
+  uid "31dab07a4eca7be54c737c5f25120f51e08f498e"
+  resolved "https://api.observablehq.com/@robinl/the-carbon-impact-of-switiching-to-an-electric-car@1053.tgz?v=3#31dab07a4eca7be54c737c5f25120f51e08f498e"
 
 "@robinl/understanding-match-weights@https://api.observablehq.com/@robinl/understanding-match-weights@644.tgz?v=3":
   version "644.0.0"
+  uid "5517612bc8565a3accaffd64bdd947570f2d61f4"
+  resolved "https://api.observablehq.com/@robinl/understanding-match-weights@644.tgz?v=3#5517612bc8565a3accaffd64bdd947570f2d61f4"
 
 "@robinl/understanding-the-spark-ui-by-example-sorting-data@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3":
   version "269.0.0"
+  uid af8ef6e8d0a35699f084433bd8937fc5cd9d9c2e
+  resolved "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3#af8ef6e8d0a35699f084433bd8937fc5cd9d9c2e"
 
 "@robinl/understanding-the-spark-ui-by-example-the-left-join@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3":
   version "221.0.0"
+  uid "0e79eb796c608cbd32bb58fb33bd9f985c2109d7"
+  resolved "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3#0e79eb796c608cbd32bb58fb33bd9f985c2109d7"
 
 "@robinl/unsupervised-probabalistic-data-matching-using-the-expec@https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3":
   version "1041.0.0"
+  uid ea71c517f100139f104315a2d2980dee9da15139
+  resolved "https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3#ea71c517f100139f104315a2d2980dee9da15139"
 
-
-"@robinl/visualising-fellegi-sunter@https://api.observablehq.com/@robinl/visualising-fellegi-sunter@1006.tgz?v=3":
+"@robinl/visualising-fellegi-sunter@https://api.observablehq.com/@robinl/visualising-fellegi-sunter@1011.tgz?v=3":
   version "1011.0.0"
+  uid "181cf2cbb8e934b7552f4cafd4bf259791ee45f2"
+  resolved "https://api.observablehq.com/@robinl/visualising-fellegi-sunter@1011.tgz?v=3#181cf2cbb8e934b7552f4cafd4bf259791ee45f2"
 
 "@sideway/address@^4.1.0":
   version "4.1.1"
@@ -8993,9 +9036,9 @@ minipass-pipeline@^1.2.2:
     minipass "^3.0.0"
 
 minipass@^3.0.0, minipass@^3.1.1:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/minipass/-/minipass-3.1.3.tgz#7d42ff1f39635482e15f9cdb53184deebd5815fd"
-  integrity sha512-Mgd2GdMVzY+x3IJ+oHnVM+KG3lA5c8tnabyJKmHSaG2kAGpudxuOf8ToDkhumF7UzME7DecbQE9uOZhNm7PuJg==
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/minipass/-/minipass-3.1.5.tgz#71f6251b0a33a49c01b3cf97ff77eda030dff732"
+  integrity sha512-+8NzxD82XQoNKNrl1d/FSi+X8wAEWR+sbYAfIvub4Nz0d22plFG72CEVVaufV8PNf4qSslFTD8VMOxNVhHCjTw==
   dependencies:
     yallist "^4.0.0"
 
@@ -12228,9 +12271,9 @@ tapable@^2.1.1, tapable@^2.2.0:
   integrity sha512-FBk4IesMV1rBxX2tfiK8RAmogtWn53puLOQlvO8XuwlgxcYbP4mVPS9Ph4aeamSyyVjOl24aYWAuc8U5kCVwMw==
 
 tar@^6.0.2:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/tar/-/tar-6.1.0.tgz#d1724e9bcc04b977b18d5c573b333a2207229a83"
-  integrity sha512-DUCttfhsnLCjwoDoFcI+B2iJgYa93vBnDUATYEeRx6sntCTdN01VnqsIuTlALXla/LWooNg0yEGeB+Y8WdFxGA==
+  version "6.1.11"
+  resolved "https://registry.yarnpkg.com/tar/-/tar-6.1.11.tgz#6760a38f003afa1b2ffd0ffe9e9abbd0eab3d621"
+  integrity sha512-an/KZQzQUkZCkuoAA64hM92X0Urb6VpRhAFllDzz44U2mcD5scmT3zBc4VgVpkugF580+DQn8eAFSyoQt0tznA==
   dependencies:
     chownr "^2.0.0"
     fs-minipass "^2.0.0"
