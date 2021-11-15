@@ -1,12 +1,12 @@
 import React from 'react'
-import define from "@robinl/m-and-u-probability-generator"
+import define from "@robinl/m-and-u-probability-generator_starting_values"
 import ProbLinkagePage from "../components/prob_linkage_page"
 import { css } from "@emotion/core"
 
 export const frontmatter = {
-    title: "m and u probability generator",
-    post_date: "2021-06-10",
-    code_url: "https://observablehq.com/@robinl/m-and-u-probability-generator",
+    title: "m and u probability generator with starting values",
+    post_date: "2021-11-15",
+    code_url: "https://observablehq.com/d/1d09c6cf5d576e0a",
     post_type: "obs",
     post_category: "probabilistic_linkage",
     description: "Generate m and u probabilities to input into Splink.  Part of the introduction to Fellegi Sunter series."
@@ -14,7 +14,7 @@ export const frontmatter = {
 
 let output_order = [
     "title",
-    "viewof num_levels",
+    "viewof starting_data",
     "viewof d",
     "bf_chart",
     "para_1",
