@@ -1669,6 +1669,46 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
+"@jridgewell/gen-mapping@^0.3.0":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.3.2.tgz#c1aedc61e853f2bb9f5dfe6d4442d3b565b253b9"
+  integrity sha512-mh65xKQAzI6iBcFzwv28KVWSmCkdRBWoOh+bYQGW3+6OZvbbN3TqMGo5hqYxQniRcH9F2VZIoJCm4pa3BPDK/A==
+  dependencies:
+    "@jridgewell/set-array" "^1.0.1"
+    "@jridgewell/sourcemap-codec" "^1.4.10"
+    "@jridgewell/trace-mapping" "^0.3.9"
+
+"@jridgewell/resolve-uri@^3.0.3":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@jridgewell/resolve-uri/-/resolve-uri-3.1.0.tgz#2203b118c157721addfe69d47b70465463066d78"
+  integrity sha512-F2msla3tad+Mfht5cJq7LSXcdudKTWCVYUgw6pLFOOHSTtZlj6SWNYAp+AhuqLmWdBO2X5hPrLcu8cVP8fy28w==
+
+"@jridgewell/set-array@^1.0.1":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@jridgewell/set-array/-/set-array-1.1.2.tgz#7c6cf998d6d20b914c0a55a91ae928ff25965e72"
+  integrity sha512-xnkseuNADM0gt2bs+BvhO0p78Mk762YnZdsuzFV018NoG1Sj1SCQvpSqa7XUaTam5vAGasABV9qXASMKnFMwMw==
+
+"@jridgewell/source-map@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@jridgewell/source-map/-/source-map-0.3.2.tgz#f45351aaed4527a298512ec72f81040c998580fb"
+  integrity sha512-m7O9o2uR8k2ObDysZYzdfhb08VuEml5oWGiosa1VdaPZ/A6QyPkAJuwN0Q1lhULOf6B7MtQmHENS743hWtCrgw==
+  dependencies:
+    "@jridgewell/gen-mapping" "^0.3.0"
+    "@jridgewell/trace-mapping" "^0.3.9"
+
+"@jridgewell/sourcemap-codec@^1.4.10":
+  version "1.4.14"
+  resolved "https://registry.yarnpkg.com/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.4.14.tgz#add4c98d341472a289190b424efbdb096991bb24"
+  integrity sha512-XPSJHWmi394fuUuzDnGz1wiKqWfo1yXecHQMRf2l6hztTO+nPru658AyDngaBe7isIxEkRsPR3FZh+s7iVa4Uw==
+
+"@jridgewell/trace-mapping@^0.3.9":
+  version "0.3.14"
+  resolved "https://registry.yarnpkg.com/@jridgewell/trace-mapping/-/trace-mapping-0.3.14.tgz#b231a081d8f66796e475ad588a1ef473112701ed"
+  integrity sha512-bJWEfQ9lPTvm3SneWwRFVLzrh6nhjwqw7TUFFBEMzwvg7t7PCDenf2lDwqo4NQXzdpgBXyFgDWnQA+2vkruksQ==
+  dependencies:
+    "@jridgewell/resolve-uri" "^3.0.3"
+    "@jridgewell/sourcemap-codec" "^1.4.10"
+
 "@mdx-js/mdx@^1.5.0":
   version "1.6.21"
   resolved "https://registry.yarnpkg.com/@mdx-js/mdx/-/mdx-1.6.21.tgz#d3651b4802db7bdc399270c0ffa9e2aa99dd4b00"
@@ -1794,71 +1834,113 @@
 
 "@robinl/86fc30325e4106c4@https://api.observablehq.com/@robinl/86fc30325e4106c4@851.tgz?v=3":
   version "851.0.0"
+  uid "449993572c2245f98dc289bc07258533d272b0fe"
+  resolved "https://api.observablehq.com/@robinl/86fc30325e4106c4@851.tgz?v=3#449993572c2245f98dc289bc07258533d272b0fe"
 
 "@robinl/9534e8e74053c14e@https://api.observablehq.com/@robinl/9534e8e74053c14e@451.tgz?v=3":
   version "451.0.0"
+  uid "27bbc5bb2494f4f3140a7bfa20348f0a462144f9"
+  resolved "https://api.observablehq.com/@robinl/9534e8e74053c14e@451.tgz?v=3#27bbc5bb2494f4f3140a7bfa20348f0a462144f9"
 
 "@robinl/bird-song-quiz@https://api.observablehq.com/@robinl/bird-song-quiz@718.tgz?v=3":
   version "718.0.0"
+  uid "61db3fa138eb55b683d233b90929155495a0a72e"
+  resolved "https://api.observablehq.com/@robinl/bird-song-quiz@718.tgz?v=3#61db3fa138eb55b683d233b90929155495a0a72e"
 
 "@robinl/birdsong-recordings@https://api.observablehq.com/@robinl/birdsong-recordings@442.tgz?v=3":
   version "442.0.0"
+  uid "62a3713d9012aa4cc0795db1efe7096cc049a8f5"
+  resolved "https://api.observablehq.com/@robinl/birdsong-recordings@442.tgz?v=3#62a3713d9012aa4cc0795db1efe7096cc049a8f5"
 
 "@robinl/d51533bbe054b3d8@https://api.observablehq.com/@robinl/d51533bbe054b3d8@510.tgz?v=3":
   version "510.0.0"
+  uid "60689bb6b8193f356e3630d7b19957850051e245"
+  resolved "https://api.observablehq.com/@robinl/d51533bbe054b3d8@510.tgz?v=3#60689bb6b8193f356e3630d7b19957850051e245"
 
 "@robinl/dependencies-between-match-weights@https://api.observablehq.com/@robinl/dependencies-between-match-weights.tgz?v=3":
   version "158.0.0"
-
+  uid "48a46d5f7faf3a10e81b13e5eee7e3a093ecb7ee"
+  resolved "https://api.observablehq.com/@robinl/dependencies-between-match-weights.tgz?v=3#48a46d5f7faf3a10e81b13e5eee7e3a093ecb7ee"
 
 "@robinl/energy-usage-and-goods-imports-and-exports@https://api.observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports.tgz?v=3":
-  version "1349.0.0"
+  version "1351.0.0"
+  uid "77cd224037289203c2dafc11f00effbd5df46aaa"
+  resolved "https://api.observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports.tgz?v=3#77cd224037289203c2dafc11f00effbd5df46aaa"
 
 "@robinl/energy-usage-calculator-for-everyday-activities@https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities@561.tgz?v=3":
   version "561.0.0"
+  uid "42ac913d036e9ca9b53cf8979858d16a80cebd70"
+  resolved "https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities@561.tgz?v=3#42ac913d036e9ca9b53cf8979858d16a80cebd70"
 
 "@robinl/filling-the-country-with-solar-panels@https://api.observablehq.com/@robinl/filling-the-country-with-solar-panels.tgz?v=3":
-  version "64.0.0"
+  version "66.0.0"
+  uid aa1b4439e79ad374afbf099fd805ef6daf64a759
+  resolved "https://api.observablehq.com/@robinl/filling-the-country-with-solar-panels.tgz?v=3#aa1b4439e79ad374afbf099fd805ef6daf64a759"
 
 "@robinl/flight-distance-calculator@https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3":
-  version "1073.0.0"
+  version "1090.0.0"
+  uid da2b79c6af50f2a7feaa7c5b6f601884ae8b86df
+  resolved "https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3#da2b79c6af50f2a7feaa7c5b6f601884ae8b86df"
 
 "@robinl/how-much-should-carbon-offsetting-cost@https://api.observablehq.com/@robinl/how-much-should-carbon-offsetting-cost.tgz?v=3":
-  version "476.0.0"
+  version "478.0.0"
+  uid cf412d44c8d7d12f003d75fe2d132f3983c3cd1a
+  resolved "https://api.observablehq.com/@robinl/how-much-should-carbon-offsetting-cost.tgz?v=3#cf412d44c8d7d12f003d75fe2d132f3983c3cd1a"
 
 "@robinl/interactive-blogging-with-observable-notebooks-and-gatsb@https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3":
   version "518.0.0"
+  uid "4c1ea2f25260f6765c623c35ae5563d7e91fd12c"
+  resolved "https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3#4c1ea2f25260f6765c623c35ae5563d7e91fd12c"
 
 "@robinl/m-and-u-probability-generator@https://api.observablehq.com/@robinl/m-and-u-probability-generator.tgz?v=3":
-  version "62.0.0"
-
-"@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
-  version "511.0.0"
-
-"@robinl/spark-explain@https://api.observablehq.com/@robinl/spark-explain.tgz?v=3":
-  version "647.0.0"
-
-"@robinl/the-carbon-impact-of-switiching-to-an-electric-car@https://api.observablehq.com/@robinl/the-carbon-impact-of-switiching-to-an-electric-car@1053.tgz?v=3":
-  version "1053.0.0"
-
-"@robinl/understanding-match-weights@https://api.observablehq.com/@robinl/understanding-match-weights@644.tgz?v=3":
-  version "644.0.0"
-
-"@robinl/understanding-the-spark-ui-by-example-sorting-data@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3":
-  version "269.0.0"
-
-"@robinl/understanding-the-spark-ui-by-example-the-left-join@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3":
-  version "221.0.0"
-
-"@robinl/unsupervised-probabalistic-data-matching-using-the-expec@https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3":
-  version "1041.0.0"
-
-
-"@robinl/visualising-fellegi-sunter@https://api.observablehq.com/@robinl/visualising-fellegi-sunter@1006.tgz?v=3":
-  version "1011.0.0"
+  version "79.0.0"
+  uid fe484a33f30dc16fbb8ffba2022da5f038b492cd
+  resolved "https://api.observablehq.com/@robinl/m-and-u-probability-generator.tgz?v=3#fe484a33f30dc16fbb8ffba2022da5f038b492cd"
 
 "@robinl/m-and-u-probability-generator_starting_values@https://api.observablehq.com/d/1d09c6cf5d576e0a@119.tgz?v=3":
   version "119.0.0"
+  uid aaf8baf661dd5f577add2d8ba34784c2d6b08573
+  resolved "https://api.observablehq.com/d/1d09c6cf5d576e0a@119.tgz?v=3#aaf8baf661dd5f577add2d8ba34784c2d6b08573"
+
+"@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
+  version "514.0.0"
+  uid "29af0ab7dd88c281ac5182049c8157b4aa866b52"
+  resolved "https://api.observablehq.com/@robinl/my-flights.tgz?v=3#29af0ab7dd88c281ac5182049c8157b4aa866b52"
+
+"@robinl/spark-explain@https://api.observablehq.com/@robinl/spark-explain.tgz?v=3":
+  version "647.0.0"
+  uid "29079abf26db132f9c86b575ff91e64e8bd17b79"
+  resolved "https://api.observablehq.com/@robinl/spark-explain.tgz?v=3#29079abf26db132f9c86b575ff91e64e8bd17b79"
+
+"@robinl/the-carbon-impact-of-switiching-to-an-electric-car@https://api.observablehq.com/@robinl/the-carbon-impact-of-switiching-to-an-electric-car@1053.tgz?v=3":
+  version "1053.0.0"
+  uid "7633449c2664b2484da3eea630eca3617fa7e2c7"
+  resolved "https://api.observablehq.com/@robinl/the-carbon-impact-of-switiching-to-an-electric-car@1053.tgz?v=3#7633449c2664b2484da3eea630eca3617fa7e2c7"
+
+"@robinl/understanding-match-weights@https://api.observablehq.com/@robinl/understanding-match-weights@644.tgz?v=3":
+  version "644.0.0"
+  uid d2ffa66d5d850ea8f4bc33460fb8f36bdc11d6ee
+  resolved "https://api.observablehq.com/@robinl/understanding-match-weights@644.tgz?v=3#d2ffa66d5d850ea8f4bc33460fb8f36bdc11d6ee"
+
+"@robinl/understanding-the-spark-ui-by-example-sorting-data@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3":
+  version "269.0.0"
+  uid "2f39c68c2ce9299d6593bcdd02df7f2cb2392b7f"
+  resolved "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3#2f39c68c2ce9299d6593bcdd02df7f2cb2392b7f"
+
+"@robinl/understanding-the-spark-ui-by-example-the-left-join@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3":
+  version "221.0.0"
+  uid "1e1a4cfc7c3574f993a8cf72b4404c6f974b797c"
+  resolved "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3#1e1a4cfc7c3574f993a8cf72b4404c6f974b797c"
+
+"@robinl/unsupervised-probabalistic-data-matching-using-the-expec@https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3":
+  version "1041.0.0"
+  uid da861d16001542cf84bbc37dea15076e4334dd3e
+  resolved "https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3#da861d16001542cf84bbc37dea15076e4334dd3e"
+
+"@robinl/visualising-fellegi-sunter@https://api.observablehq.com/@robinl/visualising-fellegi-sunter@1011.tgz?v=3":
+  version "1011.0.0"
+  uid "4ce98f05eef0d62655a1c368fb4136d52a044abe"
+  resolved "https://api.observablehq.com/@robinl/visualising-fellegi-sunter@1011.tgz?v=3#4ce98f05eef0d62655a1c368fb4136d52a044abe"
 
 "@sideway/address@^4.1.0":
   version "4.1.1"
@@ -2467,10 +2549,10 @@ acorn@^7.4.0:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.4.1.tgz#feaed255973d2e77555b83dbc08851a6c63520fa"
   integrity sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==
 
-acorn@^8.0.0, acorn@^8.2.1:
-  version "8.2.4"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.2.4.tgz#caba24b08185c3b56e3168e97d15ed17f4d31fd0"
-  integrity sha512-Ibt84YwBDDA890eDiDCEqcbwvHlBvzzDkU2cGBBDDI1QWT12jTiXIOn2CIw5KK4i6N5Z2HUxwYjzriDyqaqqZg==
+acorn@^8.0.0, acorn@^8.2.1, acorn@^8.5.0:
+  version "8.7.1"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.7.1.tgz#0197122c843d1bf6d0a5e83220a788f278f63c30"
+  integrity sha512-Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==
 
 address@1.1.2, address@^1.0.1:
   version "1.1.2"
@@ -3200,9 +3282,9 @@ browserslist@^4.0.0, browserslist@^4.12.2, browserslist@^4.14.5, browserslist@^4
     node-releases "^1.1.71"
 
 buffer-from@^1.0.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.1.tgz#32713bc028f75c02fdb710d7c7bcec1f2c6070ef"
-  integrity sha512-MQcXEUbCKtEo7bhqEs6560Hyd4XaovZlO/k9V3hjVUF/zwW7KBVdSK4gIt/bzwS9MbR5qob+F5jusZsb0YQK2A==
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.2.tgz#2b146a6fd72e80b4f55d255f35ed59a3a9a41bd5"
+  integrity sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==
 
 buffer-indexof@^1.0.0:
   version "1.1.1"
@@ -11741,10 +11823,10 @@ source-map-resolve@^0.5.0:
     source-map-url "^0.4.0"
     urix "^0.1.0"
 
-source-map-support@^0.5.17, source-map-support@^0.5.19, source-map-support@~0.5.19:
-  version "0.5.19"
-  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.19.tgz#a98b62f86dcaf4f67399648c085291ab9e8fed61"
-  integrity sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==
+source-map-support@^0.5.17, source-map-support@^0.5.19, source-map-support@~0.5.20:
+  version "0.5.21"
+  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.21.tgz#04fe7c7f9e1ed2d662233c28cb2b35b9f63f6e4f"
+  integrity sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==
   dependencies:
     buffer-from "^1.0.0"
     source-map "^0.6.0"
@@ -11754,7 +11836,7 @@ source-map-url@^0.4.0:
   resolved "https://registry.yarnpkg.com/source-map-url/-/source-map-url-0.4.1.tgz#0af66605a745a5a2f91cf1bbf8a7afbc283dec56"
   integrity sha512-cPiFOTLUKvJFIg4SKVScy4ilPPW6rFgMgfuZJPNoDuMs3nC1HbMUycBoJw77xFIp6z1UJQJOfx6C9GMH80DiTw==
 
-source-map@0.7.3, source-map@^0.7.3, source-map@~0.7.2:
+source-map@0.7.3, source-map@^0.7.3:
   version "0.7.3"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.7.3.tgz#5302f8169031735226544092e64981f751750383"
   integrity sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==
@@ -12258,13 +12340,14 @@ terser-webpack-plugin@^5.1.1:
     terser "^5.5.1"
 
 terser@^5.5.1:
-  version "5.7.0"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-5.7.0.tgz#a761eeec206bc87b605ab13029876ead938ae693"
-  integrity sha512-HP5/9hp2UaZt5fYkuhNBR8YyRcT8juw8+uFbAme53iN9hblvKnLUTKkmwJG6ocWpIKf8UK4DoeWG4ty0J6S6/g==
+  version "5.14.2"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-5.14.2.tgz#9ac9f22b06994d736174f4091aa368db896f1c10"
+  integrity sha512-oL0rGeM/WFQCUd0y2QrWxYnq7tfSuKBiqTjRPWrRgB46WD/kiwHwF8T23z78H6Q6kGCuuHcPB+KULHRdxvVGQA==
   dependencies:
+    "@jridgewell/source-map" "^0.3.2"
+    acorn "^8.5.0"
     commander "^2.20.0"
-    source-map "~0.7.2"
-    source-map-support "~0.5.19"
+    source-map-support "~0.5.20"
 
 text-table@0.2.0, text-table@^0.2.0:
   version "0.2.0"
