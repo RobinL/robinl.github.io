@@ -1,4 +1,38 @@
-# Fuzzy Matching and Deduplicating Hundreds of Millions of Records using Apache Spark
+import Subtitle from "../components/subtitle"
+import imageUrl from "../images/splink_banner.png"
+
+# Fuzzy Matching and Deduplicating Hundreds of Millions of Records with Splink
+
+<Subtitle>
+  Introducing Splink: A fast, accurate and scalable record linkage library that
+  supports multiple SQL backends
+</Subtitle>
+
+_Article updated 2022-08-04_
+
+<img src={imageUrl} alt="Sample Splink charts" style="margin-bottom:0;" />
+
+## Summary
+
+[Splink](https://github.com/moj-analytical-services/splink) is a Python library for probabilistic record linkage (entity resolution). It supports running record linkage workloads using the `Apache Spark`, `AWS Athena`, or `DuckDB` backends.
+
+Its key features are:
+
+- It is extremely fast. It is capable of linking a million records on a modern laptop in under two minutes using the `DuckDB` backend.
+
+- It is highly accurate, with support for term frequency adjustments, and sophisticated fuzzy matching logic.
+
+- It is capable of linking very large datasets (100 million records +) using the `Spark` or `AWS Athena` backends.
+
+- Has a simple but highly customisable interface, so users can tackle the majority of record linking and deduplication problems
+
+- Training data is not required because models can be trained using an unsupervised approach.
+
+- Supports the full workflow of data linkage, from exploratory analysts, through to model prediction, diagnostics and quality assurance.
+
+- Is robust, with an automated suite of unit and integration tests.
+
+## Problem statement
 
 A common data quality problem is to have multiple different records that refer to the same entity but no unique identifier that ties these entities together.
 
@@ -6,96 +40,127 @@ For instance, customer data may have been entered multiple times in multiple dif
 
 There is a large body of theoretical and empirical work into this problem. The solution usually involves computing a new unique identifier column which allows entities to be linked and grouped, using a process of statistical estimation, machine learning and/or rules-based logic.
 
-However, there is a lack of free software that can tackle this problem at the scale of millions of records — the size typically seen in large organisations. Solving the problem usually involves generating very large numbers of record comparisons and so is ill-suited to in-memory solutions in R or Python. Distributed computing frameworks like Apache Spark are a much better fit.
+However, there is a lack of free software that can tackle this problem at the scale of millions of records — the size typically seen in large organisations. Solving the problem usually involves generating very large numbers of record comparisons and so is ill-suited to in-memory solutions in R or Python. Distributed computing frameworks like Apache Spark, or backends that are parellelised and not memory-bound like DuckDB, are a much better fit.
 
-We have recently released a free and [open source](https://github.com/moj-analytical-services/splink) library called `splink`, that implements the Fellegi-Sunter/Expectation Maximisation approach, one of the key statistical models from the data linking literature. This is an unsupervised learning algorithm which yields a match score for each pair of record comparisons.
+We have released a free and [open source](https://github.com/moj-analytical-services/splink) library called `splink`, that implements the Fellegi-Sunter/Expectation Maximisation approach, one of the key statistical models from the data linking literature. This is an unsupervised learning algorithm which yields a match score for each pair of record comparisons.
 
-## Introducing splink
+## What it does:
 
-[Splink](https://github.com/moj-analytical-services/splink) is a Pyspark library available on PyPi that can be installed using `pip` . It can be run with Spark installed locally on your laptop, but for large jobs you will need access to a Spark cluster.
+In a nutshell, Splink takes messy data that may looks like this:
 
-The aims of `splink` are to:
+| row_id | first_name | surname | dob        | city       |
+| ------ | ---------- | ------- | ---------- | ---------- |
+| 1      | lucas      | smith   | 1984-01-02 | London     |
+| 2      | lucas      | smyth   | 1984-07-02 | Manchester |
+| 3      | lucas      | smyth   | 1984-07-02 |            |
+| 4      | david      | jones   |            | Leeds      |
+| 5      | david      | jones   | 1990-03-21 | Leeds      |
 
-*   Work at much greater scale than existing open source libraries (100 million records +).
-*   Compute results faster than existing open source implementations — with runtimes of less than an hour even for large record linking problems.
-*   Have a transparent methodology, so the match scores can be easily explained both graphically and in words
-*   Have accuracy similar to some of the best alternatives, open source or commercial
-*   Have a simple interface that offers flexibility and customizability, so users can tackle the majority of record linking and deduplication problems
-*   Be robust, with an automated suite of unit and integration tests.
+And produces pairwise predictions of which records match:
 
-We have been testing the library for several months now, tackling large-scale data linking problems with significantly improved accuracy from previous approaches.
+| row_id_l | row_id_r | match_probability |
+| -------- | -------- | ----------------- |
+| 1        | 2        | 0.9               |
+| 1        | 3        | 0.85              |
+| 2        | 3        | 0.92              |
+| 4        | 5        | 0.7               |
+
+It then clusters the predictions to produce an estimated unique id:
+
+| cluster_id | row_id |
+| ---------- | ------ |
+| a          | 1      |
+| a          | 2      |
+| a          | 3      |
+| b          | 4      |
+| b          | 5      |
+
+It makes no assumption about the entity type (person, company, case, etc.), so it can be used to link or most types of data.
 
 ## Try it out
 
-You can try out the library in a Jupyter notebook using our Binder link [here](https://mybinder.org/v2/gh/moj-analytical-services/splink_demos/master?urlpath=lab/tree/index.ipynb). These demos illustrate how to use the library, but note they are running in local mode on free servers, so don’t expect fast performance.
+You can try out the library in a Jupyter notebook using our Binder link [here](https://mybinder.org/v2/gh/moj-analytical-services/splink_demos/master?urlpath=lab/tree/index.ipynb). These demos illustrate how to use the library, but note they are running in local mode on free servers, so don’t expect great performance.
 
 ## How it works
 
-The library estimates matches using the Fellegi-Sunter/Expectation Maximisation framework, which you can [learn more about in my interactive training materials](https://www.robinlinacre.com/probabilistic_linkage/).
+Splink is an implementation of the Fellegi-Sunter model. The software generates pairwise record comparisons using an approach called [blocking](https://en.wikipedia.org/wiki/Record_linkage#Probabilistic_record_linkage), and computes a match score for each pair which quantifies the similarity between the two records.
 
-First, a large number of record comparisons (candidate pairs) are generated using an approach called [blocking](https://en.wikipedia.org/wiki/Record_linkage#Probabilistic_record_linkage), which ensures only records that plausibly may refer to the same entity are generated.
+The match score is determined by parameters are known as partial match weights. These quantify the importance of different aspects of the comparison.
 
-Next, for each candidate pair, the fields (columns) are compared in turn — is there a match on first name, surname, date of birth, etc.
+For example, a matching date of birth lends more evidence in favour of two records being a match than a match on gender. A mismatch on postcode may provide weak evidence against a match because people move house, whereas a mismatch on date of birth may be stronger evidence against the record being a match.
 
-Next an iterative algorithm called Expectation Maximisation is used to maximise a likelihood function. This results in estimates of the amount of information contained in each field, and how this contributes to an overall assessment of whether the pair are a match.
+This simple idea has a lot of power to build highly nuanced models. Partial match weights can be computed for an arbitrary number of user-defined scenarios, not just a match or non match. For example, a partial match weight can be estimated for a scenario where postcodes do not match, but are within 10 miles of each other.
 
-For instance, consider a first name field:
+These partial match weights are combined into an overall match score, which represents the weight of evidence that the two records are a match.
 
-*   If first name matches, how much does this increase our confidence that the records are a match?
-*   If first name does not match, how much does this decrease our confidence that the records are a match?
+The library uses unsupervised learning (the Expectation Maximisation algorithm) to estimate these match weights. You can learn more about the theory [in my interactive training materials](https://www.robinlinacre.com/probabilistic_linkage/).
 
-This will vary between fields. High quality fields with very high cardinality such as a social security number contribute a lot more information than low quality fields with low cardinality such as a person’s gender.
-
-This information is then combined into an overall score between 0 and 1 of whether the pairwise record comparison represents a match.
+A more detailed video description of how this all works can be found [here](https://youtu.be/msz3T741KQI?t=497).
 
 ## Sample Code
 
 We have tried to design an interface which is simple but nevertheless can be adapted to most record linkage and deduplication problems.
 
-To illustrate how easy the library is to use with default settings, the following code could be used to deduplicate a large dataset:
+In the following code we:
+
+- Specify a data linkage model
+- Estimate its parameters
+- Use the model to compute pairwise match scores
+- Cluster the match scores into groups to produce an estimated unique person id
 
 ```python
-df = spark.read.parquet("path_to_your_data")
+from splink.duckdb.duckdb_linker import DuckDBLinker
+from splink.duckdb.duckdb_comparison_library import (
+    exact_match,
+    levenshtein_at_thresholds,
+)
 
+import pandas as pd
+
+df = pd.read_csv("./tests/datasets/fake_1000_from_splink_demos.csv")
+
+# Specify a data linkage model
 settings = {
     "link_type": "dedupe_only",
-    "blocking_rules": [
+    "blocking_rules_to_generate_predictions": [
         "l.first_name = r.first_name",
         "l.surname = r.surname",
-        "l.dob = r.dob"
     ],
-    "comparison_columns": [
-        {
-            "col_name": "first_name",
-            "term_frequency_adjustments": True},
-        {
-            "col_name": "surname",
-            "term_frequency_adjustments": True
-        },
-        {
-            "col_name": "dob"
-        },
-        {
-            "col_name": "city"
-        },
-        {
-            "col_name": "email"
-        }
-    ]
+    "comparisons": [
+        levenshtein_at_thresholds("first_name", 2),
+        exact_match("surname"),
+        exact_match("dob"),
+        exact_match("city", term_frequency_adjustments=True),
+        exact_match("email"),
+    ],
 }
 
-from splink import Splink
-linker = Splink(settings, spark, df=df)
-df_e = linker.get_scored_comparisons()
+linker = DuckDBLinker(df, settings)
+
+# Estimate its parameters
+linker.estimate_u_using_random_sampling(target_rows=1e6)
+
+blocking_rule_for_training = "l.first_name = r.first_name and l.surname = r.surname"
+linker.estimate_parameters_using_expectation_maximisation(blocking_rule_for_training)
+
+blocking_rule_for_training = "l.dob = r.dob"
+linker.estimate_parameters_using_expectation_maximisation(blocking_rule_for_training)
+
+# Use the model to compute pairwise match scores
+pairwise_predictions = linker.predict()
+
+# Cluster the match scores into groups to produce an estimated unique person id
+clusters = linker.cluster_pairwise_predictions_at_threshold(pairwise_predictions, 0.95)
+clusters.as_pandas_dataframe(limit=5)
 
 ```
 
-The user has to configure two main parts of the problem:
+## Feedback
 
-*   Blocking rules. These are the rules to reduce the number of comparison records down from the Cartesian product to a computationally tractable number. In this case, record comparisons will only be generated for pairs where first name, surname or date of birth matches.
-*   Comparison columns. The user must specify which columns in the input dataset contain useful information which help to identify entities.
+We are grateful to all our users who have contributed and provided feedback so far. Please continue to do so by:
 
-For complex record linkage problems, the `settings` object can become quite detailed. We have created an [interactive online tool](https://moj-analytical-services.github.io/splink_settings_editor/) for auto-completing and validating settings, which includes a series of examples.
+- Starting [a discussion](https://github.com/moj-analytical-services/splink/discussions) if you have questions about how to do something
+- Raising [an issue](https://github.com/moj-analytical-services/splink/issues) if you’ve found a bug or would like to request a new feature
+- Raising a [pull request](https://github.com/moj-analytical-services/splink/pulls) if you’d like to fix a bug or add a feature
 
-Please do try `splink` and let us know what you think. You can raise issues or contribute at the [Github repo](https://github.com/moj-analytical-services/splink) or I’m @robinlinacre on Twitter.
-
+Or I’m [@robinlinacre](https://twitter.com/RobinLinacre) on Twitter.

@@ -9,7 +9,7 @@ export const frontmatter = {
            "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/introducing_splink.mdx",
          post_type: "mdx",
          post_category: "data",
-         description: "Introducing splink, a Pyspark library for record linkage at scale using unsupervised learning"
+         description: "Introducing Splink, a fast, accurate and scalable record linkage library that supports multiple SQL backends"
        }
 
 export default ({ data }) => (
