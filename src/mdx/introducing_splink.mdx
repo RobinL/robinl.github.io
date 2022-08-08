@@ -1,5 +1,6 @@
 import Subtitle from "../components/subtitle"
 import splink_charts_img from "../images/splink_charts.png"
+import splink_banner_img from "../images/splink_banner.png"
 
 # Fuzzy Matching and Deduplicating Hundreds of Millions of Records with Splink
 
@@ -7,14 +8,9 @@ import splink_charts_img from "../images/splink_charts.png"
   A fast, accurate and scalable record linkage library that supports multiple
   SQL backends
 </Subtitle>
+<img src={splink_banner_img} alt="Splink logo" style="margin-bottom:0;" />
 
 _Article updated 2022-08-04_
-
-<img
-  src={splink_charts_img}
-  alt="Sample Splink charts"
-  style="margin-bottom:0;"
-/>
 
 ## Summary
 
@@ -28,17 +24,31 @@ Its key features are:
 
 - It is capable of linking very large datasets (100 million records +) using the `Spark` or `AWS Athena` backends.
 
-- Has a simple but highly customisable interface, so users can tackle the majority of record linking and deduplication problems
+- It has a simple but highly customisable interface, so users can tackle the majority of record linking and deduplication problems
 
 - Training data is not required because models can be trained using an unsupervised approach.
 
-- Supports the full workflow of data linkage, from exploratory analysts, through to model prediction, diagnostics and quality assurance.
+- It supports the full workflow of data linkage, from exploratory analysts, through to model prediction, diagnostics and quality assurance.
 
 - Is robust, with an automated suite of unit and integration tests.
 
+<img
+  src={splink_charts_img}
+  alt="Sample Splink charts"
+  style="margin-bottom:0;"
+/>
+
 ## Problem statement
 
-A common data quality problem is to have multiple different records that refer to the same entity but no unique identifier that ties these entities together.
+A common data quality problem is to have multiple different records that refer to the same entity but no unique identifier that ties these entities together:
+
+| row_id | first_name | surname | dob        | city       |
+| ------ | ---------- | ------- | ---------- | ---------- |
+| 1      | lucas      | smith   | 1984-01-02 | London     |
+| 2      | lucas      | smyth   | 1984-07-02 | Manchester |
+| 3      | lucas      | smyth   | 1984-07-02 |            |
+| 4      | david      | jones   |            | Leeds      |
+| 5      | david      | jones   | 1990-03-21 | Leeds      |
 
 For instance, customer data may have been entered multiple times in multiple different computer systems, with different spellings of names, different addresses, and other typos. The lack of a unique customer identifier presents challenges at all stages of data analysis — from basic questions such counting the number of unique customers, to feature engineering of customers’ details for machine learning purposes.
 
@@ -50,17 +60,7 @@ We have released a free and [open source](https://github.com/moj-analytical-serv
 
 ## What it does:
 
-In a nutshell, Splink takes messy data that may looks like this:
-
-| row_id | first_name | surname | dob        | city       |
-| ------ | ---------- | ------- | ---------- | ---------- |
-| 1      | lucas      | smith   | 1984-01-02 | London     |
-| 2      | lucas      | smyth   | 1984-07-02 | Manchester |
-| 3      | lucas      | smyth   | 1984-07-02 |            |
-| 4      | david      | jones   |            | Leeds      |
-| 5      | david      | jones   | 1990-03-21 | Leeds      |
-
-And produces pairwise predictions of which records match:
+In a nutshell, Splink takes messy input data in the table above and produces pairwise predictions of which records match:
 
 | row_id_l | row_id_r | match_probability |
 | -------- | -------- | ----------------- |
@@ -91,7 +91,7 @@ Splink is an implementation of the Fellegi-Sunter model. The software generates 
 
 The match score is determined by parameters are known as partial match weights. These quantify the importance of different aspects of the comparison.
 
-For example, a matching date of birth lends more evidence in favour of two records being a match than a match on gender. A mismatch on postcode may provide weak evidence against a match because people move house, whereas a mismatch on date of birth may be stronger evidence against the record being a match.
+For example, a match on date of birth lends more evidence in favour of two records being a match than a match on gender. A mismatch on postcode may provide weak evidence against a match because people move house, whereas a mismatch on date of birth may be stronger evidence against the record being a match.
 
 This simple idea has a lot of power to build highly nuanced models. Partial match weights can be computed for an arbitrary number of user-defined scenarios, not just a match or non match. For example, a partial match weight can be estimated for a scenario where postcodes do not match, but are within 10 miles of each other.
 
