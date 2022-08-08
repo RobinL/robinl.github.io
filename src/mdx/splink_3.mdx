@@ -1,16 +1,18 @@
 import Subtitle from "../components/subtitle"
-import imageUrl from "../images/splink_banner.png"
+import splink_banner_img from "../images/splink_banner.png"
+import splink_charts_img from "../images/splink_charts.png"
 
 # **Splink version 3: Fast, accurate and scalable linkage in Python**
 
 <Subtitle>
-  Splink v3 now offers support for Python and AWS Athena backends, in addition
-  to Spark. It's now easier to use, faster and more flexible, and can be used
-  for close to real time linkage.
+  Splink now includes Python and AWS Athena backends, in addition to Spark. It's
+  easier to use, faster and more flexible, and can be used for close to real
+  time linkage.
 </Subtitle>
-<img src={imageUrl} alt="Sample Splink charts" style="margin-bottom:0;" />
 
-Two years ago, [we introduced Splink](https://medium.com/p/93d0f095001f), a Python library for data deduplication and linkage (entity resolution) at scale.
+Two years ago, [we introduced Splink](https://www.robinlinacre.com/introducing_splink/), a Python library for data deduplication and linkage (entity resolution) at scale.
+
+<img src={splink_banner_img} alt="Splink logo" style="margin-bottom:0;" />
 
 Since then, Splink has been used in government, the private sector, and academia to link and deduplicate huge datasets, some in excess of 100 million records, and it’s been downloaded over 3 million times.
 
@@ -33,6 +35,12 @@ We’ve learned a lot from our users, and we’ve just released version 3, which
 - [**Clustering of links to produce unique identifiers**](https://moj-analytical-services.github.io/splink/linkerpred.html#splink.linker.Linker.cluster_pairwise_predictions_at_threshold) is now implemented in Splink, so does not require configuration of external dependencies.
 - [**A new documentation website**](https://moj-analytical-services.github.io/splink) brings together tutorials, topic guides, API documentation, and an interactive settings editor.
 - **An overhaul of all** [**charting**](https://moj-analytical-services.github.io/splink) [**outputs**](https://moj-analytical-services.github.io/splink) makes them simpler, easier to read, and improves their labelling.
+
+<img
+  src={splink_charts_img}
+  alt="Sample Splink charts"
+  style="margin-bottom:0;"
+/>
 
 ## Try it out
 
