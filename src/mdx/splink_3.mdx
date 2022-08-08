@@ -2,7 +2,7 @@ import Subtitle from "../components/subtitle"
 import splink_banner_img from "../images/splink_banner.png"
 import splink_charts_img from "../images/splink_charts.png"
 
-# **Splink version 3: Fast, accurate and scalable linkage in Python**
+# **Splink version 3: Fast, accurate and scalable record linkage in Python**
 
 <Subtitle>
   Splink now includes Python and AWS Athena backends, in addition to Spark. It's
@@ -18,21 +18,21 @@ Since then, Splink has been used in government, the private sector, and academia
 
 We believe that it is now the fastest and most accurate free library for record linkage at scale.
 
-We’ve learned a lot from our users, and we’ve just released version 3, which includes frequently requested features and tried to address some of the biggest pain points.
+We’ve learned a lot from our users, and we’ve just released version 3, which includes frequently requested features and tries to address some the biggest pain points.
 
 ## Major new features
 
 - **Splink 3 now offers support for** [**Python and AWS Athena backends, in addition to Spark**](https://moj-analytical-services.github.io/splink/topic_guides/backends.html)**.** Linking in Python is supported by the Python [DuckDB](https://pypi.org/project/duckdb/) package, which is capable of linking datasets of up to about 2 million records on a laptop.
 - **Small linkages can run 100x faster** through use the new DuckDB backend, relative to Spark. It’s possible to link a dataset of a million records in under two minutes on a modern laptop.
-- [**Close to real time linage is possible**](https://moj-analytical-services.github.io/splink/demos/real_time_record_linkage.html), using the DuckDB backend, which could enable Splink to be embedded in search services.
+- [**Close to real time linkage is possible**](https://moj-analytical-services.github.io/splink/demos/real_time_record_linkage.html), using the DuckDB backend, which could enable Splink to be embedded in search services.
 - [**Interactive dashboards**](https://moj-analytical-services.github.io/splink/demos/04_Visualising_predictions.html) are now core Splink outputs.
 - Splink 3 is written to be agnostic to the target SQL backend, meaning adding support for new backends is [relatively straightforward](https://github.com/moj-analytical-services/splink/blob/master/splink/duckdb/duckdb_linker.py).
 
 ## Other changes
 
 - **Linkage models are now simpler to estimate.** [Less code is needed,](https://moj-analytical-services.github.io/splink/index.html#quickstart) and the [API](https://moj-analytical-services.github.io/splink/linker.html) is clearer. Splink now automatically combines parameter estimates from different model runs, significantly reducing the number of lines of code to estimate a full model.
-- **Linkage in Spark run significantly faster,** and are less likely to result in out of memory errors or other scaling issues. Big data linkage in Athena runs significantly faster than Spark in some instances.
-- [**Clustering of links to produce unique identifiers**](https://moj-analytical-services.github.io/splink/linkerpred.html#splink.linker.Linker.cluster_pairwise_predictions_at_threshold) is now implemented in Splink, so does not require configuration of external dependencies.
+- **Linkages in Spark run significantly faster,** and are less likely to result in out of memory errors or other scaling issues. Big data linkage in Athena runs significantly faster than Spark in some instances.
+- [**Clustering of links to produce unique identifiers**](https://moj-analytical-services.github.io/splink/linkerpred.html#splink.linker.Linker.cluster_pairwise_predictions_at_threshold) is now implemented in Splink, so does not require configuration of external dependencies like `graphframes`.
 - [**A new documentation website**](https://moj-analytical-services.github.io/splink) brings together tutorials, topic guides, API documentation, and an interactive settings editor.
 - **An overhaul of all** [**charting**](https://moj-analytical-services.github.io/splink) [**outputs**](https://moj-analytical-services.github.io/splink) makes them simpler, easier to read, and improves their labelling.
 
