@@ -6,7 +6,7 @@ Statically hosted parquet files provide one of the easiest to use and most perfo
 
 With DuckDB, the parquet files are directly queryable using SQL, providing a universal API to interrogate such datasets. This can be used from languages like Python and R, and even works in the browser.
 
-This can be extremely performant. The [National Statistics Postcode Lookup](https://geoportal.statistics.gov.uk/datasets/national-statistics-postcode-lookup-2021-census-november-2022/about) is a 1.1GB csv file with 2.6 million rows. When hosted as a parquet file, this [can be queried to return a single postcode in 13 seconds](https://gist.github.com/RobinL/87b3fd14f5696ee72c732237635ac72c) from a cold start on a home internet connection, and 100ms for subsequent queries.
+This can be extremely performant. The [National Statistics Postcode Lookup](https://geoportal.statistics.gov.uk/datasets/national-statistics-postcode-lookup-2021-census-november-2022/about) is a 1.1GB csv file with 2.6 million rows. When hosted as a parquet file, this can be queried [in the brower](https://shell.duckdb.org/) to [return a single postcode in 13 seconds](https://gist.github.com/RobinL/87b3fd14f5696ee72c732237635ac72c) from a cold start on a home internet connection, and 100ms for subsequent queries.
 
 # Introduction
 
@@ -34,7 +34,7 @@ My preferred way of getting acquainted with a new dataset is usually by looking 
 
 Loading a sample of rows from an online parquet file is a [simple one-liner](https://pandas.pydata.org/docs/reference/api/pandas.read_parquet.html) in most analytical programming languages - usually the same familiar code as loading in data from disk. Viewing metadata is also [a one-liner.](https://gist.github.com/RobinL/87b3fd14f5696ee72c732237635ac72c#file-view_metadata-py-L2)
 
-There are a wide range of free tools to dig deeper, and each user will have their favourite (e.g. [Rill](https://github.com/rilldata/rill-developer), [skimpy](https://github.com/aeturrell/skimpy), [pandas profiling](https://github.com/ydataai/pandas-profiling), [datasette](https://github.com/simonw/datasette) or [R equivalents](https://towardsdatascience.com/four-r-packages-for-automated-exploratory-data-analysis-you-might-have-missed-c38b03d4ee16)). Nowadays, this can even be [done in the web browser](https://observablehq.com/@observablehq/duckdb), without the need for any special software to be downloaded.
+There are a wide range of free tools to dig deeper, and each user will have their favourite (e.g. [Rill](https://github.com/rilldata/rill-developer), [skimpy](https://github.com/aeturrell/skimpy), [pandas profiling](https://github.com/ydataai/pandas-profiling), [datasette](https://github.com/simonw/datasette) or [R equivalents](https://towardsdatascience.com/four-r-packages-for-automated-exploratory-data-analysis-you-might-have-missed-c38b03d4ee16)). Nowadays, this can even be [done in the web browser](https://observablehq.com/d/735b2408ad41dcf8), without the need for any special software to be downloaded.
 
 ## Simplicity of use
 
@@ -54,7 +54,7 @@ This enables self-updating data dashboards to be built on the open data in just 
 
 ## Cheap and simple and performant hosting
 
-Serving data as a static file is probably the simplest and cheapest architecture. Modern cloud services mean it’s as simple as uploading the file to blob storage (e.g. AWS S3). Data access will [remain performant even if traffic is high](https://docs.aws.amazon.com/AmazonS3/latest/userguide/optimizing-performance.html), and the service will have very high reliability and availability. All of this is taken care of by the cloud provider.
+Serving data as a static file is probably the simplest and cheapest possible architecture for open data services. Modern cloud services mean it’s as simple as uploading the file to blob storage (e.g. AWS S3). Data access will [remain performant even if traffic is high](https://docs.aws.amazon.com/AmazonS3/latest/userguide/optimizing-performance.html), and the service will have very high reliability and availability. All of this is taken care of by the cloud provider.
 
 For the end user, a parquet file served from blob storage will also be one of the fastest possible ways of getting data into their data analysis software from a remote provider - often far faster than obtaining data from a custom API.
 
@@ -84,8 +84,8 @@ Alongside Apache Arrow, parquet is rapidly becoming a de facto standard for savi
 
 There are some cases where static parquet files may be inappropriate. Examples include:
 
-- **Very large datasets** of 10s of millions of records. For reference, the [gridwatch dataset](https://www.gridwatch.templar.co.uk/download.php) contains over 1m rows and 24 columns of the composition of UK energy generation every 5 minutes since 2011. It’s 29Mb as a parquet file (GZIP compression) or 55MB (SNAPPY). [A query](https://gist.github.com/RobinL/87b3fd14f5696ee72c732237635ac72c) run [in the browser](https://shell.duckdb.org/) to find the maximum power generation from wind takes 6 seconds on my laptop (most of which is data download - subsequent similar queries take 200ms since the data is cached). \
-  I would recommend keeping parquet files to around 200Mb or less if possible. In these cases it may be appropriate to offer an API that allows users to query the underlying data to return smaller subsets⁴.
+- **Very large datasets** of 10s of millions of records. For reference, the [gridwatch dataset](https://www.gridwatch.templar.co.uk/download.php) contains over 1m rows and 24 columns of the composition of UK energy generation every 5 minutes since 2011. It’s 29Mb as a parquet file (GZIP compression) or 55MB (SNAPPY). [A query](https://gist.github.com/RobinL/87b3fd14f5696ee72c732237635ac72c) run [in the browser](https://shell.duckdb.org/) to find the maximum power generation from wind takes 6 seconds on my laptop (most of which is data download - subsequent similar queries take 200ms since the data is cached).
+  I would recommend keeping parquet files to around 200MB or less if possible. In these cases it may be appropriate to offer an API that allows users to query the underlying data to return smaller subsets⁴.
 - **You’re not serving bulk data. ** If your users are mostly software developers who want to make transactional or atomic requests, then static files are inappropriate. For example, if you want to run a [postcode lookup service](https://postcodes.io/), then serving the [NSPL](https://geoportal.statistics.gov.uk/datasets/national-statistics-postcode-lookup-2021-census-november-2022/about) as a single parquet file would not serve the needs of your users⁵.
 - **Relational data with a complex schema. **In this case, serving a sqlite or duckdb database as a single file may be a better fit.
 
