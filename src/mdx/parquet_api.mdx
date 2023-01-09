@@ -1,0 +1,100 @@
+# Why parquet files are my preferred API for bulk open data
+
+# Summary
+
+Statically hosted parquet files provide one of the easiest to use and most performant APIs for accessing bulk¹ data, and are far simpler and cheaper to provide than custom APIs. Furthermore, features of more sophisticated APIs are often best left to the end user to perform in their preferred data analysis tools.
+
+With DuckDB, the parquet files are directly queryable using SQL, providing a universal API to interrogate such datasets. This can be used from languages like Python and R, and even works in the browser.
+
+This can be extremely performant. The [National Statistics Postcode Lookup](https://geoportal.statistics.gov.uk/datasets/national-statistics-postcode-lookup-2021-census-november-2022/about) is a 1.1GB csv file with 2.6 million rows. When hosted as a parquet file, this [can be queried to return a single postcode in 13 seconds](https://gist.github.com/RobinL/87b3fd14f5696ee72c732237635ac72c) from a cold start on a home internet connection, and 100ms for subsequent queries.
+
+# Introduction
+
+As a data scientist, I find the complexity of many open data services frustrating. I don't want to have to learn how to query an endpoint, think about data types, or read through API documentation. Just give me the data!
+
+In this post, I argue that the best way of serving bulk data is usually one or more parquet files, served at a predictable URL with [CORS ](https://enable-cors.org/)enabled². These files should represent the canonical version of the data, and any other data products (such as Excel files, reports, or CSVs) should be derived from these files.
+
+SQL provides a familiar, universal API on top of these files, enabling filtering, joining, calculation or aggregation services that may otherwise be custom features of data APIs. Software libraries such as DuckDB enable SQL to be run directly and efficiently on these parquet files, including from the browser (meaning no additional software is required).
+
+To be concrete about this proposal, if I wanted to serve open data on the number of widgets produced, the URL structure could be something like:
+
+```
+www.my-organisation.com/open_data/v1/widgets_2021.parquet
+www.my-organisation.com/open_data/v1/widgets_2022.parquet
+www.my-organisation.com/open_data/v1/widgets_latest.parquet
+```
+
+The dated URLs provide fixed snapshots for reproducible results, and the ‘latest’ URL always provides the most up-to-date data. I would recommend serving a .csv copy at equivalent URLs. A directory listing service should also be provided to enable data discovery and scraping.
+
+# Benefits of using static files
+
+## Gaining familiarity with the data
+
+My preferred way of getting acquainted with a new dataset is usually by looking at a sample of rows, and then exploring the data further with queries and automatic profiling tools. Only later am I likely to look at documentation or metadata.
+
+Loading a sample of rows from an online parquet file is a [simple one-liner](https://pandas.pydata.org/docs/reference/api/pandas.read_parquet.html) in most analytical programming languages - usually the same familiar code as loading in data from disk. Viewing metadata is also [a one-liner.](https://gist.github.com/RobinL/87b3fd14f5696ee72c732237635ac72c#file-view_metadata-py-L2)
+
+There are a wide range of free tools to dig deeper, and each user will have their favourite (e.g. [Rill](https://github.com/rilldata/rill-developer), [skimpy](https://github.com/aeturrell/skimpy), [pandas profiling](https://github.com/ydataai/pandas-profiling), [datasette](https://github.com/simonw/datasette) or [R equivalents](https://towardsdatascience.com/four-r-packages-for-automated-exploratory-data-analysis-you-might-have-missed-c38b03d4ee16)). Nowadays, this can even be [done in the web browser](https://observablehq.com/@observablehq/duckdb), without the need for any special software to be downloaded.
+
+## Simplicity of use
+
+Importing data from parquet is usually as simple as [pointing the tool at the URL](https://pandas.pydata.org/docs/reference/api/pandas.read_parquet.html). This includes Excel, in which it’s possible to enable [easy data refreshes](https://superuser.com/questions/235438/can-you-pull-excel-data-from-an-external-and-dynamic-csv-file) without needing to write code.
+
+In contrast, in the case of many custom APIs, the user would need to write non-trivial custom code to obtain the data prior to being able to use these tools.
+
+Users can then use their preferred analytical tools to manipulate and query the data. One particularly interesting recent development is [DuckDB in the browser](https://shell.duckdb.org/), which [enables parquet files to be queried using SQL directly in the web browser](https://observablehq.com/d/735b2408ad41dcf8), without the need for installing additional software. If open data was consistently served as parquet files, this would effectively provide a universal API to allow all open data to be interrogated quickly and easily, with no servers required.
+
+Importing from parquet also makes it exceptionally easy to write a Reproducible Analytical Pipeline on top of the data. It also encourages internal use of open data products (‘dogfooding’), which is an effective way of detecting problems early and continuous improvement.
+
+## Web dashboards and other products using CORS
+
+[Cross-Origin Resource Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) (CORS) enables any website to load your data directly from source parquet files without the need for a server.
+
+This enables self-updating data dashboards to be built on the open data in just a few lines of code - whether those be official products built by the data owner, or other internet users. This leads to a very simple architecture that reduces copies of the canonical data and prevents dashboards from going stale.
+
+## Cheap and simple and performant hosting
+
+Serving data as a static file is probably the simplest and cheapest architecture. Modern cloud services mean it’s as simple as uploading the file to blob storage (e.g. AWS S3). Data access will [remain performant even if traffic is high](https://docs.aws.amazon.com/AmazonS3/latest/userguide/optimizing-performance.html), and the service will have very high reliability and availability. All of this is taken care of by the cloud provider.
+
+For the end user, a parquet file served from blob storage will also be one of the fastest possible ways of getting data into their data analysis software from a remote provider - often far faster than obtaining data from a custom API.
+
+Overall, serving static parquet files is likely to be orders of magnitude cheaper than developing a custom solution.
+
+## Building other data services on top of the static files
+
+It’s difficult to predict what services may wish to be downstream users of the open data. However, serving performant data in a [typed](https://arrow.apache.org/docs/python/api/datatypes.html) format with wide support enables others to easily build services on top of the data.
+
+This provides a clean separation of concerns between data engineers, who are responsible for the canonical datasets, and digital services that may have bespoke needs to consume this data in bespoke way - e.g. a lookup service. The simple availability of the data is also likely to make it simpler to build and maintain these downstream services³.
+
+# Benefits of using parquet files vs other formats
+
+Parquet is particularly well suited to sharing a wide variety of data online for a variety of reasons:
+
+- Data is typed, meaning the data type of each column is specified and enforced by the file format. This contrasts to .csv format, where data typing issues are a common source of problems in analysis
+- Data is compressed, greatly reducing file size
+- Parquet supports [complex nested data types](https://arrow.apache.org/blog/2022/10/08/arrow-parquet-encoding-part-2/), giving it great flexibility for supporting many different types of data. For example, it's possible to store lists and dicts within columns, enabling normalisation which in some cases may make the data easier to interpret and use, and reduce file size.
+- Parquet is [widely supported in modern data tools](https://arrow.apache.org/docs/), and one of the fastest ways of reading large datasets
+- Parquet supports the inclusion of [arbitrary metadata](https://arrow.apache.org/docs/python/generated/pyarrow.Schema.html#pyarrow.Schema.metadata), which could be used, for instance, to describe the contents of columns or data lineage
+- Parquet also automatically generates [certain metadata](https://arrow.apache.org/docs/python/parquet.html#inspecting-the-parquet-file-metadata), such as the cardinality of some columns, the number of rows, etc.
+- Parquet format is increasingly used in data warehousing, meaning that it is often the 'native' format in which organisations hold their data internally.
+
+Alongside Apache Arrow, parquet is rapidly becoming a de facto standard for saving, transferring and sharing data.
+
+# When are static files inappropriate?
+
+There are some cases where static parquet files may be inappropriate. Examples include:
+
+- **Very large datasets** of 10s of millions of records. For reference, the [gridwatch dataset](https://www.gridwatch.templar.co.uk/download.php) contains over 1m rows and 24 columns of the composition of UK energy generation every 5 minutes since 2011. It’s 29Mb as a parquet file (GZIP compression) or 55MB (SNAPPY). [A query](https://gist.github.com/RobinL/87b3fd14f5696ee72c732237635ac72c) run [in the browser](https://shell.duckdb.org/) to find the maximum power generation from wind takes 6 seconds on my laptop (most of which is data download - subsequent similar queries take 200ms since the data is cached). \
+  I would recommend keeping parquet files to around 200Mb or less if possible. In these cases it may be appropriate to offer an API that allows users to query the underlying data to return smaller subsets⁴.
+- **You’re not serving bulk data. ** If your users are mostly software developers who want to make transactional or atomic requests, then static files are inappropriate. For example, if you want to run a [postcode lookup service](https://postcodes.io/), then serving the [NSPL](https://geoportal.statistics.gov.uk/datasets/national-statistics-postcode-lookup-2021-census-november-2022/about) as a single parquet file would not serve the needs of your users⁵.
+- **Relational data with a complex schema. **In this case, serving a sqlite or duckdb database as a single file may be a better fit.
+
+¹ By 'bulk' data, I mean APIs designed to serve whole datasets to the end user, as opposed to 'atomic' APIs which serve individual data points (e.g. a postcode lookup) for use in downstream services
+
+² Cross-Origin Resource Sharing (CORS) enables any website to load your data directly from source parquet files without the need for a server.
+
+³ For example, it may be possible to produce a widget lookup service by running DuckDB as a AWS lambda function, with the data cached by lambda. Some recent, relevant tweets: [https://mobile.twitter.com/BoilingData/status/1611082851184791553](https://mobile.twitter.com/BoilingData/status/1611082851184791553), [https://twitter.com/gunnarmorling/status/1609958952040599552](https://twitter.com/gunnarmorling/status/1609958952040599552)
+
+⁴ But I would investigate whether serving several smaller files may be appropriate first (e.g. one for each year). The problem with developing a custom service is that if the data is large enough to merit one, the processing requirements of such a service are relatively high.
+
+⁵ That said, the NSPL - a 2m row dataset which is over 1GB in csv format is 69Mb as a parquet file. [Using this for occasional/ad hoc lookups is easy and takes less than 15 seconds on my laptop](https://gist.github.com/RobinL/87b3fd14f5696ee72c732237635ac72c#file-gridwatch-sql-L10). Obviously not suitable for a production service, but not bad.
