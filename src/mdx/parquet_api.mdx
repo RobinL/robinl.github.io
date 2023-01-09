@@ -88,6 +88,8 @@ There are some cases where static parquet files may be inappropriate. Examples i
   I would recommend keeping parquet files to around 200MB or less if possible. In these cases it may be appropriate to offer an API that allows users to query the underlying data to return smaller subsets⁴.
 - **You’re not serving bulk data. ** If your users are mostly software developers who want to make transactional or atomic requests, then static files are inappropriate. For example, if you want to run a [postcode lookup service](https://postcodes.io/), then serving the [NSPL](https://geoportal.statistics.gov.uk/datasets/national-statistics-postcode-lookup-2021-census-november-2022/about) as a single parquet file would not serve the needs of your users⁵.
 - **Relational data with a complex schema. **In this case, serving a sqlite or duckdb database as a single file may be a better fit.
+- **Private datasets with granular access control**. If you need row or column based access controls, static files are unlikely to be appropriate, [as noted here](https://twitter.com/gunnarmorling/status/1612538897564573697).
+- **Rapidly changing data to which users need immediate access**. If your data is updated very frequently and your users need access to up-to-the-minute data, static files may not be appropriate, as noted [here](https://twitter.com/kardotjewell/status/1612517499496456209).
 
 ¹ By 'bulk' data, I mean APIs designed to serve whole datasets to the end user, as opposed to 'atomic' APIs which serve individual data points (e.g. a postcode lookup) for use in downstream services
 
