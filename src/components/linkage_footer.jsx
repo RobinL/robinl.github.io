@@ -32,6 +32,7 @@ const order_of_articles = [
   "/intro_to_probabilistic_linkage/",
   "/maths_of_fellegi_sunter/",
   "/visualising_fellegi_sunter/",
+  "/em_intuition/",
   "/understanding_match_weights/",
   "/match_weight_dependencies/",
   "/m_u_generator/",

@@ -25,9 +25,13 @@ function Index() {
                 <li><Link to={'/visualising_fellegi_sunter/'}>Visualising the Fellegi Sunter model
                 </Link>
                 </li>
+                <li><Link to={'/em_intuition/'}>The intuition behind the use of expectation maximisation to train linkage models
+                </Link>
+                </li>
                 <li><Link to={'/understanding_match_weights/'}>Understanding match weights
                 </Link>
                 </li>
+
                 <li><Link to={'/match_weight_dependencies/'}>Dependencies between match weights
                 </Link>
                 </li>
