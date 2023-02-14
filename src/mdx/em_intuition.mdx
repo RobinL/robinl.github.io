@@ -22,13 +22,13 @@ The Expectation Maximisation (EM) algorithm provides a solution to this paradox.
 
 ## The EM Approach
 
-The parameters of a record linkage model — the m and the u probabilities — can be calculated from the aggregate characteristics of matching records and non-matching records respectively. (If this terminology is not familiar, I recommend reading [this blog post](https://www.robinlinacre.com/maths_of_fellegi_sunter/).) Once these values are known, the model is usually able accurately to predict which records match.
+The parameters of a record linkage model — the m and the u probabilities — can be calculated from the aggregate characteristics of matching records and non-matching records respectively. (For a fuller treatment of m and u probabilities, I recommend reading [this blog post](https://www.robinlinacre.com/maths_of_fellegi_sunter/).) Once these values are known, the model is usually able accurately to predict which records match.
 
-The key to the EM approach is leveraging the fact that matching and non-matching form two fairly distinct ‘clusters’:
+The key to the EM approach is leveraging the fact that matching and non-matching record comparisons form two fairly distinct ‘clusters’:
 
-- Amongst matching records, the information in most or all columns in the two records usually matches.
+- Amongst matching record comparisons, the information in most or all columns in the two records usually matches.
 
-- Amongst non-match records, the information in most or all columns in the two records usually does not match
+- Amongst non-matching record comparisons, the information in most or all columns in the two records usually does not match
 
 This results in a bimodal distribution of record comparisons:
 
@@ -39,21 +39,31 @@ This results in a bimodal distribution of record comparisons:
 
 This separation between matches and non-matches means it’s relatively easy to come up with a rough decision rule that is able to correctly identify most matches and most non-matches. For instance, we could simply count the number of columns that match (first name surname, and so on), and predict a match for any record pair where more than half of them match.
 
-Now that we have designated each record comparison as a match or a non match, we can compute the implied m and u parameters of the model. And this enables us to iteratively improve this decision rule, using the following algorithm:
+This is fundamental to resolving our paradox: We've just found a way to designate matches and non matches without any labeled data (i.e. unsupervised learning).
+
+Now that we have designated each record comparison as a match or a non match, we can use this information to estimate the implied m and u parameters of the model. And this enables us to iteratively improve this decision rule, using the following algorithm:
 
 **Expectation step: **Use the estimated model parameters to predict which record comparisons are matches
 
 **Maximisation step: **Use the predictions to re-estimate the model parameters
 
-In this example, our initial decision rule worked by simply counting the number of columns with matching information. As such, we gave equal weight to every column. Clearly there is room for improvement in this rule— in reality a match on a postcode column is more important than a match on gender.
+In this example, our initial decision rule worked by simply counting the number of columns with matching information. As such, we gave equal weight to every column. Clearly there is room for improvement in this rule — in reality a match on a postcode column is more important than a match on gender.
 
-The expectation maximisation process will immediately begin to learn these weights, because it will recognise that, amongst non-matches there are many record comparisons which match on gender, but few that match on postcode. This will be represented in the re-computed m and u probabilities, and in the next iteration, greater weight will be placed on a match on postcode.
+In the first maximisation step, the expectation maximisation process will immediately begin to learn these weights. For example, it will recognise that, amongst non-matches there are many record comparisons which match on gender, but few that match on postcode. This will be represented in the re-computed m and u probabilities, and in the next iteration, greater weight will be placed on a match on postcode than gender.
 
 At each iteration, the decision rule will be refined as the model makes fewer mistakes, and the weights therefore become more accurate.
 
 Convergence occurs when the parameter estimates stabilise, and there are no longer any changes to parameter estimates between iterations.
 
 It turns out this algorithm is equivalent to maximising the likelihood function of the Fellegi-Sunter model (although note that it is only guaranteed to converge to a local maxima, not necessarily a global one).
+
+## A caveat around the decision boundary
+
+In the above, to build intutiion, I describe concrete decision boundary that classifies each record comparison as either a match or a non match. The m and u values calculated in the maximisation step are based on the counts of matches and non-matches that result from this binary classifier.
+
+In reality, we can improve on this, because using a decision boundary throws away some of the information in the match probability: it treats an uncertain match in the same way as a highly probable match.
+
+There's a simple modification to the methodology that accounts for this. We can use the match probability directly, rather than applying the decision bondary. For example, if a record comparison has a 70% match probability, in the maximisation step this can be treated as 0.3 non-matching records and 0.7 matching records. So when the m and u probabilities are recomputed in the maximisation step, we use the sum of probabilities rather than counts of matches and non matches.
 
 ## How the EM approach is implemented in Splink
 
