@@ -89,4 +89,4 @@ You can see all of this at work in practice in some of our [example notebooks](h
 
 ## Conclusion
 
-EM is a powerful tool for estimating the parameters of probabilistic linkage models in the Fellegi Sunter framework. In our experience, the EM approach works best when it is used to estimate the m probabilities of the model only, following estimation of the u probabilities using random sampling.
+EM is a powerful tool for estimating the parameters of probabilistic linkage models in the Fellegi Sunter framework. In our experience, the EM approach works best when it is used to estimate the m probabilities of the model only, following estimation of the u probabilities using random sampling, and estimating the [prior](https://moj-analytical-services.github.io/splink/settings_dict_guide.html#probability_two_random_records_match) using a [direct estimation techique](https://moj-analytical-services.github.io/splink/linkerest.html#splink.linker.Linker.estimate_probability_two_random_records_match).
