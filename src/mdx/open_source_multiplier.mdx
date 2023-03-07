@@ -1,0 +1,83 @@
+import { Vega, VegaLite } from "react-vega"
+import Subtitle from "../components/subtitle"
+
+import statistics from "./open_source_multiplier/statistics.json"
+import star_chart from "./open_source_multiplier/star_chart.vl.json"
+import cumulative_download_count from "./open_source_multiplier/cumulative_download_count.vl.json"
+import monthly_downloads_by_release from "./open_source_multiplier/monthly_downloads_by_release.vl.json"
+
+# Splink and the Open Source Dividend
+
+<Subtitle>
+  How Splink has benefitted from the data linking community
+</Subtitle>
+
+## Summary
+
+This post presents the argument for open sourcing analytical work using the real world example of Splink, a Python library for record linkage.  The hope is that it helps others who want to argue the case for open sourcing their work.
+
+The benefits to Splink of working in the open have been enormous.   Academics, government, private sector consultancies, big tech companies and expert hobbiests have all contributed code and ideas to the project, for which we are very thankful.  As such, Splink represents an international collaboration of some of the world's leading experts in record linkage.
+
+This post concentrates on tangible statistics that to the extent of external engagement and collaboration.  It is a companion to a previous, more abstract blog post I've written:  [Why you should open source your analytical work](https://www.robinlinacre.com/open_sourcing_analytical_work/).
+
+<p>
+  {" "}
+  Headline statistics as of <span>
+    {new Date().toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    })}
+  </span> {" "} are as follows:
+</p>
+
+<ul>
+  <li>Splink has been downloaded <span>{statistics.total_downloads.toLocaleString("en-GB")}</span> times</li>
+
+  <li><a href="https://github.com/moj-analytical-services/splink/stargazers"><span>{statistics.total_stars}</span> people</a> have starred (favourited) Splink on Github </li>
+
+  <li><span>{statistics.distinct_users_commented}</span> external users have posted a total of  <span>{statistics.total_external_comments}</span> comments on the <a href="http://github.com/moj-analytical-services/splink">main Splink website</a></li>
+
+  <li><a href="https://github.com/moj-analytical-services/splink/graphs/contributors"><span>{statistics.code_contributors}</span>  users</a> have contributed to the codebase</li>
+
+</ul>
+
+## Background
+
+Network effects are a key factor that make big cities highly productive: concentrations of skilled workers collaborate, share ideas and infrastructure, help upskill each other, and enjoy working with other like-minded people. Each of these interactions is only a small productivity multiplier, but they compound to make dramatic overall gains.
+
+I've seen a lot of similar benefits from working on Splink. Cities bring people physically closer together for collaboration. Open source enables this to happen virtually, creating an informal community of experts around the world who share an interest in solving a particular and often highly-specific problem.
+
+Open source has been key to building this community around Splink, because:
+
+- Our work on Splink was easily discoverable using Google, and the software and methodology was fully transparent because the source code is easily accessible
+- Users could begin downloading and using Splink immediately and for free, without even needing to contact us - mostly, we only hear from them when they have problems or want to give us feedback
+- Collaborators and other experts are motivated to help because they know they are contributing to something that benefits the wider data linkage community
+- Discussions can be posted in the open, removing any barriers to communication
+
+This community in turn has been critical in helping us iteratively improve Splink. Users have spontanously given us hundreds of pieces of feedback, including reporting bugs, suggesting new features, and asking questions.
+
+
+
+## Number of downloads
+
+
+<VegaLite spec={monthly_downloads_by_release} />
+
+
+This post looks at statistics from my experience working on Splink, an open source Python library for record linkage at scale. It concentrates on the interactions the core team have had with external parties to give a sense of the wealth of knowledge we’ve been able to tap into and exploit to continuously improve Splink. For a more abstract look at the power of open source, see this historical post.
+
+
+
+
+<VegaLite spec={star_chart} />
+
+
+In addition, we've had a huge amount of engagement via email and in person.
+
+We've had contributions from academics, governmentm, private sector consultancies, and big tech firms.
+
+Splink has been used to underpin published academic reserach.
+
+<VegaLite spec={cumulative_download_count} />
+
