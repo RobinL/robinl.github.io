@@ -6,6 +6,10 @@ import star_chart from "./open_source_multiplier/star_chart.vl.json"
 import cumulative_download_count from "./open_source_multiplier/cumulative_download_count.vl.json"
 import monthly_downloads_by_release from "./open_source_multiplier/monthly_downloads_by_release.vl.json"
 
+import cumulative_external_comment_count from "./open_source_multiplier/cumulative_external_comment_count.vl.json"
+import distinct_external_commentors from "./open_source_multiplier/distinct_external_commentors.vl.json"
+
+
 # Splink and the Open Source Dividend
 
 <Subtitle>
@@ -36,48 +40,62 @@ This post concentrates on tangible statistics that to the extent of external eng
 
   <li><a href="https://github.com/moj-analytical-services/splink/stargazers"><span>{statistics.total_stars}</span> people</a> have starred (favourited) Splink on Github </li>
 
-  <li><span>{statistics.distinct_users_commented}</span> external users have posted a total of  <span>{statistics.total_external_comments}</span> comments on the <a href="http://github.com/moj-analytical-services/splink">main Splink website</a></li>
+  <li><span>{statistics.distinct_users_commented}</span> external users have posted a total of  <span>{statistics.total_external_comments}</span> comments on the <a href="http://github.com/moj-analytical-services/splink">main Splink website</a>, including bug reports, feature requests and requests for help</li>
 
   <li><a href="https://github.com/moj-analytical-services/splink/graphs/contributors"><span>{statistics.code_contributors}</span>  users</a> have contributed to the codebase</li>
 
 </ul>
 
+## The growth of Splink
+
+Let's start with a few charts that tell the story of the growth of Splink.
+
+Right from the beginning - even when Splink was beta software - there was significant interest as measured by downloads.  As the project has matured, the number of monthly downloads has continued to increase consistently.
+
+<VegaLite spec={monthly_downloads_by_release} />
+
+<VegaLite spec={cumulative_download_count} />
+
+The biggest growth in external engagement
+
+<VegaLite spec={cumulative_external_comment_count} />
+
+<VegaLite spec={distinct_external_commentors} />
+
+
+Possibly the best measure of interest from the external community is stars
+
+<VegaLite spec={star_chart} />
+
+
+
 ## Background
 
-Network effects are a key factor that make big cities highly productive: concentrations of skilled workers collaborate, share ideas and infrastructure, help upskill each other, and enjoy working with other like-minded people. Each of these interactions is only a small productivity multiplier, but they compound to make dramatic overall gains.
+Cities bring people together physically for collaboration resulting in network effects that boost productivity. Open source software projects enjoy similar network effects, which happen virtually, creating an informal community of experts around the world who share an interest in solving a particular and often highly-specific problem.  Each interaction within this community is only a small productivity multiplier, but they compound to make dramatic overall gains. A virtuous cycle can be established whereby as the quality of the open source project increases, more users are attracted into the network.
 
-I've seen a lot of similar benefits from working on Splink. Cities bring people physically closer together for collaboration. Open source enables this to happen virtually, creating an informal community of experts around the world who share an interest in solving a particular and often highly-specific problem.
-
-Open source has been key to building this community around Splink, because:
+With Splink, I believe working in the open was critical to establishing these network effects because:
 
 - Our work on Splink was easily discoverable using Google, and the software and methodology was fully transparent because the source code is easily accessible
 - Users could begin downloading and using Splink immediately and for free, without even needing to contact us - mostly, we only hear from them when they have problems or want to give us feedback
 - Collaborators and other experts are motivated to help because they know they are contributing to something that benefits the wider data linkage community
 - Discussions can be posted in the open, removing any barriers to communication
 
-This community in turn has been critical in helping us iteratively improve Splink. Users have spontanously given us hundreds of pieces of feedback, including reporting bugs, suggesting new features, and asking questions.
+This community has been critical in helping us iteratively improve Splink. Users have spontanously given us hundreds of pieces of feedback, including reporting bugs, suggesting new features, and asking questions.  The first release of Splink was .  In early 2022, in response to two years of user feedback, we rewrote Splink from the ground up, addressing the most serious usability and performance issues which had been identified by the community.
+
+The remainder of this post presents some charts to illustrate the strength of the community
+
+## Key collaborators
+
+We have been invited to present to government statisticians in at least 6 different countries.  This has given us the opportunity to understand how record linkage experts in these various counties.
+
+We have also presented our work to over 30 UK government departments and agencies, and had external contributions from several departments.
+
+Finally, we've collaborated with data scientists working for private sector consultancies and big tech firms, who have contributed to our codebase.
+
+Finally, in terms of usage we're aware of use of Splink in other government departments, in the private sector and academia.
 
 
 
-## Number of downloads
+## A final plea
 
-
-<VegaLite spec={monthly_downloads_by_release} />
-
-
-This post looks at statistics from my experience working on Splink, an open source Python library for record linkage at scale. It concentrates on the interactions the core team have had with external parties to give a sense of the wealth of knowledge we’ve been able to tap into and exploit to continuously improve Splink. For a more abstract look at the power of open source, see this historical post.
-
-
-
-
-<VegaLite spec={star_chart} />
-
-
-In addition, we've had a huge amount of engagement via email and in person.
-
-We've had contributions from academics, governmentm, private sector consultancies, and big tech firms.
-
-Splink has been used to underpin published academic reserach.
-
-<VegaLite spec={cumulative_download_count} />
-
+The one area we don't have good statistics on is who is using Splink.  If you are a Splink user, please
