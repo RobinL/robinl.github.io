@@ -2,7 +2,7 @@ import { Vega, VegaLite } from "react-vega"
 import Subtitle from "../components/subtitle"
 
 import statistics from "./open_source_multiplier/statistics.json"
-import star_chart from "./open_source_multiplier/star_chart.vl.json"
+import cumulative_stars from "./open_source_multiplier/cumulative_stars.vl.json"
 import cumulative_download_count from "./open_source_multiplier/cumulative_download_count.vl.json"
 import monthly_downloads_by_release from "./open_source_multiplier/monthly_downloads_by_release.vl.json"
 
@@ -12,13 +12,9 @@ import distinct_external_commentors from "./open_source_multiplier/distinct_exte
 
 # Splink and the Open Source Dividend
 
-<Subtitle>
-  How Splink has benefitted from the data linking community
-</Subtitle>
-
 ## Summary
 
-This post presents the argument for open sourcing analytical work using the real world example of Splink, a Python library for record linkage.  The hope is that it helps others who want to argue the case for open sourcing their work.
+This post presents the argument for open sourcing analytical work using the real world example of [Splink](http://github.com/moj-analytical-services/splink), a Python record linkage library.  The hope is that it helps others who want to make the case for open sourcing their work.
 
 The benefits to Splink of working in the open have been enormous.   Academics, government, private sector consultancies, big tech companies and expert hobbiests have all contributed code and ideas to the project, for which we are very thankful.  As such, Splink represents an international collaboration of some of the world's leading experts in record linkage.
 
@@ -35,10 +31,7 @@ The following headline statistics give an indication of extent of external engag
 
 </ul>
 
-This post it is a companion to a previous, more abstract blog post I've written:  [Why you should open source your analytical work](https://www.robinlinacre.com/open_sourcing_analytical_work/).
-
-
-
+This post it is a concrete companion to a previous, more abstract blog post I've written:  [Why you should open source your analytical work](https://www.robinlinacre.com/open_sourcing_analytical_work/).
 
 
 
@@ -46,9 +39,7 @@ This post it is a companion to a previous, more abstract blog post I've written:
 
 Some of the greatest benefits have come from the informal, virtual community centered around Splink, and the resultant network effects.  Each interaction within this community is a small quality and productivity multiplier, but these multipliers compound to make dramatic overall gains. We also seem to have established a virtuous cycle has been established whereby as the quality of the open source project increases, more users are attracted into the network.
 
-The following charts illustrate the level of engagement we've had on Github:
-
-<VegaLite spec={cumulative_external_comment_count} />
+The following charts shows the how the number of different users we've interacted with on Github has grown through time:
 
 <VegaLite spec={distinct_external_commentors} />
 
@@ -59,45 +50,51 @@ With Splink, I believe working in the open was critical to establishing these ne
 - Collaborators and other experts are motivated to help because they know they are contributing to something that benefits the wider data linkage community
 - Discussions can be posted in the open, removing any barriers to communication
 
-This community has been critical in helping us iteratively improve Splink. Users have spontanously given us hundreds of pieces of feedback, including reporting bugs, suggesting new features, and asking questions.  The first release of Splink was .  In early 2022, in response to two years of user feedback, we rewrote Splink from the ground up, addressing the most serious usability and performance issues which had been identified by the community.
+This community has been critical in helping us to understand best practice record linkage techniques and how we can incorporate them into Splink.
 
-<VegaLite spec={star_chart} />
+## User needs, feedback and documentation
 
-## The growth of Splink
+One of the greatest benefits of this community has been the access its given us to a wide range of users who've contacted us both via our public discussion forums and privately.  This has effectively enabled us to conduct user research with some of worlds leading experts and practitioners.
 
-Let's start with a few charts that tell the story of the growth of Splink.
+For example, we have been contacted by and have spoken to government analysts in at least six different countries, who have been at various stages of testing Splink on their data.  Similarly we've spoken to academics in leading international universities, and Splink has been used to power published academic research.
 
-Right from the beginning - even when Splink was beta software - there was significant interest as measured by downloads.  As the project has matured, the number of monthly downloads has continued to increase consistently.
+Overall, users have spontanously given us hundreds of pieces of feedback, including reporting bugs, suggesting new features, and asking questions, and shown in the following chart:
+
+<VegaLite spec={cumulative_external_comment_count} />
+
+<p>The main result has been continuous and iterative improvement of Splink, with a total of <span>{statistics.number_of_releases}</span> releases, each of which represents incremental improvements.  Some of these releases also represent a step change in capabilities: In July 2022, in response to two years of user feedback, we rewrote Splink from the ground up, addressing the most serious usability and performance issues which had been identified by the community.  At the same time, we released a new  <a href = "https://moj-analytical-services.github.io/splink">documentation</a> website to help users get the most from Splink.</p>
+
+We'e seen first hand how these user experience improvements documentation have made Splink easier to use as new starters have joined the team.  Corporate knowledge retention is much easier when all the materials are easily available online, including:
+- [An seven part tutorial](https://moj-analytical-services.github.io/splink/demos/00_Tutorial_Introduction.html) which can be [run interactively in JupyterLab in the web browser](https://mybinder.org/v2/gh/moj-analytical-services/splink_demos/splink3_demos?urlpath=lab)
+- [A series of nine fully-functional record linkage examples](https://moj-analytical-services.github.io/splink/examples_index.html), which can also be run interactively in the browser
+- [A series of interactive articles](https://www.robinlinacre.com/probabilistic_linkage/) explaining record linkage theory.
+- An [one-hour introductory video](https://www.youtube.com/channel/UCavuC5RfLRUv_8XZxYDR0FA/videos), plus a [much earlier video](https://www.youtube.com/watch?v=_8lV2Lbd6Xs&list=PLgDj8qwDZg5jVWDg0LI4gc7aMrYIlBIFJ&index=2), which together have been viewed over 6,800 times.
+- [Full API documentation](https://moj-analytical-services.github.io/splink/linker.html)
+
+One of the clearest ways we've been able to chart the resultant growth in interst in Splink is through Github 'stars' - which is a way of favouriting Splink within the Github platform:
+
+<VegaLite spec={cumulative_stars} />
+
+It's also possible to see who has starred Splink.  The list includes a broad range of people from around the world, including people working for a variety of big tech firms, academics, companies and individuals.  See the bubble chart [here](https://ossinsight.io/analyze/splink/).
+
+## Collaboration
+
+We've collaborated with data scientists working for private sector consultancies and big tech firms, who have contributed to our codebase.
+
+## Users
+
+A final strong argument for open sourcing Splink has been the benefits users themselves get from Splink.  As a government analyst, my work is taxpayer funded so it makes sense that taxpayers should get as much value as possible from it.
+
+Finally, in terms of usage we're aware of use of Splink in other government departments, in the private sector and academia.
+
+
 
 <VegaLite spec={monthly_downloads_by_release} />
 
 <VegaLite spec={cumulative_download_count} />
 
-The biggest growth in external engagement
-
-
-
-
-Possibly the best measure of interest from the external community is stars
-
-
-
-
-## Contributors
-
-External contributors over time?
-
-## Key collaborators
-
-We have been invited to present to government statisticians in at least 6 different countries.  This has given us the opportunity to understand how record linkage experts in these various counties.
-
-We have also presented our work to over 30 UK government departments and agencies, and had external contributions from several departments.
-
-Finally, we've collaborated with data scientists working for private sector consultancies and big tech firms, who have contributed to our codebase.
-
-Finally, in terms of usage we're aware of use of Splink in other government departments, in the private sector and academia.
-
-
 ## A final plea
 
-The one area we don't have good statistics on is who is using Splink.  If you are a Splink user, please
+Since Splink is open source, it's difficult to know who is using it.  This is particularly true because record linkage is usually conducted on sensitive data, so code that uses Splink will generally not be open source.
+
+If you are a Splink user, please do get in touch and - we'd love to hear from you about how you've used it:  robinlinacre@hotmail.com.
