@@ -16,18 +16,22 @@ import distinct_external_commentors from "./open_source_multiplier/distinct_exte
 
 This post presents the argument for open sourcing analytical work using the real world example of [Splink](http://github.com/moj-analytical-services/splink), a Python record linkage library.  The hope is that it helps others who want to make the case for open sourcing their work.
 
-The benefits to Splink of working in the open have been enormous.   Academics, government, private sector consultancies, big tech companies and expert hobbiests have all contributed code and ideas to the project, for which we are very thankful.  As such, Splink represents an international collaboration of some of the world's leading experts in record linkage.
+The benefits to Splink of working in the open have been enormous.   Academics, government, private sector consultancies, big tech companies and expert hobbiests have all contributed code and ideas to the project, for which we are very thankful.
+
+As such, Splink represents an international collaboration of some of the world's leading experts in record linkage.
 
 The following headline statistics give an indication of extent of external engagement and collaboration and the size of the community:
 
 <ul>
-  <li>Splink has been downloaded <span>{statistics.total_downloads.toLocaleString("en-GB")}</span> times</li>
+  <li>Splink has been downloaded <span>{statistics.total_downloads.toLocaleString("en-GB")}</span> times and is in the top <span>{(statistics.splink_pypi_percentile*100).toFixed(2)}</span>% of all Python packages by monthly downloads.</li>
 
   <li><a href="https://github.com/moj-analytical-services/splink/stargazers"><span>{statistics.total_stars}</span> people</a> have starred (favourited) Splink on Github </li>
 
   <li><span>{statistics.distinct_users_commented}</span> external users have posted a total of  <span>{statistics.total_external_comments}</span> comments on the <a href="http://github.com/moj-analytical-services/splink">main Splink website</a>, including bug reports, feature requests and requests for help</li>
 
   <li><a href="https://github.com/moj-analytical-services/splink/graphs/contributors"><span>{statistics.code_contributors}</span>  users</a> have contributed to the codebase</li>
+
+
 
 </ul>
 
@@ -77,24 +81,28 @@ One of the clearest ways we've been able to chart the resultant growth in inters
 
 It's also possible to see who has starred Splink.  The list includes a broad range of people from around the world, including people working for a variety of big tech firms, academics, companies and individuals.  See the bubble chart [here](https://ossinsight.io/analyze/splink/).
 
-## Collaboration
+## Collaboration and external contributions
 
-We've collaborated with data scientists working for private sector consultancies and big tech firms, who have contributed to our codebase.
+<p> We've collaborated with data scientists working for private sector consultancies and big tech firms, who have contributed to our codebase.  Overall a total of <span>{statistics.code_contributors}</span> different people have contributed to our codebase.</p>
+
+The following chart shows the number of contributions from external users through time:
+
+[Chart of merged pull requests opened by external parties]
 
 ## Users
 
 A final strong argument for open sourcing Splink has been the benefits users themselves get from Splink.  As a government analyst, my work is taxpayer funded so it makes sense that taxpayers should get as much value as possible from it.
 
-Finally, in terms of usage we're aware of use of Splink in other government departments, in the private sector and academia.
-
-
+The following two charts show the monthly downloads of Splink, and the cumulative total downloads, respectively:
 
 <VegaLite spec={monthly_downloads_by_release} />
 
 <VegaLite spec={cumulative_download_count} />
 
+<p>It's a bit unclear how this translates into users.  But it's worth noting that Splink is the <span>{statistics.splink_top_pypi_rank.toLocaleString("en-Gb")}</span> most downloaded Python package out of a total of <span>{statistics.total_pypi_packages.toLocaleString("en-Gb")}</span> packages posted on PyPi, putting it in the top <span>{(statistics.splink_pypi_percentile*100).toFixed(2)}</span>% of all packages.</p>
+
 ## A final plea
 
 Since Splink is open source, it's difficult to know who is using it.  This is particularly true because record linkage is usually conducted on sensitive data, so code that uses Splink will generally not be open source.
 
-If you are a Splink user, please do get in touch and - we'd love to hear from you about how you've used it:  robinlinacre@hotmail.com.
+If you are a Splink user, please do get in touch and - we'd love to hear from you about how you've used it - email robinlinacre@hotmail.com.
