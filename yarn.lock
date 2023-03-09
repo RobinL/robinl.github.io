@@ -1794,71 +1794,113 @@
 
 "@robinl/86fc30325e4106c4@https://api.observablehq.com/@robinl/86fc30325e4106c4@851.tgz?v=3":
   version "851.0.0"
+  uid e11a0aded4e8b025ad720ab284c7a8774f7a4f1c
+  resolved "https://api.observablehq.com/@robinl/86fc30325e4106c4@851.tgz?v=3#e11a0aded4e8b025ad720ab284c7a8774f7a4f1c"
 
 "@robinl/9534e8e74053c14e@https://api.observablehq.com/@robinl/9534e8e74053c14e@451.tgz?v=3":
   version "451.0.0"
+  uid e26b3e49903e4c73ded170a61d6511bef5ab2681
+  resolved "https://api.observablehq.com/@robinl/9534e8e74053c14e@451.tgz?v=3#e26b3e49903e4c73ded170a61d6511bef5ab2681"
 
 "@robinl/bird-song-quiz@https://api.observablehq.com/@robinl/bird-song-quiz@718.tgz?v=3":
   version "718.0.0"
+  uid ab6a862ee1cbebac1ca501d06857be28673bf0ae
+  resolved "https://api.observablehq.com/@robinl/bird-song-quiz@718.tgz?v=3#ab6a862ee1cbebac1ca501d06857be28673bf0ae"
 
 "@robinl/birdsong-recordings@https://api.observablehq.com/@robinl/birdsong-recordings@442.tgz?v=3":
   version "442.0.0"
+  uid "9171dc8de673f18b04ad6691d0be7d2ac269932c"
+  resolved "https://api.observablehq.com/@robinl/birdsong-recordings@442.tgz?v=3#9171dc8de673f18b04ad6691d0be7d2ac269932c"
 
 "@robinl/d51533bbe054b3d8@https://api.observablehq.com/@robinl/d51533bbe054b3d8@510.tgz?v=3":
   version "510.0.0"
+  uid "21d1ea45c3370280c52d546d4f047ea0a4bfd708"
+  resolved "https://api.observablehq.com/@robinl/d51533bbe054b3d8@510.tgz?v=3#21d1ea45c3370280c52d546d4f047ea0a4bfd708"
 
 "@robinl/dependencies-between-match-weights@https://api.observablehq.com/@robinl/dependencies-between-match-weights.tgz?v=3":
   version "158.0.0"
-
+  uid "464cb2f183d5cb0d429570ee0dd534bc973a6221"
+  resolved "https://api.observablehq.com/@robinl/dependencies-between-match-weights.tgz?v=3#464cb2f183d5cb0d429570ee0dd534bc973a6221"
 
 "@robinl/energy-usage-and-goods-imports-and-exports@https://api.observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports.tgz?v=3":
-  version "1349.0.0"
+  version "1351.0.0"
+  uid "80ad6323851983b8d25112165a1a461fad18b28c"
+  resolved "https://api.observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports.tgz?v=3#80ad6323851983b8d25112165a1a461fad18b28c"
 
 "@robinl/energy-usage-calculator-for-everyday-activities@https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities@561.tgz?v=3":
   version "561.0.0"
+  uid e0794dac69ed1d31d76d063884297bceb4b04cd2
+  resolved "https://api.observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities@561.tgz?v=3#e0794dac69ed1d31d76d063884297bceb4b04cd2"
 
 "@robinl/filling-the-country-with-solar-panels@https://api.observablehq.com/@robinl/filling-the-country-with-solar-panels.tgz?v=3":
-  version "64.0.0"
+  version "66.0.0"
+  uid "28f3752e2521b73f7c4531e0cdc088dd5e678e67"
+  resolved "https://api.observablehq.com/@robinl/filling-the-country-with-solar-panels.tgz?v=3#28f3752e2521b73f7c4531e0cdc088dd5e678e67"
 
 "@robinl/flight-distance-calculator@https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3":
-  version "1073.0.0"
+  version "1090.0.0"
+  uid "6d1651620a737afa3c406413a498d4cfb8de443f"
+  resolved "https://api.observablehq.com/@robinl/flight-distance-calculator.tgz?v=3#6d1651620a737afa3c406413a498d4cfb8de443f"
 
 "@robinl/how-much-should-carbon-offsetting-cost@https://api.observablehq.com/@robinl/how-much-should-carbon-offsetting-cost.tgz?v=3":
-  version "476.0.0"
+  version "478.0.0"
+  uid da9ea67b97f313dca3bc4a6c461d73f04a4a55d9
+  resolved "https://api.observablehq.com/@robinl/how-much-should-carbon-offsetting-cost.tgz?v=3#da9ea67b97f313dca3bc4a6c461d73f04a4a55d9"
 
 "@robinl/interactive-blogging-with-observable-notebooks-and-gatsb@https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3":
   version "518.0.0"
+  uid "7f4841c1bd4db03d00c78a7d948ab8ec52ed5788"
+  resolved "https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3#7f4841c1bd4db03d00c78a7d948ab8ec52ed5788"
 
 "@robinl/m-and-u-probability-generator@https://api.observablehq.com/@robinl/m-and-u-probability-generator.tgz?v=3":
-  version "62.0.0"
-
-"@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
-  version "511.0.0"
-
-"@robinl/spark-explain@https://api.observablehq.com/@robinl/spark-explain.tgz?v=3":
-  version "647.0.0"
-
-"@robinl/the-carbon-impact-of-switiching-to-an-electric-car@https://api.observablehq.com/@robinl/the-carbon-impact-of-switiching-to-an-electric-car@1053.tgz?v=3":
-  version "1053.0.0"
-
-"@robinl/understanding-match-weights@https://api.observablehq.com/@robinl/understanding-match-weights@644.tgz?v=3":
-  version "644.0.0"
-
-"@robinl/understanding-the-spark-ui-by-example-sorting-data@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3":
-  version "269.0.0"
-
-"@robinl/understanding-the-spark-ui-by-example-the-left-join@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3":
-  version "221.0.0"
-
-"@robinl/unsupervised-probabalistic-data-matching-using-the-expec@https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3":
-  version "1041.0.0"
-
-
-"@robinl/visualising-fellegi-sunter@https://api.observablehq.com/@robinl/visualising-fellegi-sunter@1006.tgz?v=3":
-  version "1011.0.0"
+  version "79.0.0"
+  uid e26e0514523331317ce8e2e093c651f6d18890e4
+  resolved "https://api.observablehq.com/@robinl/m-and-u-probability-generator.tgz?v=3#e26e0514523331317ce8e2e093c651f6d18890e4"
 
 "@robinl/m-and-u-probability-generator_starting_values@https://api.observablehq.com/d/1d09c6cf5d576e0a@119.tgz?v=3":
   version "119.0.0"
+  uid "97101cdd84e9a04999498c5a7ded266845c9fadf"
+  resolved "https://api.observablehq.com/d/1d09c6cf5d576e0a@119.tgz?v=3#97101cdd84e9a04999498c5a7ded266845c9fadf"
+
+"@robinl/my-flights@https://api.observablehq.com/@robinl/my-flights.tgz?v=3":
+  version "514.0.0"
+  uid "982fec96597fc9c0bd8f465cb7944a7778d59520"
+  resolved "https://api.observablehq.com/@robinl/my-flights.tgz?v=3#982fec96597fc9c0bd8f465cb7944a7778d59520"
+
+"@robinl/spark-explain@https://api.observablehq.com/@robinl/spark-explain.tgz?v=3":
+  version "647.0.0"
+  uid "5c9a1b416684df5f071c3146e5f354eea2b591f8"
+  resolved "https://api.observablehq.com/@robinl/spark-explain.tgz?v=3#5c9a1b416684df5f071c3146e5f354eea2b591f8"
+
+"@robinl/the-carbon-impact-of-switiching-to-an-electric-car@https://api.observablehq.com/@robinl/the-carbon-impact-of-switiching-to-an-electric-car@1053.tgz?v=3":
+  version "1053.0.0"
+  uid d18332235c00ed073735d54217324b040ba96f3a
+  resolved "https://api.observablehq.com/@robinl/the-carbon-impact-of-switiching-to-an-electric-car@1053.tgz?v=3#d18332235c00ed073735d54217324b040ba96f3a"
+
+"@robinl/understanding-match-weights@https://api.observablehq.com/@robinl/understanding-match-weights@644.tgz?v=3":
+  version "644.0.0"
+  uid "8462e69b8875ef1d09dbc95cede2b01d7f247904"
+  resolved "https://api.observablehq.com/@robinl/understanding-match-weights@644.tgz?v=3#8462e69b8875ef1d09dbc95cede2b01d7f247904"
+
+"@robinl/understanding-the-spark-ui-by-example-sorting-data@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3":
+  version "269.0.0"
+  uid "9ee669690e0a28f2beb4f9c55df0af430d16d900"
+  resolved "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data@269.tgz?v=3#9ee669690e0a28f2beb4f9c55df0af430d16d900"
+
+"@robinl/understanding-the-spark-ui-by-example-the-left-join@https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3":
+  version "221.0.0"
+  uid f4006f9cbfa3d0b97ab231b3910f200f5ba2aa3a
+  resolved "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3#f4006f9cbfa3d0b97ab231b3910f200f5ba2aa3a"
+
+"@robinl/unsupervised-probabalistic-data-matching-using-the-expec@https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3":
+  version "1041.0.0"
+  uid "2788fe5692e2ed4a92fda2254af6f3c66fe4f808"
+  resolved "https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3#2788fe5692e2ed4a92fda2254af6f3c66fe4f808"
+
+"@robinl/visualising-fellegi-sunter@https://api.observablehq.com/@robinl/visualising-fellegi-sunter@1011.tgz?v=3":
+  version "1011.0.0"
+  uid cfa04f796deef09c544294e7048ed28a6a501814
+  resolved "https://api.observablehq.com/@robinl/visualising-fellegi-sunter@1011.tgz?v=3#cfa04f796deef09c544294e7048ed28a6a501814"
 
 "@sideway/address@^4.1.0":
   version "4.1.1"
@@ -9108,9 +9150,9 @@ nan@^2.12.1:
   integrity sha512-M2ufzIiINKCuDfBSAUr1vWQ+vuVcA9kqx8JJUsbQi6yf1uGRyb7HfpdfUr5qLXf3B/t8dPvcjhKMmlfnP47EzQ==
 
 nanoid@^3.1.20, nanoid@^3.1.22:
-  version "3.1.22"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.22.tgz#b35f8fb7d151990a8aebd5aa5015c03cf726f844"
-  integrity sha512-/2ZUaJX2ANuLtTvqTlgqBQNJoQO398KyJgZloL0PZkC0dpysjncRUPsFe3DUPzz/y3h+u7C46np8RMuvF3jsSQ==
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
+  integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
 
 nanomatch@^1.2.9:
   version "1.2.13"
