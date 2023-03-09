@@ -1,15 +1,15 @@
 import React from 'react'
 import ObsMdxPage from "../components/mdx_obs_page"
-import MDXDocument from "../mdx/open_source_multiplier.mdx"
+import MDXDocument from "../mdx/open_source_dividend.mdx"
 
 export const frontmatter = {
-         title: "The open source multipler",
+         title: "The open source dividend",
          post_date: "2023-03-04",
          code_url:
-           "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/open_source_multipler.mdx",
+           "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/open_source_dividend.mdx",
          post_type: "mdx",
          post_category: "data",
-         description: "The open source multiplier and splink stats"
+         description: "Splink and the open source dividend"
        }
 
 export default ({ data }) => (
