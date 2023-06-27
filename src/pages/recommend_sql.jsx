@@ -3,7 +3,7 @@ import ObsMdxPage from "../components/mdx_obs_page"
 import MDXDocument from "../mdx/recommend_sql.mdx"
 
 export const frontmatter = {
-         title: "SQL should be your default choice for data engineering pipelines",
+         title: "SQL should be the default choice for data transformation logic",
          post_date: "2023-01-30",
          code_url:
            "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/recommend_sql.mdx",

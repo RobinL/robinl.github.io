@@ -1,4 +1,4 @@
-# SQL should be your default choice for data engineering pipelines
+# SQL should be the default choice for data transformation logic
 
 ## Summary
 
@@ -98,3 +98,4 @@ Some interesting things I have an eye on:
 - Similarly, [Ibis](https://ibis-project.org/docs/4.1.0/) offers a replacement API for SQL queries which is more familiar to Python users, but ‘compiles down’ to SQL for execution against its supported backends. [Dbplyr](https://github.com/tidyverse/dbplyr) is similar in R. Polars [allows the execution of SQL](https://github.com/pola-rs/polars/pull/4967), though it looks like the SQL is transpiled in [the opposite direction](https://github.com/pola-rs/polars/pull/4967#issuecomment-1279160653).
 - [SQLGlot](https://github.com/tobymao/sqlglot) has the potential for lots of interesting applications such as [keeping track of lineage](https://twitter.com/Captaintobs/status/1619185992111624197). It seems possible that it might be used in future as a tool to re-write a CTE pipeline to improve the efficiency of operation without changing its meaning (since [CTEs can sometimes be bad for performance](https://twitter.com/A_n_Elk/status/1615495328077352960?s=20)).
 - [dbt](https://github.com/dbt-labs/dbt-core) has gained widespread adoption for data engineering. I’m particularly interested in future directions such as functions that can provide more information about lineage, or that introspect the SQL and improve the efficiency of execution
+- [Polars](https://github.com/pola-rs/polars#sql) is a fast DataFrame library that supports SQL with a Python API.
