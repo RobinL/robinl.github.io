@@ -1,6 +1,6 @@
 import React from 'react'
 import ObsMdxPage from "../components/mdx_obs_page"
-import MDXDocument from "../mdx/em_intuition.mdx"
+import MDXDocument from "../mdx/slide_rule.mdx"
 import LinkageFooter from '../components/linkage_footer'
 
 export const frontmatter = {
