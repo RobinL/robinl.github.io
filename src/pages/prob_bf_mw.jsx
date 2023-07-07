@@ -1,13 +1,13 @@
 import React from 'react'
 import ObsMdxPage from "../components/mdx_obs_page"
-import MDXDocument from "../mdx/slide_rule.mdx"
+import MDXDocument from "../mdx/prob_bf_mw.mdx"
 import LinkageFooter from '../components/linkage_footer'
 
 export const frontmatter = {
   title: "The relationship between probabilities, match weights and Bayes factors",
   post_date: "2023-07-07",
   code_url:
-    "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/slide_rule.mdx",
+    "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/prob_bf_mw.mdx",
   post_type: "mdx",
   post_category: "probabilistic_linkage",
   description: "Visualising the correspondence between match weights, probabilities, Bayes factors and their intuitive explanations"
