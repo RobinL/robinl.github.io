@@ -33,6 +33,7 @@
     "@robinl/how-much-should-carbon-offsetting-cost": "https://api.observablehq.com/@robinl/how-much-should-carbon-offsetting-cost.tgz?v=3",
     "@robinl/interactive-blogging-with-observable-notebooks-and-gatsb": "https://api.observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb.tgz?v=3",
     "@robinl/m-and-u-probability-generator": "https://api.observablehq.com/@robinl/m-and-u-probability-generator.tgz?v=3",
+    "@robinl/m-and-u-probability-generator_starting_values": "https://api.observablehq.com/d/1d09c6cf5d576e0a@119.tgz?v=3",
     "@robinl/my-flights": "https://api.observablehq.com/@robinl/my-flights.tgz?v=3",
     "@robinl/spark-explain": "https://api.observablehq.com/@robinl/spark-explain.tgz?v=3",
     "@robinl/the-carbon-impact-of-switiching-to-an-electric-car": "https://api.observablehq.com/@robinl/the-carbon-impact-of-switiching-to-an-electric-car@1053.tgz?v=3",
@@ -41,7 +42,6 @@
     "@robinl/understanding-the-spark-ui-by-example-the-left-join": "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join.tgz?v=3",
     "@robinl/unsupervised-probabalistic-data-matching-using-the-expec": "https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec.tgz?v=3",
     "@robinl/visualising-fellegi-sunter": "https://api.observablehq.com/@robinl/visualising-fellegi-sunter@1011.tgz?v=3",
-    "@robinl/m-and-u-probability-generator_starting_values": "https://api.observablehq.com/d/1d09c6cf5d576e0a@119.tgz?v=3",
     "babel-preset-gatsby": "^0.3.1",
     "gatsby": "^3.4.1",
     "gatsby-design-tokens": "^1.0.8",
@@ -68,8 +68,8 @@
     "react-vega": "^7.1.0",
     "typography": "^0.16.19",
     "typography-theme-st-annes": "^0.16.19",
-    "vega": "^5.7.3",
-    "vega-lite": "^4.0.0-beta.10"
+    "vega": "5.25.0",
+    "vega-lite": "5.13.0"
   },
   "devDependencies": {
     "prettier": "^1.18.2"
