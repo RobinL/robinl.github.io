@@ -1,0 +1,21 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Gatsby develop",
+            "program": "${workspaceRoot}/node_modules/gatsby/dist/bin/gatsby",
+            "args": [
+                "develop"
+            ],
+            "stopOnEntry": false,
+            "sourceMaps": false,
+            "runtimeExecutable": "/Users/robinlinacre/.nvm/versions/node/v20.5.0/bin/node",
+
+        }
+    ]
+}

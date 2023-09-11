@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1,
+h2,
+h3,
+h4 {
+    @apply font-semibold font-serif;
+}
+
+h1 {
+    @apply text-3xl leading-tight text-gray-900 mb-4;
+}
+
+h2 {
+    @apply text-2xl leading-snug text-gray-800 mb-2;
+}
+
+h3 {
+    @apply text-xl leading-relaxed text-gray-700 mb-2;
+}
+
+h4 {
+    @apply text-xl leading-normal text-gray-600 mb-2;
+}
+
+p {
+    @apply text-base mb-4 leading-relaxed text-gray-700;
+}
+
+ol {
+    @apply list-decimal list-outside  pl-5;
+}
+
+ul {
+    @apply list-disc list-outside pl-5;
+}
+
+li {
+    @apply text-base mb-2 leading-relaxed text-gray-700;
+}
+
+a {
+    @apply text-blue-600 no-underline hover:underline;
+}
+
+a:focus {
+    @apply outline-none ring-2 ring-blue-200;
+}
+
+blockquote {
+    @apply p-2 ml-4 mb-4 italic border-l-4 bg-gray-100 text-blue-600;
+}
+
+blockquote p {
+    @apply mb-0;
+}
+
+code {
+    @apply bg-gray-100 text-gray-800 border border-gray-200 p-0.5 rounded text-sm;
+}
+
+table {
+    @apply w-full border-collapse bg-white text-sm mb-4;
+}
+
+th {
+    @apply text-left font-semibold text-gray-700;
+}
+
+td {
+    @apply text-gray-700;
+}
+
+thead th {
+    @apply border-b border-gray-300;
+}
+
+tbody tr:not(:last-child) {
+    @apply border-b border-gray-300;
+}
+
+input[type='number'] {
+    @apply w-16 text-center text-xs border border-gray-300 rounded p-1;
+}
+
+input[type='text'] {
+    @apply w-16 text-center text-xs border border-gray-300 rounded p-1;
+}
+
+select {
+    @apply border border-gray-300 text-xs  rounded p-1 bg-white;
+}
+
+.observablehq {
+    @apply mb-4;
+}
+
+.observablehq code {
+    @apply text-sm;
+}
+
+#vg-tooltip-element.vg-tooltip {
+    @apply bg-white text-xs shadow-md rounded p-1 mb-0;
+    max-width: 250px;
+}
+
+#vg-tooltip-element.vg-tooltip table {
+    @apply table-fixed w-full mb-0;
+}
+
+#vg-tooltip-element.vg-tooltip tbody,
+#vg-tooltip-element.vg-tooltip tr {
+    @apply m-0 p-0;
+}
+
+#vg-tooltip-element.vg-tooltip td.key {
+    @apply px-0.5 py-0.5 text-right  m-0;
+}
+
+#vg-tooltip-element.vg-tooltip td.value {
+    @apply px-0.5 py-0.5 text-left m-0;
+}
+
+input[type='submit'],
+input[type='reset'],
+input[type='text'],
+input[type='password'],
+input[type='email'],
+input[type='search'],
+input[type='number'],
+input[type='file'] {
+    @apply text-xs text-gray-700 p-1 rounded text-left border border-gray-300 mr-2 mt-2;
+}
+
+input[type='button'] {
+    @apply text-xs bg-gray-200 text-gray-700 p-1 rounded border border-gray-300 mr-2 mt-2;
+}
+
+textarea {
+    @apply text-sm text-gray-700 p-1 rounded text-left border border-gray-300 mr-2 mt-2;
+}
+
+input[type='text'] {
+    width: auto;
+}
+
+svg {
+    @apply inline;
+}

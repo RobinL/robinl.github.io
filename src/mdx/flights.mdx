@@ -1,0 +1,18 @@
+---
+title: "My flights"
+description: "A history of my flights"
+post_date: "2019-10-05"
+post_category: "energy"
+code_url: "https://observablehq.com/@robinl/my-flights/"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import notebook from '@robinl/my-flights';
+import ObservableNotebook from '../components/ObservableNotebook';
+
+export const output_order = ['title', 'blurb', 'chart'];
+
+<ObservableNotebook notebook={notebook} cells={output_order} />

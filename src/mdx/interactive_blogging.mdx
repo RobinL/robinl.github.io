@@ -1,0 +1,18 @@
+---
+title: "Interactive blogging with Observable Notebooks and gatsby.js"
+description:
+post_date: "2019-10-11"
+post_category: "data"
+code_url: "https://observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import notebook from '@robinl/interactive-blogging-with-observable-notebooks-and-gatsb';
+import ObservableNotebook from '../components/ObservableNotebook';
+
+export const output_order = ['message', 'md1', 'md2', 'md3', 'md4', 'md5', 'md6'];
+
+<ObservableNotebook notebook={notebook} cells={output_order} />

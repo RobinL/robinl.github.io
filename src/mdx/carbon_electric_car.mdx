@@ -1,0 +1,42 @@
+---
+title: "The carbon impact of switiching to an electric car"
+description: "What is the comparative carbon footprint of electric cars?  As an existing petrol ICE car owner, should you switch to an electric car"
+post_date: "2021-09-03"
+post_category: "energy"
+code_url: "https://observablehq.com/@robinl/the-carbon-impact-of-switiching-to-an-electric-car"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import notebook from '@robinl/the-carbon-impact-of-switiching-to-an-electric-car';
+import ObservableNotebook from '../components/ObservableNotebook';
+
+export const output_order = [
+    'title',
+    'para_1',
+    'title_assumptions',
+    'ice_mileage_md',
+    'elec_mileage_md',
+    'total_emissions_ice_md',
+    'total_emissions_elec_md',
+    'ice_vehicle_emissions_md',
+    'uplift_md',
+    'elec_miles_kwh_md',
+    'carbon_intensity_md',
+    'results_title',
+    'results_para_1',
+    'results_chart',
+    'results_table',
+    'results_carbon_offset',
+    'replace_para_1',
+    'replace_para_2',
+    'replace_para_3',
+    'breakeven_electric',
+    'breakeven_electric_chart',
+    'further_considerations',
+    'annex',
+];
+
+<ObservableNotebook notebook={notebook} cells={output_order} />

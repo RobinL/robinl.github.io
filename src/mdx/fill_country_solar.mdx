@@ -1,0 +1,23 @@
+---
+title: "Filling the country with solar panels"
+description: ""
+post_date: "2020-04-17"
+post_category: "energy"
+code_url: "https://observablehq.com/@robinl/filling-the-country-with-solar-panels"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import notebook from '@robinl/filling-the-country-with-solar-panels';
+import ObservableNotebook from '../components/ObservableNotebook';
+
+export const output_order = [
+  "title",
+  "viewof solar_perc",
+  "map",
+  "total_kwh"
+];
+
+<ObservableNotebook notebook={notebook} cells={output_order} />

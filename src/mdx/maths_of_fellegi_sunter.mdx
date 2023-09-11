@@ -1,0 +1,57 @@
+---
+title: "The mathematics of the Fellegi Sunter model"
+description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article presents the maths alongside an interactive example."
+post_date: "2021-05-21"
+post_category: "probabilistic_linkage"
+code_url: "https://observablehq.com/@robinl/86fc30325e4106c4"
+prob_linkage_category: "tutorial"
+tutorial_number: 2
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import notebook from '@robinl/86fc30325e4106c4';
+import ObservableNotebook from '../components/ObservableNotebook';
+import TutorialNav from '../components/TutorialNav';
+import CompactTutorialNav from '../components/CompactTutorialNav';
+
+export const output_order = [
+  "title",
+  "para_1",
+  "para_2",
+  "para_3",
+  "table_l1",
+  "ds2_head",
+  "table_r1",
+  "rec_comparisons",
+  "para_4",
+  "subhead_1",
+  "para_5",
+  "para_6",
+  "para_7",
+  "para_8",
+  "subhead_2",
+  "para_10",
+  "viewof splink_settings",
+  "para_11",
+  "viewof row_index",
+  "this_row",
+  "para_12",
+  "para_13",
+  "para_14",
+  "para_15",
+  "para_16",
+  "para_17",
+  "para_18",
+  "para_19",
+  "css_styles"
+];
+
+
+<CompactTutorialNav frontmatter={props.pageContext.frontmatter} />
+
+<ObservableNotebook notebook={notebook} cells={output_order} />
+
+<TutorialNav frontmatter={props.pageContext.frontmatter} />

@@ -1,0 +1,26 @@
+---
+title: "Birdsong quiz"
+description: "Test how good you are at identifying UK birdsong recordings"
+post_date: "2020-04-26"
+post_category: "other"
+code_url: "https://observablehq.com/@robinl/bird-song-quiz/"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import notebook from '@robinl/bird-song-quiz';
+import ObservableNotebook from '../components/ObservableNotebook';
+
+export const output_order = [
+  'title',
+  'tag',
+  'settings',
+  'viewof select_your_quiz',
+  'quiz',
+  'my_interface',
+  'other_link'
+];
+
+<ObservableNotebook notebook={notebook} cells={output_order} />

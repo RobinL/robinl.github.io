@@ -1,0 +1,33 @@
+---
+title: "Flight distance calculator"
+description: "Simple flight distance calculator.  Advert free.  Export data to spreadsheet."
+post_date: "2019-10-09"
+post_category: "energy"
+code_url: "https://observablehq.com/@robinl/flight-distance-calculator/"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import styles from '../styles/flight_distance_calc.css'
+
+import notebook from '@robinl/flight-distance-calculator';
+
+import  {ObservableCell,  WithObservableProvider}   from '../components/ObservableCells';
+
+<WithObservableProvider notebook={notebook}>
+
+
+  <ObservableCell cellName="title" />
+  <ObservableCell cellName="viewof flights_list" />
+  <ObservableCell cellName="blurb" />
+  <ObservableCell cellName="table_of_distances" />
+  <ObservableCell cellName="download_as_csv" />
+  <ObservableCell cellName="flights_chart" />
+  <ObservableCell cellName="file_upload_blurb" />
+  <ObservableCell cellName="viewof upload" />
+
+
+</WithObservableProvider>
+

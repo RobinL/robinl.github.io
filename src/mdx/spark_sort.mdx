@@ -1,0 +1,27 @@
+---
+title: "Understanding the Spark UI by example: sorting data"
+description:
+post_date: "2019-12-08"
+post_category: "data"
+code_url: "https://observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data/"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import notebook from '@robinl/understanding-the-spark-ui-by-example-sorting-data';
+import ObservableNotebook from '../components/ObservableNotebook';
+
+export const output_order = [
+  "title",
+  "intro",
+  "jobs",
+  "plan",
+  "observations",
+  "references",
+  "mystyles",
+  "metadata",
+];
+
+<ObservableNotebook notebook={notebook} cells={output_order} />

@@ -1,0 +1,27 @@
+---
+title: "Spark UI SQL detailed annotator"
+description:
+post_date: "2019-11-15"
+post_category: "data"
+code_url: "https://observablehq.com/@robinl/spark-explain/"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import notebook from '@robinl/spark-explain';
+import ObservableNotebook from '../components/ObservableNotebook';
+
+export const output_order = [
+  "title",
+  "md_1",
+  "viewof raw_html",
+  "output_svg",
+  "md_glossary",
+  "metadata",
+  "styles1",
+  "styles2"
+];
+
+<ObservableNotebook notebook={notebook} cells={output_order} />

@@ -1,0 +1,35 @@
+---
+title: "Dependencies between match weights"
+post_date: "2021-06-10"
+code_url: "https://observablehq.com/@robinl/dependencies-between-match-weights"
+post_category: "probabilistic_linkage"
+description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage. The dependencies between match weights."
+prob_linkage_category: "archive"
+---
+
+
+export { MDXLayoutWide as default } from '../components/MDXLayout';
+
+import notebook from '@robinl/dependencies-between-match-weights';
+import ObservableNotebook from '../components/ObservableNotebook';
+
+export const output_order = [
+    "title",
+    "para_1",
+    "para_2",
+    "viewof gen",
+    "viewof reset_gender",
+    "bf_chart_gender",
+    "para_3",
+    "para_4",
+    "viewof fn1",
+    "viewof reset_fn1",
+    "bf_chart_fn_1",
+    "para_5",
+    "viewof fn2",
+    "viewof reset_fn2",
+    "bf_chart_fn_2",
+    "para_6"
+];
+
+<ObservableNotebook notebook={notebook} cells={output_order} />

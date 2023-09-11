@@ -1,0 +1,56 @@
+---
+title: "Unsupervised probabalistic data matching using the Expectation Maximisation algorithm"
+description:
+post_date: "2019-11-03"
+post_category: "probabilistic_linkage"
+code_url: "https://observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec/"
+prob_linkage_category: "archive"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import notebook from '@robinl/unsupervised-probabalistic-data-matching-using-the-expec';
+import ObservableNotebook from '../components/ObservableNotebook';
+
+export const output_order = [
+  "title",
+  "out_1",
+  "out_2",
+  "out_3",
+  "viewof left_table_csv",
+  "out_4",
+  "out_5",
+  "viewof right_table_csv",
+  "out_6",
+  "out_7",
+  "viewof match_pairs_csv",
+  "out_8",
+  "out_9",
+  "out_10",
+  "out_11",
+  "out_12",
+  "viewof lambda",
+  "viewof pi1_1_m1",
+  "viewof pi1_1_m0",
+  "viewof pi2_1_m1",
+  "viewof pi2_05_m1",
+  "viewof pi2_1_m0",
+  "viewof pi2_05_m0",
+  "out_13",
+  "out_14",
+  "ll_chart",
+  "out_15",
+  "pi_chart_1",
+  "out_16",
+  "pi_chart_2",
+  "out_17",
+  "out_18",
+  "out_19"
+];
+
+<ObservableNotebook notebook={notebook} cells={output_order} />
+
+
+

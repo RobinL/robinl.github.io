@@ -1,0 +1,26 @@
+---
+title: "Comparing energy usage across countries"
+description: ""
+post_date: "2020-04-17"
+post_category: "energy"
+code_url: "https://observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import notebook from '@robinl/energy-usage-and-goods-imports-and-exports';
+import ObservableNotebook from '../components/ObservableNotebook';
+
+export const output_order = [
+  "title",
+  "intro",
+  "viewof metric",
+  "country_map",
+  "bar_chart",
+  "sewha_comparison",
+  "styles"
+];
+
+<ObservableNotebook notebook={notebook} cells={output_order} />

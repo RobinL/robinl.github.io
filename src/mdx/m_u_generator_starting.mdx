@@ -1,0 +1,24 @@
+---
+title: "m and u probability generator with starting values"
+post_date: "2021-11-15"
+code_url: "https://observablehq.com/d/1d09c6cf5d576e0a"
+post_category: "probabilistic_linkage"
+description: "Generate m and u probabilities to input into Splink. Part of the introduction to Fellegi Sunter series."
+prob_linkage_category: "archive"
+---
+
+export { MDXLayoutWide as default } from '../components/MDXLayout';
+
+import notebook from '@robinl/m-and-u-probability-generator-with-starting-values';
+import ObservableNotebook from '../components/ObservableNotebook';
+
+export const output_order = [
+    "title",
+    "viewof starting_data",
+    "viewof d",
+    "bf_chart",
+    "para_1",
+    "settings_output"
+];
+
+<ObservableNotebook notebook={notebook} cells={output_order} />

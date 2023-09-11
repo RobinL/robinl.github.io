@@ -1,0 +1,18 @@
+---
+title: "Birdsong recording finder"
+description: "Listen to UK birdsong using the xeno-canto API"
+post_date: "2020-04-25"
+post_category: "other"
+code_url: "https://observablehq.com/@robinl/bird-song-quiz/"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import notebook from '@robinl/birdsong-recordings';
+import ObservableNotebook from '../components/ObservableNotebook';
+
+export const output_order = ['title', 'viewof bird', 'viewof include_rare', 'audio_table', 'photos_title', 'gallery'];
+
+<ObservableNotebook notebook={notebook} cells={output_order} />

@@ -1,0 +1,41 @@
+/* https://observablehq.com/d/6abd39450ae50f4b */
+.shimmer-text {
+    color: transparent;
+    background: linear-gradient(
+        90deg,
+        black 25%,
+        #440154,
+        #21908d,
+        #fde725,
+        black 75%
+    );
+    background-size: 400% 100%;
+    animation: shimmer 20s linear infinite;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+@keyframes shimmer {
+    0%,
+    50% {
+        background-position: 100% 0;
+    }
+    65%,
+    100% {
+        background-position: 0% 0;
+    }
+}
+
+.shimmer-text:hover {
+    animation: shimmer-fast 2s linear infinite;
+}
+
+@keyframes shimmer-fast {
+    0% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        background-position: 0% 0;
+    }
+}

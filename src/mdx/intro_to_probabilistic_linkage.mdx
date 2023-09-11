@@ -1,0 +1,45 @@
+---
+title: "An Interactive Introduction to Probabilistic Record Linkage"
+description: "A set of interactive, explorable explanations of the Fellegi Sunter model, providing an introduction to probabilistic record linkage."
+post_date: "2021-05-20"
+post_category: "probabilistic_linkage"
+code_url: "https://observablehq.com/@robinl/d51533bbe054b3d8"
+prob_linkage_category: "tutorial"
+tutorial_number: 1
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+
+import notebook from '@robinl/d51533bbe054b3d8';
+import ObservableNotebook from '../components/ObservableNotebook';
+import TutorialNav from '../components/TutorialNav';
+import CompactTutorialNav from '../components/CompactTutorialNav';
+
+export const output_order = [
+    "title",
+    "para_1",
+    "para_2",
+    "para_3",
+    "para_4",
+    "para_5",
+    "table",
+    "estimated_probability",
+    "para_6",
+    "viewof show_complex",
+    "waterfall_chart",
+    "para_7",
+    "structure",
+    "para_8"
+];
+
+
+<CompactTutorialNav frontmatter={props.pageContext.frontmatter} />
+<ObservableNotebook notebook={notebook} cells={output_order} />
+<TutorialNav frontmatter={props.pageContext.frontmatter} />
+
+
+
+

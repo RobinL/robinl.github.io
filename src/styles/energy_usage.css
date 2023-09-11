@@ -1,0 +1,15 @@
+.energy_usage .observablehq {
+    margin-bottom: 0rem;
+}
+
+.energy_usage .observablehq > svg {
+    margin-bottom: 2.5rem;
+}
+
+.energy_usage input[type='number'] {
+    min-width: 2.5rem;
+}
+
+.energy_usage .observablehq h2 {
+    margin-bottom: 0rem;
+}

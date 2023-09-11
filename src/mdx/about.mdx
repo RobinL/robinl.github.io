@@ -1,0 +1,36 @@
+---
+title: About
+description: About
+post_date: 2023-09-11
+post_category: non_blog_post
+---
+
+export { Layout as default } from '../components/Layout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+import HeadShot from '../components/HeadShot';
+import RotatingText from 'react-rotating-text';
+
+<HeadShot />
+
+Hi, I'm Robin. I'm a <RotatingText  style={{ color: '#008000', backgroundColor: 'yellow' }} items={['data scientist', 'data engineer', 'dad', 'economist']}  />.
+
+I'm the lead author of [Splink](https://github.com/moj-analytical-services/splink), a Python library for record linkage.
+
+I've previously led work on the [MoJ's Analytical Platform](https://mojdigital.blog.gov.uk/2018/04/05/pushing-the-boundaries-of-data-science-with-the-moj-analytical-platform/) and also used to work as a government economist.
+
+I love open source and I am a [strong advocate for open code in government](https://www.robinlinacre.com/open_source_dividend/).
+
+I'm a trustee and secretary of [GiveDirectly UK](https://www.givedirectly.org.uk/), a charity that allows you to give money directly to people living in extreme poverty. Donate here: [UK](https://www.givedirectly.org/uk/) | [rest of world](https://www.givedirectly.org.uk/donate).
+
+I'm also a [Giving What We Can](https://www.givingwhatwecan.org/pledge) pledgee.
+
+You can contact me here:
+
+- X/Twitter: [@robinlinacre](https://twitter.com/robinlinacre)
+- LinkedIn: [robinlinacre](https://www.linkedin.com/in/robinlinacre)
+- Email: robinlinacre@hotmail.com
+- Github: [robinl](https://github.com/robinl)
+
+
+

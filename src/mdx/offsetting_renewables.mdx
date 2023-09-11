@@ -1,0 +1,31 @@
+---
+title: "Carbon offsetting vs. the cost of renewable energy"
+description: ""
+post_date: "2019-10-13"
+post_category: "energy"
+code_url: "https://observablehq.com/@robinl/how-much-should-carbon-offsetting-cost/"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import notebook from '@robinl/how-much-should-carbon-offsetting-cost';
+import ObservableNotebook from '../components/ObservableNotebook';
+
+export const output_order = [
+  "title",
+  "md1",
+  "md2",
+  "md3",
+  "md4",
+  "md5",
+  "md6",
+  "md7",
+  "md8",
+  "md9",
+  "md10",
+  "md11"
+];
+
+<ObservableNotebook notebook={notebook} cells={output_order} />

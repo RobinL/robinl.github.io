@@ -1,0 +1,61 @@
+---
+title: "Visualising the Fellegi Sunter model"
+description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article presents a way of visualising how the model works."
+post_date: "2021-05-22"
+post_category: "probabilistic_linkage"
+code_url: "https://observablehq.com/@robinl/visualising-fellegi-sunter"
+prob_linkage_category: "tutorial"
+tutorial_number: 3
+---
+
+export { MDXLayoutWide as default } from '../components/MDXLayout';
+
+import notebook from '@robinl/visualising-fellegi-sunter';
+import ObservableNotebook from '../components/ObservableNotebook';
+
+import TutorialNav from '../components/TutorialNav';
+import CompactTutorialNav from '../components/CompactTutorialNav';
+
+export const output_order = [
+  "additional_styles",
+  "title",
+  "para_1",
+  "para_2",
+  "para_3",
+  "para_4",
+  "subhead_1",
+  "para_5",
+  "lam_view",
+  "treemap_1",
+  "para_6",
+  "subhead_2",
+  "para_7",
+  "fname_view",
+  "para_8",
+  "treemap_2",
+  "para_9",
+  "subhead_3",
+  "para_10",
+  "sname_view",
+  "para_11",
+  "treemap_3",
+  "para_12",
+  "subhead_4",
+  "dob_view",
+  "para_13",
+  "treemap_4",
+  "para_14",
+  "subhead_5",
+  "town_view",
+  "para_15",
+  "treemap_5",
+  "para_16",
+  "annex",
+  "additional_styles",
+  "styles2",
+  "css_styles"
+];
+
+<CompactTutorialNav frontmatter={props.pageContext.frontmatter} />
+<ObservableNotebook notebook={notebook} cells={output_order} />
+<TutorialNav frontmatter={props.pageContext.frontmatter} />
