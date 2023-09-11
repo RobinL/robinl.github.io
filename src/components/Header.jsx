@@ -8,6 +8,7 @@ import {
     FaInfoCircle,
 } from 'react-icons/fa';
 
+import { SlLink } from 'react-icons/sl';
 import ResponsiveLink from './ResponsiveIcon';
 
 import '../styles/shimmer.css';
@@ -37,6 +38,18 @@ const Header = () => {
                         IconComponent={FaInfoCircle}
                         route="/about"
                     />
+
+                    <Link
+                        to="/probabilistic_linkage"
+                        className="text-gray-600 hover:text-blue-700 transition ease-in duration-200 "
+                    >
+                        <SlLink
+                            style={{
+                                transform: 'scaleY(-1)',
+                            }}
+                            className="w-4.5 h-4.5 "
+                        />
+                    </Link>
 
                     <a
                         href="https://twitter.com/robinlinacre"
