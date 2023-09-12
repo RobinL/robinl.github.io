@@ -6,15 +6,38 @@ post_category: "probabilistic_linkage"
 prob_linkage_category: "tools"
 description: "Visualising the correspondence between match weights, probabilities, Bayes factors and their intuitive explanations"
 ---
-export { MDXLayoutWide as default } from '../components/MDXLayout';
-import { SEO } from "../components/SEO"
-export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
-import { Vega, VegaLite } from "react-vega"
-import prob_bf_mw from "./prob_bf_mw/prob_bf_mw.json"
+export { MDXLayoutWide as default } from '../components/MDXLayout';
+
+import notebook from '@robinl/interactive-bayes-factor-probability-and-match-weight';
+
+import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
 
 # The relationship between probabilities, match weights and Bayes factors
 
-<VegaLite spec={prob_bf_mw} />
+<mark> Hover over the chart below to select a match weight. </mark>
 
-Code to create [here](https://gist.github.com/RobinL/38de8cf58be3dfbaece46c6895096a26)
+<WithObservableProvider notebook={notebook}>
+
+  <ObservableCell cellName="viewof chart" />
+    ## Converstion of partial match weight to probability
+    <br/>
+    <ObservableCell cellName="mw_1" />
+    <br/>
+    <ObservableCell cellName="bf_1" />
+    <br/>
+    <ObservableCell cellName="p_1" />
+    <br/>
+    ## Converstion of probability to partial match weight
+    <br/>
+    <ObservableCell cellName="p_2" />
+    <br/>
+    <ObservableCell cellName="bf_2" />
+    <br/>
+    <ObservableCell cellName="mw_2" />
+    <br/>
+
+
+
+
+</WithObservableProvider>
