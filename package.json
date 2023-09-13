@@ -16,6 +16,7 @@
     "version": "gatsby -v"
   },
   "dependencies": {
+    "@duckdb/duckdb-wasm": "^1.27.1-dev114.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mdx-js/react": "^2.3.0",
@@ -42,6 +43,7 @@
     "@robinl/understanding-the-spark-ui-by-example-the-left-join": "https://api.observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join@221.tgz?v=3",
     "@robinl/unsupervised-probabalistic-data-matching-using-the-expec": "https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec@1041.tgz?v=3",
     "@robinl/visualising-fellegi-sunter": "https://api.observablehq.com/@robinl/visualising-fellegi-sunter@1011.tgz?v=3",
+    "76ca6fde8161e708": "https://api.observablehq.com/d/76ca6fde8161e708@52.tgz?v=3",
     "gatsby": "^5.12.4",
     "gatsby-plugin-feed": "^5.11.0",
     "gatsby-plugin-google-fonts": "^1.0.1",

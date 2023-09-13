@@ -1,0 +1,21 @@
+---
+title: "duckdb on my website"
+description: "duckdb on my website"
+post_date: "2023-09-13"
+post_category: "data"
+code_url: "https://observablehq.com/@robinl/my-flights/"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import notebook from '76ca6fde8161e708';
+import duckdb from '76ca6fde8161e708';
+
+import ObservableNotebook from '../components/ObservableNotebook';
+
+export const output_order = [ 'my_table'];
+
+<ObservableNotebook notebook={notebook} cells={output_order} />
