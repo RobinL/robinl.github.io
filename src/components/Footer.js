@@ -12,7 +12,7 @@ const Footer = () => {
                     This site is built using{' '}
                     <a href="https://observablehq.com">Observable HQ</a> and{' '}
                     <a href="https://gatsbyjs.org">Gatsby.js</a>. Source code{' '}
-                    <a href="https://github.com/robinl/robinlinacre">here</a>.
+                    <a href="https://github.com/RobinL/robinl.github.io/">here</a>.
                 </p>
             </footer>
         </div>
