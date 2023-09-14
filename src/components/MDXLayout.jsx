@@ -3,10 +3,14 @@ import { MDXProvider } from '@mdx-js/react';
 import Layout from './Layout';
 import PostInfo from './PostCodeLink';
 import CodeBlock from './CodeBlock';
+import AnchorHeader from './AnchorHeader';
 
 const components = {
     pre: props => <div {...props}></div>,
     code: CodeBlock,
+    h1: props => <AnchorHeader tag="h1" {...props} />,
+    h2: props => <AnchorHeader tag="h2" {...props} />,
+    h3: props => <AnchorHeader tag="h3" {...props} />,
 };
 
 export function MDXLayout({ children, pageContext }) {
