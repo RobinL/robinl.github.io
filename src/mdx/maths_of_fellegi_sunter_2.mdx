@@ -1,0 +1,88 @@
+---
+title: "The maths"
+description: "desc"
+post_date: "2023-09-20"
+post_category: "probabilistic_linkage"
+code_url: "https://observablehq.com/@robinl/d51533bbe054b3d8"
+prob_linkage_category: "tutorial"
+tutorial_number: 10
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
+
+import TutorialNav from '../components/TutorialNav';
+import CompactTutorialNav from '../components/CompactTutorialNav';
+
+<CompactTutorialNav frontmatter={props.pageContext.frontmatter} />
+
+# The Maths of Fellegi Sunter: Partial Match Weights
+
+We saw in the previous article that the Fellegi-Sunter model makes its predictions with a simple calculation: a sum of the partial match weights, which we represented by a waterfall chart.
+
+But what are these partial match rates and where do they come from?
+
+This article:
+
+- Describes the concept of partial match weights
+- Introduces the concept of m and u values, and how they determine of partial match weights
+- Explains the relationship between m and u values, Bayes Factors, and probabilities
+- Shows an example of how the modle is computed for real data.
+
+## Partial match weights
+
+Before we introduce any mathematics, let's consider their role.
+
+When part of the information in two records is compared, a partial match weight quantifies the strength of evidence in favour or against these two records being a match.
+
+For example, suppose we have records relating to people, with their first name, surname, dates of birth and gender.
+
+It's up to the modller to choose how to define how information is compared.
+
+For example, with this data, we might estimate partial match weights for the first name column as follows:
+
+**Partial match weights for first name**
+1. First names are identical
+2. First names sound the same (e.g. using [dmetaphone](https://en.wikipedia.org/wiki/Metaphone#Double_Metaphone))
+3. First names are otherwise similar (e.g. using [Jaro Winkler](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance#Jaro%E2%80%93Winkler_similarity))
+4. All other cases
+
+Separately, we will also estimate partial match weights for the surname column, the date of birth column and the gender column.
+
+Note that the number of partial match weights can vary depending on the type of information.  For example:
+
+**Partial match weights for date of birth**
+1. Dates of birth are identical
+2. Dates of birth have no more than a single typo (e.g. using [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance))
+3. All other cases
+
+## An example of typical partial match weights
+
+Positive partial match weights
+
+[Show Splink match weights chart here.]
+
+In the chart, we can see that the partial match weight associated with an exact match on date of birth is stronger than the partial match weight associated with gender.
+
+This should be intuitive: if we observe that gender matches in two records, this is not as strong evidence in favour of a match as observing that the date of birth matches.
+
+Negative partial match weights can also be intuitive:  We may know that gender is recorded with a high degree of precision, but surname is commonly subject to typos or other errors.  In this case, we would expect a non-match on gender to provide stronger evidence against a match than a non-match on surname.
+
+## How to interpret partial match weights
+
+
+
+
+
+
+
+
+
+
+
+
+
