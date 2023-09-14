@@ -1,6 +1,12 @@
 import React from 'react';
 
-const generateId = str => str.toLowerCase().replace(/\s+/g, '-');
+const generateId = str => {
+    if (typeof str !== 'string') {
+        console.error('generateId received non-string argument:', str);
+        return '';
+    }
+    return str.toLowerCase().replace(/\s+/g, '-');
+};
 
 const AnchorHeader = ({ children, tag: Tag }) => {
     const id = generateId(children);
