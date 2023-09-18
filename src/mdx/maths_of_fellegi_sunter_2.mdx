@@ -1,5 +1,5 @@
 ---
-title: "The maths"
+title: "Partial match weights"
 description: "desc"
 post_date: "2023-09-20"
 post_category: "probabilistic_linkage"
@@ -13,24 +13,28 @@ import { SEO } from "../components/SEO"
 
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
+import { Vega, VegaLite } from "react-vega"
 import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
 import { partial_match_weight } from "../components/Definitions";
 import TutorialNav from '../components/TutorialNav';
 import CompactTutorialNav from '../components/CompactTutorialNav';
 
+import partial_match_weights from './partial_match_weights/partial_match_weights.json'
+import partial_match_weights_first_name from './partial_match_weights/partial_match_weights_first_name.json'
+
 <CompactTutorialNav frontmatter={props.pageContext.frontmatter} />
 
 # The Maths of Fellegi Sunter: Partial Match Weights
 
-We saw in the previous article that the Fellegi-Sunter model makes its predictions with a simple calculation: a sum of the partial match weights.
+In the previous article we saw that the Fellegi-Sunter model makes its predictions with a simple calculation: a sum of the partial match weights.
 
-But what are these partial match rates and where do they come from?
+But what are partial match weights and where do they come from?
 
 This article:
 
 - Describes the concept of partial match weights
 - Introduces the concept of m and u values, and how they determine of partial match weights
-- Explains the relationship between m and u values, Bayes Factors, and probabilities
+- Explains the relationship between m and u values, bayes factors, and probabilities
 - Shows an example of how the model is computed for real data.
 
 ## Partial match weights
@@ -42,23 +46,9 @@ Some columns are more important than others to the calculation of overall match 
 
 This is quantified by the {partial_match_weight}s.
 
+We can also think more generally than just matches and non-matches: partial match weights can be estimated for additional scenarios like 'not an exact match, but similar'.
 
-
-When part of the information in two records is compared, a partial match weight quantifies the strength of evidence in favour or against these two records being a match.
-
-For example, suppose we have data relating to people as follows:
-
-| First Name | Surname  | Date of Birth | Gender |
-|------------|----------|---------------|--------|
-| John       | Doe      | 1990-07-20    | Male   |
-| Jane       | Smith    | 1985-12-05    | Female |
-
-
- We may wish to compute partial match weights for first name.
-
-The modeller must begin by defining how the information in the records will be compared.
-
-For example, for first name, we may place the comparison in one of four categories (in Splink, these are known as `ComparisonLevels`):
+It is up to the modeller to define the partial match weights they wish to compute.  For example, for first name, we could define the following three categories (in Splink, these are known as `ComparisonLevels`):
 
 1. First names are identical
 2. First names are similar (e.g. using [Jaro Winkler](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance#Jaro%E2%80%93Winkler_similarity))
@@ -66,7 +56,7 @@ For example, for first name, we may place the comparison in one of four categori
 
 In a typical model, the estimated partial match weights may look like this:
 
-[Add in chart here]
+<VegaLite spec={partial_match_weights_first_name} />
 
 Positive partial match weights mean evidence in favour of a match, negative weights mean evidence against a match.
 
@@ -76,7 +66,7 @@ Separately, we will also estimate partial match weights for the surname column, 
 
 Note that the number and definition of partial match weights can vary depending on the type of information.  For example, for gender we'd likely have two weights: match, and non-match.  For date of birth, we would define similarity differently to first name.
 
-[Add in full partial match weights chart]
+<VegaLite spec={partial_match_weights} />
 
 ## Intuitive interpretations of partial match weights
 
