@@ -91,3 +91,12 @@ chart_dict['datasets'][data_name] = new_data
 
 with open('../../src/mdx/partial_match_weights/partial_match_weights_first_name.json', 'w') as f:
     json.dump(chart_dict, f)
+
+
+# TODO:
+
+- Get rid of key
+- Get rid of prior
+- Fix css on tooltip to make wider/more legible
+- Overwrite some partial match weights to help commentary?
+- Use this same trained model for the first page of the tutorial
