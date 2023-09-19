@@ -33,11 +33,9 @@ This is part one of a series of interactive articles that aim to provide an intr
 
 In this article I provide a high-level description of the purpose of probabilistic record linkage in the Fellegi-Sunter framework, and an interactive example of a linkage model.
 
-Subsequent articles explore the theory in more details.
-
 These materials align closely to the probabilisic model used by [Splink](http://github.com/moj-analytical-services/splink), a free software package for record linkage at scale.
 
-These articles cover the theory only.  For a guide on how to build record linkage models in practice using Splink, see [here](https://moj-analytical-services.github.io/splink/demos/tutorials/00_Tutorial_Introduction.html)
+These articles cover the theory only.  For practical model building using Splink, see [here](https://moj-analytical-services.github.io/splink/demos/tutorials/00_Tutorial_Introduction.html).
 
 ## What is probabilistic record linkage?
 
@@ -49,7 +47,7 @@ Record linkage can be done within datasets (deduplication), between datasets (li
 
 Linkage is 'probabilistic' in the sense that it relies on the balance on evidence. For instance, in a large dataset, observing that two records match on the full name `John Smith` provides some evidence that these two records may refer to the same person, but this evidence is inconclusive because it's possible there are two different `John Smith`s.
 
-More broadly, it is often impossible to classify pairs of records as matches or non-matches beyond any doubt. Instead, the aim of probabilisitic record linkage is to quantify the probability that a pair of records refer to the same entity by considering evidence in favour and against a match and weighting it appropriately.
+More broadly,  it is often impossible to classify pairs of records as matches or non-matches beyond any doubt. Instead, the aim of probabilisitic record linkage is to quantify the probability that a pair of records refer to the same entity by considering evidence in favour and against a match and weighting it appropriately.
 
 The most common type of probabilistic record linkage model is called the Fellegi-Sunter model.
 
@@ -61,24 +59,23 @@ For example, a match on postcode gives us more evidence in favour of a match on 
 
 The final prediction is a simple calculation:  we sum up {partial_match_weight}s to compute a final match weight, which is then converted into a probability.
 
-## Simple example
+## Example
 
-Let's take a look at at an example of a simple Fellegi-Sunter model to calculate match probability interactively. This model will compare the two records in the table, and assess whether they refer to the same person, or different people. ✨<mark>You may edit the values in the table to see how the match probability changes.</mark>✨
+Let's take a look at at an example of a simple Fellegi-Sunter model to calculate match probability interactively. This model will compare the two records in the table, and assess whether they refer to the same person, or different people.
+
+✨<mark>You may edit the values in the table to see how the match probability changes.</mark>✨
 
 
 <WithObservableProvider notebook={notebook}>
     <ObservableCell cellName="table" />
     <ObservableCell cellName="estimated_probability" />
 
-    We can represent the model graphically using a waterfall chart, which is read from left to right. We start with the prior, and take each column into account in turn, with different match weights being applied to each column. You can hover over the bars to see how the probability changes as each subsequent field is taken into account.
+    We can represent the sum of the {partial_match_weight}s graphically using a waterfall chart, which is read from left to right. We start with the prior, and take each column into account in turn.  The size of the bar corresponds to the {partial_match_weight}. You can hover over the bars to see how the probability changes as each subsequent field is taken into account.
 
     <ObservableCell cellName="viewof show_complex" />
     <ObservableCell cellName="waterfall_chart" />
-   Columns with higher number of distinct values, such as date of birth, tend to represent stronger evidence in favour of a match since it's less likely that two records chosen at random would match by coincidence.
 
-    Where a column does not match, this is usually evidence against a match. However, the evidence may not be strong - for example, people move house, which could cause a mismatch on the 'postcode' column.
-
-
+    In the next article, we will look at partial match weights in great depth.
 
 </WithObservableProvider>
 

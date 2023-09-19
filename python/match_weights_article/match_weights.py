@@ -72,10 +72,9 @@ updated_chart = alt.Chart.from_dict(chart_dict)
 updated_chart.save("../../src/mdx/partial_match_weights/partial_match_weights.json")
 
 
-
+# Chart just for first_name
 with open('../../src/mdx/partial_match_weights/partial_match_weights.json') as f:
     chart_dict = json.load(f)
-
 
 data_name = chart_dict['data']['name']
 
@@ -85,18 +84,28 @@ for item in chart_dict['datasets'][data_name]:
         if item['comparison_name'] == 'first_name':
             new_data.append(item)
 
+# Remove prior
+chart_dict["vconcat"].pop(0)
+del chart_dict["vconcat"][0]['transform']
+del chart_dict["vconcat"][0]['resolve']
+chart_dict["vconcat"][0]['encoding']['color']['legend'] = None
+chart_dict["vconcat"][0]['encoding']['x']['axis']["title"] = "Partial match weight"
 
 chart_dict['datasets'][data_name] = new_data
-
+chart_dict['title'] = "Partial match weights for first name"
 
 with open('../../src/mdx/partial_match_weights/partial_match_weights_first_name.json', 'w') as f:
     json.dump(chart_dict, f)
 
+c = alt.Chart.from_dict(chart_dict)
+
+c.save("delete.html")
+
 
 # TODO:
 
-- Get rid of key
-- Get rid of prior
-- Fix css on tooltip to make wider/more legible
-- Overwrite some partial match weights to help commentary?
-- Use this same trained model for the first page of the tutorial
+# - Get rid of key
+# - Get rid of prior
+# - Fix css on tooltip to make wider/more legible
+# - Overwrite some partial match weights to help commentary?
+# - Use this same trained model for the first page of the tutorial

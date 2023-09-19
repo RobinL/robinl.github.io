@@ -24,7 +24,9 @@ import partial_match_weights_first_name from './partial_match_weights/partial_ma
 
 <CompactTutorialNav frontmatter={props.pageContext.frontmatter} />
 
-# The Maths of Fellegi Sunter: Partial Match Weights
+# Partial Match Weights
+
+
 
 In the previous article we saw that the Fellegi-Sunter model makes its predictions with a simple calculation: a sum of the partial match weights.
 
@@ -39,32 +41,57 @@ This article:
 
 ## Partial match weights
 
-Some columns are more important than others to the calculation of overall match probability. For example:
+Some columns are more important than others to the calculation of overall match probability.  This is quantified by the partial match weights.
 
--  a match on date of birth provides stronger evidence in favour of a match than a match on gender.
--  a mismatch on date of birth may provide more evidence against a match than a mismatch on address (because people move house)
+For example:
 
-This is quantified by the {partial_match_weight}s.
+-  A match on date of birth provides stronger evidence in favour of a match than a match on gender.
+-  A mismatch on date of birth may provide more evidence against a match than a mismatch on address (because people move house).
 
-We can also think more generally than just matches and non-matches: partial match weights can be estimated for additional scenarios like 'not an exact match, but similar'.
+Positive values indicate evidence in favour of a match whilst negative values mean evidence against a match.
 
-It is up to the modeller to define the partial match weights they wish to compute.  For example, for first name, we could define the following three categories (in Splink, these are known as `ComparisonLevels`):
+The concept applies more generally than just to matches and non-matches: partial match weights can be estimated for more subtle scenarios like 'first name not an exact match, but similar'.
 
-1. First names are identical
-2. First names are similar (e.g. using [Jaro Winkler](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance#Jaro%E2%80%93Winkler_similarity))
+It is up to the modeller to define these scenarios and the resultant partial match weights they wish to estimate.
+
+### Example:  First name column
+
+For first name, we could define the following three categories (in Splink, these are known as `ComparisonLevels`):
+
+1. Exact match: First names are identical
+2. Fuzzy match:  First names are similar according to the [Jaro Winkler](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance#Jaro%E2%80%93Winkler_similarity) measure
 3. All other cases
 
-In a typical model, the estimated partial match weights may look like this:
+The estimated partial match weights may look like this:[^1]
+
+[^1]:A later article will explain how to estimate partial match weights.  Here I just assume they have already been estimated.
 
 <VegaLite spec={partial_match_weights_first_name} />
 
-Positive partial match weights mean evidence in favour of a match, negative weights mean evidence against a match.
+These are a series of mutually exclusive categories that work like a sequence of `if` statements:
 
-Hover over the chart for tooltips.
+```python
+if first_name_l == first_name_r:
+    partial_match_weight = 7.1
+elif jaro_winkler_sim(first_name_l, first_name_r) >= 0.9:
+    partial_match_weight = 5.7
+else:
+    partial_match_weight = -1.7
+```
+
+Observe that:
+- An exact match on first name provides stronger evidence in favour of a match than a fuzzy match
+- If the first name is completely different (neither and exact nor fuzzy match), this is evidence against the records being a match.
+
+### Remaining columns
 
 Separately, we will also estimate partial match weights for the surname column, the date of birth column and the gender column.
 
-Note that the number and definition of partial match weights can vary depending on the type of information.  For example, for gender we'd likely have two weights: match, and non-match.  For date of birth, we would define similarity differently to first name.
+Note that the number of scienarios modelled and definition of the scenarios can vary depending on the type of information.
+
+For example, since gender is a categorical variable we'd likely have two weights: match, and non-match.  For date of birth, we would may define three scenarios, but similarity would be defined differently to first name.
+
+We can plot the partial match weights for all the information in a single chart:
 
 <VegaLite spec={partial_match_weights} />
 
@@ -75,6 +102,10 @@ In the chart, we can see that the partial match weight associated with an exact 
 This should be intuitive: if we observe that gender matches in two records, this is not as strong evidence in favour of a match as observing that the date of birth matches.
 
 Negative partial match weights can also be intuitive:  We may know that gender is recorded with a high degree of precision, but surname is commonly subject to typos or other errors.  In this case, we would expect a non-match on gender to provide stronger evidence against a match than a non-match on surname.
+
+#### TODO:  Here we want a table with two records, that shows the partial match weights chart with highlighted bars, then a latex sum, and the waterfall chart.
+
+The next article should be on m and u values
 
 ## m and u probabilities: the building blocks of partial match weights
 
