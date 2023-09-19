@@ -6,11 +6,11 @@ import json
 import duckdb
 import altair as alt
 
-con = duckdb.connect(database=':memory:', read_only=False)
+con = duckdb.connect(database=":memory:", read_only=False)
 sql = """
 CREATE TABLE df AS
-SELECT * FROM read_parquet('synthetic_1m_clean.parquet')
-WHERE REGEXP_MATCHES(unique_id, '^Q[0-9]+-([0-7])$')
+SELECT *, postcode_fake as postcode FROM read_parquet('synthetic_1m_clean.parquet')
+WHERE REGEXP_MATCHES(unique_id, '^Q[0-9]+-([0-5])$')
 AND NOT RIGHT(dob, 5) = '01-01';
 """
 
@@ -30,13 +30,10 @@ settings = {
     "comparisons": [
         cl.jaro_at_thresholds("first_name", 0.9),
         cl.jaro_at_thresholds("surname", 0.9),
-        cl.levenshtein_at_thresholds("dob", 1),
+        cl.levenshtein_at_thresholds("postcode", 1),
         cl.exact_match("gender"),
-
     ],
-    "blocking_rules_to_generate_predictions": [
-        block_on(["first_name", "surname"])
-    ],
+    "blocking_rules_to_generate_predictions": [block_on(["first_name", "surname"])],
     "retain_matching_columns": True,
     "retain_intermediate_calculation_columns": True,
 }
@@ -49,11 +46,33 @@ linker = DuckDBLinker("df", settings, connection=con)
 linker.estimate_u_using_random_sampling(max_pairs=2e6)
 linker.estimate_m_from_label_column("cluster")
 
+fname = linker._settings_obj._get_comparison_by_output_column_name("first_name")
+fname.comparison_levels[1].m_probability = 0.85
+fname.comparison_levels[2].m_probability = 0.05
+fname.comparison_levels[3].m_probability = 0.1
+
+
+fname = linker._settings_obj._get_comparison_by_output_column_name("surname")
+fname.comparison_levels[1].m_probability = 0.8
+fname.comparison_levels[2].m_probability = 0.15
+fname.comparison_levels[3].m_probability = 0.05
+
+fname = linker._settings_obj._get_comparison_by_output_column_name("postcode")
+fname.comparison_levels[1].m_probability = 0.3
+fname.comparison_levels[2].m_probability = 0.3
+fname.comparison_levels[3].m_probability = 0.4
+
+fname = linker._settings_obj._get_comparison_by_output_column_name("gender")
+fname.comparison_levels[1].m_probability = 0.995
+fname.comparison_levels[2].m_probability = 0.005
+
 
 chart = linker.match_weights_chart()
+chart
 chart = chart.properties(title="Partial match weights")
 chart.config.view.continuousWidth = 400
 chart_dict = chart.to_dict()
+
 
 def recursive_del(d, keys_to_remove):
     if isinstance(d, dict):
@@ -66,46 +85,53 @@ def recursive_del(d, keys_to_remove):
         for item in d:
             recursive_del(item, keys_to_remove)
 
-keys_to_remove = ['gridDash', 'gridWidth', 'gridColor']
+
+keys_to_remove = ["gridDash", "gridWidth", "gridColor"]
 recursive_del(chart_dict, keys_to_remove)
+
+old_key = chart_dict["data"]["name"]
+chart_dict["data"]["name"] = "my_data"
+
+chart_dict["datasets"]["my_data"] = chart_dict["datasets"].pop(old_key)
+
+
+# Remove prior
+chart_dict["datasets"]["my_data"] = [
+    d
+    for d in chart_dict["datasets"]["my_data"]
+    if d["comparison_name"] != "probability_two_random_records_match"
+]
+chart_dict["vconcat"].pop(0)
+
+del chart_dict["vconcat"][0]["transform"]
+
+chart_dict["vconcat"][0]["encoding"]["color"]["legend"] = None
+chart_dict["vconcat"][0]["encoding"]["x"]["axis"]["title"] = "Partial match"
+
 updated_chart = alt.Chart.from_dict(chart_dict)
 updated_chart.save("../../src/mdx/partial_match_weights/partial_match_weights.json")
 
 
 # Chart just for first_name
-with open('../../src/mdx/partial_match_weights/partial_match_weights.json') as f:
+with open("../../src/mdx/partial_match_weights/partial_match_weights.json") as f:
     chart_dict = json.load(f)
 
-data_name = chart_dict['data']['name']
+data_name = chart_dict["data"]["name"]
 
 new_data = []
-for item in chart_dict['datasets'][data_name]:
-    if 'comparison_name' in item:
-        if item['comparison_name'] == 'first_name':
+for item in chart_dict["datasets"][data_name]:
+    if "comparison_name" in item:
+        if item["comparison_name"] == "first_name":
             new_data.append(item)
 
-# Remove prior
-chart_dict["vconcat"].pop(0)
-del chart_dict["vconcat"][0]['transform']
-del chart_dict["vconcat"][0]['resolve']
-chart_dict["vconcat"][0]['encoding']['color']['legend'] = None
-chart_dict["vconcat"][0]['encoding']['x']['axis']["title"] = "Partial match weight"
 
-chart_dict['datasets'][data_name] = new_data
-chart_dict['title'] = "Partial match weights for first name"
+chart_dict["datasets"][data_name] = new_data
+del chart_dict["vconcat"][0]["resolve"]
+chart_dict["title"] = "Partial match weights for first name"
 
-with open('../../src/mdx/partial_match_weights/partial_match_weights_first_name.json', 'w') as f:
+with open(
+    "../../src/mdx/partial_match_weights/partial_match_weights_first_name.json", "w"
+) as f:
     json.dump(chart_dict, f)
 
-c = alt.Chart.from_dict(chart_dict)
-
-c.save("delete.html")
-
-
-# TODO:
-
-# - Get rid of key
-# - Get rid of prior
-# - Fix css on tooltip to make wider/more legible
-# - Overwrite some partial match weights to help commentary?
-# - Use this same trained model for the first page of the tutorial
+# c = alt.Chart.from_dict(chart_dict)

@@ -8,6 +8,7 @@ packages = [{include = "match_weights_article"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+black = "^23.9.1"
 
 
 [build-system]

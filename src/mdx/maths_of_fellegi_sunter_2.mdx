@@ -20,6 +20,7 @@ import TutorialNav from '../components/TutorialNav';
 import CompactTutorialNav from '../components/CompactTutorialNav';
 
 import partial_match_weights from './partial_match_weights/partial_match_weights.json'
+
 import partial_match_weights_first_name from './partial_match_weights/partial_match_weights_first_name.json'
 
 <CompactTutorialNav frontmatter={props.pageContext.frontmatter} />
@@ -27,10 +28,11 @@ import partial_match_weights_first_name from './partial_match_weights/partial_ma
 # Partial Match Weights
 
 
-
 In the previous article we saw that the Fellegi-Sunter model makes its predictions with a simple calculation: a sum of the partial match weights.
 
-But what are partial match weights and where do they come from?
+But what are partial[^1] match weights and where do they come from?
+
+[^1]: In this context, the word 'partial' means 'using only a subset of the information in the record' - often a single column.  There is then a partial match weight for each column.
 
 This article:
 
@@ -41,7 +43,9 @@ This article:
 
 ## Partial match weights
 
-Some columns are more important than others to the calculation of overall match probability.  This is quantified by the partial match weights.
+Some columns[^2] are more important than others to the calculation of overall match probability.  This is quantified by the partial match weights.
+
+[^2]: In this article, for simplicity,  there's a one to one correspondence between columns and partial match weights. Each column is treated as a separate piece of information.  In reality, the model allows for more flexibility.  We could split a column (e.g. date of birth) into several pieces of information (e.g. day, month, year) and estimate partial match weights for each.  Or we could combine several columsn (e.g. first, middle and surname) into a single piece of information and estimate a partial match weights for this information.
 
 For example:
 
@@ -62,21 +66,23 @@ For first name, we could define the following three categories (in Splink, these
 2. Fuzzy match:  First names are similar according to the [Jaro Winkler](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance#Jaro%E2%80%93Winkler_similarity) measure
 3. All other cases
 
-The estimated partial match weights may look like this:[^1]
+The estimated partial match weights may look like this:[^3]
 
-[^1]:A later article will explain how to estimate partial match weights.  Here I just assume they have already been estimated.
+[^3]:A later article will explain how to estimate partial match weights.  Here I just assume they have already been estimated.
 
 <VegaLite spec={partial_match_weights_first_name} />
 
 These are a series of mutually exclusive categories that work like a sequence of `if` statements:
 
+
+
 ```python
 if first_name_l == first_name_r:
-    partial_match_weight = 7.1
+    first_name_partial_match_weight = 7.2
 elif jaro_winkler_sim(first_name_l, first_name_r) >= 0.9:
-    partial_match_weight = 5.7
+    first_name_partial_match_weight = 5.9
 else:
-    partial_match_weight = -1.7
+    first_name_partial_match_weight = -3.3
 ```
 
 Observe that:
@@ -85,7 +91,7 @@ Observe that:
 
 ### Remaining columns
 
-Separately, we will also estimate partial match weights for the surname column, the date of birth column and the gender column.
+We can also estimate partial match weights for the remaining columns.
 
 Note that the number of scienarios modelled and definition of the scenarios can vary depending on the type of information.
 
@@ -95,19 +101,19 @@ We can plot the partial match weights for all the information in a single chart:
 
 <VegaLite spec={partial_match_weights} />
 
-## Intuitive interpretations of partial match weights
+## Interpreting partial match weights
 
-In the chart, we can see that the partial match weight associated with an exact match on date of birth is stronger than the partial match weight associated with gender.
+In the chart, we can see that the partial match weight associated with an exact match on postcode is stronger than the partial match weight associated with gender.
 
 This should be intuitive: if we observe that gender matches in two records, this is not as strong evidence in favour of a match as observing that the date of birth matches.
 
-Negative partial match weights can also be intuitive:  We may know that gender is recorded with a high degree of precision, but surname is commonly subject to typos or other errors.  In this case, we would expect a non-match on gender to provide stronger evidence against a match than a non-match on surname.
+The pattern of negative partial match weights is also intuitive:  If gender is recorded as categorical variable, then it may highly accurate.  A mismatch would thus be strong evidence against a match.  Conversely, a mismatch on postcode may offer little evidence against a match since people move house.
 
-#### TODO:  Here we want a table with two records, that shows the partial match weights chart with highlighted bars, then a latex sum, and the waterfall chart.
+## Correspondence between partial match weight chart and waterfall chart.
 
-The next article should be on m and u values
 
-## m and u probabilities: the building blocks of partial match weights
 
-Partial match weights are
+## Last header
+
+We now have a good qualitative understanding of the meaning partial match weights. But how are they calculated and how should we interpret their magnitude?
 
