@@ -66,10 +66,13 @@ fname = linker._settings_obj._get_comparison_by_output_column_name("gender")
 fname.comparison_levels[1].m_probability = 0.995
 fname.comparison_levels[2].m_probability = 0.005
 
+# linker.save_model_to_json("model.json")
 
 chart = linker.match_weights_chart()
-chart
+
+chart.save("chart_for_pkg.json")
 chart = chart.properties(title="Partial match weights")
+
 chart.config.view.continuousWidth = 400
 chart_dict = chart.to_dict()
 
@@ -93,20 +96,7 @@ old_key = chart_dict["data"]["name"]
 chart_dict["data"]["name"] = "my_data"
 
 chart_dict["datasets"]["my_data"] = chart_dict["datasets"].pop(old_key)
-
-
-# Remove prior
-chart_dict["datasets"]["my_data"] = [
-    d
-    for d in chart_dict["datasets"]["my_data"]
-    if d["comparison_name"] != "probability_two_random_records_match"
-]
-chart_dict["vconcat"].pop(0)
-
-del chart_dict["vconcat"][0]["transform"]
-
 chart_dict["vconcat"][0]["encoding"]["color"]["legend"] = None
-chart_dict["vconcat"][0]["encoding"]["x"]["axis"]["title"] = "Partial match"
 
 updated_chart = alt.Chart.from_dict(chart_dict)
 updated_chart.save("../../src/mdx/partial_match_weights/partial_match_weights.json")
@@ -125,8 +115,12 @@ for item in chart_dict["datasets"][data_name]:
             new_data.append(item)
 
 
-chart_dict["datasets"][data_name] = new_data
+del chart_dict["vconcat"][0]["transform"]
 del chart_dict["vconcat"][0]["resolve"]
+chart_dict["vconcat"][0]["encoding"]["color"]["legend"] = None
+chart_dict["vconcat"][0]["encoding"]["x"]["axis"]["title"] = "Partial match"
+
+chart_dict["datasets"][data_name] = new_data
 chart_dict["title"] = "Partial match weights for first name"
 
 with open(
@@ -134,4 +128,12 @@ with open(
 ) as f:
     json.dump(chart_dict, f)
 
-# c = alt.Chart.from_dict(chart_dict)
+# Waterfall cahrt
+df_predict = linker.predict()
+records_to_view = df_predict.as_record_dict(limit=5)
+chart = linker.waterfall_chart(records_to_view, filter_nulls=False)
+
+
+chart.save("waterfall_example.json")
+
+linker._settings_obj._as_completed_dict()
