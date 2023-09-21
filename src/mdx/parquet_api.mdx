@@ -4,6 +4,7 @@ description: "Open data should be served as CORS-enabled parquet files rather th
 post_date: "2023-01-09"
 post_category: "data"
 code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/parquet_api.mdx"
+post_latest_update: "2023-09-21"
 ---
 
 export { MDXLayout as default } from '../components/MDXLayout';
@@ -115,11 +116,11 @@ There are some cases where static parquet files may be inappropriate. Examples i
 > Ah, I remember this specific file from my time at the ECB 15-ish years ago.
 > IIRC it was by far the most downloaded file on the ECB website. Tons of people, including many financial institutions, downloaded it daily, and used it to update their own systems.
 
-IIRC #2 in the minutes immediately after the daily scheduled time for publishing this file, there was a massive traffic spike.
+> IIRC #2 in the minutes immediately after the daily scheduled time for publishing this file, there was a massive traffic spike.
 
-It was a conscious decision to make it a simple CSV file (once unzipped): it made it possible to serve the file reliably, fast, and with little resources needed.
+> It was a conscious decision to make it a simple CSV file (once unzipped): it made it possible to serve the file reliably, fast, and with little resources needed.
 
-The small team responsible at the time for the ECB’S public website was inordinately proud of the technical decisions made to serve this data in a single static file. And rightly so.
+> The small team responsible at the time for the ECB’S public website was inordinately proud of the technical decisions made to serve this data in a single static file. And rightly so.
 
 ¹ By 'bulk' data, I mean APIs designed to serve whole datasets to the end user, as opposed to 'atomic' APIs which serve individual data points (e.g. a postcode lookup) for use in downstream services
 
