@@ -35,6 +35,8 @@
     "@robinl/m-and-u-probability-generator": "https://api.observablehq.com/@robinl/m-and-u-probability-generator@79.tgz?v=3",
     "@robinl/m-and-u-probability-generator-with-starting-values": "https://api.observablehq.com/@robinl/m-and-u-probability-generator-with-starting-values@119.tgz?v=3",
     "@robinl/my-flights": "https://api.observablehq.com/@robinl/my-flights@514.tgz?v=3",
+    "@robinl/partial-match-weights": "https://api.observablehq.com/@robinl/partial-match-weights@380.tgz?v=3",
+    "@robinl/record_linkage_javascript_utilities": "^0.0.4",
     "@robinl/spark-explain": "https://api.observablehq.com/@robinl/spark-explain@647.tgz?v=3",
     "@robinl/the-carbon-impact-of-switiching-to-an-electric-car": "https://api.observablehq.com/@robinl/the-carbon-impact-of-switiching-to-an-electric-car@1053.tgz?v=3",
     "@robinl/understanding-match-weights": "https://api.observablehq.com/@robinl/understanding-match-weights@644.tgz?v=3",

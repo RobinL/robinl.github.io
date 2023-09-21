@@ -19,6 +19,8 @@ import { partial_match_weight } from "../components/Definitions";
 import TutorialNav from '../components/TutorialNav';
 import CompactTutorialNav from '../components/CompactTutorialNav';
 
+import notebook from "@robinl/partial-match-weights";
+
 import partial_match_weights from './partial_match_weights/partial_match_weights.json'
 
 import partial_match_weights_first_name from './partial_match_weights/partial_match_weights_first_name.json'
@@ -30,20 +32,15 @@ import partial_match_weights_first_name from './partial_match_weights/partial_ma
 
 In the previous article we saw that the Fellegi-Sunter model makes its predictions with a simple calculation: a sum of the partial match weights.
 
-But what are partial[^1] match weights and where do they come from?
+But what are partial match weights and where do they come from?[^1]
 
 [^1]: In this context, the word 'partial' means 'using only a subset of the information in the record' - often a single column.  There is then a partial match weight for each column.
 
-This article:
 
-- Describes the concept of partial match weights
-- Introduces the concept of m and u values, and how they determine of partial match weights
-- Explains the relationship between m and u values, bayes factors, and probabilities
-- Shows an example of how the model is computed for real data.
 
 ## Partial match weights
 
-Some columns[^2] are more important than others to the calculation of overall match probability.  This is quantified by the partial match weights.
+Some columns are more important than others to the calculation of overall match probability.[^2]  This is quantified by the partial match weights.
 
 [^2]: In this article, for simplicity,  there's a one to one correspondence between columns and partial match weights. Each column is treated as a separate piece of information.  In reality, the model allows for more flexibility.  We could split a column (e.g. date of birth) into several pieces of information (e.g. day, month, year) and estimate partial match weights for each.  Or we could combine several columsn (e.g. first, middle and surname) into a single piece of information and estimate a partial match weights for this information.
 
@@ -101,16 +98,39 @@ We can plot the partial match weights for all the information in a single chart:
 
 <VegaLite spec={partial_match_weights} />
 
-## Interpreting partial match weights
+## Intuitive interpretation of partial match weights
 
 In the chart, we can see that the partial match weight associated with an exact match on postcode is stronger than the partial match weight associated with gender.
 
-This should be intuitive: if we observe that gender matches in two records, this is not as strong evidence in favour of a match as observing that the date of birth matches.
+This should be intuitive: a match on gender doesn't tell us much about whether two records are a match, whereas a match on postcode is much more informative.
 
-The pattern of negative partial match weights is also intuitive:  If gender is recorded as categorical variable, then it may highly accurate.  A mismatch would thus be strong evidence against a match.  Conversely, a mismatch on postcode may offer little evidence against a match since people move house.
+The pattern of negative partial match weights is also intuitive:  If gender is recorded as categorical variable, then it may be very accurate.  A mismatch would thus be strong evidence against a match.
 
-## Correspondence between partial match weight chart and waterfall chart.
+Conversely, a mismatch on postcode may offer little evidence against a match since people move house, or typos may have been made.
 
+## Understanding the partial match weight chart and waterfall chart
+
+Let's take a look at how the partial match weights in the chart above are applied.
+
+Consider the following <mark>interactive</mark> table of data. <mark>The below calculations will update as you edit it</mark>.
+
+
+
+<WithObservableProvider notebook={notebook}>
+    <ObservableCell cellName="input_table" />
+
+    This is a reproduction of the above partial match weights chart with the activated partial match weights highlighted in colour.
+
+    <ObservableCell cellName="partial_match_weights_highligh" />
+
+    This corresponds to the following waterfall chart:
+    <ObservableCell cellName="waterfall_highlight" />
+
+    And finally we can represent the calculation of overall match weight as a formula:
+
+    <ObservableCell cellName="waterfall_as_formula" />
+
+</WithObservableProvider>
 
 
 ## Last header
