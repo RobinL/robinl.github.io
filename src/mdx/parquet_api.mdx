@@ -106,6 +106,21 @@ There are some cases where static parquet files may be inappropriate. Examples i
 - **Private datasets with granular access control**. If you need row or column based access controls, static files are unlikely to be appropriate, [as noted here](https://twitter.com/gunnarmorling/status/1612538897564573697).
 - **Rapidly changing data to which users need immediate access**. If your data is updated very frequently and your users need access to up-to-the-minute data, static files may not be appropriate, as noted [here](https://twitter.com/kardotjewell/status/1612517499496456209).
 
+## Some updates since this was first published:
+
+- The French National Institute of Statistics and Economic Studies (Insee) have started publishing open data in parquet format that can be immediately analysed in the DuckDB shell.  See [here](https://twitter.com/ericMauviere/status/1698962876973592964).  It can be immediately manipulated in SQL using DuckDB in Observable - see [here](https://observablehq.com/@fil/insee-parquet)
+
+- I love this comment [from Hacker News](https://news.ycombinator.com/item?id=37528076), in response to a [post](https://news.ycombinator.com/item?id=37526047) entitled: "My favourite API is a zipfile on the European Central Bank's website"
+
+> Ah, I remember this specific file from my time at the ECB 15-ish years ago.
+> IIRC it was by far the most downloaded file on the ECB website. Tons of people, including many financial institutions, downloaded it daily, and used it to update their own systems.
+
+IIRC #2 in the minutes immediately after the daily scheduled time for publishing this file, there was a massive traffic spike.
+
+It was a conscious decision to make it a simple CSV file (once unzipped): it made it possible to serve the file reliably, fast, and with little resources needed.
+
+The small team responsible at the time for the ECB’S public website was inordinately proud of the technical decisions made to serve this data in a single static file. And rightly so.
+
 ¹ By 'bulk' data, I mean APIs designed to serve whole datasets to the end user, as opposed to 'atomic' APIs which serve individual data points (e.g. a postcode lookup) for use in downstream services
 
 ² Cross-Origin Resource Sharing (CORS) enables any website to load your data directly from source parquet files without the need for a server.
