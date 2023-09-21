@@ -11,6 +11,7 @@ python = "^3.10"
 ipykernel = "^6.25.2"
 splink = "^3.9.7"
 pyarrow = "^13.0.0"
+pandas = "2.0.3"
 
 
 [build-system]

@@ -70,7 +70,7 @@ fname.comparison_levels[2].m_probability = 0.005
 
 chart = linker.match_weights_chart()
 
-chart.save("chart_for_pkg.json")
+
 chart = chart.properties(title="Partial match weights")
 
 chart.config.view.continuousWidth = 400
@@ -116,7 +116,7 @@ for item in chart_dict["datasets"][data_name]:
 
 
 del chart_dict["vconcat"][0]["transform"]
-del chart_dict["vconcat"][0]["resolve"]
+# del chart_dict["vconcat"][0]["resolve"]
 chart_dict["vconcat"][0]["encoding"]["color"]["legend"] = None
 chart_dict["vconcat"][0]["encoding"]["x"]["axis"]["title"] = "Partial match"
 
