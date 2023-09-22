@@ -68,7 +68,7 @@ fname = linker._settings_obj._get_comparison_by_output_column_name("gender")
 fname.comparison_levels[1].m_probability = 0.995
 fname.comparison_levels[2].m_probability = 0.005
 
-linker.save_model_to_json("settings_for_js.json")
+linker.save_model_to_json("settings_for_js.json", overwrite=True)
 
 chart = linker.match_weights_chart()
 

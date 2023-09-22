@@ -1,0 +1,29 @@
+---
+title: "m and u values in the Fellegi-Sunter model"
+description: "desc"
+post_date: "2023-09-22"
+post_category: "probabilistic_linkage"
+code_url: "https://observablehq.com/@robinl/d51533bbe054b3d8"
+prob_linkage_category: "tutorial"
+tutorial_number: 3
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+
+import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
+import { partial_match_weight } from "../components/Definitions";
+import TutorialNav from '../components/TutorialNav';
+import CompactTutorialNav from '../components/CompactTutorialNav';
+
+
+<CompactTutorialNav frontmatter={props.pageContext.frontmatter} />
+
+# m and u values in the Fellegi-Sunter model
+
+The previous article introduced the concept of partial match weights.
+
+This article looks at
