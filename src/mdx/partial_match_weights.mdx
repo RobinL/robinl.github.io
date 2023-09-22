@@ -90,9 +90,11 @@ Observe that:
 
 We can also estimate partial match weights for the remaining columns.
 
-Note that the number of scienarios modelled and definition of the scenarios can vary depending on the type of information.
+The number of scienarios modelled and definition of the scenarios can vary depending on the type of information.
 
-For example, since gender is a categorical variable we'd likely have two weights: match, and non-match.  For date of birth, we would may define three scenarios, but similarity would be defined differently to first name.
+For example, since gender is a categorical variable we'd likely have just two partial weights: match, and non-match.
+
+For date of birth, we would may define three scenarios, but [Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance) would be more suitable than [Jaro Winkler](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) for assessing similarity.
 
 We can plot the partial match weights for all the information in a single chart:
 
@@ -100,9 +102,11 @@ We can plot the partial match weights for all the information in a single chart:
 
 ## Intuitive interpretation of partial match weights
 
-In the chart, we can see that the partial match weight associated with an exact match on postcode is stronger than the partial match weight associated with gender.
+The partial match weights in the chart have intuitive interpretations.
 
-This should be intuitive: a match on gender doesn't tell us much about whether two records are a match, whereas a match on postcode is much more informative.
+For example, the partial match weight associated with an exact match on postcode is stronger than the partial match weight associated with gender.
+
+This makes sense: a match on gender doesn't tell us much about whether two records are a match, whereas a match on postcode is much more informative.
 
 The pattern of negative partial match weights is also intuitive:  If gender is recorded as categorical variable, then it may be very accurate.  A mismatch would thus be strong evidence against a match.
 
@@ -110,30 +114,37 @@ Conversely, a mismatch on postcode may offer little evidence against a match sin
 
 ## Understanding the partial match weight chart and waterfall chart
 
-Let's take a look at how the partial match weights in the chart above are applied.
+Let's take a look at an example record comparison, and see how the partial match weights are used.
 
-Consider the following <mark>interactive</mark> table of data. <mark>The below calculations will update as you edit it</mark>.
+<mark>You can edit the data in the below table to see how the calculation changes</mark>.
 
 
 
 <WithObservableProvider notebook={notebook}>
     <ObservableCell cellName="input_table" />
 
-    This is a reproduction of the above partial match weights chart with the activated partial match weights highlighted in colour.
+    The first stage is to calculate which scenarios apply for each column.  For example, are the first names an exact match, a fuzzy match, or neither?
+
+    <ObservableCell cellName="text_activated_categories" />
+
+    In the below chart, I reproduce the partial match weights chart, but with the activated partial match weights highlighted.
 
     <ObservableCell cellName="partial_match_weights_highligh" />
 
-    This corresponds to the following waterfall chart:
+    The activated (selected) partial match weights can then be plotted in a waterfall chart, which represents how they are summed up to compute the final match weight:
+
     <ObservableCell cellName="waterfall_highlight" />
 
-    And finally we can represent the calculation of overall match weight as a formula:
+    Alternatively we can represent the calculation of overall match weight as a simple sum:
 
     <ObservableCell cellName="waterfall_as_formula" />
 
 </WithObservableProvider>
 
 
-## Last header
+## Next steps
 
-We now have a good qualitative understanding of the meaning partial match weights. But how are they calculated and how should we interpret their magnitude?
+We now have a good qualitative understanding of the meaning partial match weights.
+
+In the next article we explore how they are calculated, and how to interpret their values.
 

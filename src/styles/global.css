@@ -149,3 +149,7 @@ input[type='text'] {
 svg {
     @apply inline;
 }
+
+.vega-embed-wrapper {
+    overflow: visible !important;
+}
