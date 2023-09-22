@@ -46,6 +46,8 @@ linker = DuckDBLinker("df", settings, connection=con)
 linker.estimate_u_using_random_sampling(max_pairs=2e6)
 linker.estimate_m_from_label_column("cluster")
 
+linker._settings_obj._probability_two_random_records_match = 1 / 1e6
+
 fname = linker._settings_obj._get_comparison_by_output_column_name("first_name")
 fname.comparison_levels[1].m_probability = 0.85
 fname.comparison_levels[2].m_probability = 0.05
@@ -66,7 +68,7 @@ fname = linker._settings_obj._get_comparison_by_output_column_name("gender")
 fname.comparison_levels[1].m_probability = 0.995
 fname.comparison_levels[2].m_probability = 0.005
 
-# linker.save_model_to_json("model.json")
+linker.save_model_to_json("settings_for_js.json")
 
 chart = linker.match_weights_chart()
 
@@ -93,13 +95,14 @@ keys_to_remove = ["gridDash", "gridWidth", "gridColor"]
 recursive_del(chart_dict, keys_to_remove)
 
 old_key = chart_dict["data"]["name"]
-chart_dict["data"]["name"] = "my_data"
+chart_dict["data"]["name"] = "mydata"
 
-chart_dict["datasets"]["my_data"] = chart_dict["datasets"].pop(old_key)
+chart_dict["datasets"]["mydata"] = chart_dict["datasets"].pop(old_key)
 chart_dict["vconcat"][0]["encoding"]["color"]["legend"] = None
 
 updated_chart = alt.Chart.from_dict(chart_dict)
 updated_chart.save("../../src/mdx/partial_match_weights/partial_match_weights.json")
+updated_chart.save("partial_match_weights_chart_for_js.json")
 
 
 # Chart just for first_name
@@ -115,8 +118,8 @@ for item in chart_dict["datasets"][data_name]:
             new_data.append(item)
 
 
-del chart_dict["vconcat"][0]["transform"]
-# del chart_dict["vconcat"][0]["resolve"]
+chart_dict["vconcat"].pop(0)
+
 chart_dict["vconcat"][0]["encoding"]["color"]["legend"] = None
 chart_dict["vconcat"][0]["encoding"]["x"]["axis"]["title"] = "Partial match"
 
@@ -128,12 +131,22 @@ with open(
 ) as f:
     json.dump(chart_dict, f)
 
+alt.Chart.from_dict(chart_dict)
+
 # Waterfall cahrt
 df_predict = linker.predict()
-records_to_view = df_predict.as_record_dict(limit=5)
+records_to_view = df_predict.as_record_dict(limit=1)
 chart = linker.waterfall_chart(records_to_view, filter_nulls=False)
+chart_dict = chart.to_dict()
+
+old_key = chart_dict["data"]["name"]
+chart_dict["data"]["name"] = "mydata"
+
+chart_dict["datasets"]["mydata"] = chart_dict["datasets"].pop(old_key)
 
 
-chart.save("waterfall_example.json")
+del chart_dict["params"]
+chart_dict["transform"].pop(0)
 
-linker._settings_obj._as_completed_dict()
+with open("waterfall_example_for_js.json", "w") as f:
+    json.dump(chart_dict, f)

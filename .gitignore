@@ -2,3 +2,5 @@ node_modules
 public/
 .cache/
 *.parquet
+
+python/match_weights_article/*_for_js.json
