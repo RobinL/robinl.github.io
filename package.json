@@ -62,7 +62,9 @@
     "react-icons": "^4.10.1",
     "react-rotating-text": "^1.4.1",
     "react-vega": "^7.6.0",
+    "rehype-katex": "^6.0.3",
     "remark-gfm": "^3.0.1",
+    "remark-math": "^5.1.1",
     "typeface-source-sans-pro": "^1.1.13"
   },
   "devDependencies": {

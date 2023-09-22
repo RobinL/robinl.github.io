@@ -1,4 +1,7 @@
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math'
+import rehypeKatex from 'rehype-katex'
+
 import * as dotenv from 'dotenv';
 dotenv.config({ path: '.env' });
 const siteUrl = process.env.URL || `https://www.robinlinacre.com`
@@ -22,8 +25,12 @@ const config = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         mdxOptions: {
-          remarkPlugins: [remarkGfm]
+          remarkPlugins: [remarkGfm, remarkMath],
+          rehypePlugins: [
+            [rehypeKatex, { strict: 'ignore' }],
+          ],
         },
+
         gatsbyRemarkPlugins: [
           {
             resolve: `gatsby-remark-images`,
