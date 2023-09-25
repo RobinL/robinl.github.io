@@ -36,6 +36,15 @@ for d in data:
 data = pd.DataFrame(data)
 data
 
+c = alt.Color(
+    "mw:Q",
+    scale=alt.Scale(
+        domain=[-10, 0, 10],
+        range=["#4B0000", "#222222", "#003300"],
+        interpolate="lab",
+    ),
+    legend=None,
+)
 nearest = alt.selection_point(
     name="param_7",
     nearest=True,
@@ -65,7 +74,6 @@ mark_text_args = {
     "baseline": "middle",
     "fontWeight": "bold",
     "fontSize": 16,
-    "color": "darkred",
 }
 
 line_height = 30
@@ -81,7 +89,7 @@ text1 = (
 
 # LN2
 # format(datum.value/(1-datum.value), ',.1f')
-axis2 = alt.Axis(title="Match weight", labelExpr=f"datum.value")
+axis2 = alt.Axis(title="Partial Match Weight", labelExpr=f"datum.value")
 
 
 text2 = (
@@ -115,6 +123,7 @@ axis4 = alt.Axis(
     labelExpr="if(pow(2, datum.value) >=1, pow(2, datum.value), (1/pow(2, datum.value)))",
 )
 
+
 text4 = (
     alt.Chart(data)
     .mark_text(**mark_text_args)
@@ -137,9 +146,19 @@ rules = (
 
 bar = (
     alt.Chart(data)
-    .mark_bar(color="#bbdffd")
+    .mark_bar(opacity=0.5)
     .encode(
         x="mw:Q",
+        color=alt.Color(
+            "mw:Q",
+            scale=alt.Scale(
+                domain=[-10, 0, 10],
+                range=["red", "#bbbbbb", "green"],
+                interpolate="lab",
+            ),
+            title="Match weight",
+            legend=None,
+        ),
     )
     .transform_filter(nearest)
 )
@@ -175,15 +194,14 @@ c4 = alt.layer(
 
 final_chart = (
     alt.vconcat(c2, c3, c4)
-    .properties(title="Correspondence between match weight, and Bayes factor")
+    .properties(title="Correspondence between partial match weight and Bayes factor")
     .configure_title(anchor="middle")
 )
 # get spec as dict
 final_chart_spec = final_chart.to_dict()
 
-# final_chart_spec["data"] = {"name": "mydata"}
-# final_chart_spec["datasets"] = {"mydata": []}
 
 # Save final_chart_spec to json pretty
 with open("../../src/mdx/m_and_u_probabilities/spec.json", "w") as f:
     json.dump(final_chart_spec, f, indent=4)
+final_chart

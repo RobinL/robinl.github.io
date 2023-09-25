@@ -1,6 +1,6 @@
 import './src/styles/global.css'
 import './src/styles/prism-atom-dark.css'
-
+import "katex/dist/katex.min.css";
 import { Prism } from "prism-react-renderer";
 
 (typeof global !== "undefined" ? global : window).Prism = Prism;
