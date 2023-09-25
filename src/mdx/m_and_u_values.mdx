@@ -22,8 +22,28 @@ import CompactTutorialNav from '../components/CompactTutorialNav';
 
 <CompactTutorialNav frontmatter={props.pageContext.frontmatter} />
 
-# m and u values in the Fellegi-Sunter model
+# m and u probabilities in the Fellegi-Sunter model
 
-The previous article introduced the concept of partial match weights.
+The previous article showed how partial match weights are used to compute a prediction of whether two records match.
 
-This article looks at
+However, partial match weights are not estimated directly.  They are made up of two values known as the `m` and the `u` probabilities.
+
+This article explains what these values are, and how they can help us interpret the partial match weights.
+
+## Motivation and aim
+
+Before looking at any maths, let's consider a simple example:
+
+Imagine we have two records.  We're not sure whether they represent the same person.
+
+Now we get some new information: we're told that month of birth matches.
+
+Intuitively, it should now be around 12 times more likely that the records represent the same person.
+
+This article explans how the `m` and `u` probabilities can be used to quantify this intuition.
+
+
+## m and u probabilities
+
+In the Fellegi Sunter model, ech partial match weight is derived from two parameters known as the `m` and `u` values of the model.
+
