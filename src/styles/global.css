@@ -14,7 +14,7 @@ h1 {
 }
 
 h2 {
-    @apply text-2xl leading-snug text-gray-800 mb-2;
+    @apply text-2xl leading-snug text-gray-800 mb-2 mt-6;
 }
 
 h3 {
@@ -30,11 +30,11 @@ p {
 }
 
 ol {
-    @apply list-decimal list-outside  pl-5;
+    @apply list-decimal list-outside ml-2 pl-6 mb-4;
 }
 
 ul {
-    @apply list-disc list-outside pl-5;
+    @apply list-disc list-outside ml-2 pl-6 mb-4;
 }
 
 li {
@@ -103,11 +103,11 @@ select {
 
 #vg-tooltip-element.vg-tooltip {
     @apply bg-white text-xs shadow-md rounded p-1 mb-0;
-    max-width: 250px;
+    max-width: 450px;
 }
 
 #vg-tooltip-element.vg-tooltip table {
-    @apply table-fixed w-full mb-0;
+    @apply mb-0;
 }
 
 #vg-tooltip-element.vg-tooltip tbody,
@@ -148,4 +148,8 @@ input[type='text'] {
 
 svg {
     @apply inline;
+}
+
+.vega-embed-wrapper {
+    overflow: visible !important;
 }

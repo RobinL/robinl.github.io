@@ -1,0 +1,163 @@
+---
+title: "Partial match weights"
+description: "desc"
+post_date: "2023-09-20"
+post_category: "probabilistic_linkage"
+code_url: "https://observablehq.com/@robinl/d51533bbe054b3d8"
+prob_linkage_category: "tutorial"
+tutorial_number: 2
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import { Vega, VegaLite } from "react-vega"
+import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
+import { partial_match_weight } from "../components/Definitions";
+import TutorialNav from '../components/TutorialNav';
+import CompactTutorialNav from '../components/CompactTutorialNav';
+
+import notebook from "@robinl/partial-match-weights";
+
+import partial_match_weights from './partial_match_weights/partial_match_weights.json'
+
+import partial_match_weights_first_name from './partial_match_weights/partial_match_weights_first_name.json'
+
+<CompactTutorialNav frontmatter={props.pageContext.frontmatter} />
+
+# Partial Match Weights
+
+
+In the previous article we saw that the Fellegi-Sunter model makes its predictions with a simple calculation: a sum of the partial match weights.
+
+But what are partial match weights and where do they come from?[^1]
+
+[^1]: In this context, the word 'partial' means 'using only a subset of the information in the record' - often a single column.  There is then a partial match weight for each column.
+
+
+
+## Partial match weights
+
+Some columns are more important than others to the calculation of overall match probability.[^2]  This is quantified by the partial match weights.
+
+[^2]: In this article, for simplicity,  there's a one to one correspondence between columns and partial match weights. Each column is treated as a separate piece of information.  In reality, the model allows for more flexibility.  We could split a column (e.g. date of birth) into several pieces of information (e.g. day, month, year) and estimate partial match weights for each.  Or we could combine several columsn (e.g. first, middle and surname) into a single piece of information and estimate a partial match weights for this information.
+
+For example:
+
+-  A match on date of birth provides stronger evidence in favour of a match than a match on gender.
+-  A mismatch on date of birth may provide more evidence against a match than a mismatch on address (because people move house).
+
+Positive values indicate evidence in favour of a match whilst negative values mean evidence against a match.
+
+The concept applies more generally than just to matches and non-matches: partial match weights can be estimated for more subtle scenarios like 'first name not an exact match, but similar'.
+
+It is up to the modeller to define these scenarios and the resultant partial match weights they wish to estimate.
+
+### Example:  First name column
+
+For first name, we could define the following three categories (in Splink, these are known as `ComparisonLevels`):
+
+1. Exact match: First names are identical
+2. Fuzzy match:  First names are similar according to the [Jaro Winkler](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance#Jaro%E2%80%93Winkler_similarity) measure
+3. All other cases
+
+The estimated partial match weights may look like this:[^3]
+
+[^3]:A later article will explain how to estimate partial match weights.  Here I just assume they have already been estimated.
+
+<VegaLite spec={partial_match_weights_first_name} />
+
+These are a series of mutually exclusive categories that work like a sequence of `if` statements:
+
+
+
+```python
+if first_name_l == first_name_r:
+    first_name_partial_match_weight = 7.2
+elif jaro_winkler_sim(first_name_l, first_name_r) >= 0.9:
+    first_name_partial_match_weight = 5.9
+else:
+    first_name_partial_match_weight = -3.3
+```
+
+Observe that:
+- An exact match on first name provides stronger evidence in favour of a match than a fuzzy match
+- If the first name is completely different (neither and exact nor fuzzy match), this is evidence against the records being a match.
+
+### Remaining columns
+
+We can also estimate partial match weights for the remaining columns.
+
+The number of scienarios modelled and definition of the scenarios can vary depending on the type of information.
+
+For example, since gender is a categorical variable we'd likely have just two partial weights: match, and non-match.
+
+For date of birth, we would may define three scenarios, but [Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance) would be more suitable than [Jaro Winkler](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) for assessing similarity.
+
+We can plot the partial match weights for all the information in a single chart:
+
+<VegaLite spec={partial_match_weights} />
+
+## Intuitive interpretation of partial match weights
+
+The partial match weights in the chart have intuitive interpretations.
+
+For example, the partial match weight associated with an exact match on postcode is stronger than the partial match weight associated with gender.
+
+This makes sense: a match on gender doesn't tell us much about whether two records are a match, whereas a match on postcode is much more informative.
+
+The pattern of negative partial match weights is also intuitive:  If gender is recorded as categorical variable, then it may be very accurate.  A mismatch would thus be strong evidence against a match.
+
+Conversely, a mismatch on postcode may offer little evidence against a match since people move house, or typos may have been made.
+
+## Understanding the partial match weight chart and waterfall chart
+
+Let's take a look at an example record comparison, and see how the partial match weights are used.
+
+<mark>You can edit the data in the below table to see how the calculation changes</mark>.
+
+
+
+<WithObservableProvider notebook={notebook}>
+    <ObservableCell cellName="input_table" />
+
+    The first stage is to calculate which scenarios apply for each column.  For example, are the first names an exact match, a fuzzy match, or neither?
+
+    <ObservableCell cellName="text_activated_categories" />
+
+    In the below chart, I reproduce the partial match weights chart, but with the activated partial match weights highlighted.
+
+    <ObservableCell cellName="partial_match_weights_highligh" />
+
+    The activated (selected) partial match weights can then be plotted in a waterfall chart, which represents how they are summed up to compute the final match weight:
+
+    <ObservableCell cellName="waterfall_highlight" />
+
+    Alternatively we can represent the calculation of overall match weight as a simple sum:
+
+    <ObservableCell cellName="waterfall_as_formula" />
+
+</WithObservableProvider>
+
+The final match weight is a measure of the similarity of the two records.  In subsequent articles we will see how it can be converted into a probability using the formula:
+
+
+
+
+$$\Large{p = \frac{2^{\omega}}{1 + 2^{\omega}}}$$
+
+
+
+Where $p$ is the probability and $\omega$ is the final match weight.
+
+
+
+## Next steps
+
+We now have a good qualitative understanding of the meaning partial match weights.
+
+In the next article we explore how they are calculated, and how to interpret their values.
+
+<TutorialNav frontmatter={props.pageContext.frontmatter} />
