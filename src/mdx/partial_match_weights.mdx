@@ -8,7 +8,7 @@ prob_linkage_category: "tutorial"
 tutorial_number: 2
 ---
 
-export { MDXLayout as default } from '../components/MDXLayout';
+export { ProbLinkageLayout as default} from '../components/ProbLinkageLayout'
 import { SEO } from "../components/SEO"
 
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
@@ -24,8 +24,6 @@ import notebook from "@robinl/partial-match-weights";
 import partial_match_weights from './partial_match_weights/partial_match_weights.json'
 
 import partial_match_weights_first_name from './partial_match_weights/partial_match_weights_first_name.json'
-
-<CompactTutorialNav frontmatter={props.pageContext.frontmatter} />
 
 # Partial Match Weights
 
@@ -160,4 +158,3 @@ We now have a good qualitative understanding of the meaning partial match weight
 
 In the next article we explore how they are calculated, and how to interpret their values.
 
-<TutorialNav frontmatter={props.pageContext.frontmatter} />

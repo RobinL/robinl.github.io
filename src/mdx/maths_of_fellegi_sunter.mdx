@@ -8,7 +8,7 @@ prob_linkage_category: "tutorial"
 tutorial_number: 4
 ---
 
-export { MDXLayout as default } from '../components/MDXLayout';
+export { ProbLinkageLayout as default} from '../components/ProbLinkageLayout'
 import { SEO } from "../components/SEO"
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
@@ -50,8 +50,4 @@ export const output_order = [
 ];
 
 
-<CompactTutorialNav frontmatter={props.pageContext.frontmatter} />
-
 <ObservableNotebook notebook={notebook} cells={output_order} />
-
-<TutorialNav frontmatter={props.pageContext.frontmatter} />
