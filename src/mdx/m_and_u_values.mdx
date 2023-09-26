@@ -53,20 +53,20 @@ But how much evidence?
 
 This is quantified by the `m` and `u` probabilities.  For each scenario in the model:
 
-- The `m` probability is:  $$\text{Pr}(\text{scenario}|\text{records match})$$
+- The `m` probability measures how often the scenario occurs among matching records:  $$\text{Pr}(\text{scenario}|\text{records match})$$
 
-- The `u` probability is: $$\text{Pr}(\text{scenario}|\text{records do not match})$$
+- The `u` probability measures how often the scenario occurs among non-matching records: $$\text{Pr}(\text{scenario}|\text{records do not match})$$
 
-What matters is the _relative_ size of the m and u probabilities.  This is calculated as a ratio known as the Bayes Factor, denoted by $K$.
+What matters is the _relative_ size of these values.  This is calculated as a ratio known as the Bayes Factor, denoted by $K$.
 
 $\text{Bayes Factor} = K = \frac{m}{u} = \frac{\text{Pr}(\text{scenario}|\text{records match})}{\text{Pr}(\text{scenario}|\text{records do not match})} $
 
-Bayes Factors are the easiest way to interpret the parameters of the Fellegi Sunter model because of they act as a relative multiplier to increase or decrease the overall prediction of a match. For example:
+Bayes Factors provide the easiest way to interpret the parameters of the Fellegi Sunter model because they act as a relative multiplier that increases or decreases the overall prediction of whether the records match. For example:
 
 - A Bayes Factor of 5 can be interpreted as '5 times more likely to match'
 - A Bayes Factor of 0.2 can be interpreted as '5 times less likely to match'
 
-In this sense, a Bayes Factor is are similar to the concept of odds. Odds of 5 mean that an even happens five out of size times, or in some sense it is five times more likely for the event to happen than not happen.
+In this sense, a Bayes Factor is are similar to the concept of odds. Odds of 5 mean that an even happens five out of six times, or in some sense it is five times more likely for the event to happen than not happen.
 
 ### Example 1: Evidence in favour of a match
 
@@ -77,18 +77,18 @@ For example, suppose we observe that month of birth matches.
 
 $\text{Bayes Factor} = K = \frac{m}{u} = \frac{0.99}{0.0833} = 11.9$.
 
-We observe this scenario around 11.9 times more often amongst matching records than non-matching records.
+This means we observe this scenario around 11.9 times more often amongst matching records than non-matching records.
 
 Hence, given this observation, the records are 11.9 times more likely to be a match.
 
-More generally, strong positive match weights are dependent on low `u` probabilities.
+More generally, we can see that strong positive match weights are dependent on low `u` probabilities.
 
 ### Example 2: Evidence against a match
 
 Suppose we observe that gender does not match.
 
-- Amongst matching records, it will be rare to observe a non-match on date of birth.  If there are occasional data entry errors, we may have $m = 0.02$
-- Amongst non matching records, gender will not around half the time.  So $u = 0.5$.
+- Amongst matching records, it will be rare to observe a non-match on gender.  If there are occasional data entry errors, we may have $m = 0.02$
+- Amongst non matching records, gender will match around half the time.  So $u = 0.5$.
 
 $\text{Bayes Factor} = K = \frac{m}{u} = \frac{0.02}{0.5} = 0.04 = \frac{1}{25}$.
 
@@ -96,7 +96,7 @@ We observe this scenario around 25 times more often among non-matching records t
 
 Hence, given this observation the records are 25 times less likely to be a match.
 
-One important takeaway from this example is that strong negative match weights require very low `m` probabilitiess, implying high data quality.
+One important takeaway from this example is that strong negative match weights require very low `m` probabilitiess, which in turn implies high data quality.
 
 ## Interpreting m and u probabilities
 
@@ -112,8 +112,6 @@ An m probabilitiy of 0.9 means that, amongst matching records, the first name ma
 
 The m probability for an exact match on postcode may be even lower - but this may be driven primarily by people moving house, as opposed to data error.
 
-For example,
-
 ### u probabilities
 
 The `u` probability is primarily a measure of the likelihood of coincidences, which is driven by the cardinailty of the data.
@@ -128,11 +126,13 @@ A column such as first name with a large number of distinct values (high cardina
 
 ## The relationship between Bayes Factors, partial match weights and m and u probabilities
 
+How do `m` and `u` probabilities and Bayes Factors relate to the partial match weights we explored in the previous article?
+
 Partial match weights relate to Bayes Factors through a simple formula:
 
 $\text{partial match weight} = \omega = \log_2 \text{(Bayes Factor)} = \log_2 (\frac{m}{u})$
 
-Why do we need the additional concept of partial match weights useful when we already have Bayes Factors?  The are two main reasons:
+There are two main reasons that the additional concept of partial match weights is useful in addition to Bayes Factors:
 
 - Partial match weights are easier to represent on charts.  They tend to range from -30 to 30, whereas Bayes Factors can be tiny (one in a million) or massive (millions).
 - Since Bayes Factors are multiplicative, the log transform turns them into something additive, which simplifies the maths a little.
@@ -144,20 +144,19 @@ We can summarise this relationship with this chart (hover over chart to select):
 
 A larger, standalone version is available <Link to="/prob_bf_mw/">here</Link>.
 
-
-
-
-## Bayes Factors and the prior
+## How Bayes Factors are used to compute probabilities
 
 What does it mean for a match to be $n$ times more or less likely?  More likely than what?
 
-It's only meaningful to say that something is more or less likely relative to a starting point - known as the 'prior' (our 'prior belief').
+It's only meaningful to say that something is more or less likely relative to a starting probability - known as the 'prior' (our 'prior belief').
 
-In the context of record linkage, the prior is our existing belief that the two records match before we saw the new information (e.g. that first names match).
+In the context of record linkage, the prior is our existing belief that the two records match before we saw the new information contained in a scenario (e.g. that first names match).
 
 Our updated belief given this new information is called the 'posterior'.
 
 Here's a calculator which shows how a prior probability is updated with a Bayes Factor/partial match weight:
+
+## Posterior calculator
 
 <WithObservableProvider notebook={notebook}>
     <ObservableCell cellName="viewof prior_probability" />
@@ -168,6 +167,8 @@ Here's a calculator which shows how a prior probability is updated with a Bayes 
 
 
 </WithObservableProvider>
+
+An alternative way of visualising these concepts can be found <Link to="/visualising_fellegi_sunter/">here</Link>.
 
 The mathematical derivations are given in the mathematical annex below.
 
