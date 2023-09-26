@@ -7,6 +7,7 @@ code_url: "https://observablehq.com/@robinl/d51533bbe054b3d8"
 prob_linkage_category: "tutorial"
 tutorial_number: 3
 ---
+import { Link } from "gatsby"
 
 export { MDXLayout as default } from '../components/MDXLayout';
 import { SEO } from "../components/SEO"
@@ -19,6 +20,9 @@ import CompactTutorialNav from '../components/CompactTutorialNav';
 
 import { Vega, VegaLite } from "react-vega"
 import spec from "./m_and_u_probabilities/spec.json"
+import movement_spec from "./m_and_u_probabilities/bf_movement_spec.json"
+import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
+import notebook from "@robinl/bf-prior-calc";
 
 <CompactTutorialNav frontmatter={props.pageContext.frontmatter} />
 
@@ -133,19 +137,19 @@ Why do we need the additional concept of partial match weights useful when we al
 - Partial match weights are easier to represent on charts.  They tend to range from -30 to 30, whereas Bayes Factors can be tiny (one in a million) or massive (millions).
 - Since Bayes Factors are multiplicative, the log transform turns them into something additive, which simplifies the maths a little.
 
-We can summarise this relationship with this chart:
+We can summarise this relationship with this chart (hover over chart to select):
 
 
 <VegaLite spec={spec} />
 
-A larger, standalone version is here:
+A larger, standalone version is available <Link to="/prob_bf_mw/">here</Link>.
+
+
 
 
 ## Bayes Factors and the prior
 
-I've mentioned that Bayes Factors have an intuitive interpretation as relative multipliers.
-
-But what does it mean for a match to be $n$ times more or less likely?  More likely than what?
+What does it mean for a match to be $n$ times more or less likely?  More likely than what?
 
 It's only meaningful to say that something is more or less likely relative to a starting point - known as the 'prior' (our 'prior belief').
 
@@ -153,26 +157,35 @@ In the context of record linkage, the prior is our existing belief that the two 
 
 Our updated belief given this new information is called the 'posterior'.
 
-Here's a calculator which
+Here's a calculator which shows how a prior probability is updated with a Bayes Factor/partial match weight:
+
+<WithObservableProvider notebook={notebook}>
+    <ObservableCell cellName="viewof prior_probability" />
+    <ObservableCell cellName="partial_match_weight_bound" />
+    <ObservableCell cellName="bayes_factor" />
+    <ObservableCell cellName="narrative" />
+    <ObservableCell cellName="chart" />
 
 
+</WithObservableProvider>
 
+The mathematical derivations are given in the mathematical annex below.
 
 ## Next steps
 
-Now that we have a good understanding, we're in a positon to present the full mathematical specification of the Fellegi Sunter model.
+Now that we have a firm grasp of these ingredients, we're in a positon to present the full mathematical specification of the Fellegi Sunter model.
 
 ## Mathematical annex
 
+Supposing we obesrve the scenario that first name matches
+
 We can use Bayes Theorem to write:
 
-$\text{posterior} = \frac{\operatorname{Pr}(\text{first name matches}|\text{prior})(\text{prior})}{\operatorname{Pr}{(\text{first name matches})}}$
+$\text{posterior probability} = \frac{\operatorname{Pr}(\text{first name matches}|\text{prior})(\text{prior})}{\operatorname{Pr}{(\text{first name matches})}}$
 
-$\text{posterior} = \frac{m \times \text{prior}}{m \times \text{prior} + u \times (1 - \text{prior})}$
+$\text{posterior probability} = \frac{m \times \text{prior}}{m \times \text{prior} + u \times (1 - \text{prior})}$
 
 Which can also be written:
-
-We can write:
 
 $\text{posterior odds} =  \frac{\text{prior}}{1 - \text{prior}} \times \text{Bayes Factor}$
 
@@ -180,3 +193,4 @@ and
 
 $\text{posterior probability} = \frac{\text{posterior odds}}{1 + \text{posterior odds}}$
 
+<TutorialNav frontmatter={props.pageContext.frontmatter} />
