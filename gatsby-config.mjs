@@ -72,6 +72,13 @@ const config = {
       }
     },
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `definitions`,
+        path: `./src/definitions_mdx`,
+      },
+    },
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
         "name": "mdx",
