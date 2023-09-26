@@ -9,7 +9,7 @@ tutorial_number: 3
 ---
 import { Link } from "gatsby"
 
-export { MDXLayout as default } from '../components/MDXLayout';
+export { ProbLinkageLayout as default} from '../components/ProbLinkageLayout'
 import { SEO } from "../components/SEO"
 
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
@@ -24,7 +24,6 @@ import movement_spec from "./m_and_u_probabilities/bf_movement_spec.json"
 import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
 import notebook from "@robinl/bf-prior-calc";
 
-<CompactTutorialNav frontmatter={props.pageContext.frontmatter} />
 
 # m and u probabilities in the Fellegi-Sunter model
 
@@ -194,4 +193,3 @@ and
 
 $\text{posterior probability} = \frac{\text{posterior odds}}{1 + \text{posterior odds}}$
 
-<TutorialNav frontmatter={props.pageContext.frontmatter} />

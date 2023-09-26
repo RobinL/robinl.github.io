@@ -9,7 +9,9 @@ tutorial_number: 1
 post_latest_update: "2023-09-12"
 ---
 
-export { MDXLayout as default } from '../components/MDXLayout';
+
+export { ProbLinkageLayout as default} from '../components/ProbLinkageLayout'
+
 import { SEO } from "../components/SEO"
 import { prior, partial_match_weight } from "../components/Definitions";
 
@@ -23,7 +25,7 @@ import {ObservableCell, WithObservableProvider}   from '../components/Observable
 import TutorialNav from '../components/TutorialNav';
 import CompactTutorialNav from '../components/CompactTutorialNav';
 
-<CompactTutorialNav frontmatter={props.pageContext.frontmatter} />
+
 
 # An Interactive Introduction to the Fellegi Sunter model for Probabilistic Record Linkage
 
@@ -79,6 +81,6 @@ Let's take a look at at an example of a simple Fellegi-Sunter model to calculate
 
 </WithObservableProvider>
 
-<TutorialNav frontmatter={props.pageContext.frontmatter} />
+
 
 
