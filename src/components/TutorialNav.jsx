@@ -32,7 +32,12 @@ const TutorialNav = ({ frontmatter }) => {
         <div className="bg-blue-100  p-4 mt-8  mb-4 rounded-lg ">
             <div className="container mx-auto">
                 <div className="text-blue-800 font-semibold text-base mb-2">
-                    Probabilistic Linkage Tutorial Navigation:
+                    <Link
+                        to="/probabilistic_linkage"
+                        className="text-blue-500 hover:underline"
+                    >
+                        Probabilistic Linkage Tutorial Navigation:
+                    </Link>
                 </div>
                 <ol className="space-y-2 text-sm">
                     {sortedTutorials.map(edge => (
