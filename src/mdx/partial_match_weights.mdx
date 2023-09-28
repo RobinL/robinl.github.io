@@ -1,6 +1,6 @@
 ---
 title: "Partial match weights"
-description: "desc"
+description: "Partial match weights in the Fellegi-Sunter model.  Part of an interactive introduction to probabilistic record linkage (data deduplication) theory"
 post_date: "2023-09-20"
 post_category: "probabilistic_linkage"
 code_url: "https://observablehq.com/@robinl/d51533bbe054b3d8"
@@ -30,7 +30,7 @@ import DefinitionToolTip from "../components/DefinitionToolTip";
 # Partial Match Weights
 
 
-In the previous article we saw that the Fellegi-Sunter model makes its predictions with a simple calculation: a sum of the partial match weights.
+In the previous article we saw that the Fellegi-Sunter model makes its predictions with a simple calculation: the sum of the partial match weights.
 
 But what are partial match weights and where do they come from?[^1]
 
@@ -38,11 +38,11 @@ But what are partial match weights and where do they come from?[^1]
 
 
 
-## Partial match weights
+## What are they?
 
 Some columns are more important than others to the calculation of overall match probability.[^2]  This is quantified by the partial match weights.
 
-[^2]: In this article, for simplicity,  there's a one to one correspondence between columns and partial match weights. Each column is treated as a separate piece of information.  In reality, the model allows for more flexibility.  We could split a column (e.g. date of birth) into several pieces of information (e.g. day, month, year) and estimate partial match weights for each.  Or we could combine several columsn (e.g. first, middle and surname) into a single piece of information and estimate a partial match weights for this information.
+[^2]: In this article, for simplicity,  there's a one to one correspondence between columns and partial match weights. Each column is treated as a separate piece of information.  In reality, the model allows for more flexibility.  We could split a column (e.g. date of birth) into several pieces of information (e.g. day, month, year) and estimate partial match weights for each.  Or we could combine several columns (e.g. first, middle and surname) into a single piece of information and estimate a partial match weights for this information.
 
 For example:
 
@@ -57,7 +57,7 @@ It is up to the modeller to define these scenarios and the resultant partial mat
 
 ### Example:  First name column
 
-For first name, we could define the following three categories (in Splink, these are known as `ComparisonLevels`):
+For first name, we could define the following three scenarios (in Splink, these are known as `ComparisonLevels`):
 
 1. Exact match: First names are identical
 2. Fuzzy match:  First names are similar according to the [Jaro Winkler](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance#Jaro%E2%80%93Winkler_similarity) measure
@@ -69,7 +69,7 @@ The estimated partial match weights may look like this:[^3]
 
 <VegaLite spec={partial_match_weights_first_name} />
 
-These are a series of mutually exclusive categories that work like a sequence of `if` statements:
+These scenarios are a series of mutually exclusive categories that work like a sequence of `if` statements:
 
 
 
@@ -90,15 +90,17 @@ Observe that:
 
 We can also estimate partial match weights for the remaining columns.
 
-The number of scienarios modelled and definition of the scenarios can vary depending on the type of information.
+The number of scenarios modelled and the definition of these scenarios can vary depending on the type of information.
 
 For example, since gender is a categorical variable we'd likely have just two partial weights: match, and non-match.
 
-For date of birth, we would may define three scenarios, but [Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance) would be more suitable than [Jaro Winkler](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) for assessing similarity.
+For date of birth, we may define three scenarios, but [Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance) would be more suitable than [Jaro Winkler](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) for assessing similarity.
 
-We can plot the partial match weights for all the information in a single chart:
+We can plot all the partial match weights in a single chart like this:
 
 <VegaLite spec={partial_match_weights} />
+
+This provides a succinct summary of the whole model.
 
 ## Intuitive interpretation of partial match weights
 
@@ -135,7 +137,7 @@ Let's take a look at an example record comparison, and see how the partial match
 
     <ObservableCell cellName="waterfall_highlight" />
 
-    Alternatively we can represent the calculation of overall match weight as a simple sum:
+    Alternatively we can represent the calculation of overall match weight as a sum:
 
     <ObservableCell cellName="waterfall_as_formula" />
 
@@ -156,7 +158,7 @@ Where $p$ is the probability and $\omega$ is the final match weight.
 
 ## Next steps
 
-We now have a good qualitative understanding of the meaning partial match weights.
+We now have a good qualitative understanding of the meaning of partial match weights.
 
 In the next article we explore how they are calculated, and how to interpret their values.
 

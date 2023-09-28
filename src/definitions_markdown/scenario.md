@@ -11,4 +11,4 @@ For example, for the first name column, the following (mutually exclusive) scena
 -   else jaro winkler match < 0.9
 -   else everything else
 
-In Splink, these are known as a `comparison_levels` and each comparison level represents a branch of a SQL case expression. They are specified in order of evaluation, each with a sql_condition that represents the branch of a case expression",
+In Splink, these are known as a `comparison_levels` and each comparison level represents a branch of a SQL case expression. They are specified in order of evaluation, each with a sql_condition that represents the branch of a case expression
