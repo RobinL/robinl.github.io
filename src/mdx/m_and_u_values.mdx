@@ -44,7 +44,7 @@ Is this scenario more likely among matches or non-matches?
 - Amongst matching records, month of birth will usually match
 - Amongst non-matching records month of birth will rarely match
 
-Since it's common to observe this scenario among matching records, but rare to obseve it among non-matching records, this is evidence in favour of a match.
+Since it's common to observe this scenario among matching records, but rare to observe it among non-matching records, this is evidence in favour of a match.
 
 But how much evidence?
 
@@ -65,7 +65,7 @@ Bayes Factors provide the easiest way to interpret the parameters of the Fellegi
 - A Bayes Factor of 5 can be interpreted as '5 times more likely to match'
 - A Bayes Factor of 0.2 can be interpreted as '5 times less likely to match'
 
-In this sense, a Bayes Factor is are similar to the concept of odds. Odds of 5 mean that an even happens five out of six times, or in some sense it is five times more likely for the event to happen than not happen.
+In this sense, a Bayes Factor is are similar to the concept of odds. Odds of 5 mean that an event happens five out of six times, or in some sense it is five times more likely for the event to happen than not happen.
 
 ### Example 1: Evidence in favour of a match
 
@@ -80,7 +80,7 @@ This means we observe this scenario around 11.9 times more often amongst matchin
 
 Hence, given this observation, the records are 11.9 times more likely to be a match.
 
-More generally, we can see that strong positive match weights are dependent on low `u` probabilities.
+More generally, we can see from the formula that strong positive match weights only possible with low `u` probabilities, implying high cardinality.
 
 ### Example 2: Evidence against a match
 
@@ -95,11 +95,11 @@ We observe this scenario around 25 times more often among non-matching records t
 
 Hence, given this observation the records are 25 times less likely to be a match.
 
-One important takeaway from this example is that strong negative match weights require very low `m` probabilitiess, which in turn implies high data quality.
+More generally, we can see from the formula that strong negative match weights only possible with low `m` probabilities, which in turn implies high data quality.
 
 ## Interpreting m and u probabilities
 
-In addition to these quantitiative interpretations, the `m` and `u` probabilities also have intuitive qualitative interpretations:
+In addition to these quantitative interpretations, the `m` and `u` probabilities also have intuitive qualitative interpretations:
 
 ### m probabilities
 
@@ -107,19 +107,19 @@ The `m` probability can be thought of as a measure of data quality, or the prope
 
 For example, consider the scenario of an exact match on first name.
 
-An m probabilitiy of 0.9 means that, amongst matching records, the first name matches just 90% of the time, which is an indication of poor data quality.
+An m probability of 0.9 means that, amongst matching records, the first name matches just 90% of the time, which is an indication of poor data quality.
 
 The m probability for an exact match on postcode may be even lower - but this may be driven primarily by people moving house, as opposed to data error.
 
 ### u probabilities
 
-The `u` probability is primarily a measure of the likelihood of coincidences, which is driven by the cardinailty of the data.
+The `u` probability is primarily a measure of the likelihood of coincidences, which is driven by the cardinality of the data.
 
 Consider the scenario of an exact match on first name.
 
 A `u` probability of 0.005 means that, amongst non-matching records, first name matches 0.5% of the time.
 
-The `u` probability therefore measures how often two _different_ people have the same first name - so in this sence it's a measure of how often coincidences occur.
+The `u` probability therefore measures how often two _different_ people have the same first name - so in this sense it's a measure of how often coincidences occur.
 
 A column such as first name with a large number of distinct values (high cardinality) will have much smaller `u` probabilities than a column such as gender which has low cardinality.
 
@@ -173,11 +173,11 @@ The mathematical derivations are given in the mathematical annex below.
 
 ## Next steps
 
-Now that we have a firm grasp of these ingredients, we're in a positon to present the full mathematical specification of the Fellegi Sunter model.
+Now that we have a firm grasp of these ingredients, we're in a position to present the full mathematical specification of the Fellegi Sunter model.
 
 ## Mathematical annex
 
-Supposing we obesrve the scenario that first name matches
+Supposing we observe the scenario that first name matches
 
 We can use Bayes Theorem to write:
 

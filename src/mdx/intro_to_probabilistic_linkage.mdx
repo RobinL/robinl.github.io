@@ -24,15 +24,15 @@ import {ObservableCell, WithObservableProvider}   from '../components/Observable
 import TutorialNav from '../components/TutorialNav';
 import CompactTutorialNav from '../components/CompactTutorialNav';
 
-# An Interactive Introduction to the Fellegi Sunter model for Probabilistic Record Linkage
+# An Interactive Introduction to the Fellegi-Sunter Model for Probabilistic Record Linkage
 
 ## Aims
 
-This is part one of a series of interactive articles that aim to provide an introduction to the theory probabilistic record linkage (data deduplication).
+This is part one of a series of interactive articles that aim to provide an introduction to the theory of probabilistic record linkage (data deduplication).
 
 In this article I provide a high-level description of the purpose of probabilistic record linkage in the Fellegi-Sunter framework, and an interactive example of a linkage model.
 
-These materials align closely to the probabilisic model used by [Splink](http://github.com/moj-analytical-services/splink), a free software package for record linkage at scale.
+These materials align closely to the probabilistic model used by [Splink](http://github.com/moj-analytical-services/splink), a free software package for record linkage at scale.
 
 These articles cover the theory only.  For practical model building using Splink, see [here](https://moj-analytical-services.github.io/splink/demos/tutorials/00_Tutorial_Introduction.html).
 
@@ -44,7 +44,7 @@ In the absence of a unique identifier such as a National Insurance number, we ca
 
 Record linkage can be done within datasets (deduplication), between datasets (linkage), or both.
 
-Linkage is 'probabilistic' in the sense that it relies on the balance on evidence. For instance, in a large dataset, observing that two records match on the full name `John Smith` provides some evidence that these two records may refer to the same person, but this evidence is inconclusive because it's possible there are two different `John Smith`s.
+Linkage is 'probabilistic' in the sense that it relies on the balance of evidence. For instance, in a large dataset, observing that two records match on the full name `John Smith` provides some evidence that these two records may refer to the same person, but this evidence is inconclusive because it's possible there are two different `John Smith`s.
 
 More broadly,  it is often impossible to classify pairs of records as matches or non-matches beyond any doubt. Instead, the aim of probabilisitic record linkage is to quantify the probability that a pair of records refer to the same entity by considering evidence in favour and against a match and weighting it appropriately.
 
@@ -52,15 +52,15 @@ The most common type of probabilistic record linkage model is called the Fellegi
 
 We start with a <DefinitionToolTip term="prior" />, which represents the probability that two records drawn at random are a match. We then compare the two records, increasing the match probability where information in the record matches, and decreasing it when information differs.
 
-The amount we increse and decrease the match probability is determined by the '<DefinitionToolTip term="partial_match_weight" />s' of the model.
+The amount we increase and decrease the match probability is determined by the '<DefinitionToolTip term="partial_match_weight" />s' of the model.
 
-For example, a match on postcode gives us more evidence in favour of a match on gender, since the later is much more likely to occur by chance.
+For example, a match on postcode gives us more evidence in favour of a match on gender, since the latter is much more likely to occur by chance.
 
 The final prediction is a simple calculation:  we sum up <DefinitionToolTip term="partial_match_weight" />s to compute a final match weight, which is then converted into a probability.
 
 ## Example
 
-Let's take a look at at an example of a simple Fellegi-Sunter model to calculate match probability interactively. This model will compare the two records in the table, and assess whether they refer to the same person, or different people.
+Let's take a look at an example of a simple Fellegi-Sunter model to calculate match probability interactively. This model will compare the two records in the table, and assess whether they refer to the same person, or different people.
 
 ✨<mark>You may edit the values in the table to see how the match probability changes.</mark>✨
 
