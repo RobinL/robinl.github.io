@@ -48,7 +48,15 @@ const CompactTutorialNav = ({ frontmatter }) => {
                     )}
                 </div>
                 <div className="w-1/3 text-center">
-                    <span>This is part {tutorial_number} of the tutorial</span>
+                    <span>
+                        This is part {tutorial_number} of the{' '}
+                        <Link
+                            to="/probabilistic_linkage"
+                            className="text-blue-500 hover:underline"
+                        >
+                            tutorial
+                        </Link>
+                    </span>
                 </div>
                 <div className="w-1/3 text-right">
                     {nextExists && (
