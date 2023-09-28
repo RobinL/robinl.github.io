@@ -21,6 +21,7 @@ const config = {
   },
   plugins: ["gatsby-plugin-postcss",
     `gatsby-plugin-sharp`,
+    `gatsby-transformer-remark`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
