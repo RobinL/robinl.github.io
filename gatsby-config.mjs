@@ -21,6 +21,7 @@ const config = {
   },
   plugins: ["gatsby-plugin-postcss",
     `gatsby-plugin-sharp`,
+    `gatsby-transformer-remark`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
@@ -77,6 +78,13 @@ const config = {
         "name": "mdx",
         "path": "./src/images/"
       }
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `definitions`,
+        path: `./src/definitions_markdown`,
+      },
     },
     {
       resolve: `gatsby-plugin-page-creator`,

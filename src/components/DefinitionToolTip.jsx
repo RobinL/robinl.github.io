@@ -1,12 +1,44 @@
 import React, { useState } from 'react';
+import { graphql, useStaticQuery } from 'gatsby';
 
-const DefinitionTooltip = ({ term, definition }) => {
+const getData = () => {
+    const data = useStaticQuery(graphql`
+        query {
+            allMarkdownRemark(
+                filter: {
+                    fileAbsolutePath: { regex: "/definitions_markdown/" }
+                }
+            ) {
+                edges {
+                    node {
+                        id
+                        html
+                        frontmatter {
+                            term
+                        }
+                    }
+                }
+            }
+        }
+    `);
+
+    return data.allMarkdownRemark.edges;
+};
+
+const DefinitionToolTip = ({ term }) => {
     const [showDefinition, setShowDefinition] = useState(false);
 
     const toggleDefinition = () => {
-        console.log('Toggled');
         setShowDefinition(!showDefinition);
     };
+
+    const data = getData();
+
+    const filteredNode = data.find(edge => edge.node.frontmatter.term === term);
+
+    const filteredHtml = filteredNode
+        ? filteredNode.node.html
+        : 'Term not found';
 
     return (
         <span className="relative">
@@ -19,12 +51,14 @@ const DefinitionTooltip = ({ term, definition }) => {
                 {term}
             </span>
             {showDefinition && (
-                <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-200 border border-gray-300 p-2 w-48 text-left text-sm z-10">
-                    {definition}
-                </span>
+                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-blue-50 border border-gray-300 p-2 w-64 text-left text-xs z-10 definition-tooltip-content">
+                    <div
+                        dangerouslySetInnerHTML={{ __html: filteredHtml }}
+                    ></div>
+                </div>
             )}
         </span>
     );
 };
 
-export default DefinitionTooltip;
+export default DefinitionToolTip;
