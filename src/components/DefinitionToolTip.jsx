@@ -51,10 +51,11 @@ const DefinitionToolTip = ({ term }) => {
                 {term}
             </span>
             {showDefinition && (
-                <div
-                    dangerouslySetInnerHTML={{ __html: filteredHtml }}
-                    className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-blue-50 border border-gray-300 p-2 w-48 text-left text-xs z-10"
-                ></div>
+                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-blue-50 border border-gray-300 p-2 w-64 text-left text-xs z-10 definition-tooltip-content">
+                    <div
+                        dangerouslySetInnerHTML={{ __html: filteredHtml }}
+                    ></div>
+                </div>
             )}
         </span>
     );

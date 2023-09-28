@@ -15,7 +15,7 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 
 import { Vega, VegaLite } from "react-vega"
 import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
-import { partial_match_weight } from "../components/Definitions";
+
 import TutorialNav from '../components/TutorialNav';
 import CompactTutorialNav from '../components/CompactTutorialNav';
 
@@ -24,6 +24,8 @@ import notebook from "@robinl/partial-match-weights";
 import partial_match_weights from './partial_match_weights/partial_match_weights.json'
 
 import partial_match_weights_first_name from './partial_match_weights/partial_match_weights_first_name.json'
+
+import DefinitionToolTip from "../components/DefinitionToolTip";
 
 # Partial Match Weights
 
@@ -49,7 +51,7 @@ For example:
 
 Positive values indicate evidence in favour of a match whilst negative values mean evidence against a match.
 
-The concept applies more generally than just to matches and non-matches: partial match weights can be estimated for more subtle scenarios like 'first name not an exact match, but similar'.
+The concept applies more generally than just to matches and non-matches: partial match weights can be estimated for more subtle <DefinitionToolTip term="scenario" />s like 'first name not an exact match, but similar'.
 
 It is up to the modeller to define these scenarios and the resultant partial match weights they wish to estimate.
 

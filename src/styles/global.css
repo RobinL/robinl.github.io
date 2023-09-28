@@ -153,3 +153,10 @@ svg {
 .vega-embed-wrapper {
     overflow: visible !important;
 }
+
+.definition-tooltip-content p,
+.definition-tooltip-content ul,
+.definition-tooltip-content li,
+.definition-tooltip-content code {
+    font-size: 0.8rem;
+}
