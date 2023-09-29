@@ -13,6 +13,8 @@ const Footer = () => {
                     <a href="https://observablehq.com">Observable HQ</a> and{' '}
                     <a href="https://gatsbyjs.org">Gatsby.js</a>. Source code{' '}
                     <a href="https://github.com/RobinL/robinl.github.io/">here</a>.
+                    Say <a href="/thanks/">thanks!</a>
+
                 </p>
             </footer>
         </div>
