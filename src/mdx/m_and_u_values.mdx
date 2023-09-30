@@ -65,7 +65,7 @@ Bayes Factors provide the easiest way to interpret the parameters of the Fellegi
 - A Bayes Factor of 5 can be interpreted as '5 times more likely to match'
 - A Bayes Factor of 0.2 can be interpreted as '5 times less likely to match'
 
-In this sense, a Bayes Factor is are similar to the concept of odds. Odds of 5 mean that an event happens five out of six times, or in some sense it is five times more likely for the event to happen than not happen.
+In this sense, a Bayes Factor is are similar to the concept of odds. Odds of 5 to 1 mean that an event happens five out of six times, or in some sense it is five times more likely for the event to happen than not happen.
 
 ### Example 1: Evidence in favour of a match
 
@@ -152,6 +152,24 @@ It's only meaningful to say that something is more or less likely relative to a 
 In the context of record linkage, the prior is our existing belief that the two records match before we saw the new information contained in a scenario (e.g. that first names match).
 
 Our updated belief given this new information is called the 'posterior'.
+
+Mathematically this can be written:
+
+$\text{posterior odds} =  \text{prior odds} \times \text{Bayes Factor}$
+
+and odds can be turned into probabilities with the following formula:
+
+$\text{probability} = \frac{\text{odds}}{1 + \text{odds}}$
+
+For example, suppose we believe 1 in 120 records comparisons are a match. But now we observe the new information that month of birth matches, with a Bayes Factor of 12.
+
+So, the posterior odds are:
+$\text{posterior odds} =  \frac{1}{120}  \times 12 = \frac{1}{10}$
+
+
+$\text{posterior probability} = \frac{\frac{1}{10}}{1 + \frac{1}{10}} = \frac{1}{11} \approx 0.0909$
+
+So after observing that the month of birth matches, the odds of the records being a match would be 1 in 10, or a probability of approximately 0.0909.
 
 Here's a calculator which shows how a prior probability is updated with a Bayes Factor/partial match weight:
 

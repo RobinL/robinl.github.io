@@ -2,52 +2,66 @@
 title: "The mathematics of the Fellegi Sunter model"
 description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article presents the maths alongside an interactive example."
 post_date: "2021-05-21"
+post_latest_update: "2023-09-30"
 post_category: "probabilistic_linkage"
 code_url: "https://observablehq.com/@robinl/86fc30325e4106c4"
 prob_linkage_category: "tutorial"
 tutorial_number: 4
 ---
 
+
 export { ProbLinkageLayout as default} from '../components/ProbLinkageLayout'
+
 import { SEO } from "../components/SEO"
+import DefinitionToolTip from "../components/DefinitionToolTip";
+
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
-import notebook from '@robinl/86fc30325e4106c4';
-import ObservableNotebook from '../components/ObservableNotebook';
+import notebook from '@robinl/intro-prob-linkage';
+
+import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
+
 import TutorialNav from '../components/TutorialNav';
 import CompactTutorialNav from '../components/CompactTutorialNav';
 
-export const output_order = [
-  "title",
-  "para_1",
-  "para_2",
-  "para_3",
-  "table_l1",
-  "ds2_head",
-  "table_r1",
-  "rec_comparisons",
-  "para_4",
-  "subhead_1",
-  "para_5",
-  "para_6",
-  "para_7",
-  "para_8",
-  "subhead_2",
-  "para_10",
-  "viewof splink_settings",
-  "para_11",
-  "viewof row_index",
-  "this_row",
-  "para_12",
-  "para_13",
-  "para_14",
-  "para_15",
-  "para_16",
-  "para_17",
-  "para_18",
-  "para_19",
-  "css_styles"
-];
+# The mathematics of the Fellegi Sunter model
+
+The previous article showed how `m` and `u` probabilities and can be converted into Bayes Factors, which in turn could be combined with the prior  <DefinitionToolTip term="prior" /> probability to compute an updated prediction (the 'posterior' probability).
+
+We now have all the groundwork in place to present a full mathematical definition of a model in the Fellegi-Sunter framework.
+
+A more technical treatment is given in [AP	Enamorado, T., Fifield, B., & Imai, K. (2019)](https://imai.fas.harvard.edu/research/files/linkage.pdf), which contains a more generaliesd form of the model presented here.
 
 
-<ObservableNotebook notebook={notebook} cells={output_order} />
+##  Multiplying Bayes Factors
+
+In the previous article we saw that:
+
+$\text{posterior odds} =  \text{prior odds} \times \text{Bayes Factor}$
+
+
+
+
+
+For example, suppose we compare two records:
+- If month of birth matches, the Bayes Factor may be around 12: the records are about 12x more likely to match
+- If gender matches, the Bayes Factor may be around 2: the records are about 2x more likely to match
+
+If both match, it becomes 24x more likely the records match.
+
+Multiplying Bayes Factors in this way sometimes known as [Naive Bayes](https://en.wikipedia.org/wiki/Naive_Bayes_classifier).[^1]
+
+[^1]: The result is only valid if we assume that the columns are independent conditional on match status.  This is 'naive' in the sense that it's rarely true.  However, it turns out for record linkage purposes that Fellegi Sunter models are quite robust to the violation of this assumption.
+
+### Odds in terms of Bayes Factors
+
+We previously saw that for a single Bayes Factor (K):
+
+
+
+We can simply extend this formula to accomodate all our match weights:
+
+$\text{posterior odds} =  \frac{\text{prior}}{1 - \text{prior}} \times \text{Bayes Factor}$
+
+
+$\text{odds of match} = \frac{\lambda}{(1-\lambda)} \times b_{1\ell} \times b_{2\ell} \times \ldots \times b_{K\ell}$
