@@ -23,7 +23,7 @@ import spec from "./m_and_u_probabilities/spec.json"
 import movement_spec from "./m_and_u_probabilities/bf_movement_spec.json"
 import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
 import notebook from "@robinl/bf-prior-calc";
-
+import DefinitionToolTip from "../components/DefinitionToolTip";
 
 # m and u probabilities in the Fellegi-Sunter model
 
@@ -31,7 +31,9 @@ The previous article showed how partial match weights are used to compute a pred
 
 However, partial match weights are not estimated directly.  They are made up of two parameters known as the `m` and the `u` probabilities.
 
-These probabilities are key to enabling estimation of partial match weights, and also allow us to interpret their values intuitively.
+These probabilities are key to enabling estimation of partial match weights.
+
+The `m` and `u` probabilities also have intuitive interpretations that allow us to understand linkage models and diagnose problems.
 
 ##  Motivating example
 
@@ -39,7 +41,7 @@ Imagine we have two records.  We're not sure whether they represent the same per
 
 Now we're given some new information: we're told that month of birth matches.
 
-Is this scenario more likely among matches or non-matches?
+Is this <DefinitionToolTip term="scenario" /> more likely among matches or non-matches?
 
 - Amongst matching records, month of birth will usually match
 - Amongst non-matching records month of birth will rarely match
@@ -50,13 +52,15 @@ But how much evidence?
 
 ## m and u probabilities and Bayes Factors
 
-This is quantified by the `m` and `u` probabilities.  For each scenario in the model:
+The strength of the evidence is quantified using the `m` and `u` probabilities.  For each scenario in the model:
 
-- The `m` probability measures how often the scenario occurs among matching records:  $$\text{Pr}(\text{scenario}|\text{records match})$$
+- The `m` probability measures how often the scenario occurs among matching records: $m = \text{Pr}(\text{scenario}|\text{records match})$
 
-- The `u` probability measures how often the scenario occurs among non-matching records: $$\text{Pr}(\text{scenario}|\text{records do not match})$$
+- The `u` probability measures how often the scenario occurs among non-matching records: $u = \text{Pr}(\text{scenario}|\text{records do not match})$
 
-What matters is the _relative_ size of these values.  This is calculated as a ratio known as the Bayes Factor, denoted by $K$.
+What matters is the _relative_ size of these values.  This is calculated as a ratio known as the Bayes Factor[^1], denoted by $K$.
+
+[^1]:  You can read more about Bayes Factors [here](https://bookdown.org/kevin_davisross/bayesian-reasoning-and-methods/bayes-factor.html#:~:text=The%20posterior%20odds%20are%20the%20product%20of%20the%20prior%20odds%20and%20the%20Bayes%20factor.%20The%20Bayes%20factor%20is%20the%20ratio%20of%20the%20likelihoods.%20Since%20the%20sensitivity%20and%20specificity%20are%20the%20same%20as%20in%20the%20previous%20example%2C%20the%20likelihoods%20are%20the%20same%2C%20and%20the%20Bayes%20factor%20is%20the%20same).  The concept is quite similar to a likelihood ratio.
 
 $\text{Bayes Factor} = K = \frac{m}{u} = \frac{\text{Pr}(\text{scenario}|\text{records match})}{\text{Pr}(\text{scenario}|\text{records do not match})} $
 
@@ -64,8 +68,6 @@ Bayes Factors provide the easiest way to interpret the parameters of the Fellegi
 
 - A Bayes Factor of 5 can be interpreted as '5 times more likely to match'
 - A Bayes Factor of 0.2 can be interpreted as '5 times less likely to match'
-
-In this sense, a Bayes Factor is are similar to the concept of odds. Odds of 5 mean that an event happens five out of six times, or in some sense it is five times more likely for the event to happen than not happen.
 
 ### Example 1: Evidence in favour of a match
 
@@ -97,6 +99,7 @@ Hence, given this observation the records are 25 times less likely to be a match
 
 More generally, we can see from the formula that strong negative match weights only possible with low `m` probabilities, which in turn implies high data quality.
 
+
 ## Interpreting m and u probabilities
 
 In addition to these quantitative interpretations, the `m` and `u` probabilities also have intuitive qualitative interpretations:
@@ -123,6 +126,55 @@ The `u` probability therefore measures how often two _different_ people have the
 
 A column such as first name with a large number of distinct values (high cardinality) will have much smaller `u` probabilities than a column such as gender which has low cardinality.
 
+
+
+## Using Bayes Factors to compute probabilities
+
+What does it mean for a match to be $n$ times more or less likely?  More likely than what?
+
+It's only meaningful to say that something is more or less likely relative to a starting probability - known as the 'prior' (our 'prior belief').
+
+In the context of record linkage, the prior is our existing belief that the two records match before we saw the new information contained in a scenario (e.g. that first names match).
+
+Our updated belief given this new information is called the 'posterior'.
+
+Mathematically this can be written:
+
+$\text{posterior odds} =  \text{prior odds} \times \text{Bayes Factor}$
+
+and odds can be turned into probabilities with the following formula:
+
+$\text{probability} = \frac{\text{odds}}{1 + \text{odds}}$
+
+See the mathematical annex for further detail on these derivations.
+
+For example, suppose we believe the odds of a record comparison being a match are 1 to 120. But now we observe the new information that month of birth matches, with a Bayes Factor of 12.
+
+So $\text{posterior odds} =  \frac{1}{120}  \times 12 = \frac{1}{10}$
+
+$\text{posterior probability} = \frac{\frac{1}{10}}{1 + \frac{1}{10}} = \frac{1}{11} \approx 0.0909$
+
+So after observing that the month of birth matches, the odds of the records being a match would be 1 in 10, or a probability of approximately 0.0909.
+
+Here's a calculator which shows how a prior probability is updated with a Bayes Factor/partial match weight:
+
+## Posterior calculator
+
+<WithObservableProvider notebook={notebook}>
+    #### Prior
+    <ObservableCell cellName="prior_probability_bound" />
+    <ObservableCell cellName="prior_odds_bound" />
+    #### New evidence
+    <ObservableCell cellName="partial_match_weight_bound" />
+    <ObservableCell cellName="bayes_factor" />
+    <ObservableCell cellName="narrative" />
+    <ObservableCell cellName="chart" />
+
+
+</WithObservableProvider>
+
+An alternative way of visualising these concepts can be found <Link to="/visualising_fellegi_sunter/">here</Link>.
+
 ## The relationship between Bayes Factors, partial match weights and m and u probabilities
 
 How do `m` and `u` probabilities and Bayes Factors relate to the partial match weights we explored in the previous article?
@@ -143,53 +195,56 @@ We can summarise this relationship with this chart (hover over chart to select):
 
 A larger, standalone version is available <Link to="/prob_bf_mw/">here</Link>.
 
-## How Bayes Factors are used to compute probabilities
-
-What does it mean for a match to be $n$ times more or less likely?  More likely than what?
-
-It's only meaningful to say that something is more or less likely relative to a starting probability - known as the 'prior' (our 'prior belief').
-
-In the context of record linkage, the prior is our existing belief that the two records match before we saw the new information contained in a scenario (e.g. that first names match).
-
-Our updated belief given this new information is called the 'posterior'.
-
-Here's a calculator which shows how a prior probability is updated with a Bayes Factor/partial match weight:
-
-## Posterior calculator
-
-<WithObservableProvider notebook={notebook}>
-    <ObservableCell cellName="viewof prior_probability" />
-    <ObservableCell cellName="partial_match_weight_bound" />
-    <ObservableCell cellName="bayes_factor" />
-    <ObservableCell cellName="narrative" />
-    <ObservableCell cellName="chart" />
-
-
-</WithObservableProvider>
-
-An alternative way of visualising these concepts can be found <Link to="/visualising_fellegi_sunter/">here</Link>.
-
-The mathematical derivations are given in the mathematical annex below.
-
 ## Next steps
 
 Now that we have a firm grasp of these ingredients, we're in a position to present the full mathematical specification of the Fellegi Sunter model.
 
 ## Mathematical annex
 
-Supposing we observe the scenario that first name matches
+In the main text we asserted that:
 
-We can use Bayes Theorem to write:
+$\text{posterior odds} =  \text{prior odds} \times \text{Bayes Factor}$
 
-$\text{posterior probability} = \frac{\operatorname{Pr}(\text{first name matches}|\text{prior})(\text{prior})}{\operatorname{Pr}{(\text{first name matches})}}$
+We can derive this formula from the `m` and `u` probabilities and Bayes Theorem.
 
-$\text{posterior probability} = \frac{m \times \text{prior}}{m \times \text{prior} + u \times (1 - \text{prior})}$
+Recall that Bayes Theorm is:
+
+$\operatorname{Pr}(a|b) = {\frac{\operatorname{Pr}(b|a)\operatorname{Pr}(a)}{\operatorname{Pr}{(b)}}}$
+
+or in words:
+
+$\text{posterior probability} = \frac{\text{likelihood} \times \text{prior probability}}{\text{evidence}}$
+
+In the context of record linkage, we can describe these parts as:
+
+**Prior**:
+The overall proportion of comparisons which are matches $\operatorname{Pr}(\text{match})$
+
+**Evidence**: We have observed that e.g. first name matches, $\operatorname{Pr}(\text{first name matches})$
+
+**Likelihood**: The probability that first name matches amongst matches, given by $\operatorname{Pr}(\text{first name matches}|\text{records match})$
+
+So Bayes' formuls is:
+
+$\operatorname{Pr}(\text{match}|\text{first name matches}) = \frac{\operatorname{Pr}(\text{first name matches}|\text{match})\operatorname{Pr}(\text{match})}{\operatorname{Pr}{(\text{first name matches})}}$
 
 Which can also be written:
 
-$\text{posterior odds} =  \frac{\text{prior}}{1 - \text{prior}} \times \text{Bayes Factor}$
+$ \frac{\operatorname{Pr}(\text{first name matches}|\text{match})\operatorname{Pr}(\text{match})}{\operatorname{Pr}(\text{first name matches}|\text{match})\operatorname{Pr}(\text{match}) + \operatorname{Pr}(\text{first name matches}|\text{non match})\operatorname{Pr}(\text{non match})}$
 
-and
+Using some of the terminology from the article this is the same as:
 
-$\text{posterior probability} = \frac{\text{posterior odds}}{1 + \text{posterior odds}}$
+$\text{posterior probability} = \frac{m \times \text{prior probability}}{m \times \text{prior probability} + u \times (1 - \text{prior probability})}$
+
+The formula for odds is:
+
+$\text{odds} = \frac{p}{1-p}$
+
+So we can write:
+
+$\text{posterior odds} =  \frac{\text{prior}}{1 - \text{prior}} \frac{m}{u}$
+
+$\text{posterior odds} =  \text{prior odds} \times \text{Bayes Factor}$
+
+
 

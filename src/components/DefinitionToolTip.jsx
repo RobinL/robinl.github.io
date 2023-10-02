@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Tooltip } from 'react-tooltip';
+
 import { graphql, useStaticQuery } from 'gatsby';
 
 const getData = () => {
@@ -26,16 +28,8 @@ const getData = () => {
 };
 
 const DefinitionToolTip = ({ term }) => {
-    const [showDefinition, setShowDefinition] = useState(false);
-
-    const toggleDefinition = () => {
-        setShowDefinition(!showDefinition);
-    };
-
     const data = getData();
-
     const filteredNode = data.find(edge => edge.node.frontmatter.term === term);
-
     const filteredHtml = filteredNode
         ? filteredNode.node.html
         : 'Term not found';
@@ -43,20 +37,27 @@ const DefinitionToolTip = ({ term }) => {
     return (
         <span className="relative">
             <span
-                className="underline cursor-pointer"
-                onMouseEnter={toggleDefinition}
-                onMouseLeave={toggleDefinition}
-                onClick={toggleDefinition}
+                className="underline cursor-pointer blahh"
+                data-tip
+                data-for={`tooltip-${term}`}
             >
                 {term}
             </span>
-            {showDefinition && (
-                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 bg-blue-50 border border-gray-300 p-2 w-64 text-left text-xs z-10 definition-tooltip-content">
-                    <div
-                        dangerouslySetInnerHTML={{ __html: filteredHtml }}
-                    ></div>
-                </div>
-            )}
+            <Tooltip
+                id={`tooltip-${term}`}
+                anchorSelect=".blahh"
+                style={{
+                    backgroundColor: '#EEE',
+                    color: '#222',
+                    fontSize: '0.8rem',
+                }}
+                clickable
+            >
+                <div
+                    className="w-64 text-xs z-10 definition-tooltip-content"
+                    dangerouslySetInnerHTML={{ __html: filteredHtml }}
+                ></div>
+            </Tooltip>
         </span>
     );
 };
