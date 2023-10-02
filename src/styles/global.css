@@ -131,7 +131,7 @@ input[type='email'],
 input[type='search'],
 input[type='number'],
 input[type='file'] {
-    @apply text-xs text-gray-700 p-1 rounded text-left border border-gray-300 mr-2 mt-2;
+    @apply text-xs text-gray-700 p-1 rounded text-left border border-gray-300 mr-2 mt-2 min-w-[70px];
 }
 
 input[type='button'] {
