@@ -1,8 +1,8 @@
 ---
 title: "The mathematics of the Fellegi Sunter model"
-description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article presents the maths alongside an interactive example."
+description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article shows the derivation of the mathematical formulation of the model"
 post_date: "2021-05-21"
-post_latest_update: "2023-09-30"
+post_latest_update: "2023-10-02"
 post_category: "probabilistic_linkage"
 code_url: "https://observablehq.com/@robinl/86fc30325e4106c4"
 prob_linkage_category: "tutorial"
@@ -15,6 +15,7 @@ export { ProbLinkageLayout as default} from '../components/ProbLinkageLayout'
 import { SEO } from "../components/SEO"
 import DefinitionToolTip from "../components/DefinitionToolTip";
 
+import { Link } from "gatsby";
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
 import notebook from '@robinl/intro-prob-linkage';
@@ -35,33 +36,96 @@ A more technical treatment is given in [AP	Enamorado, T., Fifield, B., & Imai, K
 
 ##  Multiplying Bayes Factors
 
-In the previous article we saw that:
+In the previous article we saw what Bayes Factors act as a relative multiplier that increases or decreases the overall prediction of whether the records match.
+
+We saw that, for a Bayes Factor for a specific <DefinitionToolTip term="scenario" /> such as a match on month of birth we could write:
 
 $\text{posterior odds} =  \text{prior odds} \times \text{Bayes Factor}$
 
+It turns out that this formula can be extended to account for multiple scenarios such as a match on first name and surname, and a fuzzy match on date of birth.
 
+Let us denote by $K_i$ the Bayes Factors for each activated scenario[^1], then the general formula is:
 
+[^1]: The 'activated scenario' is the similarity category for the record comparison under evaluation.  For example, the 'activated scenario', three scenarios (similarity categories) may be defined for the first name column - 'exact match', 'fuzzy match' and 'all other'.  Each will have a Bayes Factor associated with it.  The 'activated scenario' is which of these scenarios describes the record comparison under evaluatino.
 
+$\text{posterior odds of match} = \text{prior odds} \times K_1 \times K_2 \times \ldots \times K_n \quad (\text{Eq 4.1})$
 
-For example, suppose we compare two records:
+This formula is quite intuitive.  For example:
+
 - If month of birth matches, the Bayes Factor may be around 12: the records are about 12x more likely to match
 - If gender matches, the Bayes Factor may be around 2: the records are about 2x more likely to match
 
 If both match, it becomes 24x more likely the records match.
 
-Multiplying Bayes Factors in this way sometimes known as [Naive Bayes](https://en.wikipedia.org/wiki/Naive_Bayes_classifier).[^1]
+Multiplying Bayes Factors to compute a predicted probability in this way sometimes known as a [Naive Bayes](https://en.wikipedia.org/wiki/Naive_Bayes_classifier) classifier.[^2]
 
-[^1]: The result is only valid if we assume that the columns are independent conditional on match status.  This is 'naive' in the sense that it's rarely true.  However, it turns out for record linkage purposes that Fellegi Sunter models are quite robust to the violation of this assumption.
+[^2]: The result is only valid if we assume that the columns are independent conditional on match status.  This is 'naive' in the sense that it's rarely true.  However, it turns out for record linkage purposes that Fellegi Sunter models are quite robust to the violation of this assumption.
 
-### Odds in terms of Bayes Factors
+The final result can be converted into a probability using
 
-We previously saw that for a single Bayes Factor (K):
+$\text{probability} = \frac{\text{odds}}{1 + \text{odds}}$
+
+## Summing partial match weights
+
+In the  <Link to="/intro_to_probabilistic_linkage/">first article</Link> in this tutorial we said that the Fellegi-Sunter model makes its predictions by summing of the partial match weights.
+
+This follows from equation 4.1.  Specifically, by taking the logarithm, we can write:
+
+Applying $\log_2$ to both sides, you get:
+
+$\text{final match weight} = \text{prior match weight} + \omega_1 + \omega_2 + \ldots + \omega_n$
+
+where $\omega_i = \log_2(K_i)$ are the partial match weights.
+
+The remainder of this article delves a bit deeper into equation (4.1) and can be safely skipped if you're not interested in the maths.  In particular, it shows how the match probability can be expressed in terms of the `m` and `u` probabilities,  using a formulation equivalent to equation 4 in the [Fastlink paper](https://imai.fas.harvard.edu/research/files/linkage.pdf).
+
+The next article will look at the mechanics of computing the final prediction.
+
+## Deriving the formula in the Fastlink paper
+
+
+In the <Link to="/m_and_u_values/#mathematical-annex/">previous article</Link> we saw that by applying Bayes Theorem to a specific scenario we could write:
+
+$\operatorname{Pr}(\text{match}|\text{first name matches}) = \frac{\operatorname{Pr}(\text{first name matches}|\text{match})\operatorname{Pr}(\text{match})}{\operatorname{Pr}(\text{first name matches}|\text{match})\operatorname{Pr}(\text{match}) + \operatorname{Pr}(\text{first name matches}|\text{non match})\operatorname{Pr}(\text{non match})}$
+
+We can make this easier to read by recalling that
+
+$m = \text{Pr}(\text{scenario}|\text{records match})$
+
+and
+
+$u = \text{Pr}(\text{scenario}|\text{records do not match})$
+
+and denoting $\lambda$ as the prior probability
+
+this can be written:
+
+$\text{posterior probability} = \frac{\lambda m}{\lambda m + (1 - \lambda)u}$
+
+By repeated application of Bayes Theorem (see annex <Link to="/visualising_fellegi_sunter/">here</Link>), we can generalise this formula to:
+
+$\text{posterior probability of match} = \frac{\lambda m_1 m_2 \ldots m_n}{\lambda m_1 m_2 \ldots m_n + (1 - \lambda)u_1 u_2 \ldots u_n} \quad (\text{Eq 4.2})$
+
+We can write a similar formula for a non-match:
+
+$\text{posterior probability of non-match} = \frac{(1- \lambda) u_1 u_2 \ldots u_n}{\lambda m_1 m_2 \ldots m_n + (1 - \lambda)u_1 u_2 \ldots u_n} \quad (\text{Eq 4.3})$
+
+Now, recall that:
+
+$\text{odds} = \frac{\text{probability}}{1-\text{probability}}$
+
+This means we can devide (4.2) by (4.3 to obtain the odds).  Since they share a denominator this becomes:
+
+$\text{posterior odds of match} = \frac{\lambda m_1 m_2 \ldots m_n}{(1- \lambda) u_1 u_2 \ldots u_n} \quad (\text{Eq 4.3}) $
+
+But since $K_i = \frac{m_i}{u_i}$ this is equivalent to Equation 4.1.
 
 
 
-We can simply extend this formula to accomodate all our match weights:
-
-$\text{posterior odds} =  \frac{\text{prior}}{1 - \text{prior}} \times \text{Bayes Factor}$
 
 
-$\text{odds of match} = \frac{\lambda}{(1-\lambda)} \times b_{1\ell} \times b_{2\ell} \times \ldots \times b_{K\ell}$
+
+
+
+
+
