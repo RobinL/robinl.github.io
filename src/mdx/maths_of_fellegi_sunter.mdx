@@ -1,6 +1,6 @@
 ---
 title: "The mathematics of the Fellegi Sunter model"
-description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article shows the derivation of the mathematical formulation of the model"
+description: "A set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article shows the derivation of the mathematical formulation of the model"
 post_date: "2021-05-21"
 post_latest_update: "2023-10-02"
 post_category: "probabilistic_linkage"
@@ -27,11 +27,11 @@ import CompactTutorialNav from '../components/CompactTutorialNav';
 
 # The mathematics of the Fellegi Sunter model
 
-The previous article showed how `m` and `u` probabilities and can be converted into Bayes Factors, which in turn could be combined with the prior  <DefinitionToolTip term="prior" /> probability to compute an updated prediction (the 'posterior' probability).
+The previous article showed how `m` and `u` probabilities <Link to="/m_and_u_values/#mathematical-annex">can be converted</Link> into Bayes Factors, which in turn could be combined with the prior  <DefinitionToolTip term="prior" /> probability to compute an updated prediction (the 'posterior' probability).
 
-We now have all the groundwork in place to present a full mathematical definition of a model in the Fellegi-Sunter framework.
+We now have all the groundwork in place to present a full mathematical definition of a model in the [Fellegi-Sunter](https://courses.cs.washington.edu/courses/cse590q/04au/papers/Felligi69.pdf) framework.
 
-A more technical treatment is given in [AP	Enamorado, T., Fifield, B., & Imai, K. (2019)](https://imai.fas.harvard.edu/research/files/linkage.pdf), which contains a more generaliesd form of the model presented here.
+A more technical treatment is given in [AP	Enamorado, T., Fifield, B., & Imai, K. (2019)](https://imai.fas.harvard.edu/research/files/linkage.pdf), which contains a slightly more generalised form of the model presented here.
 
 
 ##  Multiplying Bayes Factors
@@ -40,13 +40,13 @@ In the previous article we saw what Bayes Factors act as a relative multiplier t
 
 We saw that, for a Bayes Factor for a specific <DefinitionToolTip term="scenario" /> such as a match on month of birth we could write:
 
-$\text{posterior odds} =  \text{prior odds} \times \text{Bayes Factor}$
+$\text{posterior odds of match} =  \text{prior odds of match} \times \text{Bayes Factor}$
 
-It turns out that this formula can be extended to account for multiple scenarios such as a match on first name and surname, and a fuzzy match on date of birth.
+It turns out that this formula can be extended to account for the information in multiple scenarios such as: a match on first name _and_ a match on surname _and_ a fuzzy match on date of birth.
 
 Let us denote by $K_i$ the Bayes Factors for each activated scenario[^1], then the general formula is:
 
-[^1]: The 'activated scenario' is the similarity category for the record comparison under evaluation.  For example, the 'activated scenario', three scenarios (similarity categories) may be defined for the first name column - 'exact match', 'fuzzy match' and 'all other'.  Each will have a Bayes Factor associated with it.  The 'activated scenario' is which of these scenarios describes the record comparison under evaluatino.
+[^1]: The 'activated scenario' is the similarity category for the record comparison under evaluation.  For example, the 'activated scenario', three scenarios (similarity categories) may be defined for the first name column - 'exact match', 'fuzzy match' and 'all other'.  Each will have a Bayes Factor associated with it.  The 'activated scenario' is which of these scenarios describes the record comparison under evaluation.
 
 $\text{posterior odds of match} = \text{prior odds} \times K_1 \times K_2 \times \ldots \times K_n \quad (\text{Eq 4.1})$
 
@@ -61,13 +61,17 @@ Multiplying Bayes Factors to compute a predicted probability in this way sometim
 
 [^2]: The result is only valid if we assume that the columns are independent conditional on match status.  This is 'naive' in the sense that it's rarely true.  However, it turns out for record linkage purposes that Fellegi Sunter models are quite robust to the violation of this assumption.
 
-The final result can be converted into a probability using
+Since Bayes Factors are not estimated directly, and instead we estimte the `m` and `u` probabilities of the model, we can use  $K_i = \frac{m_i}{u_i}$ to write the full specification of our model:
+
+$\text{posterior odds of match} = \text{prior odds} \times \frac{m_1 m_2 \ldots m_n}{u_1 u_2 \ldots u_n}$
+
+This final result can be converted into a probability using
 
 $\text{probability} = \frac{\text{odds}}{1 + \text{odds}}$
 
 ## Summing partial match weights
 
-In the  <Link to="/intro_to_probabilistic_linkage/">first article</Link> in this tutorial we said that the Fellegi-Sunter model makes its predictions by summing of the partial match weights.
+In the  <Link to="/intro_to_probabilistic_linkage/">first article</Link> in this tutorial we claimed that the Fellegi-Sunter model makes its predictions by summing of the partial match weights.
 
 This follows from equation 4.1.  Specifically, by taking the logarithm, we can write:
 
@@ -77,7 +81,7 @@ $\text{final match weight} = \text{prior match weight} + \omega_1 + \omega_2 + \
 
 where $\omega_i = \log_2(K_i)$ are the partial match weights.
 
-The remainder of this article delves a bit deeper into equation (4.1) and can be safely skipped if you're not interested in the maths.  In particular, it shows how the match probability can be expressed in terms of the `m` and `u` probabilities,  using a formulation equivalent to equation 4 in the [Fastlink paper](https://imai.fas.harvard.edu/research/files/linkage.pdf).
+The remainder of this article delves a bit deeper into equation (4.1) and can be safely skipped if you're not interested in the maths.  In particular, it shows how the match probability can be expressed in terms of the `m` and `u` probabilities  using a formulation equivalent to equation 4 in the [Fastlink paper](https://imai.fas.harvard.edu/research/files/linkage.pdf).
 
 The next article will look at the mechanics of computing the final prediction.
 
@@ -100,7 +104,7 @@ and denoting $\lambda$ as the prior probability
 
 this can be written:
 
-$\text{posterior probability} = \frac{\lambda m}{\lambda m + (1 - \lambda)u}$
+$\text{posterior probability of match} = \frac{\lambda m}{\lambda m + (1 - \lambda)u}$
 
 By repeated application of Bayes Theorem (see annex <Link to="/visualising_fellegi_sunter/">here</Link>), we can generalise this formula to:
 
@@ -114,11 +118,11 @@ Now, recall that:
 
 $\text{odds} = \frac{\text{probability}}{1-\text{probability}}$
 
-This means we can devide (4.2) by (4.3 to obtain the odds).  Since they share a denominator this becomes:
+This means we can divide (4.2) by (4.3 to obtain the odds).  Since they share a denominator this becomes:
 
-$\text{posterior odds of match} = \frac{\lambda m_1 m_2 \ldots m_n}{(1- \lambda) u_1 u_2 \ldots u_n} \quad (\text{Eq 4.3}) $
+$\text{posterior odds of match} = \frac{\lambda m_1 m_2 \ldots m_n}{(1- \lambda) u_1 u_2 \ldots u_n} $
 
-But since $K_i = \frac{m_i}{u_i}$ this is equivalent to Equation 4.1.
+Since $K_i = \frac{m_i}{u_i}$ this is equivalent to Equation 4.1 in this article, and also is equivalent to Equation 4 in the FastLink paper.
 
 
 
