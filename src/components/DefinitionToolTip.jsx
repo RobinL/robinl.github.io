@@ -37,7 +37,7 @@ const DefinitionToolTip = ({ term }) => {
     return (
         <span className="relative">
             <span
-                className="underline cursor-pointer blahh"
+                className={`underline cursor-pointer tooltip-${term}`}
                 data-tip
                 data-for={`tooltip-${term}`}
             >
@@ -45,11 +45,12 @@ const DefinitionToolTip = ({ term }) => {
             </span>
             <Tooltip
                 id={`tooltip-${term}`}
-                anchorSelect=".blahh"
+                anchorSelect={`.tooltip-${term}`}
                 style={{
                     backgroundColor: '#EEE',
                     color: '#222',
                     fontSize: '0.8rem',
+                    zIndex: 1000,
                 }}
                 clickable
             >
