@@ -40,7 +40,7 @@ This article contains a step-by-step demonstration of how we use this mathematic
 
 <WithObservableProvider notebook={notebook}>
 
-The aim of the model is to compute a prediction of which records match. This prediction is a probability which quantifies the likelihood the two records represent the same entity.
+The aim of the model is to compute a prediction of which records match. This prediction is a probability that quantifies the likelihood the two records represent the same entity.
 
 ## Computing the prediction step by step
 
@@ -59,7 +59,7 @@ The aim of the model is to compute a prediction of which records match. This pre
 
     <ObservableCell cellName="comparison_pairs_no_gamma" />
 
-    At first glance, it seems challenging to turn this table of text into a numeric prediction.  But this can be achieved using the concepts of <DefinitionToolTip term="scenario" />s and <DefinitionToolTip term="partial_match_weight" />s <Link to="/partial_match_weights/">introduced earlier in this tutorial</Link>.
+    At first glance, it may seem challenging to turn this table of text into a numeric prediction.  But this can be achieved using the concepts of <DefinitionToolTip term="scenario" />s and <DefinitionToolTip term="partial_match_weight" />s <Link to="/partial_match_weights/">introduced earlier in this tutorial</Link>.
 
     Specifically, we define scenarios for each column and then use a lookup table to find the partial match weights.
 
@@ -70,7 +70,7 @@ The aim of the model is to compute a prediction of which records match. This pre
 
     Note the 'comparison vector value' column in this table.  This is an integer value that identifies the scenario within the column. We will use it to help us look up the correct partial match weights.
 
-    We then proceed by computing which scenario is <DefinitionToolTip term="activate" />d for each pairwise record comparison, and representing this using the comaprison vector value.  We use the gamma symbol (γ) to refer to the comparison vector value.
+    We then proceed by computing which scenario is <DefinitionToolTip term="activate" />d for each pairwise record comparison, and representing this using the comparison vector value.  We use the gamma symbol (γ) to refer to the comparison vector value.
 
     <ObservableCell cellName="comparison_pairs_with_gamma" />
 
@@ -80,7 +80,7 @@ The aim of the model is to compute a prediction of which records match. This pre
 
     Each row in this table is known as the 'comparison vector' for the record comparison
 
-    We now look up the partial match weights from the comparison vector.  I have also added the <DefinitionToolTip term="prior" />, expressed as a partial match weight, and finally the sum:
+    We now look up the partial match weights from the comparison vector.  I've also added the <DefinitionToolTip term="prior" />, expressed as a partial match weight, and finally the sum:
 
     <ObservableCell cellName="partial_match_weights_from_cv" />
 
