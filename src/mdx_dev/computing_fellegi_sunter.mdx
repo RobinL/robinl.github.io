@@ -1,0 +1,118 @@
+---
+title: "Computing the Fellegi Sunter model"
+description: "A set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article shows how to compute the model"
+post_date: "2021-05-21"
+post_category: "probabilistic_linkage"
+code_url: "https://observablehq.com/@robinl/86fc30325e4106c4"
+prob_linkage_category: "tutorial"
+tutorial_number: 5
+post_latest_update: "2023-10-02"
+---
+
+import { Link } from "gatsby"
+
+export { ProbLinkageLayout as default} from '../components/ProbLinkageLayout'
+import { SEO } from "../components/SEO"
+
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+
+import TutorialNav from '../components/TutorialNav';
+import CompactTutorialNav from '../components/CompactTutorialNav';
+
+import { Vega, VegaLite } from "react-vega"
+
+
+import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
+import notebook from "@robinl/computing-the-fellegi-sunter-model";
+import DefinitionToolTip from "../components/DefinitionToolTip";
+
+
+# Computing the Fellegi Sunter model
+
+The previous article showed how we could derive a mathematical representation of the Fellegi-Sunter model.
+
+This article contains a step-by-step demonstration of how we use this mathematical model to compute predictions from data.
+
+## Objective of the Model
+
+
+
+<WithObservableProvider notebook={notebook}>
+
+The aim of the model is to compute a prediction of which records match. This prediction is a probability which quantifies the likelihood the two records represent the same entity.
+
+## Computing the prediction step by step
+
+    We begin with some data:
+
+    ### Input table 1
+    <ObservableCell cellName="input_table_l" />
+
+    ### Input table 2:
+    <ObservableCell cellName="input_table_r" />
+
+
+
+
+    In the first step of the calculation we set values against each other, as pairwise record comparisons:
+
+    <ObservableCell cellName="comparison_pairs_no_gamma" />
+
+    At first glance, it seems challenging to turn this table of text into a numeric prediction.  But this can be achieved using the concepts of <DefinitionToolTip term="scenario" />s and <DefinitionToolTip term="partial_match_weight" />s <Link to="/partial_match_weights/">introduced earlier in this tutorial</Link>.
+
+    Specifically, we define scenarios for each column and then use a lookup table to find the partial match weights.
+
+    For example, we may choose to define our scenarios as follows:
+
+
+    <ObservableCell cellName="lookup_table" />
+
+    Note the 'comparison vector value' column in this table.  This is an integer value that identifies the scenario within the column. We will use it to help us look up the correct partial match weights.
+
+    We then proceed by computing which scenario is <DefinitionToolTip term="activate" />d for each pairwise record comparison, and representing this using the comaprison vector value.  We use the gamma symbol (γ) to refer to the comparison vector value.
+
+    <ObservableCell cellName="comparison_pairs_with_gamma" />
+
+    Now that we've used the text values to compute the comparison vector value, we no longer need it.  What remains are known as the comparison vectors for each pairwise comparison:
+
+    <ObservableCell cellName="comparison_vector_values_only" />
+
+    Each row in this table is known as the 'comparison vector' for the record comparison
+
+    We now look up the partial match weights from the comparison vector.  I have also added the <DefinitionToolTip term="prior" />, expressed as a partial match weight, and finally the sum:
+
+    <ObservableCell cellName="partial_match_weights_from_cv" />
+
+
+
+
+
+
+
+    <ObservableCell cellName="cv_pmw_sum" />
+
+     Finally, we can then sum the values in the partial match weights to produce a final match weight.  This can then be converted into a probability using:
+
+    $$\Large{p = \frac{2^{\omega}}{1 + 2^{\omega}}}$$
+
+    We can now see how the original comparison pairs were scored by this simple model:
+
+
+    <ObservableCell cellName="raw_values_with_final_match_prob" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+</WithObservableProvider>
+
+

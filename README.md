@@ -1,5 +1,23 @@
 ### Development notes
 
+To develop a single page, it's faster to edit gatsby config
+
+````
+  {
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: `./src/mdx_dev/`,
+      },
+    },
+        {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        "name": "mdx",
+        "path": "./src/mdx_dev/"
+      }
+    },
+
+    ```
 
 #### Frontmatter
 
@@ -17,3 +35,4 @@ ToDO:
 - fix the sitemap to have correct urls etc https://www.gatsbyjs.com/plugins/gatsby-plugin-sitemap/
 - Add an observable page to check it's possible
 - Write the homepage/index page which is a listing of the site
+````

@@ -69,7 +69,7 @@ const config = {
       resolve: 'gatsby-source-filesystem',
       options: {
         "name": "mdx",
-        "path": "./src/mdx/"
+        "path": "./src/mdx_dev/"
       }
     },
     {
@@ -89,7 +89,7 @@ const config = {
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
-        path: `./src/mdx`,
+        path: `./src/mdx_dev/`,
       },
     },
     {
