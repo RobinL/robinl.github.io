@@ -50,7 +50,7 @@ export function ObservableProvider({ notebook, children }) {
     );
 }
 
-export function ObservableCell({ cellName, styles }) {
+export function ObservableCell({ cellName, styles, className }) {
     const ref = useRef(null);
     const { setSharedRefs } = useContext(ObservableRuntimeContext);
 
@@ -58,7 +58,7 @@ export function ObservableCell({ cellName, styles }) {
         setSharedRefs(prevRefs => ({ ...prevRefs, [cellName]: ref.current }));
     }, [cellName, setSharedRefs]);
 
-    return <div ref={ref} style={styles} />;
+    return <div ref={ref} style={styles} className={className} />;
 }
 
 export function WithObservableProvider({ notebook, children }) {

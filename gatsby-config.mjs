@@ -89,7 +89,7 @@ const config = {
     {
       resolve: `gatsby-plugin-page-creator`,
       options: {
-        path: `./src/mdx`,
+        path: `./src/mdx/`,
       },
     },
     {
