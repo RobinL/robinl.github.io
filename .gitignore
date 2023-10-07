@@ -4,3 +4,5 @@ public/
 *.parquet
 
 python/match_weights_article/*_for_js.json
+
+src/mdx_dev/
