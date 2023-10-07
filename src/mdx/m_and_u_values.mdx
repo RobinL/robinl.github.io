@@ -11,7 +11,7 @@ import { Link } from "gatsby"
 
 export { ProbLinkageLayout as default} from '../components/ProbLinkageLayout'
 import { SEO } from "../components/SEO"
-
+import InteractiveCallout from "../components/InteractiveCallout"
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
 
@@ -188,8 +188,9 @@ There are two main reasons that the additional concept of partial match weights 
 - Partial match weights are easier to represent on charts.  They tend to range from -30 to 30, whereas Bayes Factors can be tiny (one in a million) or massive (millions).
 - Since Bayes Factors are multiplicative, the log transform turns them into something additive, which simplifies the maths a little.
 
-We can summarise this relationship with this chart (hover over chart to select):
+We can summarise this relationship with this chart.
 
+<InteractiveCallout>Hover over the chart to view different values</ InteractiveCallout>
 
 <VegaLite spec={spec} />
 
