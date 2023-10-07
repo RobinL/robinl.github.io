@@ -7,6 +7,7 @@ code_url: "https://observablehq.com/@robinl/86fc30325e4106c4"
 prob_linkage_category: "tutorial"
 tutorial_number: 5
 post_latest_update: "2023-10-02"
+stylesheet: "computing_fellegi_sunter.css"
 ---
 
 import { Link } from "gatsby"
@@ -44,20 +45,20 @@ The aim of the model is to compute a prediction of which records match. This pre
 
 ## Computing the prediction step by step
 
-    We begin with some data:
+    We begin with some data. In this example we will attempt to link but not deduplicate these records.
 
     ### Input table 1
-    <ObservableCell cellName="input_table_l" />
+    <ObservableCell cellName="input_table_l" className="observableTableWithScrollbar"/>
 
     ### Input table 2:
-    <ObservableCell cellName="input_table_r" />
+    <ObservableCell cellName="input_table_r" className="observableTableWithScrollbar"/>
 
+    In the first step of the calculation we compare each record in the first table with all records in the second table.
 
+    We wish to predict which of these pairwise record comparisons represent the same entity (i.e. which records match).
 
-
-    In the first step of the calculation we set values against each other, as pairwise record comparisons:
-
-    <ObservableCell cellName="comparison_pairs_no_gamma" />
+    <ObservableCell cellName="comparison_pairs_no_gamma" className="observableTableWithScrollbar"/>
+    <p class="table-note">Table scrolls right →</p>
 
     At first glance, it may seem challenging to turn this table of text into a numeric prediction.  But this can be achieved using the concepts of <DefinitionToolTip term="scenario" />s and <DefinitionToolTip term="partial_match_weight" />s <Link to="/partial_match_weights/">introduced earlier in this tutorial</Link>.
 
@@ -66,13 +67,20 @@ The aim of the model is to compute a prediction of which records match. This pre
     For example, we may choose to define our scenarios as follows:
 
 
-    <ObservableCell cellName="lookup_table" />
+    <ObservableCell cellName="lookup_table" className="observableTableWithScrollbar"/>
 
     Note the 'comparison vector value' column in this table.  This is an integer value that identifies the scenario within the column. We will use it to help us look up the correct partial match weights.
 
     We then proceed by computing which scenario is <DefinitionToolTip term="activate" />d for each pairwise record comparison, and representing this using the comparison vector value.  We use the gamma symbol (γ) to refer to the comparison vector value.
 
-    <ObservableCell cellName="comparison_pairs_with_gamma" />
+
+
+<ObservableCell
+  cellName="comparison_pairs_with_gamma"
+  className="observableTableWithScrollbar"
+/>
+
+<p class="table-note">Table scrolls right →</p>
 
     Now that we've used the text values to compute the comparison vector value, we no longer need it.  What remains are known as the comparison vectors for each pairwise comparison:
 
@@ -90,7 +98,8 @@ The aim of the model is to compute a prediction of which records match. This pre
 
 
 
-    <ObservableCell cellName="cv_pmw_sum" />
+    <ObservableCell cellName="cv_pmw_sum" className="observableTableWithScrollbar"/>
+    <p class="table-note">Table scrolls right →</p>
 
      Finally, we can then sum the values in the partial match weights to produce a final match weight.  This can then be converted into a probability using:
 
@@ -99,7 +108,8 @@ The aim of the model is to compute a prediction of which records match. This pre
     We can now see how the original comparison pairs were scored by this simple model:
 
 
-    <ObservableCell cellName="raw_values_with_final_match_prob" />
+    <ObservableCell cellName="raw_values_with_final_match_prob" className="observableTableWithScrollbar"/>
+    <p class="table-note">Table scrolls right →</p>
 
 
 

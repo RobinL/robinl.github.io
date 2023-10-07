@@ -19,11 +19,20 @@ export const SEO = ({ frontmatter }) => {
         ...frontmatter,
     };
 
+    const stylesheetLink = frontmatter?.stylesheet;
+
     return (
         <>
             <title>{seo.title}</title>
             <meta name="description" content={seo.description} />
             <meta name="image" content={seo.image} />
+            {stylesheetLink && (
+                <link
+                    rel="stylesheet"
+                    type="text/css"
+                    href={`/styles/${stylesheetLink}`}
+                />
+            )}
         </>
     );
 };
