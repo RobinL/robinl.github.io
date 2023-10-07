@@ -1,12 +1,11 @@
 ---
 title: "Computing the Fellegi Sunter model"
 description: "A set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article shows how to compute the model"
-post_date: "2021-05-21"
+post_date: "2023-10-02"
 post_category: "probabilistic_linkage"
 code_url: "https://observablehq.com/@robinl/86fc30325e4106c4"
 prob_linkage_category: "tutorial"
 tutorial_number: 5
-post_latest_update: "2023-10-02"
 stylesheet: "computing_fellegi_sunter.css"
 ---
 
@@ -37,8 +36,6 @@ This article contains a step-by-step demonstration of how we use this mathematic
 
 ## Objective of the Model
 
-
-
 <WithObservableProvider notebook={notebook}>
 
 The aim of the model is to compute a prediction of which records match. This prediction is a probability that quantifies the likelihood the two records represent the same entity.
@@ -53,7 +50,9 @@ The aim of the model is to compute a prediction of which records match. This pre
     ### Input table 2:
     <ObservableCell cellName="input_table_r" className="observableTableWithScrollbar"/>
 
-    In the first step of the calculation we compare each record in the first table with all records in the second table.
+    In the first step of the calculation we compare each record in the first table with all records in the second table.[^1]
+
+
 
     We wish to predict which of these pairwise record comparisons represent the same entity (i.e. which records match).
 
@@ -88,14 +87,9 @@ The aim of the model is to compute a prediction of which records match. This pre
 
     Each row in this table is known as the 'comparison vector' for the record comparison
 
-    We now look up the partial match weights from the comparison vector.  I've also added the <DefinitionToolTip term="prior" />, expressed as a partial match weight, and finally the sum:
+    We now look up the partial match weights from the comparison vector.  I've also added the <DefinitionToolTip term="prior" />, expressed as a partial match weight, and the sum of the match weights:
 
     <ObservableCell cellName="partial_match_weights_from_cv" />
-
-
-
-
-
 
 
     <ObservableCell cellName="cv_pmw_sum" className="observableTableWithScrollbar"/>
@@ -126,3 +120,4 @@ The aim of the model is to compute a prediction of which records match. This pre
 </WithObservableProvider>
 
 
+[^1]:In real applications, we would typically use [blocking](https://moj-analytical-services.github.io/splink/topic_guides/blocking/blocking_rules.html?h=blocking#blocking) to reduce the number of record comparisons.
