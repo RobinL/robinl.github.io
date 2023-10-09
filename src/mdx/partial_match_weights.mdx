@@ -3,7 +3,7 @@ title: "Partial match weights"
 description: "Partial match weights in the Fellegi-Sunter model.  Part of an interactive introduction to probabilistic record linkage (data deduplication) theory"
 post_date: "2023-09-20"
 post_category: "probabilistic_linkage"
-code_url: "https://observablehq.com/@robinl/d51533bbe054b3d8"
+code_url: "https://observablehq.com/@robinl/partial-match-weights"
 prob_linkage_category: "tutorial"
 tutorial_number: 2
 ---
@@ -30,13 +30,11 @@ import DefinitionToolTip from "../components/DefinitionToolTip";
 # Partial Match Weights
 
 
-In the previous article we saw that the Fellegi-Sunter model makes its predictions with a simple calculation: the sum of the partial match weights.
+In the previous article we saw that the Fellegi-Sunter model makes its predictions with a simple calculation: the sum of the <DefinitionToolTip term="partial_match_weight" />s.
 
 But what are partial match weights and where do they come from?[^1]
 
 [^1]: In this context, the word 'partial' means 'using only a subset of the information in the record' - often a single column.  There is then a partial match weight for each column.
-
-
 
 ## What are they?
 
@@ -57,7 +55,7 @@ It is up to the modeller to define these scenarios and the resultant partial mat
 
 ### Example:  First name column
 
-For first name, we could define the following three scenarios (in Splink, these are known as `ComparisonLevels`):
+For first name, we could define the following three scenarios:
 
 1. Exact match: First names are identical
 2. Fuzzy match:  First names are similar according to the [Jaro Winkler](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance#Jaro%E2%80%93Winkler_similarity) measure
@@ -69,9 +67,11 @@ The estimated partial match weights may look like this:[^3]
 
 <VegaLite spec={partial_match_weights_first_name} />
 
-These scenarios are a series of mutually exclusive categories that work like a sequence of `if` statements:
+Observe that:
+- An exact match on first name provides stronger evidence in favour of a match than a fuzzy match
+- If the first name is completely different (neither and exact nor fuzzy match), this is evidence against the records being a match.
 
-
+These scenarios are mutually exclusive, and are implemented like a sequence of `if` statements:
 
 ```python
 if first_name_l == first_name_r:
@@ -82,9 +82,6 @@ else:
     first_name_partial_match_weight = -3.3
 ```
 
-Observe that:
-- An exact match on first name provides stronger evidence in favour of a match than a fuzzy match
-- If the first name is completely different (neither and exact nor fuzzy match), this is evidence against the records being a match.
 
 ### Remaining columns
 
@@ -142,18 +139,11 @@ Let's take a look at an example record comparison, and see how the partial match
 
     <ObservableCell cellName="waterfall_as_formula" />
 
+    The final match weight is a measure of the similarity of the two records.  In subsequent articles we will see how it can be converted into a probability using the formula:
+
+    <ObservableCell cellName="probability_formula" />
+
 </WithObservableProvider>
-
-The final match weight is a measure of the similarity of the two records.  In subsequent articles we will see how it can be converted into a probability using the formula:
-
-
-
-
-$$\Large{p = \frac{2^{\omega}}{1 + 2^{\omega}}}$$
-
-
-
-Where $p$ is the probability and $\omega$ is the final match weight.
 
 
 
