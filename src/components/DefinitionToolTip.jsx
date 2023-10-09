@@ -27,12 +27,14 @@ const getData = () => {
     return data.allMarkdownRemark.edges;
 };
 
-const DefinitionToolTip = ({ term }) => {
+const DefinitionToolTip = ({ term, text }) => {
     const data = getData();
     const filteredNode = data.find(edge => edge.node.frontmatter.term === term);
     const filteredHtml = filteredNode
         ? filteredNode.node.html
         : 'Term not found';
+
+    const displayText = text || term;
 
     return (
         <span className="relative">
@@ -41,7 +43,7 @@ const DefinitionToolTip = ({ term }) => {
                 data-tip
                 data-for={`tooltip-${term}`}
             >
-                {term}
+                {displayText}
             </span>
             <Tooltip
                 id={`tooltip-${term}`}
