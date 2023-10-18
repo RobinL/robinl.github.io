@@ -1,0 +1,114 @@
+---
+title: "Visualising updating a prior"
+description: "Using treemaps to visualise updating the prior with information about a scenario in the Fellegi Sunter model"
+post_date: "2023-10-18"
+post_category: "probabilistic_linkage"
+code_url: "https://observablehq.com/@robinl/d51533bbe054b3d8"
+prob_linkage_category: "tools"
+stylesheet: "posterior_treemap.css"
+---
+import { Link } from "gatsby"
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+import InteractiveCallout from "../components/InteractiveCallout"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+
+import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
+import notebook from "@robinl/updating-a-prior-simplified";
+import DefinitionToolTip from "../components/DefinitionToolTip";
+
+# Visualising Bayes Theorem and its application to the Fellegi Sunter model
+
+This visualisation aims to clarify the intuition behind the following formula from the Fellegi Sunter model, and why it's just a re-statement of Bayes Theorem.
+
+$\text{posterior match probability} = \frac{\lambda m }{\lambda m  + (1 - \lambda) u}$
+
+where
+
+$\lambda = \text{prior match probability}$
+
+
+<WithObservableProvider notebook={notebook}>
+
+
+    Recall that the <DefinitionToolTip term="prior"/ > is the probability that two random records match, which is one of the parameters to be estimated.
+
+    We can visualise this parameter by showing how it divides the set of all pairwise record comparisons:
+
+    <ObservableCell cellName="viewof prior_probabability" />
+
+    <ObservableCell cellName="treemap_1" />
+
+
+    Also recall the following definitions of the m and u probabilities, in relation to a <DefinitionToolTip term="scenario"/ >.
+
+    $m = \text{Pr}(\text{scenario}|\text{records match})$
+
+    $u = \text{Pr}(\text{scenario}|\text{records do not match})$
+
+
+
+    The `m` and `u` probabilities therefore further subdivide this space as follows:
+
+    <ObservableCell cellName="viewof m" />
+    <ObservableCell cellName="viewof u" />
+    <ObservableCell cellName="viewof scenario_name" />
+
+    <ObservableCell cellName="treemap_2" />
+
+    Given our observation that the scenario holds, we can discard the areas in white as no longer applicable given this new information.
+
+    <ObservableCell cellName="treemap_3" />
+
+    Turning this back into formulas we can write:
+
+    <ObservableCell cellName="coloured_formulas" />
+    <ObservableCell cellName="coloured_formulas_2" />
+
+    Substituting in numbers we have:
+
+    <ObservableCell cellName="formula_with_numbers" />
+
+
+
+</WithObservableProvider>
+
+## Bayes Theorem
+
+In a more general sense, these visualisations explains the intuition behind Bayes Theorem.
+
+Recall that Bayes Theorm is:
+
+$\text{posterior probability} = \frac{\text{likelihood} \times \text{prior probability}}{\text{evidence}}$
+
+or:
+
+$\operatorname{Pr}(a|b) = {\frac{\operatorname{Pr}(b|a)\operatorname{Pr}(a)}{\operatorname{Pr}{(b)}}}$
+
+
+In the context of record linkage, we can describe these parts as:
+
+**Prior**:
+The overall proportion of comparisons which are matches $\operatorname{Pr}(\text{match})$
+
+**Evidence**: We have observed that a scenario holds, $\operatorname{Pr}(\text{scenario})$
+
+**Likelihood**: The probability that the scenario holds amongst matches, given by $\operatorname{Pr}(\text{scenario}|\text{records match})$
+
+So Bayes' Theorem is:
+
+$\operatorname{Pr}(\text{match}|\text{scenario}) = \frac{\operatorname{Pr}(\text{scenario}|\text{match})\operatorname{Pr}(\text{match})}{\operatorname{Pr}{(\text{scenario})}}$
+
+but:
+
+$
+\text{Pr}(\text{scenario}) = \lambda m + (1 - \lambda) u
+$
+
+So Bayes Theorem is just our original formula:
+
+$\text{posterior match probability} = \frac{\lambda m }{\lambda m  + (1 - \lambda) u}$
+
+See also [this great video](https://www.youtube.com/watch?v=HZGCoVF3YvM)!
