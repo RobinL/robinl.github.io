@@ -24,13 +24,25 @@ import DefinitionToolTip from "../components/DefinitionToolTip";
 
 # Visualising Bayes Theorem and its application to the Fellegi Sunter model
 
-This visualisation aims to clarify the intuition behind the following formula from the Fellegi Sunter model, and why it's just a re-statement of Bayes Theorem.
+This visualisation aims to clarify the intuition behind the following formula from the Fellegi Sunter model, which was presented in the <Link to="/maths_of_fellegi_sunter/">article on the maths of Fellegi Sunter</Link> in the main tutorial.
 
 $\text{posterior match probability} = \frac{\lambda m }{\lambda m  + (1 - \lambda) u}$
 
 where
 
 $\lambda = \text{prior match probability}$
+
+and the `m` and `u` probabilities are defined in relation to a <DefinitionToolTip term="scenario"/ >:
+
+$m = \text{Pr}(\text{scenario}|\text{records match})$
+
+$u = \text{Pr}(\text{scenario}|\text{records do not match})$
+
+
+
+This article also explains why it's just a re-statement of Bayes Theorem.
+
+## Visualising the parameters in a treemap
 
 
 <WithObservableProvider notebook={notebook}>
@@ -44,16 +56,7 @@ $\lambda = \text{prior match probability}$
 
     <ObservableCell cellName="treemap_1" />
 
-
-    Also recall the following definitions of the m and u probabilities, in relation to a <DefinitionToolTip term="scenario"/ >.
-
-    $m = \text{Pr}(\text{scenario}|\text{records match})$
-
-    $u = \text{Pr}(\text{scenario}|\text{records do not match})$
-
-
-
-    The `m` and `u` probabilities therefore further subdivide this space as follows:
+    Using the definition of the `m` and `u` probabilities above, we can further subdivide this space as follows:
 
     <ObservableCell cellName="viewof m" />
     <ObservableCell cellName="viewof u" />
