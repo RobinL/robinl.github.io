@@ -1,0 +1,7 @@
+div.wrap-info {
+    white-space: normal;
+    word-wrap: break-word;
+    margin: 0.2em;
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+}

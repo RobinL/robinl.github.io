@@ -8,6 +8,8 @@ prob_linkage_category: "tools"
 ---
 
 export { MDXLayoutWide as default } from '../components/MDXLayout';
+import ProbHomeNav from "../components/ProbHomeNav"
+
 
 import notebook from '@robinl/visualising-fellegi-sunter';
 import ObservableNotebook from '../components/ObservableNotebook';
@@ -55,6 +57,6 @@ export const output_order = [
   "css_styles"
 ];
 
-<CompactTutorialNav frontmatter={props.pageContext.frontmatter} />
+<ProbHomeNav />
 <ObservableNotebook notebook={notebook} cells={output_order} />
-<TutorialNav frontmatter={props.pageContext.frontmatter} />
+<ProbHomeNav />
