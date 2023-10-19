@@ -11,13 +11,13 @@ post_latest_update: "2023-09-12"
 export { MDXLayoutWide as default } from '../components/MDXLayout';
 
 import notebook from '@robinl/interactive-bayes-factor-probability-and-match-weight';
-
+import ProbHomeNav from "../components/ProbHomeNav"
 import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
 
 import { SEO } from "../components/SEO"
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
-
+<ProbHomeNav />
 # The relationship between Partial Match Weights, Bayes Factors, and Probabilities
 
 This chart shows how the partial match weights in a Splink `linker.match_weights_chart` (see [here](https://moj-analytical-services.github.io/splink/charts/match_weights_chart.html)) are related to Bayes Factors and probabilities.
@@ -49,7 +49,6 @@ This chart shows how the partial match weights in a Splink `linker.match_weights
     <ObservableCell cellName="mw_2" />
     <br/>
 
-
-
-
 </WithObservableProvider>
+
+<ProbHomeNav />
