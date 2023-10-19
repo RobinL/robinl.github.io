@@ -18,29 +18,34 @@ import DefinitionToolTip from "../components/DefinitionToolTip";
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
 
-# Why Probabilistic Linkage is More Accurate than Fuzzy matching
+# Why Probabilistic Linkage is More Accurate than Fuzzy matching or TF-IDF alone
 
-<Subtitle>Comparing how effectively different approaches to record matching use information in the records to make predictions</Subtitle>
+<Subtitle>How effectively do different approaches to record matching use information in the records to make predictions?</Subtitle>
 
-To get the best accuracy in record linkage, we must extract and use as much information from the input data as possible.
+To get the best accuracy in record linkage, we want a model that uses as much information from the input data as possible.
 
-This article describes
+This article describes the three main types of information that are important, and how they are all leveraged by the Fellegi-Sunter model used in [Splink](https://github.com/moj-analytical-services/splink).
 
-and how some record linkage thrown away valuable information, leaving accuracy on the table
-
-
-
-To achieve optimum accuracy, record linkage models must use as much information as possible from the records being compared.
+It also describes  how some other record linkage approaches thrown away some of this information, leaving accuracy on the table.
 
 
+## The three types of information
+
+Broadly, there are three categories of information that are relevant when trying to predict whether a pair of records match:
+
+1. Similarity of the two records at hand
+2. Cardinality of different values in the overall dataset
+3. Data quality of the overall dataset
+
+Let's look at each in turn.
+
+## Similarity of the records
+
+- Similarity of the columns in the two records.  Are they an exact match, or do they fuzzy match?
+- **The cardinality of the data**  How often are values like these observed in this dataset?  This information exists only _outside_ of the two records being immediately compared
+- **Data quality** How common is it to see mistakes and variation in records like these.
 
 
-Record linkage models will only
-
-To get the most out of
-
-
-Worth noting that when performing record linkage there are (broadly) three sources of information, of which fuzzy matching functions like levenstein/jaro etc. are just one:
 Fuzzy matching functions that can detect the similarity between strings, but are unaware of the larger context of the dataset.  So ‘Pepsi’ and Pepsu’ have a jaro winkler score of 0.92.  But so do ‘Group’ and ‘Grouo’
 
 An understanding of the cardinality of the field (number of distinct values), and the likelihood of coincidences occuring.  An exact match on the token ‘Pepsi’ provides much stronger evidence in favour of a match than a match on ‘Group’.  Similarly a fuzzy match on Pepsi at 0.92 is much stronger evidence of a match than a fuzzy match on Group.  The relevant question  is ’how much of a coincidence would it be to observed to different companies with a 0.92 match of ‘Group’ and ‘Grouo’ - and probabilistic models properly quantify this.
@@ -49,12 +54,3 @@ The strength of evidence against two record matching when fields do not match.  
 
 A lot of the power of probabilistic models comes from properly combining all three sources of information.  For large scale record linkage, it turns out that (2) and (3) are usually more powerful sources of accuracy that (1), particularly in the case you have multiple columns in your input dataset (e.g. if you have things in addition to the name, such as company address, directors names, turnover, legal structure, or anything else). (edited)
 
-## Maths annex
-
-$
-\frac{\operatorname{Pr}(\gamma_{\text{fn}}|\text{match}) \lambda}{\operatorname{Pr}(\gamma_{\text{fn}}|\text{match}) \lambda + \operatorname{Pr}(\gamma_{\text{fn}}|\text{non match}) (1 - \lambda)}
-$
-
-And another one
-
-$Pr(\text{records match}|\gamma_1, \gamma_2, \dots, \gamma_K) = \frac{\lambda m_1 m_2 \dots m_K}{\lambda m_1 m_2 \dots m_K + (1 - \lambda) u_1 u_2 \dots u_K}$
