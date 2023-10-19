@@ -13,7 +13,7 @@ export { MDXLayoutWide as default } from '../components/MDXLayout';
 import notebook from '@robinl/interactive-bayes-factor-probability-and-match-weight';
 import ProbHomeNav from "../components/ProbHomeNav"
 import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
-
+import InteractiveCallout from "../components/InteractiveCallout"
 import { SEO } from "../components/SEO"
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
@@ -22,9 +22,9 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 
 This chart shows how the partial match weights in a Splink `linker.match_weights_chart` (see [here](https://moj-analytical-services.github.io/splink/charts/match_weights_chart.html)) are related to Bayes Factors and probabilities.
 
-<mark> Hover over the chart below to select a match weight. </mark>
-<br/>
-<br/>
+
+<InteractiveCallout> Hover over the chart below to select a match weight. </ InteractiveCallout>
+
 
 <WithObservableProvider notebook={notebook}>
 
