@@ -8,10 +8,16 @@ code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/llm_short
 
 export { MDXLayout as default } from '../components/MDXLayout';
 import { SEO } from "../components/SEO"
+import {Subtitle} from "../components/Subtitle.jsx
+import chart from "./llm_short_term_thoughts_questions/messages_words.json"
+
+import { Vega, VegaLite } from "react-vega"
+
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
-
 # Thoughts and questions about the short term impact of LLMs on knowledge workers
+
+<Subtitle>Initial impressions of LLMs after about 10 months of use, 1,300 conversations, and 250,000 words of prompting</Subtitle>
 
 This post contains some fairly disorganised thoughts and questions on the short term (maybe 0 - 3 years)[^1] effects of LLMs on organisations that embrace them.
 
@@ -83,4 +89,14 @@ The design of software will change.  Developers will target building software th
 
 ## Endnote
 
-This post was not written by an LLM, I promise!
+This post was not written by an LLM, I promise!  However, I did use ChatGPT advanced data analysis to pull the following stats:
+
+- I've been using ChatGPT since since 10 Dec 2022, during which time I've had 1,298 conversations.
+- I've been using ChatGPT Plus (ChatGPT4) since 26th March 20203
+- I have written a total of 246,000 words in 5,253 messages to ChatGPT
+
+I've also used Claude (for its longer context) and Bing chat a bit, and prior to that the earliest reference I can find to using LLMs was Eleuther AI's 6b model in June 2021.
+
+Here are my stats from ChatGPT.  (This data analysis was done by ChatGPT data analysis).
+
+<VegaLite spec={chart} />
