@@ -18,13 +18,13 @@ import { Link } from "gatsby";
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
 
-# Why Probabilistic Linkage is More Accurate than Fuzzy Matching or TF-IDF alone
+# Why Probabilistic Linkage is More Accurate than Fuzzy Matching or Term Frequency based approaches
 
-<Subtitle>How effectively do different approaches to record matching use information in the records to make predictions?</Subtitle>
+<Subtitle>How effectively do different approaches to record linkage use information in the records to make predictions?</Subtitle>
 
 To get the best accuracy in record linkage, we need a model that uses as much information from the input data as possible.
 
-This article describes the three types of information that are most important, and how they are all leveraged by the Fellegi-Sunter model as used by [Splink](https://github.com/moj-analytical-services/splink).
+This article describes the three types of information that are most important in making an accurate prediction, and how all three are leveraged by the Fellegi-Sunter model as used in [Splink](https://github.com/moj-analytical-services/splink).
 
 It also describes how some alternative record linkage approaches throw away some of this information, leaving accuracy on the table.
 
@@ -33,7 +33,7 @@ It also describes how some alternative record linkage approaches throw away some
 Broadly, there are three categories of information that are relevant when trying to predict whether a pair of records match:
 
 1. Similarity of the pair of records
-2. Frequency of values in the overall dataset, or more broadly measuring how common different scenarios are
+2. Frequency of values in the overall dataset, and more broadly measuring how common different scenarios are
 3. Data quality of the overall dataset
 
 Let's look at each in turn.
@@ -41,9 +41,9 @@ Let's look at each in turn.
 
 ## 1. Similarity of the pairwise record comparison: Fuzzy matching
 
-The most obvious way to predict whether these records represent the same entity is to measure whether the columns contain the same or similar information.
+The most obvious way to predict whether two records represent the same entity is to measure whether the columns contain the same or similar information.
 
-Similarity can be measured quantitatively using fuzzy matching functions like [Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance) or [Jaro-Winker](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) for text, or numeric differences such as absolute or percentage difference.
+The similarity of each column can be measured quantitatively using fuzzy matching functions like [Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance) or [Jaro-Winker](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) for text, or numeric differences such as absolute or percentage difference.
 
 For example, `Hammond` vs `Hamond` has a Jaro-Winkler similarity of 0.97 (1.0); it's probably a typo.
 
@@ -51,10 +51,10 @@ These measures could be assigned weights, and summed together to compute a total
 
 The approach is sometimes known as fuzzy matching, and it is an important part of an accurate linkage model.
 
-However using this approach alone has major drawback: **the weights are arbitrary** in two ways:
+However using this approach alone has major drawback: the weights are arbitrary:
 
 - The importance of different fields has to be guessed at by the user.  For example, what weight should be assigned to a match on age?  How does this compare to a match on first_name?  How about the weights that should be assigned to non-matches?
-- The relationship between the prediction (probability of match) and each fuzzy matching metric has to be guessed by the user, as opposed to being estimated.  For example, how much should our prediction change if the first name is a Jaro-Winkler 0.9 fuzzy match as opposed to an exact match?  Should it change by the same amount if the Jaro-Winkler score reduces to 0.8?
+- The relationship between the strength of prediction (probability of match) and each fuzzy matching metric has to be guessed by the user, as opposed to being estimated.  For example, how much should our prediction change if the first name is a Jaro-Winkler 0.9 fuzzy match as opposed to an exact match?  Should it change by the same amount if the Jaro-Winkler score reduces to 0.8?
 
 
 ## 2. Frequency of values in the overall dataset, or more broadly measuring how common different scenarios are
@@ -65,7 +65,7 @@ For example, `John` vs `John`, and `Joss` vs `Joss` are both exact matches so ha
 
 The term frequency of `John` v `Joss` provides a data-driven estimate of the relative importance of these different names, which can be used to inform the weights.
 
-This concept can be extended to encompass similar records that are not an exact match.  Specifically, the weight is derived from an estimate of how common it is to observe fuzzy matches across the dataset.  In probabilistic linkage, this information is captured in the `u` probabilities which are discussed in more detail in the  <Link to="/m_and_u_values/">article on m and u probabilities</Link>.
+This concept can be extended to encompass similar records that are not an exact match.  Weights can derived from an estimate of how common it is to observe fuzzy matches across the dataset.  For example, if it's really common to see fuzzy matches on first name at a Jaro-Winkler score of 0.7, even amongst non-matching records, then if we observe such a match, it doesn't offer much evidence in favour of a match.  In probabilistic linkage, this information is captured in the `u` probabilities which are defined more precisely in the  <Link to="/m_and_u_values/">article on m and u probabilities</Link>.
 
 
 ## 3. Data quality of the overall dataset: measuring the importance of non-matching information
