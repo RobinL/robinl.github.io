@@ -18,7 +18,7 @@ import { Link } from "gatsby";
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
 
-# Why Probabilistic Linkage is More Accurate than Fuzzy matching or TF-IDF alone
+# Why Probabilistic Linkage is More Accurate than Fuzzy Matching or TF-IDF alone
 
 <Subtitle>How effectively do different approaches to record matching use information in the records to make predictions?</Subtitle>
 
@@ -37,14 +37,6 @@ Broadly, there are three categories of information that are relevant when trying
 3. Data quality of the overall dataset
 
 Let's look at each in turn.
-
-I will use the following example records to help explain the categories:
-
-| First Name | Last Name | Company Name          | Age | Phone Number  |
-|------------|-----------|-----------------------|-----|---------------|
-| John       | Hammond   | Flextronic Computers Plc| 35 | 0800 123456   |
-| John        | Hamond   | Flextronic Computers Ltd| 34 | 07505 302010  |
-
 
 
 ## 1. Similarity of the pairwise record comparison: Fuzzy matching
