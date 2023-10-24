@@ -41,7 +41,7 @@ Let's look at each in turn.
 
 ## 1. Similarity of the pairwise record comparison: Fuzzy matching
 
-The most obvious way to predict whether these records represent the same entity is to mesaure whether the columns contain the same or similar information.
+The most obvious way to predict whether these records represent the same entity is to measure whether the columns contain the same or similar information.
 
 Similarity can be measured quantitatively using fuzzy matching functions like [Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance) or [Jaro-Winker](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) for text, or numeric differences such as absolute or percentage difference.
 
@@ -54,7 +54,7 @@ The approach is sometimes known as fuzzy matching, and it is an important part o
 However using this approach alone has major drawback: **the weights are arbitrary** in two ways:
 
 - The importance of different fields has to be guessed at by the user.  For example, what weight should be assigned to a match on age?  How does this compare to a match on first_name?  How about the weights that should be assigned to non-matches?
-- The relationship between the predition (probability of match) and each fuzzy matching metric has to be guessed by the user, as opposed to being estimated.  For example, how much should our prediction change if the first name is a Jaro-Winkler 0.9 fuzzy match as opposed to an exact match?  Should it change by the same amount if the Jaro-Winkler score reduces to 0.8?
+- The relationship between the prediction (probability of match) and each fuzzy matching metric has to be guessed by the user, as opposed to being estimated.  For example, how much should our prediction change if the first name is a Jaro-Winkler 0.9 fuzzy match as opposed to an exact match?  Should it change by the same amount if the Jaro-Winkler score reduces to 0.8?
 
 
 ## 2. Frequency of values in the overall dataset, or more broadly measuring how common different scenarios are
@@ -82,8 +82,8 @@ Conversely, if records have been observed over a number of years, a non-match on
 
 ## Probabilistic linkage
 
-Much of the power of probabilistic models comes from properly combining all three sources of information in a way which is not possible in other models.
+Much of the power of probabilistic models comes from combining all three sources of information in a way which is not possible in other models.
 
-Specifically, probabilistic models explicitly estimate  <Link to="/partial_match_weights/">partial match weights</Link> which use a data-driven approach to capture the relative importance, and therefore properly combine, of all the different types of information.
+Not only is all of this information be incorporated in the prediction, the <Link to="/partial_match_weights/">partial match weights</Link> in the Fellegi-Sunter model enables the relative importance of the different types of information to be estimated from the data itself.
 
-Conversely, fuzzy matching techniques often use arbitary weights, and cannot fully incorporate relevant information from the source datasets. Term frequency approaches lack the ability to use information about data quality, or a mechnicanism to appropriately weight fuzzy matches.
+Conversely, fuzzy matching techniques often use arbitrary weights, and cannot fully incorporate information from all three sources.  Term frequency approaches lack the ability to use information about data quality, or a mechanism to appropriately weight fuzzy matches.
