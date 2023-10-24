@@ -14,7 +14,7 @@ export { ProbLinkageLayout as default} from '../components/ProbLinkageLayout'
 import { SEO } from "../components/SEO"
 import Subtitle from "../components/Subtitle.jsx"
 import DefinitionToolTip from "../components/DefinitionToolTip";
-
+import { Link } from "gatsby";
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
 
@@ -22,9 +22,9 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 
 <Subtitle>How effectively do different approaches to record matching use information in the records to make predictions?</Subtitle>
 
-To get the best accuracy in record linkage, we want a model that uses as much information from the input data as possible.
+To get the best accuracy in record linkage, we need a model that uses as much information from the input data as possible.
 
-This article describes three types of information that are most important, and how they are all leveraged by the Fellegi-Sunter model used by [Splink](https://github.com/moj-analytical-services/splink).
+This article describes the three types of information that are most important, and how they are all leveraged by the Fellegi-Sunter model as used by [Splink](https://github.com/moj-analytical-services/splink).
 
 It also describes how some alternative record linkage approaches throw away some of this information, leaving accuracy on the table.
 
@@ -32,8 +32,8 @@ It also describes how some alternative record linkage approaches throw away some
 
 Broadly, there are three categories of information that are relevant when trying to predict whether a pair of records match:
 
-1. Similarity of the pair of records at and
-2. Frequency of different values in the overall dataset
+1. Similarity of the pair of records
+2. Frequency of values in the overall dataset, or more broadly measuring how common different scenarios are
 3. Data quality of the overall dataset
 
 Let's look at each in turn.
@@ -47,56 +47,51 @@ I will use the following example records to help explain the categories:
 
 
 
-######123
-Notes:
-The ciritical thing about fuzzy matching is the arbitraryness of the weights
+## 1. Similarity of the pairwise record comparison: Fuzzy matching
 
-Another flaw is it can't distinguish between the same distance on two different terms (John, Robin)
+The most obvious way to predict whether these records represent the same entity is to mesaure whether the columns contain the same or similar information.
 
-You could theoretically:
-- Properly downweight no matches
-- Give correct weight to average cardinality
+Similarity can be measured quantitatively using fuzzy matching functions like [Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance) or [Jaro-Winker](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) for text, or numeric differences such as absolute or percentage difference.
 
-But that's all arbitrary
+For example, `Hammond` vs `Hamond` has a Jaro-Winkler similarity of 0.97 (1.0); it's probably a typo.
 
-## Similarity of the pairwise record comparison
+These measures could be assigned weights, and summed together to compute a total similarity score.
 
-The most obvious way to predict whether these records represent the same entity is to look whether the information in the columns is the same e.g. the first names are equal.
+The approach is sometimes known as fuzzy matching, and it is an important part of an accurate linkage model.
 
-We also should check whether the information is similar because of the possibility of data entry - for example, `Hammond` vs `Hamond` may be an accident. Some types of information also change through time - which could explain the discrepancy in age.
+However using this approach alone has major drawback: **the weights are arbitrary** in two ways:
 
-Similarity can be measured quantitatively using fuzzy matching functions like Levenshtein or Jaro-Winker for text, or numeric differences.
-
-These measures could be assigned different weights, and summed together to compute a total penalty.  If the total exceeded some threshold, the match would be rejected.
-
-However, whilst this information is fundamental to effectively scoring record comparisons, it not sufficient to produce the best predictions.
-
-The reason is that it doesn't take into account the broader context of the dataset: the 'cardinaltiy' (term freqncies).  This approach would therefore score the following two comparisons the same:
-
--  `John` vs `John`
-- `Myra` vs `Myra`
-
-when the later is much stronger evidence in favour of a match than the former.
-
-It also doesn't take into account the context of errors.
-
-The phone number
+- The importance of different fields has to be guessed at by the user.  For example, what weight should be assigned to a match on age?  How does this compare to a match on first_name?  How about the weights that should be assigned to non-matches?
+- The relationship between the predition (probability of match) and each fuzzy matching metric has to be guessed by the user, as opposed to being estimated.  For example, how much should our prediction change if the first name is a Jaro-Winkler 0.9 fuzzy match as opposed to an exact match?  Should it change by the same amount if the Jaro-Winkler score reduces to 0.8?
 
 
+## 2. Frequency of values in the overall dataset, or more broadly measuring how common different scenarios are
+
+We can improve on fuzzy matching by accounting for the frequency of values in the overall dataset (sometimes known as 'term frequencies').
+
+For example, `John` vs `John`, and `Joss` vs `Joss` are both exact matches so have the same similarity score, but the later is stronger evidence of a match than the former, because `Joss` is an unusual name.
+
+The term frequency of `John` v `Joss` provides a data-driven estimate of the relative importance of these different names, which can be used to inform the weights.
+
+This concept can be extended to encompass similar records that are not an exact match.  Specifically, the weight is derived from an estimate of how common it is to observe fuzzy matches across the dataset.  In probabilistic linkage, this information is captured in the `u` probabilities which are discussed in more detail in the  <Link to="/m_and_u_values/">article on m and u probabilities</Link>.
 
 
-A simple algorithm would be to compute
+## 3. Data quality of the overall dataset: measuring the importance of non-matching information
 
-- Similarity of the columns in the two records.  Are they an exact match, or do they fuzzy match?
-- **The cardinality of the data**  How often are values like these observed in this dataset?  This information exists only _outside_ of the two records being immediately compared
-- **Data quality** How common is it to see mistakes and variation in records like these.
+We've seen that fuzzy matching and term frequency based approaches can allow us to score the similarity between records, and even, to some extent, weight the importance of matches on different columns.
 
+However, none of these techniques help quantify the relative importance of non-matches to the predicted match probability.
 
-Fuzzy matching functions that can detect the similarity between strings, but are unaware of the larger context of the dataset.  So ‘Pepsi’ and Pepsu’ have a jaro winkler score of 0.92.  But so do ‘Group’ and ‘Grouo’
+Probabilistic methods explicitly estimate the relative importance of these scenarios by estimating data quality. In probabilistic linkage, this information is captured in the `m` probabilities which are discussed in more detail in the  <Link to="/m_and_u_values/">article on m and u probabilities</Link>.
 
-An understanding of the cardinality of the field (number of distinct values), and the likelihood of coincidences occurring.  An exact match on the token ‘Pepsi’ provides much stronger evidence in favour of a match than a match on ‘Group’.  Similarly a fuzzy match on Pepsi at 0.92 is much stronger evidence of a match than a fuzzy match on Group.  The relevant question  is ’how much of a coincidence would it be to observed to different companies with a 0.92 match of ‘Group’ and ‘Grouo’ - and probabilistic models properly quantify this.
+For example, if the data quality in the gender variable is extremely high, then a non-match on gender would be strong evidence against the two records being a true match.
 
-The strength of evidence against two record matching when fields do not match.  For example, if you observe ‘Pepsi Ltd’ vs ‘Pepsi PLC’, how much negative weight should we assign to the mismatch (Ltd vs PNC)  - how much evidence is this against these two records matching.
+Conversely, if records have been observed over a number of years, a non-match on age wouldn't be strong evidence of the two records being a match.
 
-A lot of the power of probabilistic models comes from properly combining all three sources of information.  For large scale record linkage, it turns out that (2) and (3) are usually more powerful sources of accuracy that (1), particularly in the case you have multiple columns in your input dataset (e.g. if you have things in addition to the name, such as company address, directors names, turnover, legal structure, or anything else). (edited)
+## Probabilistic linkage
 
+Much of the power of probabilistic models comes from properly combining all three sources of information in a way which is not possible in other models.
+
+Specifically, probabilistic models explicitly estimate  <Link to="/partial_match_weights/">partial match weights</Link> which use a data-driven approach to capture the relative importance, and therefore properly combine, of all the different types of information.
+
+Conversely, fuzzy matching techniques often use arbitary weights, and cannot fully incorporate relevant information from the source datasets. Term frequency approaches lack the ability to use information about data quality, or a mechnicanism to appropriately weight fuzzy matches.
