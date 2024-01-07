@@ -1,0 +1,90 @@
+---
+title: "Super-fast deduplication of large datasets using Splink and DuckDB"
+description: "Interactive, explorable explanations of the Fellegi Sunter model, providing an introduction to probabilistic record linkage (data deduplication)."
+post_date: "2021-05-20"
+post_category: "probabilistic_linkage"
+code_url: "https://observablehq.com/@robinl/d51533bbe054b3d8"
+prob_linkage_category: "tutorial"
+tutorial_number: 1
+post_latest_update: "2023-09-12"
+---
+
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+import { Link } from 'gatsby';
+
+import Subtitle from "../components/Subtitle"
+
+
+
+# Super-fast deduplication of large datasets using Splink and DuckDB
+
+<Subtitle>Evaluating 5 billion record comparisons to deduplicate 1 million records in less than a minute</Subtitle>
+
+## Summary
+
+Data deduplication is a pervasive problem which occurs when multiple records are collected for the same entity:
+
+| first_name | surname | dob        | city       | source_system |
+| ---------- | ------- | ---------- | ---------- | ------------- |
+| lucas      | smith   | 1984-01-02 | London     | sales         |
+| lucas      | smyth   | 1984-07-02 | Manchester | sales         |
+| lucas      | smyth   | 1984-07-02 |            | marketing     |
+
+
+The lack of a unique identifier means that there's no easy way of knowing these records, which may come one or more databases, refer to the same person.
+
+[Splink](https://github.com/moj-analytical-services/splink) is a Python library for solving the problem of deduplicating and linking data at scale.
+
+Since it is intended for use on very large datasets, it's important that it is fast.
+
+This blog post presents benchmarking results of Splink that show Splink is able to deduplicate a 5 million record dataset in less than a minute.
+
+To the best of my knowlege, these results show that it is by far the fastest free tool for deduplicating large datasets - by at least an order of magnitude. Please <Link to="/about/">let me know</Link> if you think otherwise!
+
+A summary of results is as follows:
+
+- 2019 macbook pro
+
+
+## The data
+
+A dataset of historical persons was collected from [WikiData](https://www.wikidata.org/wiki/Wikidata:Main_Page) using the [Wikidata Query Service](https://query.wikidata.org/).
+
+
+
+## Methodology
+
+Benchmarking was conduceted on a variety of AWS EC2 instances using [pytest-benchmark](https://pypi.org/project/pytest-benchmark/).
+
+When benchmarking the time taken to complete deduplication job, it's critical to report both:
+- The number of input records
+- The number of pairwise record comparisons made by the algorithm
+
+User-specified blocking rules determine how many comparisons are made, and so it's always possible to get a better runtimes simply by using stricter blocking.   But blocking rules are carefully chosen, fewer comparisons comes at the cost of lower recall.
+
+In this case, I've chosen to make a relatively large number of comparisons per input record to avoid the criticism that I'm using excessively tight blocking to artifiially reduce runtimes.
+
+
+
+
+
+<details>
+<summary>Click to expand</summary>
+
+```python
+
+import splink
+
+```
+
+</details>
+
+
+## Reproducuction materials
+
+Materials to reproduce the results in this post can be found in the following two repos:
+- [Code to set up AWS infrastructure](https://github.com/RobinL/benchmarking_splink_infrastructure)
+- [Code to run the benchmarks](https://github.com/RobinL/run_splink_benchmarks_in_ec2)
