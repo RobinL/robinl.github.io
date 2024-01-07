@@ -1,11 +1,12 @@
 ---
-title: "Why Probabilistic Linkage is More Accurate than Fuzzy matching or TF-IDF alone"
+title: "Why Probabilistic Linkage is More Accurate than Fuzzy Matching For Data Deduplication"
 description: "How to ensure that all available information is used to make predictions"
 post_date: "2023-10-24"
 post_category: "probabilistic_linkage"
 code_url: "https://observablehq.com/@robinl/d51533bbe054b3d8"
 prob_linkage_category: "tutorial"
 tutorial_number: 6
+post_latest_update: "2024-01-07"
 ---
 
 
@@ -18,72 +19,91 @@ import { Link } from "gatsby";
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
 
-# Why Probabilistic Linkage is More Accurate than Fuzzy Matching or Term Frequency based approaches
+# Why Probabilistic Linkage is More Accurate than Fuzzy Matching For Data Deduplication
 
-<Subtitle>How effectively do different approaches to record linkage use information in the records to make predictions?</Subtitle>
+<Subtitle>How effectively do different approaches to record linkage exploit the information in the data to make predictions?</Subtitle>
 
-To get the best accuracy in record linkage, we need a model that uses as much information from the input data as possible.
+Data duplication (record linkage) algorithms are models that predict whether records such as the following represent the same entity.
 
-This article describes the three types of information that are most important in making an accurate prediction, and how all three are leveraged by the Fellegi-Sunter model as used in [Splink](https://github.com/moj-analytical-services/splink).
+| first_name | surname | dob        | city       |
+| ---------- | ------- | ---------- | ---------- |
+| joss       | hammond | 1984-01-02 | london     |
+| joss       | hamond  | 1984-07-02 | manchester |
+
+
+What algorithms work best?  To get the best accuracy in record linkage, we need a model that uses as much information from the input data as possible.
+
+This article describes the three types of information that are most important in making an accurate prediction, and how all three are leveraged by the Fellegi-Sunter model as used in [Splink](https://github.com/moj-analytical-services/splink), a free software package for record linkage at scale.
 
 It also describes how some alternative record linkage approaches throw away some of this information, leaving accuracy on the table.
 
 ## The three types of information
 
-Broadly, there are three categories of information that are relevant when trying to predict whether a pair of records match:
 
-1. Similarity of the pair of records
-2. Frequency of values in the overall dataset, and more broadly measuring how common different scenarios are
-3. Data quality of the overall dataset
+
+Broadly, there are three categories of information that are relevant when trying to predict whether this pair of records represent the same entity:
+
+1. The similarity of the pair of records, _without_ reference to the overall dataset  (sometimes known as fuzzy matching)
+2. The frequency of values in the overall dataset, or more generally how common it is to observe different types of fuzzy matches
+3. The data quality of the overall dataset
 
 Let's look at each in turn.
 
 
-## 1. Similarity of the pairwise record comparison: Fuzzy matching
+## 1. Similarity of the pairwise record comparison (fuzzy matching)
 
 The most obvious way to predict whether two records represent the same entity is to measure whether the columns contain the same or similar information.
 
 The similarity of each column can be measured quantitatively using fuzzy matching functions like [Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance) or [Jaro-Winker](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) for text, or numeric differences such as absolute or percentage difference.
 
-For example, `Hammond` vs `Hamond` has a Jaro-Winkler similarity of 0.97 (1.0); it's probably a typo.
+For example, `hammond` vs `hamond` has a Jaro-Winkler similarity of 0.97; it's probably a typo.
 
-These measures could be assigned weights, and summed together to compute a total similarity score.
+`1984-01-02` vs `1984-07-02` has a Levenshtein distance of 1.
+
+But how do we combine these different measures of similarity? They could be assigned weights, and summed together to compute a total similarity score.
 
 The approach is sometimes known as fuzzy matching, and it is an important part of an accurate linkage model.
 
-However using this approach alone has major drawback: the weights are arbitrary:
+However using this approach alone has major drawback - the weights are arbitrary:
 
-- The importance of different fields has to be guessed at by the user.  For example, what weight should be assigned to a match on age?  How does this compare to a match on first_name?  How about the weights that should be assigned to non-matches?
-- The relationship between the strength of prediction (probability of match) and each fuzzy matching metric has to be guessed by the user, as opposed to being estimated.  For example, how much should our prediction change if the first name is a Jaro-Winkler 0.9 fuzzy match as opposed to an exact match?  Should it change by the same amount if the Jaro-Winkler score reduces to 0.8?
+- The importance of different fields has to be guessed at by the user.   Clearly a match on `gender` is less important than a match on `dob`. How about the negative weights that should be assigned to non-matches?
+- For each field, a decision must be made on how changes in the fuzzy matching metric influence the score.   For example, how much should our prediction change for a Jaro-Winkler score of 0.8 vs. 0.9?  Is this the same or different depending on the field?
 
 
-## 2. Frequency of values in the overall dataset, or more broadly measuring how common different scenarios are
+## 2. Frequency of values in the overall dataset, or more generally how often different types of fuzzy matching scenarios occur
 
 We can improve on fuzzy matching by accounting for the frequency of values in the overall dataset (sometimes known as 'term frequencies').
 
-For example, `John` vs `John`, and `Joss` vs `Joss` are both exact matches so have the same similarity score, but the later is stronger evidence of a match than the former, because `Joss` is an unusual name.
+For example, `john` vs `john`, and `joss` vs `joss` are both exact matches so have the same Jaro-Winkler or Levenshtein similarity score, but the latter is stronger evidence of a match than the former, because `joss` is an unusual name.
 
-The term frequency of `John` v `Joss` provides a data-driven estimate of the relative importance of these different names, which can be used to inform the weights.
+The term frequencies of `john` v `joss` provide a data-driven estimate of the relative importance of these different names, which can be used to inform the weights.
 
-This concept can be extended to encompass similar records that are not an exact match.  Weights can derived from an estimate of how common it is to observe fuzzy matches across the dataset.  For example, if it's really common to see fuzzy matches on first name at a Jaro-Winkler score of 0.7, even amongst non-matching records, then if we observe such a match, it doesn't offer much evidence in favour of a match.  In probabilistic linkage, this information is captured in the `u` probabilities which are defined more precisely in the  <Link to="/m_and_u_values/">article on m and u probabilities</Link>.
+In essence, the term frequencies capture the likelihood that two _non-matching_ records would have the same value on a given column i.e. the likelihood of a 'collision' (e.g. two different people with the same name).
+
+In probabilistic linkage, these values are called `u` probabilities which are defined more precisely in the  <Link to="/m_and_u_values/">article on m and u probabilities</Link>.
+
+This concept can be extended to encompass similar records that are not an exact match.  How much of a coincidence is it that `dob` differs by a single character (`1984-01-02` vs `1984-07-02`)? This can be measured from the data by looking at how often this occurs.
 
 
-## 3. Data quality of the overall dataset: measuring the importance of non-matching information
+## 3. Data quality of the overall dataset: how often do errors occur amongst matching records?
 
-We've seen that fuzzy matching and term frequency based approaches can allow us to score the similarity between records, and even, to some extent, weight the importance of matches on different columns.
+We've seen that fuzzy matching and term frequency based approaches can allow us to score the similarity between records, and even weight the importance of matches on different columns.
 
-However, none of these techniques help quantify the relative importance of non-matches to the predicted match probability.
+However, none of these techniques help quantify the relative importance of non-matches (e.g. `london` vs `manchester`) to the predicted match probability.
 
-Probabilistic methods explicitly estimate the relative importance of these scenarios by estimating data quality. In probabilistic linkage, this information is captured in the `m` probabilities which are discussed in more detail in the  <Link to="/m_and_u_values/">article on m and u probabilities</Link>.
+Probabilistic methods explicitly estimate the relative importance of non matches by estimating the data quality of each column. In probabilistic linkage, this information is captured in the `m` probabilities which are discussed in more detail in the  <Link to="/m_and_u_values/">article on m and u probabilities</Link>.
 
-For example, if the data quality in the gender variable is extremely high, then a non-match on gender would be strong evidence against the two records being a true match.
+For example, if records have been observed over a number of years, a non-match on `city` wouldn't be strong evidence against the two records being a match.
 
-Conversely, if records have been observed over a number of years, a non-match on age wouldn't be strong evidence of the two records being a match.
+Conversely, if the data quality in the `dob` variable is extremely high, then a non-match on gender would be strong evidence against the two records being a true match.
 
-## Probabilistic linkage
+
+## Probabilistic linkage using Splink
 
 Much of the power of probabilistic models comes from combining all three sources of information in a way which is not possible in other models.
 
-Not only is all of this information be incorporated in the prediction, the <Link to="/partial_match_weights/">partial match weights</Link> in the Fellegi-Sunter model enables the relative importance of the different types of information to be estimated from the data itself.
+Not only are all three sources of information used to make the prediction, but the Fellegi Sunter model used in [Splink](https://github.com/moj-analytical-services/splink) allows us estimate the relative importance of each source of information from the data itself.
+
+These data-driven partial match weights have <Link to="/partial_match_weights/">intuitive interpretations</Link>, leading to transparent and easy to understand models.
 
 Conversely, fuzzy matching techniques often use arbitrary weights, and cannot fully incorporate information from all three sources.  Term frequency approaches lack the ability to use information about data quality, or a mechanism to appropriately weight fuzzy matches.
