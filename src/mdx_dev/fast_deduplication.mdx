@@ -14,6 +14,7 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 import { Link } from 'gatsby';
 import { Vega, VegaLite } from "react-vega"
 import summary_chart from "./fast_deduplication/summary_chart.vl.json"
+import cpu_mem_chart from "./fast_deduplication/cpu_mem_chart.vl.json"
 
 import Subtitle from "../components/Subtitle"
 
@@ -86,7 +87,11 @@ I hope to write another post at some point looking at comparative accuracy in fu
 
 [link off to accuracy blog posts here rather thank quoting accuracy]
 
-## Accuracy
+## Memory and CPU usage
+
+The following chart shows CPU and memory usage for each run.  Click on the bar chart to change which machine type (instance) is selected.
+
+<VegaLite spec={cpu_mem_chart} />
 
 ## Model details
 
