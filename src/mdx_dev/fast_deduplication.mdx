@@ -35,13 +35,15 @@ Data deduplication is a ubiquitous problem that results from multiple records be
 
 The lack of a unique identifier means that there's no easy way of knowing whether these records refer to the same person.
 
-[Splink](https://github.com/moj-analytical-services/splink) is a Python library for deduplicating and linking this kind of data. It's designed for use on very large datasets, so it's important that it is fast.
+[Splink](https://github.com/moj-analytical-services/splink) is a Python library for deduplicating and linking this kind of data. It's designed for use on very large datasets, so speed is imperative.  It  [DuckDB](https://duckdb.org/) as its default backend to achieve fast parallelised execution.
 
 This blog post presents benchmarking results of Splink that show Splink is able to deduplicate an 8 million record dataset by evaluating 1 billion record comparisons in less than a minute, and at a cost of less than $1.00.
 
 <VegaLite spec={summary_chart} />
 
-To the best of my knowlege, these results show that it is fastest free tool for accurately deduplicating large datasets - by at least an order of magnitude. Please <Link to="/about/">let me know</Link> if you think otherwise!
+To the best of my knowlege, these results show that it is fastest free tool for accurately deduplicating large datasets - by at least an order of magnitude.
+
+Please <Link to="/about/">let me know</Link> if you think otherwise and I will update this post!
 
 
 
@@ -49,18 +51,23 @@ To the best of my knowlege, these results show that it is fastest free tool for 
 
 A dataset of historical persons was collected from [WikiData](https://www.wikidata.org/wiki/Wikidata:Main_Page) using the [Wikidata Query Service](https://query.wikidata.org/).
 
+Each record was corrupted to generate between 1 and 20 duplicates using an xxxx distribution.  The average (mean) number of duplicates is xxxxx and the mean is xxxxxx.
+
+
+A typical group of records looks like this:
+
+
+
 
 ## Methodology
 
 Benchmarking was conducted on a variety of AWS EC2 instances using [pytest-benchmark](https://pypi.org/project/pytest-benchmark/).
 
-When benchmarking the time taken to complete deduplication job, it's critical to report both:
-- The number of input records
-- The number of pairwise record comparisons made by the algorithm
+I have been careful to report not just the number of input rows, but also the number of pairwise comparisons made, because performance is primarily driven by the later.
 
-User-specified blocking rules determine how many comparisons are made, and so it's always possible to get a better runtimes simply by using stricter blocking.   But blocking rules are carefully chosen, fewer comparisons comes at the cost of lower recall.
+The number of comparisons is a user-configurable parameter (via blockign rules) and so it's always possible to 'cheat' and get a better runtimes simply by using stricter blocking, at the cost of lower accuracy.
 
-In this case, I've chosen to make a relatively large number of comparisons per input record to avoid the criticism that I'm using excessively tight blocking to artifiially reduce runtimes.
+In this case, I've chosen to make a relatively large number of comparisons per input record (around 100), which is representative of a real-world use case.
 
 ## Comparisons to other libraries
 
@@ -106,6 +113,7 @@ import splink
 
 </details>
 
+## Further reading
 
 ## Reproducuction materials
 
