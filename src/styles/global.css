@@ -107,20 +107,20 @@ select {
 }
 
 #vg-tooltip-element.vg-tooltip table {
-    @apply mb-0;
+    @apply mb-0 text-xs;
 }
 
 #vg-tooltip-element.vg-tooltip tbody,
 #vg-tooltip-element.vg-tooltip tr {
-    @apply m-0 p-0;
+    @apply m-0 p-0 text-xs;
 }
 
 #vg-tooltip-element.vg-tooltip td.key {
-    @apply px-0.5 py-0.5 text-right  m-0;
+    @apply px-0.5 py-0.5 text-right  m-0 text-xs;
 }
 
 #vg-tooltip-element.vg-tooltip td.value {
-    @apply px-0.5 py-0.5 text-left m-0;
+    @apply px-0.5 py-0.5 text-left m-0 text-xs;
 }
 
 input[type='submit'],

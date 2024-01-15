@@ -20,7 +20,7 @@ import Subtitle from "../components/Subtitle"
 
 # Super-fast deduplication of large datasets using Splink and DuckDB
 
-<Subtitle>Evaluating 1 billion record comparisons to deduplicate 8 million records in less than a minute</Subtitle>
+<Subtitle>Evaluating 1 billion record comparisons to deduplicate 7 million records in less than a minute</Subtitle>
 
 ## Summary
 
@@ -35,31 +35,56 @@ Data deduplication is a ubiquitous problem that results from multiple records be
 
 The lack of a unique identifier means that there's no easy way of knowing whether these records refer to the same person.
 
-[Splink](https://github.com/moj-analytical-services/splink) is a Python library for deduplicating and linking this kind of data. It's designed for use on very large datasets, so speed is imperative.  It  [DuckDB](https://duckdb.org/) as its default backend to achieve fast parallelised execution.
+[Splink](https://github.com/moj-analytical-services/splink) is a Python library for deduplicating and linking this kind of data. It's designed for use on very large datasets, so speed is imperative.  It uses [DuckDB](https://duckdb.org/) as its default backend to achieve fast parallelised execution.
 
-This blog post presents benchmarking results of Splink that show Splink is able to deduplicate an 8 million record dataset by evaluating 1 billion record comparisons in less than a minute, and at a cost of less than $1.00.
+This blog post presents the results of benchmarking Splink. It shows Splink is able to deduplicate a 7 million record dataset by evaluating 1 billion record comparisons in less than a minute, and at a cost of less than $1.00.
 
 <VegaLite spec={summary_chart} />
 
 To the best of my knowlege, these results show that it is fastest free tool for accurately deduplicating large datasets - by at least an order of magnitude.
 
-Please <Link to="/about/">let me know</Link> if you think otherwise and I will update this post!
+Please <Link to="/about/">let me know</Link> if you think otherwise!
 
+## Methodology
 
-
-## The data
+### The data
 
 A dataset of historical persons was collected from [WikiData](https://www.wikidata.org/wiki/Wikidata:Main_Page) using the [Wikidata Query Service](https://query.wikidata.org/).
 
-Each record was corrupted to generate between 1 and 20 duplicates using an xxxx distribution.  The average (mean) number of duplicates is xxxxx and the mean is xxxxxx.
-
+Each record was corrupted to generate duplicates with a [Zipf](https://en.wikipedia.org/wiki/Zipf%27s_law) distribution.  The average (mean) number of duplicates is 8.8, the median is 8 and the size of clusters ranges from 1 to 36.
 
 A typical group of records looks like this:
 
+| first_name   | middle_name   | last_name   | dob        |   birth_lat |   birth_lng | occupation          |
+|:-------------|:--------------|:------------|:-----------|------------:|------------:|:--------------------|
+| josef        |               | heřman      | 1845-01-13 |     49.74   |     13.38   | high school teacher |
+| josef        |               | heřman      | 1845-01-13 |             |             | high school teacher |
+| josef        |               | heřjan      | 1845-01-13 |     49.96   |     13.35   | high school teacher |
+| joseph       |               | hermann     | 1845-01-13 |     49.74   |     13.38   | travel writer       |
+| jowef        |               | heřman      | 1845-01-01 |     49.74   |     13.38   | high school teacher |
+
+The source information is WikiData ID [Q101637549](https://www.wikidata.org/wiki/Q101637549).
+
+### Splink script
+
+The following Splink script shows how the model was estimated (trained) using Splink, and then used to predict which record match:
+
+<details>
+<summary>Click to expand</summary>
+```python
+
+import splink
+
+```
+</details>
+
+This is a Splink model of moderate complexity
+- Several
+- Term frequency adjustments
 
 
 
-## Methodology
+### Benchmarking
 
 Benchmarking was conducted on a variety of AWS EC2 instances using [pytest-benchmark](https://pypi.org/project/pytest-benchmark/).
 
@@ -84,13 +109,14 @@ A caveat is that these runtimes are not strictly comparable because the input da
 
 This post considers runtime only.  Accuracy statistics would only be valid on the specific datset used for benchmarking, and I do not have comparative accuracy statistics for other libraries.
 
-However, there are theoretical and empircal reasons to believe Splink offers accuracy comparable to or better than alternaties:
+However, there are theoretical and empircal reasons to believe Splink offers accuracy comparable to or better than alternatives:
 
 - First, Splink is able to effectively harness most of the information in the input data in making a prediction - as explained in <Link to="/fellegi_sunter_accuracy/">this post</Link>.
-- Second, an [independent empircal study](https://scholar.googleusercontent.com/scholar?q=cache:o4-c8w6DveYJ:scholar.google.com/+splink&hl=en&as_sdt=0,5&as_ylo=2023) have found Splink's accuracy compares favourably to alternatives.
+- Second, an [independent empircal study](https://scholar.googleusercontent.com/scholar?q=cache:o4-c8w6DveYJ:scholar.google.com/+splink&hl=en&as_sdt=0,5&as_ylo=2023) has found Splink's accuracy compares favourably to alternatives.
+- Third, Splink offers a range of configuration options to optimise accuracy which are detailed further in <Link to="/comparing_splink_models/">this post</Link>.
+
 
 I hope to write another post at some point looking at comparative accuracy in further details
-
 
 [link off to accuracy blog posts here rather thank quoting accuracy]
 
@@ -100,18 +126,8 @@ The following chart shows CPU and memory usage for each run.  Click on the bar c
 
 <VegaLite spec={cpu_mem_chart} />
 
-## Model details
 
-<details>
-<summary>Click to expand</summary>
-
-```python
-
-import splink
-
-```
-
-</details>
+The following chart shows model training time
 
 ## Further reading
 
@@ -120,3 +136,4 @@ import splink
 Materials to reproduce the results in this post can be found in the following two repos:
 - [Code to set up AWS infrastructure](https://github.com/RobinL/benchmarking_splink_infrastructure)
 - [Code to run the benchmarks](https://github.com/RobinL/run_splink_benchmarks_in_ec2)
+- [Splink documentation homepage](https://moj-analytical-services.github.io/splink)
