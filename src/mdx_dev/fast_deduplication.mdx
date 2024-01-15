@@ -1,10 +1,9 @@
 ---
 title: "Super-fast deduplication of large datasets using Splink and DuckDB"
-description: "Interactive, explorable explanations of the Fellegi Sunter model, providing an introduction to probabilistic record linkage (data deduplication)."
-post_date: "2023-01-15"
+description: "Evaluating 1 billion record comparisons to deduplicate 7 million records in two minutes"
+post_date: "2023-01-18"
 post_category: "probabilistic_linkage"
 code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/fast_deduplication.mdx"
-prob_linkage_category: "tutorial"
 ---
 
 
@@ -20,7 +19,7 @@ import Subtitle from "../components/Subtitle"
 
 # Super-fast deduplication of large datasets using Splink and DuckDB
 
-<Subtitle>Evaluating 1 billion record comparisons to deduplicate 7 million records in less than a minute</Subtitle>
+<Subtitle>Evaluating 1 billion record comparisons to deduplicate 7 million records in two minutes</Subtitle>
 
 ## Summary
 
@@ -35,25 +34,21 @@ Data deduplication is a ubiquitous problem that results from multiple records be
 
 The lack of a unique identifier means that there's no easy way of knowing whether these records refer to the same person.
 
-[Splink](https://github.com/moj-analytical-services/splink) is a Python library for deduplicating and linking this kind of data. It's designed for use on very large datasets, so speed is imperative.  It uses [DuckDB](https://duckdb.org/) as its default backend to achieve fast parallelised execution.
+[Splink](https://github.com/moj-analytical-services/splink) is a free, open source Python library for deduplicating and linking this kind of data. It's designed for use on very large datasets, so speed is imperative.  It uses [DuckDB](https://duckdb.org/) as its default backend to achieve fast parallelised execution.
 
-This blog post presents the results of benchmarking Splink. It shows Splink is able to deduplicate a 7 million record dataset by evaluating 1 billion record comparisons in less than a minute, and at a cost of less than $1.00.
+This blog post presents the results of benchmarking Splink. It shows it is able to deduplicate a 7 million record dataset in just over 2 minutes, and at a cost of less than $1.00 in AWS EC2.
 
 <VegaLite spec={summary_chart} />
 
-To the best of my knowlege, these results show that it is fastest free tool for accurately deduplicating large datasets - by at least an order of magnitude.
+To the best of my knowlege, these results show that it is fastest free tool for accurately deduplicating large datasets - by at least an order of magnitude.  (Please <Link to="/about/">contact me</Link> if you know otherwise!)
 
-Please <Link to="/about/">let me know</Link> if you think otherwise!
+## Input data
 
-## Methodology
+A dataset of people was collected from the [Wikidata Query Service](https://query.wikidata.org/).
 
-### The data
+Each record was corrupted to generate a varying number of duplicates according to a [Zipf](https://en.wikipedia.org/wiki/Zipf%27s_law) distribution.  The average (mean) number of duplicates was 8.8, the median was 8 and the number of duplicates ranged from 0 to 36.
 
-A dataset of historical persons was collected from [WikiData](https://www.wikidata.org/wiki/Wikidata:Main_Page) using the [Wikidata Query Service](https://query.wikidata.org/).
-
-Each record was corrupted to generate duplicates with a [Zipf](https://en.wikipedia.org/wiki/Zipf%27s_law) distribution.  The average (mean) number of duplicates is 8.8, the median is 8 and the size of clusters ranges from 1 to 36.
-
-A typical group of records looks like this:
+For example, for WikiData entity ID [Q101637549](https://www.wikidata.org/wiki/Q101637549), the records look like this:
 
 | first_name   | middle_name   | last_name   | dob        |   birth_lat |   birth_lng | occupation          |
 |:-------------|:--------------|:------------|:-----------|------------:|------------:|:--------------------|
@@ -63,36 +58,119 @@ A typical group of records looks like this:
 | joseph       |               | hermann     | 1845-01-13 |     49.74   |     13.38   | travel writer       |
 | jowef        |               | heřman      | 1845-01-01 |     49.74   |     13.38   | high school teacher |
 
-The source information is WikiData ID [Q101637549](https://www.wikidata.org/wiki/Q101637549).
+We can see different types of errors in all the fields, and no simple rule that could be used to be sure all these records pertain to the same entity.
 
-### Splink script
+## Splink script
 
 The following Splink script shows how the model was estimated (trained) using Splink, and then used to predict which record match:
 
 <details>
-<summary>Click to expand</summary>
+<summary>Click to expand full Splink script</summary>
 ```python
+import pandas as pd
+from splink.duckdb.blocking_rule_library import block_on
+from splink.duckdb.comparison_library import (
+    distance_in_km_at_thresholds,
+    exact_match,
+    jaro_winkler_at_thresholds,
+    levenshtein_at_thresholds,
+)
+from splink.duckdb.linker import DuckDBLinker
 
-import splink
+df = pd.read_parquet("7m_prepareed.parquet")
+
+
+splink_settings = {
+    "link_type": "dedupe_only",
+    "blocking_rules_to_generate_predictions": [
+        block_on(["last_name", "occupation"]),
+        block_on(["first_name", "last_name"]),
+        block_on(["first_name", "middle_name"]),
+        block_on(["middle_name", "last_name"]),
+        block_on(["first_name", "dob"]),
+        block_on(["first_name", "middle_name"]),
+        block_on(["last_name", "birth_lat"]),
+        block_on(["first_name", "birth_lng"]),
+        block_on(["middle_name", "occupation"]),
+    ],
+    "comparisons": [
+        jaro_winkler_at_thresholds(
+            "first_name", [0.9, 0.7], term_frequency_adjustments=True
+        ),
+        jaro_winkler_at_thresholds("middle_name", [0.9]),
+        jaro_winkler_at_thresholds(
+            "last_name", [0.9, 0.7], term_frequency_adjustments=True
+        ),
+        levenshtein_at_thresholds(
+            "dob", [1, 2, 4], term_frequency_adjustments=True
+        ),
+        distance_in_km_at_thresholds(
+            "birth_lat", "birth_lng", [10, 100]
+        ),
+        exact_match("occupation", term_frequency_adjustments=True),
+    ],
+    "retain_intermediate_calculation_columns": False,
+    "retain_matching_columns": False,
+    "max_iterations": 20,
+    "em_convergence": 0.001,
+}
+
+linker = DuckDBLinker("df", splink_settings)
+
+# Model training: Estimate the parameters of the model
+linker.estimate_probability_two_random_records_match(
+    [
+        block_on(["first_name", "last_name", "dob"]),
+    ],
+    recall=0.8,
+)
+linker.estimate_u_using_random_sampling(max_pairs=1e9)
+linker.estimate_parameters_using_expectation_maximisation(
+    block_on(
+        ["first_name", "last_name", "occupation"], salting_partitions=2
+    ),
+    estimate_without_term_frequencies=True,
+)
+linker.estimate_parameters_using_expectation_maximisation(
+    block_on(["dob", "middle_name"], salting_partitions=2),
+    estimate_without_term_frequencies=True,
+)
+
+# Inference: Predict which pairs are matching entities
+df_predict = linker.predict(threshold_match_probability=0.9)
+
+# Clustering: Compute an estimated cluster id
+# that ties together records of the same entity
+linker.cluster_pairwise_predictions_at_threshold(
+    df_predict=df_predict, threshold_match_probability=0.9
+)
 
 ```
 </details>
 
-This is a Splink model of moderate complexity
-- Several
-- Term frequency adjustments
+This is a Splink model of fairly typical complexity for a large scale linkage job:
+- A wide range of blocking rules are used to create record comparisons, ensuring high recall of true matches.
+- Term frequency adjustments are made on columns with skew in value frequencies
+- A range of fuzzy matching scenarios are evaluated using functions like `jaro-winkler` and `levenshtein`
 
+### Detailed results
 
+Charts
 
-### Benchmarking
+### Methodology
 
-Benchmarking was conducted on a variety of AWS EC2 instances using [pytest-benchmark](https://pypi.org/project/pytest-benchmark/).
+Benchmarking was conducted on a variety of AWS EC2 instances using [pytest-benchmark](https://pypi.org/project/pytest-benchmark/).  Code in available in the following two repositories:
 
-I have been careful to report not just the number of input rows, but also the number of pairwise comparisons made, because performance is primarily driven by the later.
+- [Code to set up AWS infrastructure](https://github.com/RobinL/benchmarking_splink_infrastructure)
+- [Code to run the benchmarks](https://github.com/RobinL/run_splink_benchmarks_in_ec2)
 
-The number of comparisons is a user-configurable parameter (via blockign rules) and so it's always possible to 'cheat' and get a better runtimes simply by using stricter blocking, at the cost of lower accuracy.
+In the summary, I emphasied the number of comparisons (1 billion) as well as the number of input rows (7 million) because performance is primarily driven by the former.
 
-In this case, I've chosen to make a relatively large number of comparisons per input record (around 100), which is representative of a real-world use case.
+In fact, the number of comparisons is a user-configurable parameter (via blocking rules) and so it's always possible to 'cheat' and get a better runtimes simply by using stricter blocking, at the cost of lower recall.
+
+For the purpose of benchmarking, I've chosen to make a relatively large number of comparisons per input record (around 100) to demonstrate the speed of Splink.  In real record linkage scenarios, it would often be possible to use tighter blocking rules.
+
+For example, if we used a tighter blocking approach and selected only around 10 comparisons per input record, we could deduplicate a much larger dataset with a similar runtime.
 
 ## Comparisons to other libraries
 
@@ -134,6 +212,5 @@ The following chart shows model training time
 ## Reproducuction materials
 
 Materials to reproduce the results in this post can be found in the following two repos:
-- [Code to set up AWS infrastructure](https://github.com/RobinL/benchmarking_splink_infrastructure)
-- [Code to run the benchmarks](https://github.com/RobinL/run_splink_benchmarks_in_ec2)
+
 - [Splink documentation homepage](https://moj-analytical-services.github.io/splink)

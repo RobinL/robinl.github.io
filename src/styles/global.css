@@ -160,3 +160,23 @@ svg {
 .definition-tooltip-content code {
     font-size: 0.8rem;
 }
+
+details {
+    @apply p-2 mb-4;
+}
+
+summary {
+    @apply text-base font-semibold cursor-pointer mb-2;
+}
+
+summary::-webkit-details-marker {
+    @apply hidden;
+}
+
+details[open] summary {
+    @apply mb-4;
+}
+
+details > p {
+    @apply text-base text-gray-700 leading-relaxed;
+}
