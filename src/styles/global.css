@@ -162,11 +162,11 @@ svg {
 }
 
 details {
-    @apply p-2 mb-4;
+    @apply p-2 mb-4 text-gray-700;
 }
 
 summary {
-    @apply text-base font-semibold cursor-pointer mb-2;
+    @apply text-base font-semibold cursor-pointer mb-2 text-gray-700;
 }
 
 summary::-webkit-details-marker {
