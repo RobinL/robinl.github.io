@@ -40,7 +40,7 @@ The lack of a unique identifier means that there's no easy way of knowing whethe
 
 [^1]: This problem is also sometimes referred to as entity resolution, or record linkage.
 
-Historically, deduplicating large datasets has been very time consuming, with runtimes of many hours, and restrictive limits to the size of datasets that can be worked with.
+Historically, deduplicating large datasets has been very time consuming, with runtimes of many hours, and severe limits on the size of datasets that can be worked with.
 
 [Splink](https://github.com/moj-analytical-services/splink) is a free, open source Python library to address this problem. It's designed for use on very large datasets, so speed is imperative.  It uses [DuckDB](https://duckdb.org/) as its default backend to achieve fast parallelised execution.
 
