@@ -10,7 +10,7 @@ const Subtitle = ({ children }) => {
     });
 
     return (
-        <h2 className="text-xl font-sans font-normal text-gray-500 mb-8">
+        <h2 className="text-xl font-sans font-normal text-gray-500 mb-8 mt-0">
             {newChildren}
         </h2>
     );

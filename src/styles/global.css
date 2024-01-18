@@ -107,20 +107,20 @@ select {
 }
 
 #vg-tooltip-element.vg-tooltip table {
-    @apply mb-0;
+    @apply mb-0 text-xs;
 }
 
 #vg-tooltip-element.vg-tooltip tbody,
 #vg-tooltip-element.vg-tooltip tr {
-    @apply m-0 p-0;
+    @apply m-0 p-0 text-xs;
 }
 
 #vg-tooltip-element.vg-tooltip td.key {
-    @apply px-0.5 py-0.5 text-right  m-0;
+    @apply px-0.5 py-0.5 text-right  m-0 text-xs;
 }
 
 #vg-tooltip-element.vg-tooltip td.value {
-    @apply px-0.5 py-0.5 text-left m-0;
+    @apply px-0.5 py-0.5 text-left m-0 text-xs;
 }
 
 input[type='submit'],
@@ -159,4 +159,24 @@ svg {
 .definition-tooltip-content li,
 .definition-tooltip-content code {
     font-size: 0.8rem;
+}
+
+details {
+    @apply p-2 mb-4 text-gray-700;
+}
+
+summary {
+    @apply text-base font-semibold cursor-pointer mb-2 text-gray-700;
+}
+
+summary::-webkit-details-marker {
+    @apply hidden;
+}
+
+details[open] summary {
+    @apply mb-4;
+}
+
+details > p {
+    @apply text-base text-gray-700 leading-relaxed;
 }

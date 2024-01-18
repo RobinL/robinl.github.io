@@ -1,0 +1,276 @@
+---
+title: "Super-fast deduplication of large datasets using Splink and DuckDB"
+description: "Evaluating 1 billion record comparisons to deduplicate 7 million records in two minutes"
+post_date: "2023-01-20"
+post_category: "probabilistic_linkage"
+code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/fast_deduplication.mdx"
+prob_linkage_category: "benchmarking"
+---
+
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+import { Link } from 'gatsby';
+import { Vega, VegaLite } from "react-vega"
+import summary_chart from "./fast_deduplication/summary_chart.vl.json"
+import cpu_mem_chart from "./fast_deduplication/cpu_mem_chart.vl.json"
+import by_function_chart from "./fast_deduplication/by_function_chart.vl.json"
+
+import metrics_spark_filtered from "./fast_deduplication/metrics_spark_filtered.vl.json"
+import spark_vs_duckdb_chart from "./fast_deduplication/spark_vs_duckdb_chart.vl.json"
+
+
+
+import DefinitionToolTip from "../components/DefinitionToolTip";
+import Subtitle from "../components/Subtitle"
+
+# Super-fast deduplication of large datasets using Splink and DuckDB
+
+<Subtitle>Evaluating 1 billion record comparisons to deduplicate 7 million records in two minutes</Subtitle>
+
+## Summary
+
+
+
+Data deduplication is a ubiquitous problem that results from multiple records being collected for the same entity:
+
+
+| first_name | surname | dob        | city       | source_data_system |
+| ---------- | ------- | ---------- | ---------- | ------------------ |
+| lucas      | smith   | 1984-01-02 | London     | sales              |
+| lucas      | smyth   | 1984-07-02 | Manchester | sales              |
+| lucas      | smyth   | 1984-07-02 |            | marketing          |
+
+
+The lack of a unique identifier means that there's no easy way of knowing whether these records refer to the same person.[^1]
+
+[^1]: This problem is also sometimes referred to as entity resolution, or record linkage.
+
+Historically, deduplicating large datasets has been very time consuming, with runtimes of many hours, and severe limits on the size of datasets that can be worked with.
+
+[Splink](https://github.com/moj-analytical-services/splink) is a free, open source Python library to address this problem. It's designed for use on very large datasets, so speed is imperative.  It uses [DuckDB](https://duckdb.org/) as its default backend to achieve fast parallelised execution.
+
+
+This blog post presents the results of benchmarking Splink. It shows it is able to deduplicate a 7 million record dataset in just over 2 minutes, and at a cost of less than $1.00 using AWS EC2.
+
+This summary chart shows how runtime varies by the spec of the machine used, with the lowest spec machine comparable to laptop:
+
+<VegaLite spec={summary_chart} />
+
+
+
+To the best of my knowledge, these results show that it is fastest free tool for accurately deduplicating large datasets - by at least an order of magnitude.[^2]
+[^2]: Please <Link to="/about/">contact me</Link> if you know otherwise!
+
+
+
+## Input data
+
+To test the performance of Splink, a dataset of people was collected from the [Wikidata Query Service](https://query.wikidata.org/).
+
+Each record was corrupted to generate a varying number of duplicates according to a [zipf](https://en.wikipedia.org/wiki/Zipf%27s_law) distribution.  The median number of duplicates was 8 and the number of duplicates ranged from 0 to 35.
+
+For example, the rows corresponding to WikiData ID [Q101637549](https://www.wikidata.org/wiki/Q101637549) look like this:
+
+| first_name   | middle_name   | last_name   | dob        |   birth_lat |   birth_lng | occupation          |
+|:-------------|:--------------|:------------|:-----------|------------:|------------:|:--------------------|
+| josef        |               | heřman      | 1845-01-13 |     49.74   |     13.38   | high school teacher |
+| josef        |               | heřman      | 1845-01-13 |             |             | high school teacher |
+| josef        |               | heřjan      | 1845-01-13 |     49.96   |     13.35   | high school teacher |
+| joseph       |               | hermann     | 1845-01-13 |     49.74   |     13.38   | travel writer       |
+| jowef        |               | heřman      | 1845-01-01 |     49.74   |     13.38   | high school teacher |
+
+We can see different types of errors in all the fields, missing data, and no simple rule that could be used to be sure all these records pertain to the same entity.
+
+## Splink script
+
+
+A Splink model was developed that is representative of the complexity of a typical large scale linkage job:[^3]
+
+- A wide range of <DefinitionToolTip term="blocking_rule" text="blocking rules"/> are used to create record comparisons, ensuring high recall of true matches. The blocking rules are relatively loose and create 1bn comparisons in total.[^4]
+- <DefinitionToolTip term="tf_adjustment" text="Term frequency adjustments"/>  are made on columns with skew in value frequencies
+- A range of fuzzy matching scenarios are evaluated using functions like `jaro-winkler` and `levenshtein`.
+
+[^3]: It would be possible to achieve much faster runtimes by reducing complexity, at the expense of accuracy.  For instance, reducing the use of fuzzy-match functions like Jaro Winkler, and avoiding term frequency adjustments.  However, this would not be representative of a typical real-world use case.
+[^4]: It's important to emphasise the number of comparisons (1 billion) as well as the number of input rows (7 million) because performance is primarily driven by the former. Furthermore it would be possible to 'cheat' and get a better runtimes simply by using stricter blocking, at the cost of lower recall.  See [here](https://moj-analytical-services.github.io/splink/topic_guides/blocking/blocking_rules.html?h=blocking#blocking) for further details.
+
+
+For code for estimating (training) the Splink model, and then using it to predict which record match is as follows:
+
+<details>
+<summary>Click to expand full Splink script</summary>
+```python
+import pandas as pd
+from splink.duckdb.blocking_rule_library import block_on
+from splink.duckdb.comparison_library import (
+    distance_in_km_at_thresholds,
+    exact_match,
+    jaro_winkler_at_thresholds,
+    levenshtein_at_thresholds,
+)
+from splink.duckdb.linker import DuckDBLinker
+
+df = pd.read_parquet("7m_prepareed.parquet")
+
+
+splink_settings = {
+    "link_type": "dedupe_only",
+    "blocking_rules_to_generate_predictions": [
+        block_on(["last_name", "occupation"]),
+        block_on(["first_name", "last_name"]),
+        block_on(["first_name", "middle_name"]),
+        block_on(["middle_name", "last_name"]),
+        block_on(["first_name", "dob"]),
+        block_on(["first_name", "middle_name"]),
+        block_on(["last_name", "birth_lat"]),
+        block_on(["first_name", "birth_lng"]),
+        block_on(["middle_name", "occupation"]),
+    ],
+    "comparisons": [
+        jaro_winkler_at_thresholds(
+            "first_name", [0.9, 0.7], term_frequency_adjustments=True
+        ),
+        jaro_winkler_at_thresholds("middle_name", [0.9]),
+        jaro_winkler_at_thresholds(
+            "last_name", [0.9, 0.7], term_frequency_adjustments=True
+        ),
+        levenshtein_at_thresholds(
+            "dob", [1, 2, 4], term_frequency_adjustments=True
+        ),
+        distance_in_km_at_thresholds(
+            "birth_lat", "birth_lng", [10, 100]
+        ),
+        exact_match("occupation", term_frequency_adjustments=True),
+    ],
+    "retain_intermediate_calculation_columns": False,
+    "retain_matching_columns": False,
+    "max_iterations": 20,
+    "em_convergence": 0.001,
+}
+
+linker = DuckDBLinker("df", splink_settings)
+
+# Model training: Estimate the parameters of the model
+linker.estimate_probability_two_random_records_match(
+    [
+        block_on(["first_name", "last_name", "dob"]),
+    ],
+    recall=0.8,
+)
+linker.estimate_u_using_random_sampling(max_pairs=1e9)
+linker.estimate_parameters_using_expectation_maximisation(
+    block_on(
+        ["first_name", "last_name", "occupation"], salting_partitions=2
+    ),
+    estimate_without_term_frequencies=True,
+)
+linker.estimate_parameters_using_expectation_maximisation(
+    block_on(["dob", "middle_name"], salting_partitions=2),
+    estimate_without_term_frequencies=True,
+)
+
+# Inference: Predict which pairs are matching entities
+df_predict = linker.predict(threshold_match_probability=0.9)
+
+# Clustering: Compute an estimated cluster id
+# that ties together records of the same entity
+linker.cluster_pairwise_predictions_at_threshold(
+    df_predict=df_predict, threshold_match_probability=0.9
+)
+
+```
+</details>
+
+## Detailed results
+
+Benchmarking was conducted for both model training (parameter estimation) and inference (making predictions).
+
+The following chart shows runtime by the Splink function, broken down by the EC2 instance type.  Note a logarithmic scale is used to ensure all values are legible.
+
+<VegaLite spec={by_function_chart} />
+
+The next chart shows total CPU and memory usage.  The CPU metric is average across cores, so 100% means all cores are being fully used.  Click on the bar chart at the top to select the instance type.
+
+<VegaLite spec={cpu_mem_chart} />
+
+We can see that DuckDB parallelises workloads very well.  Memory usage stays low on the larger instances types.
+
+The full set of benchmarks completed on a `c6g.2xlarge` (8vCPU/16GiB memory) machine in around 25 minutes, which is comparable to a modern laptop.[^5]
+
+[^5]:  Out of memory errors were encountered on a `c6g.xlarge` (4vCPU/8GiB memory) machine.
+
+
+## Comparisons to other libraries
+
+A chart of runtimes three other popular open source record linkage packages can be found on page 362 of [this paper](https://imai.fas.harvard.edu/research/files/linkage.pdf) from the authors of the [fastLink](https://imai.fas.harvard.edu/research/files/linkage.pdf) R package.
+
+The chart shows that of the three, fastLink has by far the best performance, at 400 minutes to deduplicate 300,000 records on an 8 core machine, with runtime increasing approximately quadratically with the number of input records.
+
+Splink is able to deduplicate the same number of records in less than a minute on a comparable machine, suggesting it's at least two orders of magnitude faster.
+
+A caveat is that these runtimes are not strictly comparable because the input datasets are not the same.  However, the size of the differences are so large that it's almost certain that Splink is a great deal faster.
+
+## Scaling to larger datasets
+
+The low memory usage on large EC2 instance types suggests there's scope to scale to substantially larger datasets using DuckDB.
+
+For the purpose of this post, I chose to make a relatively large number of comparisons per input record (around 100) to demonstrate the speed of Splink.  In real record linkage scenarios, especially those where we have more columns of data about the entities, it's often  possible to use tighter blocking rules, resulting in fewer record comparisons per input record.
+
+Both these observations suggest that DuckDB could be used to link datasets of many tens of millions or records or more.
+
+Splink also offers big data backends like [Spark and Athena](https://moj-analytical-services.github.io/splink/topic_guides/splink_fundamentals/backends/backends.html?h=backends) as backends for linking truly enormous datasets.
+
+
+## Accuracy
+
+This post considers runtime only.  Accuracy statistics would only be valid on the specific dataset used for benchmarking, and I do not have comparative accuracy statistics for other libraries.
+
+However, there are theoretical and empirical reasons to believe Splink offers accuracy comparable to or better than alternatives:
+
+- Splink is able to effectively harness most of the information in the input data in making a prediction - as explained in <Link to="/fellegi_sunter_accuracy/">this post</Link>.
+- An [independent empirical study](https://scholar.googleusercontent.com/scholar?q=cache:o4-c8w6DveYJ:scholar.google.com/+splink&hl=en&as_sdt=0,5&as_ylo=2023) has found Splink's accuracy compares favourably to alternatives.
+- Splink offers a range of configuration options to optimise accuracy which are detailed further in <Link to="/comparing_splink_models/">this post</Link>.
+
+
+I hope to write another post at some point looking at comparative accuracy in further details
+
+## Comparison to the Apache Spark backend
+
+Splink supports various SQL backends, so the same job was run on the Apache Spark backend to compare runtimes.[^6]
+
+[^6]: The job was run in local mode on a `c6gd.4xlarge` instance, which has an SSD attached.  For Spark, this is important because some intermediate results are written to disk.  Note no results are present for the cluster step because the instance ran out of disk space before it could complete.
+
+
+<VegaLite spec={spark_vs_duckdb_chart} />
+
+We can see that Spark takes about 60% longer than DuckDB for estimating the `u` parameters, but for inference (making predictions) it takes 8.7 times longer.
+
+The following chart shows CPU usage, and goes some way to explaining the very long runtime of the `predict()` step.
+
+<VegaLite spec={metrics_spark_filtered} />
+
+We can see that whilst the predict step parallelises well at first, there are straggler tasks on some CPUs that take a long time to complete.
+
+A rough estimate suggests if problem of straggler tasks could be addressed and the CPUs could be pinned at 100%, Spark would still take around twice as long as DuckDB[^7].
+[^7]: With experimentation, the straggler tasks could probably be largely avoided, but it would take several runs to find the optimal configuration, and requires significant expertise in both Spark and Splink.
+
+Overall, it's clear that DuckDB is both intrinsically faster for data linking workloads, and also does a better job of parallelisation across all cores out of the box, resulting in substantially shorter runtimes.
+
+
+
+
+## Reproduction materials
+
+Benchmarking was conducted on a variety of AWS EC2 instances using [pytest-benchmark](https://pypi.org/project/pytest-benchmark/).  Code in available in the following two repositories:
+
+- [Code to set up AWS infrastructure](https://github.com/RobinL/benchmarking_splink_infrastructure/releases/tag/v0.0.3)
+- [Code to run the benchmarks](https://github.com/RobinL/run_splink_benchmarks_in_ec2/releases/tag/v0.0.3)
+
+
+## Further reading
+
+- [Splink documentation homepage](https://moj-analytical-services.github.io/splink)
+-  <Link to="/intro_to_probabilistic_linkage/">Interactive introduction to probabilistic record linkage</Link>.
+- [Splink examples](https://moj-analytical-services.github.io/splink/demos/examples/examples_index.html)
+- [Splink tutorial](https://moj-analytical-services.github.io/splink/demos/tutorials/00_Tutorial_Introduction.html)

@@ -1,0 +1,3378 @@
+{
+  "config": {
+    "view": {
+      "continuousWidth": 300,
+      "continuousHeight": 300
+    }
+  },
+  "vconcat": [
+    {
+      "mark": {
+        "type": "line"
+      },
+      "encoding": {
+        "color": {
+          "value": "steelblue"
+        },
+        "tooltip": [
+          {
+            "field": "mem_timestamp",
+            "type": "temporal",
+            "format": "%H:%M:%S"
+          },
+          {
+            "field": "mem_value",
+            "type": "quantitative"
+          }
+        ],
+        "x": {
+          "axis": {
+            "format": "%H:%M:%S",
+            "title": null
+          },
+          "field": "mem_timestamp",
+          "type": "temporal"
+        },
+        "y": {
+          "axis": {
+            "title": "Memory Usage %"
+          },
+          "field": "mem_value",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              100
+            ]
+          }
+        }
+      },
+      "height": 150,
+      "title": "Spark - Memory Usage Over Time",
+      "width": 420
+    },
+    {
+      "mark": {
+        "type": "line"
+      },
+      "encoding": {
+        "color": {
+          "value": "steelblue"
+        },
+        "tooltip": [
+          {
+            "field": "cpu_timestamp",
+            "type": "temporal",
+            "format": "%H:%M:%S"
+          },
+          {
+            "field": "cpu_value",
+            "type": "quantitative"
+          }
+        ],
+        "x": {
+          "axis": {
+            "format": "%H:%M:%S",
+            "title": null
+          },
+          "field": "cpu_timestamp",
+          "type": "temporal"
+        },
+        "y": {
+          "axis": {
+            "title": "CPU Usage %"
+          },
+          "field": "cpu_value",
+          "type": "quantitative"
+        }
+      },
+      "height": 150,
+      "title": "Spark - CPU Usage Over Time",
+      "width": 420
+    }
+  ],
+  "data": {
+    "name": "data-26c0ae7d3520233241a83f26b9df94f1"
+  },
+  "resolve": {
+    "scale": {
+      "x": "shared",
+      "y": "independent"
+    }
+  },
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.8.0.json",
+  "datasets": {
+    "data-26c0ae7d3520233241a83f26b9df94f1": [
+      {
+        "mem_timestamp": "2024-01-18T16:21:30",
+        "mem_value": 55.40920052410011,
+        "cpu_timestamp": "2024-01-18T16:21:30",
+        "cpu_value": 94.19113054334376
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:21:20",
+        "mem_value": 54.235208837027315,
+        "cpu_timestamp": "2024-01-18T16:21:20",
+        "cpu_value": 99.3125000000191
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:21:10",
+        "mem_value": 49.17242161906752,
+        "cpu_timestamp": "2024-01-18T16:21:10",
+        "cpu_value": 97.99749687111294
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:21:00",
+        "mem_value": 49.03176039224416,
+        "cpu_timestamp": "2024-01-18T16:21:00",
+        "cpu_value": 85.7501569366343
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:20:50",
+        "mem_value": 49.039437107056685,
+        "cpu_timestamp": "2024-01-18T16:20:50",
+        "cpu_value": 96.48682559597724
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:20:40",
+        "mem_value": 46.90570724680638,
+        "cpu_timestamp": "2024-01-18T16:20:40",
+        "cpu_value": 97.25171767648222
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:20:30",
+        "mem_value": 49.692416732757934,
+        "cpu_timestamp": "2024-01-18T16:20:30",
+        "cpu_value": 94.92260061924007
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:20:20",
+        "mem_value": 51.74074779139426,
+        "cpu_timestamp": "2024-01-18T16:20:20",
+        "cpu_value": 95.53459119490786
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:20:10",
+        "mem_value": 44.903758923870924,
+        "cpu_timestamp": "2024-01-18T16:20:10",
+        "cpu_value": 85.1359898798299
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:20:00",
+        "mem_value": 44.887053697938015,
+        "cpu_timestamp": "2024-01-18T16:20:00",
+        "cpu_value": 96.43304130165072
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:19:50",
+        "mem_value": 44.572060354604695,
+        "cpu_timestamp": "2024-01-18T16:19:50",
+        "cpu_value": 89.36835522198994
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:19:40",
+        "mem_value": 44.89766963958506,
+        "cpu_timestamp": "2024-01-18T16:19:40",
+        "cpu_value": 66.23215394160067
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:19:30",
+        "mem_value": 44.99501137555196,
+        "cpu_timestamp": "2024-01-18T16:19:30",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:19:20",
+        "mem_value": 44.99501137555196,
+        "cpu_timestamp": "2024-01-18T16:19:20",
+        "cpu_value": 6.312499999984254
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:19:10",
+        "mem_value": 44.99501137555196,
+        "cpu_timestamp": "2024-01-18T16:19:10",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:19:00",
+        "mem_value": 44.99501137555196,
+        "cpu_timestamp": "2024-01-18T16:19:00",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:18:50",
+        "mem_value": 44.99501137555196,
+        "cpu_timestamp": "2024-01-18T16:18:50",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:18:40",
+        "mem_value": 44.99501137555196,
+        "cpu_timestamp": "2024-01-18T16:18:40",
+        "cpu_value": 6.312500000012733
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:18:30",
+        "mem_value": 44.99501137555196,
+        "cpu_timestamp": "2024-01-18T16:18:30",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:18:20",
+        "mem_value": 44.98964139572349,
+        "cpu_timestamp": "2024-01-18T16:18:20",
+        "cpu_value": 6.265664160404202
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:18:10",
+        "mem_value": 44.98964139572349,
+        "cpu_timestamp": "2024-01-18T16:18:10",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:18:00",
+        "mem_value": 44.988872484062135,
+        "cpu_timestamp": "2024-01-18T16:18:00",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:17:50",
+        "mem_value": 44.988872484062135,
+        "cpu_timestamp": "2024-01-18T16:17:50",
+        "cpu_value": 6.371018113677971
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:17:40",
+        "mem_value": 44.988872484062135,
+        "cpu_timestamp": "2024-01-18T16:17:40",
+        "cpu_value": 6.308557151766469
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:17:30",
+        "mem_value": 44.988872484062135,
+        "cpu_timestamp": "2024-01-18T16:17:30",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:17:20",
+        "mem_value": 44.990211878569006,
+        "cpu_timestamp": "2024-01-18T16:17:20",
+        "cpu_value": 6.390977443609194
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:17:10",
+        "mem_value": 44.98510233656132,
+        "cpu_timestamp": "2024-01-18T16:17:10",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:17:00",
+        "mem_value": 44.98588365002366,
+        "cpu_timestamp": "2024-01-18T16:17:00",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:16:50",
+        "mem_value": 44.984333424899965,
+        "cpu_timestamp": "2024-01-18T16:16:50",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:16:40",
+        "mem_value": 44.984333424899965,
+        "cpu_timestamp": "2024-01-18T16:16:40",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:16:30",
+        "mem_value": 44.984333424899965,
+        "cpu_timestamp": "2024-01-18T16:16:30",
+        "cpu_value": 6.312499999989996
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:16:20",
+        "mem_value": 44.984333424899965,
+        "cpu_timestamp": "2024-01-18T16:16:20",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:16:10",
+        "mem_value": 44.98434582670095,
+        "cpu_timestamp": "2024-01-18T16:16:10",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:16:00",
+        "mem_value": 44.98435822850195,
+        "cpu_timestamp": "2024-01-18T16:16:00",
+        "cpu_value": 6.491885143580233
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:15:50",
+        "mem_value": 44.98435822850195,
+        "cpu_timestamp": "2024-01-18T16:15:50",
+        "cpu_value": 6.2460961898890455
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:15:40",
+        "mem_value": 44.98435822850195,
+        "cpu_timestamp": "2024-01-18T16:15:40",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:15:30",
+        "mem_value": 44.98435822850195,
+        "cpu_timestamp": "2024-01-18T16:15:30",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:15:20",
+        "mem_value": 44.98435822850195,
+        "cpu_timestamp": "2024-01-18T16:15:20",
+        "cpu_value": 6.2617407639319165
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:15:10",
+        "mem_value": 44.980736902612996,
+        "cpu_timestamp": "2024-01-18T16:15:10",
+        "cpu_value": 6.246096189877691
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:15:00",
+        "mem_value": 44.980736902612996,
+        "cpu_timestamp": "2024-01-18T16:15:00",
+        "cpu_value": 6.246096189877691
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:14:50",
+        "mem_value": 44.980736902612996,
+        "cpu_timestamp": "2024-01-18T16:14:50",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:14:40",
+        "mem_value": 44.980736902612996,
+        "cpu_timestamp": "2024-01-18T16:14:40",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:14:30",
+        "mem_value": 44.980736902612996,
+        "cpu_timestamp": "2024-01-18T16:14:30",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:14:20",
+        "mem_value": 44.980736902612996,
+        "cpu_timestamp": "2024-01-18T16:14:20",
+        "cpu_value": 6.257822277848905
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:14:10",
+        "mem_value": 44.98150581427435,
+        "cpu_timestamp": "2024-01-18T16:14:10",
+        "cpu_value": 6.390977443609194
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:14:00",
+        "mem_value": 44.97448639491427,
+        "cpu_timestamp": "2024-01-18T16:14:00",
+        "cpu_value": 6.312500000012733
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:13:50",
+        "mem_value": 44.974300367899424,
+        "cpu_timestamp": "2024-01-18T16:13:50",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:13:40",
+        "mem_value": 44.974300367899424,
+        "cpu_timestamp": "2024-01-18T16:13:40",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:13:30",
+        "mem_value": 44.98898410027104,
+        "cpu_timestamp": "2024-01-18T16:13:30",
+        "cpu_value": 6.371018113683762
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:13:20",
+        "mem_value": 44.9886740552463,
+        "cpu_timestamp": "2024-01-18T16:13:20",
+        "cpu_value": 6.257822277848905
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:13:10",
+        "mem_value": 44.9886740552463,
+        "cpu_timestamp": "2024-01-18T16:13:10",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:13:00",
+        "mem_value": 44.984866702342515,
+        "cpu_timestamp": "2024-01-18T16:13:00",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:12:50",
+        "mem_value": 44.984866702342515,
+        "cpu_timestamp": "2024-01-18T16:12:50",
+        "cpu_value": 6.253908692925343
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:12:40",
+        "mem_value": 44.984891505944496,
+        "cpu_timestamp": "2024-01-18T16:12:40",
+        "cpu_value": 6.308557151789192
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:12:30",
+        "mem_value": 44.984891505944496,
+        "cpu_timestamp": "2024-01-18T16:12:30",
+        "cpu_value": 6.304619225955945
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:12:20",
+        "mem_value": 44.984891505944496,
+        "cpu_timestamp": "2024-01-18T16:12:20",
+        "cpu_value": 6.3243581715839925
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:12:10",
+        "mem_value": 44.98490390774548,
+        "cpu_timestamp": "2024-01-18T16:12:10",
+        "cpu_value": 6.316447779873085
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:12:00",
+        "mem_value": 44.986466534670164,
+        "cpu_timestamp": "2024-01-18T16:12:00",
+        "cpu_value": 6.371018113683762
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:11:50",
+        "mem_value": 44.986466534670164,
+        "cpu_timestamp": "2024-01-18T16:11:50",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:11:40",
+        "mem_value": 44.986466534670164,
+        "cpu_timestamp": "2024-01-18T16:11:40",
+        "cpu_value": 6.991260923837057
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:11:30",
+        "mem_value": 44.986466534670164,
+        "cpu_timestamp": "2024-01-18T16:11:30",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:11:20",
+        "mem_value": 44.986466534670164,
+        "cpu_timestamp": "2024-01-18T16:11:20",
+        "cpu_value": 6.308557151772203
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:11:10",
+        "mem_value": 44.986466534670164,
+        "cpu_timestamp": "2024-01-18T16:11:10",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:11:00",
+        "mem_value": 44.97727680013691,
+        "cpu_timestamp": "2024-01-18T16:11:00",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:10:50",
+        "mem_value": 44.97727680013691,
+        "cpu_timestamp": "2024-01-18T16:10:50",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:10:40",
+        "mem_value": 44.97727680013691,
+        "cpu_timestamp": "2024-01-18T16:10:40",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:10:30",
+        "mem_value": 44.97727680013691,
+        "cpu_timestamp": "2024-01-18T16:10:30",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:10:20",
+        "mem_value": 44.97493285974989,
+        "cpu_timestamp": "2024-01-18T16:10:20",
+        "cpu_value": 6.273525721454542
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:10:10",
+        "mem_value": 44.97493285974989,
+        "cpu_timestamp": "2024-01-18T16:10:10",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:10:00",
+        "mem_value": 44.97602421823697,
+        "cpu_timestamp": "2024-01-18T16:10:00",
+        "cpu_value": 6.662515566618272
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:09:50",
+        "mem_value": 44.987719116570105,
+        "cpu_timestamp": "2024-01-18T16:09:50",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:09:40",
+        "mem_value": 44.987719116570105,
+        "cpu_timestamp": "2024-01-18T16:09:40",
+        "cpu_value": 6.257822277848905
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:09:30",
+        "mem_value": 44.987719116570105,
+        "cpu_timestamp": "2024-01-18T16:09:30",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:09:20",
+        "mem_value": 44.987719116570105,
+        "cpu_timestamp": "2024-01-18T16:09:20",
+        "cpu_value": 6.2617407639319165
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:09:10",
+        "mem_value": 44.987719116570105,
+        "cpu_timestamp": "2024-01-18T16:09:10",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:09:00",
+        "mem_value": 44.987719116570105,
+        "cpu_timestamp": "2024-01-18T16:09:00",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:08:50",
+        "mem_value": 44.97609862904291,
+        "cpu_timestamp": "2024-01-18T16:08:50",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:08:40",
+        "mem_value": 44.97609862904291,
+        "cpu_timestamp": "2024-01-18T16:08:40",
+        "cpu_value": 6.312500000012733
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:08:30",
+        "mem_value": 44.97609862904291,
+        "cpu_timestamp": "2024-01-18T16:08:30",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:08:20",
+        "mem_value": 44.97609862904291,
+        "cpu_timestamp": "2024-01-18T16:08:20",
+        "cpu_value": 6.257822277848905
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:08:10",
+        "mem_value": 44.97609862904291,
+        "cpu_timestamp": "2024-01-18T16:08:10",
+        "cpu_value": 6.312500000012733
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:08:00",
+        "mem_value": 44.97609862904291,
+        "cpu_timestamp": "2024-01-18T16:08:00",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:07:50",
+        "mem_value": 44.962034986720774,
+        "cpu_timestamp": "2024-01-18T16:07:50",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:07:40",
+        "mem_value": 44.962034986720774,
+        "cpu_timestamp": "2024-01-18T16:07:40",
+        "cpu_value": 6.371018113683762
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:07:30",
+        "mem_value": 44.962034986720774,
+        "cpu_timestamp": "2024-01-18T16:07:30",
+        "cpu_value": 6.304619225955945
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:07:20",
+        "mem_value": 44.96204738852176,
+        "cpu_timestamp": "2024-01-18T16:07:20",
+        "cpu_value": 6.371018113677971
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:07:10",
+        "mem_value": 44.96204738852176,
+        "cpu_timestamp": "2024-01-18T16:07:10",
+        "cpu_value": 6.99562773266301
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:07:00",
+        "mem_value": 44.96205979032275,
+        "cpu_timestamp": "2024-01-18T16:07:00",
+        "cpu_value": 6.242197253431621
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:06:50",
+        "mem_value": 44.971882016706466,
+        "cpu_timestamp": "2024-01-18T16:06:50",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:06:40",
+        "mem_value": 44.971882016706466,
+        "cpu_timestamp": "2024-01-18T16:06:40",
+        "cpu_value": 6.257822277848905
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:06:30",
+        "mem_value": 44.971882016706466,
+        "cpu_timestamp": "2024-01-18T16:06:30",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:06:20",
+        "mem_value": 44.971882016706466,
+        "cpu_timestamp": "2024-01-18T16:06:20",
+        "cpu_value": 6.2617407639319165
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:06:10",
+        "mem_value": 44.971882016706466,
+        "cpu_timestamp": "2024-01-18T16:06:10",
+        "cpu_value": 6.257822277843206
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:06:00",
+        "mem_value": 44.97283695538266,
+        "cpu_timestamp": "2024-01-18T16:06:00",
+        "cpu_value": 6.48783530877923
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:05:50",
+        "mem_value": 44.97900065047446,
+        "cpu_timestamp": "2024-01-18T16:05:50",
+        "cpu_value": 6.516290726819899
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:05:40",
+        "mem_value": 44.97422595709349,
+        "cpu_timestamp": "2024-01-18T16:05:40",
+        "cpu_value": 6.312500000012733
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:05:30",
+        "mem_value": 44.97422595709349,
+        "cpu_timestamp": "2024-01-18T16:05:30",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:05:20",
+        "mem_value": 44.97422595709349,
+        "cpu_timestamp": "2024-01-18T16:05:20",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:05:10",
+        "mem_value": 44.97422595709349,
+        "cpu_timestamp": "2024-01-18T16:05:10",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:05:00",
+        "mem_value": 44.97422595709349,
+        "cpu_timestamp": "2024-01-18T16:05:00",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:04:50",
+        "mem_value": 44.97519329757068,
+        "cpu_timestamp": "2024-01-18T16:04:50",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:04:40",
+        "mem_value": 44.98605727523751,
+        "cpu_timestamp": "2024-01-18T16:04:40",
+        "cpu_value": 6.312499999989996
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:04:30",
+        "mem_value": 44.98605727523751,
+        "cpu_timestamp": "2024-01-18T16:04:30",
+        "cpu_value": 7.000000000016371
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:04:20",
+        "mem_value": 44.98605727523751,
+        "cpu_timestamp": "2024-01-18T16:04:20",
+        "cpu_value": 6.2617407639319165
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:04:10",
+        "mem_value": 44.98605727523751,
+        "cpu_timestamp": "2024-01-18T16:04:10",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:04:00",
+        "mem_value": 44.98605727523751,
+        "cpu_timestamp": "2024-01-18T16:04:00",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:03:50",
+        "mem_value": 44.9860696770385,
+        "cpu_timestamp": "2024-01-18T16:03:50",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:03:40",
+        "mem_value": 44.97678072809733,
+        "cpu_timestamp": "2024-01-18T16:03:40",
+        "cpu_value": 6.312499999989996
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:03:30",
+        "mem_value": 44.97678072809733,
+        "cpu_timestamp": "2024-01-18T16:03:30",
+        "cpu_value": 6.312500000012733
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:03:20",
+        "mem_value": 44.97678072809733,
+        "cpu_timestamp": "2024-01-18T16:03:20",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:03:10",
+        "mem_value": 44.97678072809733,
+        "cpu_timestamp": "2024-01-18T16:03:10",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:03:00",
+        "mem_value": 44.97678072809733,
+        "cpu_timestamp": "2024-01-18T16:03:00",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:02:50",
+        "mem_value": 44.97678072809733,
+        "cpu_timestamp": "2024-01-18T16:02:50",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:02:40",
+        "mem_value": 44.981369394463464,
+        "cpu_timestamp": "2024-01-18T16:02:40",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:02:30",
+        "mem_value": 44.981369394463464,
+        "cpu_timestamp": "2024-01-18T16:02:30",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:02:20",
+        "mem_value": 44.981369394463464,
+        "cpu_timestamp": "2024-01-18T16:02:20",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:02:10",
+        "mem_value": 44.981369394463464,
+        "cpu_timestamp": "2024-01-18T16:02:10",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:02:00",
+        "mem_value": 44.981369394463464,
+        "cpu_timestamp": "2024-01-18T16:02:00",
+        "cpu_value": 6.487835308785121
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:01:50",
+        "mem_value": 44.981369394463464,
+        "cpu_timestamp": "2024-01-18T16:01:50",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:01:40",
+        "mem_value": 44.981369394463464,
+        "cpu_timestamp": "2024-01-18T16:01:40",
+        "cpu_value": 6.246096189877691
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:01:30",
+        "mem_value": 44.99142725506598,
+        "cpu_timestamp": "2024-01-18T16:01:30",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:01:20",
+        "mem_value": 44.99142725506598,
+        "cpu_timestamp": "2024-01-18T16:01:20",
+        "cpu_value": 6.265664160404202
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:01:10",
+        "mem_value": 44.99142725506598,
+        "cpu_timestamp": "2024-01-18T16:01:10",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:01:00",
+        "mem_value": 44.99142725506598,
+        "cpu_timestamp": "2024-01-18T16:01:00",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:00:50",
+        "mem_value": 44.99142725506598,
+        "cpu_timestamp": "2024-01-18T16:00:50",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:00:40",
+        "mem_value": 44.99142725506598,
+        "cpu_timestamp": "2024-01-18T16:00:40",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:00:30",
+        "mem_value": 44.98448224651184,
+        "cpu_timestamp": "2024-01-18T16:00:30",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:00:20",
+        "mem_value": 44.98448224651184,
+        "cpu_timestamp": "2024-01-18T16:00:20",
+        "cpu_value": 6.265664160398489
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:00:10",
+        "mem_value": 44.98448224651184,
+        "cpu_timestamp": "2024-01-18T16:00:10",
+        "cpu_value": 6.312499999989996
+      },
+      {
+        "mem_timestamp": "2024-01-18T16:00:00",
+        "mem_value": 44.984494648312825,
+        "cpu_timestamp": "2024-01-18T16:00:00",
+        "cpu_value": 6.487835308801926
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:59:50",
+        "mem_value": 44.984494648312825,
+        "cpu_timestamp": "2024-01-18T15:59:50",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:59:40",
+        "mem_value": 44.984494648312825,
+        "cpu_timestamp": "2024-01-18T15:59:40",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:59:30",
+        "mem_value": 44.9827459943733,
+        "cpu_timestamp": "2024-01-18T15:59:30",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:59:20",
+        "mem_value": 44.9827459943733,
+        "cpu_timestamp": "2024-01-18T15:59:20",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:59:10",
+        "mem_value": 44.9827459943733,
+        "cpu_timestamp": "2024-01-18T15:59:10",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:59:00",
+        "mem_value": 44.9827459943733,
+        "cpu_timestamp": "2024-01-18T15:59:00",
+        "cpu_value": 6.312500000006992
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:58:50",
+        "mem_value": 44.98275839617429,
+        "cpu_timestamp": "2024-01-18T15:58:50",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:58:40",
+        "mem_value": 44.98275839617429,
+        "cpu_timestamp": "2024-01-18T15:58:40",
+        "cpu_value": 6.937500000003638
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:58:30",
+        "mem_value": 44.97953392791701,
+        "cpu_timestamp": "2024-01-18T15:58:30",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:58:20",
+        "mem_value": 44.97953392791701,
+        "cpu_timestamp": "2024-01-18T15:58:20",
+        "cpu_value": 6.2578222778460555
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:58:10",
+        "mem_value": 44.97953392791701,
+        "cpu_timestamp": "2024-01-18T15:58:10",
+        "cpu_value": 6.312499999989996
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:58:00",
+        "mem_value": 44.97953392791701,
+        "cpu_timestamp": "2024-01-18T15:58:00",
+        "cpu_value": 6.550218340629986
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:57:50",
+        "mem_value": 44.97953392791701,
+        "cpu_timestamp": "2024-01-18T15:57:50",
+        "cpu_value": 6.308557151772203
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:57:40",
+        "mem_value": 44.97953392791701,
+        "cpu_timestamp": "2024-01-18T15:57:40",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:57:30",
+        "mem_value": 44.97953392791701,
+        "cpu_timestamp": "2024-01-18T15:57:30",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:57:20",
+        "mem_value": 44.98187786830403,
+        "cpu_timestamp": "2024-01-18T15:57:20",
+        "cpu_value": 6.320400500637265
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:57:10",
+        "mem_value": 44.981108956642686,
+        "cpu_timestamp": "2024-01-18T15:57:10",
+        "cpu_value": 6.25390869293388
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:57:00",
+        "mem_value": 44.981108956642686,
+        "cpu_timestamp": "2024-01-18T15:57:00",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:56:50",
+        "mem_value": 44.981108956642686,
+        "cpu_timestamp": "2024-01-18T15:56:50",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:56:40",
+        "mem_value": 44.981108956642686,
+        "cpu_timestamp": "2024-01-18T15:56:40",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:56:30",
+        "mem_value": 44.981108956642686,
+        "cpu_timestamp": "2024-01-18T15:56:30",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:56:20",
+        "mem_value": 44.978392962225975,
+        "cpu_timestamp": "2024-01-18T15:56:20",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:56:10",
+        "mem_value": 44.97840536402696,
+        "cpu_timestamp": "2024-01-18T15:56:10",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:56:00",
+        "mem_value": 44.97840536402696,
+        "cpu_timestamp": "2024-01-18T15:56:00",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:55:50",
+        "mem_value": 44.98387455826335,
+        "cpu_timestamp": "2024-01-18T15:55:50",
+        "cpu_value": 6.2578222778460555
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:55:40",
+        "mem_value": 44.98387455826335,
+        "cpu_timestamp": "2024-01-18T15:55:40",
+        "cpu_value": 6.257822277848905
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:55:30",
+        "mem_value": 44.98387455826335,
+        "cpu_timestamp": "2024-01-18T15:55:30",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:55:20",
+        "mem_value": 44.97225407073615,
+        "cpu_timestamp": "2024-01-18T15:55:20",
+        "cpu_value": 6.320400500637265
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:55:10",
+        "mem_value": 44.97225407073615,
+        "cpu_timestamp": "2024-01-18T15:55:10",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:55:00",
+        "mem_value": 44.9714851590748,
+        "cpu_timestamp": "2024-01-18T15:55:00",
+        "cpu_value": 6.25390869293388
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:54:50",
+        "mem_value": 44.9714851590748,
+        "cpu_timestamp": "2024-01-18T15:54:50",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:54:40",
+        "mem_value": 44.9714851590748,
+        "cpu_timestamp": "2024-01-18T15:54:40",
+        "cpu_value": 6.250000000002842
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:54:30",
+        "mem_value": 44.9714851590748,
+        "cpu_timestamp": "2024-01-18T15:54:30",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:54:20",
+        "mem_value": 44.971919222109435,
+        "cpu_timestamp": "2024-01-18T15:54:20",
+        "cpu_value": 6.257822277848905
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:54:10",
+        "mem_value": 44.98303123579606,
+        "cpu_timestamp": "2024-01-18T15:54:10",
+        "cpu_value": 6.25390869293388
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:54:00",
+        "mem_value": 44.983204861009916,
+        "cpu_timestamp": "2024-01-18T15:54:00",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:53:50",
+        "mem_value": 44.987719116570105,
+        "cpu_timestamp": "2024-01-18T15:53:50",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:53:40",
+        "mem_value": 44.987719116570105,
+        "cpu_timestamp": "2024-01-18T15:53:40",
+        "cpu_value": 6.312500000012733
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:53:30",
+        "mem_value": 44.987719116570105,
+        "cpu_timestamp": "2024-01-18T15:53:30",
+        "cpu_value": 6.24609618988053
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:53:20",
+        "mem_value": 44.98697500851073,
+        "cpu_timestamp": "2024-01-18T15:53:20",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:53:10",
+        "mem_value": 44.99924038968939,
+        "cpu_timestamp": "2024-01-18T15:53:10",
+        "cpu_value": 6.25390869293388
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:53:00",
+        "mem_value": 44.99924038968939,
+        "cpu_timestamp": "2024-01-18T15:53:00",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:52:50",
+        "mem_value": 44.99924038968939,
+        "cpu_timestamp": "2024-01-18T15:52:50",
+        "cpu_value": 6.246096189877691
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:52:40",
+        "mem_value": 44.99924038968939,
+        "cpu_timestamp": "2024-01-18T15:52:40",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:52:30",
+        "mem_value": 44.99924038968939,
+        "cpu_timestamp": "2024-01-18T15:52:30",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:52:20",
+        "mem_value": 44.99924038968939,
+        "cpu_timestamp": "2024-01-18T15:52:20",
+        "cpu_value": 6.261740763929064
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:52:10",
+        "mem_value": 44.9976901645657,
+        "cpu_timestamp": "2024-01-18T15:52:10",
+        "cpu_value": 6.257822277843206
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:52:00",
+        "mem_value": 44.9976901645657,
+        "cpu_timestamp": "2024-01-18T15:52:00",
+        "cpu_value": 6.487835308782175
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:51:50",
+        "mem_value": 44.99770256636669,
+        "cpu_timestamp": "2024-01-18T15:51:50",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:51:40",
+        "mem_value": 44.99770256636669,
+        "cpu_timestamp": "2024-01-18T15:51:40",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:51:30",
+        "mem_value": 44.99770256636669,
+        "cpu_timestamp": "2024-01-18T15:51:30",
+        "cpu_value": 6.2578222778460555
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:51:20",
+        "mem_value": 44.99770256636669,
+        "cpu_timestamp": "2024-01-18T15:51:20",
+        "cpu_value": 6.25390869293388
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:51:10",
+        "mem_value": 45.00004650675371,
+        "cpu_timestamp": "2024-01-18T15:51:10",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:51:00",
+        "mem_value": 45.00004650675371,
+        "cpu_timestamp": "2024-01-18T15:51:00",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:50:50",
+        "mem_value": 45.0000589085547,
+        "cpu_timestamp": "2024-01-18T15:50:50",
+        "cpu_value": 6.312499999989996
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:50:40",
+        "mem_value": 45.0000589085547,
+        "cpu_timestamp": "2024-01-18T15:50:40",
+        "cpu_value": 6.25390869293388
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:50:30",
+        "mem_value": 45.00007131035569,
+        "cpu_timestamp": "2024-01-18T15:50:30",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:50:20",
+        "mem_value": 45.00007131035569,
+        "cpu_timestamp": "2024-01-18T15:50:20",
+        "cpu_value": 6.2617407639319165
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:50:10",
+        "mem_value": 45.00007131035569,
+        "cpu_timestamp": "2024-01-18T15:50:10",
+        "cpu_value": 6.253908692936726
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:50:00",
+        "mem_value": 44.99842187082408,
+        "cpu_timestamp": "2024-01-18T15:50:00",
+        "cpu_value": 6.371018113661039
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:49:50",
+        "mem_value": 44.99842187082408,
+        "cpu_timestamp": "2024-01-18T15:49:50",
+        "cpu_value": 6.24609618988053
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:49:40",
+        "mem_value": 44.99842187082408,
+        "cpu_timestamp": "2024-01-18T15:49:40",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:49:30",
+        "mem_value": 44.99842187082408,
+        "cpu_timestamp": "2024-01-18T15:49:30",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:49:20",
+        "mem_value": 44.99842187082408,
+        "cpu_timestamp": "2024-01-18T15:49:20",
+        "cpu_value": 6.246096189877691
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:49:10",
+        "mem_value": 44.99842187082408,
+        "cpu_timestamp": "2024-01-18T15:49:10",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:49:00",
+        "mem_value": 44.99217136312535,
+        "cpu_timestamp": "2024-01-18T15:49:00",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:48:50",
+        "mem_value": 44.99217136312535,
+        "cpu_timestamp": "2024-01-18T15:48:50",
+        "cpu_value": 6.312500000012733
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:48:40",
+        "mem_value": 44.99217136312535,
+        "cpu_timestamp": "2024-01-18T15:48:40",
+        "cpu_value": 6.312499999989996
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:48:30",
+        "mem_value": 44.99217136312535,
+        "cpu_timestamp": "2024-01-18T15:48:30",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:48:20",
+        "mem_value": 44.99217136312535,
+        "cpu_timestamp": "2024-01-18T15:48:20",
+        "cpu_value": 6.257822277848905
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:48:10",
+        "mem_value": 44.99217136312535,
+        "cpu_timestamp": "2024-01-18T15:48:10",
+        "cpu_value": 6.25390869293388
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:48:00",
+        "mem_value": 44.99217136312535,
+        "cpu_timestamp": "2024-01-18T15:48:00",
+        "cpu_value": 6.25390869293388
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:47:50",
+        "mem_value": 44.98748348235131,
+        "cpu_timestamp": "2024-01-18T15:47:50",
+        "cpu_value": 6.24609618988053
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:47:40",
+        "mem_value": 44.98748348235131,
+        "cpu_timestamp": "2024-01-18T15:47:40",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:47:30",
+        "mem_value": 44.98748348235131,
+        "cpu_timestamp": "2024-01-18T15:47:30",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:47:20",
+        "mem_value": 44.987495884152295,
+        "cpu_timestamp": "2024-01-18T15:47:20",
+        "cpu_value": 6.308557151769336
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:47:10",
+        "mem_value": 44.987495884152295,
+        "cpu_timestamp": "2024-01-18T15:47:10",
+        "cpu_value": 6.24609618988053
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:47:00",
+        "mem_value": 44.98750828595329,
+        "cpu_timestamp": "2024-01-18T15:47:00",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:46:50",
+        "mem_value": 44.9820390917169,
+        "cpu_timestamp": "2024-01-18T15:46:50",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:46:40",
+        "mem_value": 44.9820390917169,
+        "cpu_timestamp": "2024-01-18T15:46:40",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:46:30",
+        "mem_value": 44.982051493517886,
+        "cpu_timestamp": "2024-01-18T15:46:30",
+        "cpu_value": 6.246096189877691
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:46:20",
+        "mem_value": 44.982051493517886,
+        "cpu_timestamp": "2024-01-18T15:46:20",
+        "cpu_value": 6.257822277848905
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:46:10",
+        "mem_value": 44.985176747367255,
+        "cpu_timestamp": "2024-01-18T15:46:10",
+        "cpu_value": 6.308557151789192
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:46:00",
+        "mem_value": 44.985176747367255,
+        "cpu_timestamp": "2024-01-18T15:46:00",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:45:50",
+        "mem_value": 44.979707553130865,
+        "cpu_timestamp": "2024-01-18T15:45:50",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:45:40",
+        "mem_value": 44.979707553130865,
+        "cpu_timestamp": "2024-01-18T15:45:40",
+        "cpu_value": 6.9999999999936335
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:45:30",
+        "mem_value": 44.979707553130865,
+        "cpu_timestamp": "2024-01-18T15:45:30",
+        "cpu_value": 6.312499999992866
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:45:20",
+        "mem_value": 44.979707553130865,
+        "cpu_timestamp": "2024-01-18T15:45:20",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:45:10",
+        "mem_value": 44.979707553130865,
+        "cpu_timestamp": "2024-01-18T15:45:10",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:45:00",
+        "mem_value": 44.979707553130865,
+        "cpu_timestamp": "2024-01-18T15:45:00",
+        "cpu_value": 6.24609618988053
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:44:50",
+        "mem_value": 44.97737601454483,
+        "cpu_timestamp": "2024-01-18T15:44:50",
+        "cpu_value": 6.253908692931034
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:44:40",
+        "mem_value": 44.97737601454483,
+        "cpu_timestamp": "2024-01-18T15:44:40",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:44:30",
+        "mem_value": 44.97737601454483,
+        "cpu_timestamp": "2024-01-18T15:44:30",
+        "cpu_value": 6.246096189877691
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:44:20",
+        "mem_value": 44.97737601454483,
+        "cpu_timestamp": "2024-01-18T15:44:20",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:44:10",
+        "mem_value": 44.97737601454483,
+        "cpu_timestamp": "2024-01-18T15:44:10",
+        "cpu_value": 6.304619225978654
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:44:00",
+        "mem_value": 44.97737601454483,
+        "cpu_timestamp": "2024-01-18T15:44:00",
+        "cpu_value": 6.304619225958809
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:43:50",
+        "mem_value": 44.97034419338377,
+        "cpu_timestamp": "2024-01-18T15:43:50",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:43:40",
+        "mem_value": 44.97034419338377,
+        "cpu_timestamp": "2024-01-18T15:43:40",
+        "cpu_value": 6.312499999989996
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:43:30",
+        "mem_value": 44.97034419338377,
+        "cpu_timestamp": "2024-01-18T15:43:30",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:43:20",
+        "mem_value": 44.97034419338377,
+        "cpu_timestamp": "2024-01-18T15:43:20",
+        "cpu_value": 6.25390869293388
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:43:10",
+        "mem_value": 44.96957528172241,
+        "cpu_timestamp": "2024-01-18T15:43:10",
+        "cpu_value": 6.371018113680867
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:43:00",
+        "mem_value": 44.96957528172241,
+        "cpu_timestamp": "2024-01-18T15:43:00",
+        "cpu_value": 6.246096189883368
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:42:50",
+        "mem_value": 44.96957528172241,
+        "cpu_timestamp": "2024-01-18T15:42:50",
+        "cpu_value": 6.304619225978654
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:42:40",
+        "mem_value": 44.98100974223477,
+        "cpu_timestamp": "2024-01-18T15:42:40",
+        "cpu_value": 6.242197253434456
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:42:30",
+        "mem_value": 44.98100974223477,
+        "cpu_timestamp": "2024-01-18T15:42:30",
+        "cpu_value": 6.24609618988053
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:42:20",
+        "mem_value": 44.98100974223477,
+        "cpu_timestamp": "2024-01-18T15:42:20",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:42:10",
+        "mem_value": 44.981022144035755,
+        "cpu_timestamp": "2024-01-18T15:42:10",
+        "cpu_value": 6.25390869293388
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:42:00",
+        "mem_value": 44.981022144035755,
+        "cpu_timestamp": "2024-01-18T15:42:00",
+        "cpu_value": 6.25390869293388
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:41:50",
+        "mem_value": 44.981022144035755,
+        "cpu_timestamp": "2024-01-18T15:41:50",
+        "cpu_value": 6.316447779853208
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:41:40",
+        "mem_value": 44.97555294979937,
+        "cpu_timestamp": "2024-01-18T15:41:40",
+        "cpu_value": 6.933166770774174
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:41:30",
+        "mem_value": 44.97555294979937,
+        "cpu_timestamp": "2024-01-18T15:41:30",
+        "cpu_value": 6.308557151772203
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:41:20",
+        "mem_value": 44.97633426326171,
+        "cpu_timestamp": "2024-01-18T15:41:20",
+        "cpu_value": 6.246096189877691
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:41:10",
+        "mem_value": 44.97633426326171,
+        "cpu_timestamp": "2024-01-18T15:41:10",
+        "cpu_value": 6.25390869293388
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:41:00",
+        "mem_value": 44.97855418563884,
+        "cpu_timestamp": "2024-01-18T15:41:00",
+        "cpu_value": 12.492192379766736
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:40:50",
+        "mem_value": 44.97855418563884,
+        "cpu_timestamp": "2024-01-18T15:40:50",
+        "cpu_value": 12.562499999989996
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:40:40",
+        "mem_value": 44.97004655016001,
+        "cpu_timestamp": "2024-01-18T15:40:40",
+        "cpu_value": 12.507817385862069
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:40:30",
+        "mem_value": 44.96926523669767,
+        "cpu_timestamp": "2024-01-18T15:40:30",
+        "cpu_value": 13.508442776730124
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:40:20",
+        "mem_value": 44.97004655016001,
+        "cpu_timestamp": "2024-01-18T15:40:20",
+        "cpu_value": 12.554653341655571
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:40:10",
+        "mem_value": 44.97004655016001,
+        "cpu_timestamp": "2024-01-18T15:40:10",
+        "cpu_value": 12.507817385873452
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:40:00",
+        "mem_value": 44.96926523669767,
+        "cpu_timestamp": "2024-01-18T15:40:00",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:39:50",
+        "mem_value": 44.96926523669767,
+        "cpu_timestamp": "2024-01-18T15:39:50",
+        "cpu_value": 12.507817385862069
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:39:40",
+        "mem_value": 44.96926523669767,
+        "cpu_timestamp": "2024-01-18T15:39:40",
+        "cpu_value": 12.507817385862069
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:39:30",
+        "mem_value": 44.978045711798266,
+        "cpu_timestamp": "2024-01-18T15:39:30",
+        "cpu_value": 12.546816479415973
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:39:20",
+        "mem_value": 44.978045711798266,
+        "cpu_timestamp": "2024-01-18T15:39:20",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:39:10",
+        "mem_value": 44.978045711798266,
+        "cpu_timestamp": "2024-01-18T15:39:10",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:39:00",
+        "mem_value": 44.978045711798266,
+        "cpu_timestamp": "2024-01-18T15:39:00",
+        "cpu_value": 12.49219237976106
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:38:50",
+        "mem_value": 44.978045711798266,
+        "cpu_timestamp": "2024-01-18T15:38:50",
+        "cpu_value": 12.49219237976106
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:38:40",
+        "mem_value": 44.978045711798266,
+        "cpu_timestamp": "2024-01-18T15:38:40",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:38:30",
+        "mem_value": 44.97727680013691,
+        "cpu_timestamp": "2024-01-18T15:38:30",
+        "cpu_value": 12.6092384519346
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:38:20",
+        "mem_value": 44.97807051540025,
+        "cpu_timestamp": "2024-01-18T15:38:20",
+        "cpu_value": 12.49219237976106
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:38:10",
+        "mem_value": 44.978082917201235,
+        "cpu_timestamp": "2024-01-18T15:38:10",
+        "cpu_value": 12.507817385873452
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:38:00",
+        "mem_value": 44.978082917201235,
+        "cpu_timestamp": "2024-01-18T15:38:00",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:37:50",
+        "mem_value": 44.978082917201235,
+        "cpu_timestamp": "2024-01-18T15:37:50",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:37:40",
+        "mem_value": 44.978082917201235,
+        "cpu_timestamp": "2024-01-18T15:37:40",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:37:30",
+        "mem_value": 44.977301603738894,
+        "cpu_timestamp": "2024-01-18T15:37:30",
+        "cpu_value": 12.757973733590575
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:37:20",
+        "mem_value": 44.97573897681421,
+        "cpu_timestamp": "2024-01-18T15:37:20",
+        "cpu_value": 12.507817385873452
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:37:10",
+        "mem_value": 44.97573897681421,
+        "cpu_timestamp": "2024-01-18T15:37:10",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:37:00",
+        "mem_value": 44.97573897681421,
+        "cpu_timestamp": "2024-01-18T15:37:00",
+        "cpu_value": 13.253768844220158
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:36:50",
+        "mem_value": 44.97573897681421,
+        "cpu_timestamp": "2024-01-18T15:36:50",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:36:40",
+        "mem_value": 44.9757513786152,
+        "cpu_timestamp": "2024-01-18T15:36:40",
+        "cpu_value": 12.492192379766736
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:36:30",
+        "mem_value": 44.97573897681421,
+        "cpu_timestamp": "2024-01-18T15:36:30",
+        "cpu_value": 12.773951158426577
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:36:20",
+        "mem_value": 44.968719557454136,
+        "cpu_timestamp": "2024-01-18T15:36:20",
+        "cpu_value": 12.554653341655571
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:36:10",
+        "mem_value": 44.968719557454136,
+        "cpu_timestamp": "2024-01-18T15:36:10",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:36:00",
+        "mem_value": 44.968719557454136,
+        "cpu_timestamp": "2024-01-18T15:36:00",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:35:50",
+        "mem_value": 44.968719557454136,
+        "cpu_timestamp": "2024-01-18T15:35:50",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:35:40",
+        "mem_value": 44.968719557454136,
+        "cpu_timestamp": "2024-01-18T15:35:40",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:35:30",
+        "mem_value": 44.96723134133539,
+        "cpu_timestamp": "2024-01-18T15:35:30",
+        "cpu_value": 12.507817385873452
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:35:20",
+        "mem_value": 44.96011270756739,
+        "cpu_timestamp": "2024-01-18T15:35:20",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:35:10",
+        "mem_value": 44.96011270756739,
+        "cpu_timestamp": "2024-01-18T15:35:10",
+        "cpu_value": 13.52536005009203
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:35:00",
+        "mem_value": 44.96011270756739,
+        "cpu_timestamp": "2024-01-18T15:35:00",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:34:50",
+        "mem_value": 44.96011270756739,
+        "cpu_timestamp": "2024-01-18T15:34:50",
+        "cpu_value": 12.546816479410275
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:34:40",
+        "mem_value": 44.96011270756739,
+        "cpu_timestamp": "2024-01-18T15:34:40",
+        "cpu_value": 12.507817385862069
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:34:30",
+        "mem_value": 44.96011270756739,
+        "cpu_timestamp": "2024-01-18T15:34:30",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:34:20",
+        "mem_value": 44.96539587478894,
+        "cpu_timestamp": "2024-01-18T15:34:20",
+        "cpu_value": 12.546816479393264
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:34:10",
+        "mem_value": 44.96539587478894,
+        "cpu_timestamp": "2024-01-18T15:34:10",
+        "cpu_value": 12.492192379766736
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:34:00",
+        "mem_value": 44.96539587478894,
+        "cpu_timestamp": "2024-01-18T15:34:00",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:33:50",
+        "mem_value": 44.96539587478894,
+        "cpu_timestamp": "2024-01-18T15:33:50",
+        "cpu_value": 12.609238451917617
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:33:40",
+        "mem_value": 44.96539587478894,
+        "cpu_timestamp": "2024-01-18T15:33:40",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:33:30",
+        "mem_value": 44.96539587478894,
+        "cpu_timestamp": "2024-01-18T15:33:30",
+        "cpu_value": 12.507817385862069
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:33:20",
+        "mem_value": 44.966598849484924,
+        "cpu_timestamp": "2024-01-18T15:33:20",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:33:10",
+        "mem_value": 44.966598849484924,
+        "cpu_timestamp": "2024-01-18T15:33:10",
+        "cpu_value": 12.49219237976106
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:33:00",
+        "mem_value": 44.966598849484924,
+        "cpu_timestamp": "2024-01-18T15:33:00",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:32:50",
+        "mem_value": 44.966598849484924,
+        "cpu_timestamp": "2024-01-18T15:32:50",
+        "cpu_value": 13.786650031203507
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:32:40",
+        "mem_value": 44.966598849484924,
+        "cpu_timestamp": "2024-01-18T15:32:40",
+        "cpu_value": 12.49219237976106
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:32:30",
+        "mem_value": 44.965817536022584,
+        "cpu_timestamp": "2024-01-18T15:32:30",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:32:20",
+        "mem_value": 44.976545093878535,
+        "cpu_timestamp": "2024-01-18T15:32:20",
+        "cpu_value": 12.507817385862069
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:32:10",
+        "mem_value": 44.976545093878535,
+        "cpu_timestamp": "2024-01-18T15:32:10",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:32:00",
+        "mem_value": 44.976545093878535,
+        "cpu_timestamp": "2024-01-18T15:32:00",
+        "cpu_value": 12.49219237976106
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:31:50",
+        "mem_value": 44.976545093878535,
+        "cpu_timestamp": "2024-01-18T15:31:50",
+        "cpu_value": 12.49219237976106
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:31:40",
+        "mem_value": 44.976545093878535,
+        "cpu_timestamp": "2024-01-18T15:31:40",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:31:30",
+        "mem_value": 44.975763780416194,
+        "cpu_timestamp": "2024-01-18T15:31:30",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:31:20",
+        "mem_value": 44.97644587947062,
+        "cpu_timestamp": "2024-01-18T15:31:20",
+        "cpu_value": 12.49219237976106
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:31:10",
+        "mem_value": 44.96795064579278,
+        "cpu_timestamp": "2024-01-18T15:31:10",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:31:00",
+        "mem_value": 44.96795064579278,
+        "cpu_timestamp": "2024-01-18T15:31:00",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:30:50",
+        "mem_value": 44.96795064579278,
+        "cpu_timestamp": "2024-01-18T15:30:50",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:30:40",
+        "mem_value": 44.96795064579278,
+        "cpu_timestamp": "2024-01-18T15:30:40",
+        "cpu_value": 12.49219237976106
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:30:30",
+        "mem_value": 44.96795064579278,
+        "cpu_timestamp": "2024-01-18T15:30:30",
+        "cpu_value": 12.492192379766736
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:30:20",
+        "mem_value": 44.96795064579278,
+        "cpu_timestamp": "2024-01-18T15:30:20",
+        "cpu_value": 12.507817385862069
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:30:10",
+        "mem_value": 44.95949261751792,
+        "cpu_timestamp": "2024-01-18T15:30:10",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:30:00",
+        "mem_value": 44.9595174211199,
+        "cpu_timestamp": "2024-01-18T15:30:00",
+        "cpu_value": 12.49219237976106
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:29:50",
+        "mem_value": 44.9595174211199,
+        "cpu_timestamp": "2024-01-18T15:29:50",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:29:40",
+        "mem_value": 44.9595174211199,
+        "cpu_timestamp": "2024-01-18T15:29:40",
+        "cpu_value": 12.515644555692111
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:29:30",
+        "mem_value": 44.9595174211199,
+        "cpu_timestamp": "2024-01-18T15:29:30",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:29:20",
+        "mem_value": 44.9595174211199,
+        "cpu_timestamp": "2024-01-18T15:29:20",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:29:10",
+        "mem_value": 44.9595174211199,
+        "cpu_timestamp": "2024-01-18T15:29:10",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:29:00",
+        "mem_value": 44.95093537483513,
+        "cpu_timestamp": "2024-01-18T15:29:00",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:28:50",
+        "mem_value": 44.95093537483513,
+        "cpu_timestamp": "2024-01-18T15:28:50",
+        "cpu_value": 12.49219237976106
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:28:40",
+        "mem_value": 44.95093537483513,
+        "cpu_timestamp": "2024-01-18T15:28:40",
+        "cpu_value": 13.454317897378125
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:28:30",
+        "mem_value": 44.95093537483513,
+        "cpu_timestamp": "2024-01-18T15:28:30",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:28:20",
+        "mem_value": 44.95093537483513,
+        "cpu_timestamp": "2024-01-18T15:28:20",
+        "cpu_value": 12.546816479393264
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:28:10",
+        "mem_value": 44.95015406137279,
+        "cpu_timestamp": "2024-01-18T15:28:10",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:28:00",
+        "mem_value": 44.957061864523965,
+        "cpu_timestamp": "2024-01-18T15:28:00",
+        "cpu_value": 12.609238451940326
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:27:50",
+        "mem_value": 44.957061864523965,
+        "cpu_timestamp": "2024-01-18T15:27:50",
+        "cpu_value": 12.554653341649866
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:27:40",
+        "mem_value": 44.957061864523965,
+        "cpu_timestamp": "2024-01-18T15:27:40",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:27:30",
+        "mem_value": 44.957061864523965,
+        "cpu_timestamp": "2024-01-18T15:27:30",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:27:20",
+        "mem_value": 44.957061864523965,
+        "cpu_timestamp": "2024-01-18T15:27:20",
+        "cpu_value": 12.663755458508941
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:27:10",
+        "mem_value": 44.957061864523965,
+        "cpu_timestamp": "2024-01-18T15:27:10",
+        "cpu_value": 12.546816479393264
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:27:00",
+        "mem_value": 44.958277241020944,
+        "cpu_timestamp": "2024-01-18T15:27:00",
+        "cpu_value": 12.49219237976106
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:26:50",
+        "mem_value": 44.98069969721003,
+        "cpu_timestamp": "2024-01-18T15:26:50",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:26:40",
+        "mem_value": 44.98069969721003,
+        "cpu_timestamp": "2024-01-18T15:26:40",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:26:30",
+        "mem_value": 44.980712099011015,
+        "cpu_timestamp": "2024-01-18T15:26:30",
+        "cpu_value": 12.49219237976106
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:26:20",
+        "mem_value": 44.98072450081201,
+        "cpu_timestamp": "2024-01-18T15:26:20",
+        "cpu_value": 12.507817385862069
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:26:10",
+        "mem_value": 44.98072450081201,
+        "cpu_timestamp": "2024-01-18T15:26:10",
+        "cpu_value": 12.492192379766736
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:26:00",
+        "mem_value": 44.980736902612996,
+        "cpu_timestamp": "2024-01-18T15:26:00",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:25:50",
+        "mem_value": 44.97604902183895,
+        "cpu_timestamp": "2024-01-18T15:25:50",
+        "cpu_value": 12.492192379766736
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:25:40",
+        "mem_value": 44.97604902183895,
+        "cpu_timestamp": "2024-01-18T15:25:40",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:25:30",
+        "mem_value": 44.97604902183895,
+        "cpu_timestamp": "2024-01-18T15:25:30",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:25:20",
+        "mem_value": 44.97604902183895,
+        "cpu_timestamp": "2024-01-18T15:25:20",
+        "cpu_value": 12.484394506863241
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:25:10",
+        "mem_value": 44.97604902183895,
+        "cpu_timestamp": "2024-01-18T15:25:10",
+        "cpu_value": 12.49219237976106
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:25:00",
+        "mem_value": 44.97604902183895,
+        "cpu_timestamp": "2024-01-18T15:25:00",
+        "cpu_value": 12.507817385862069
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:24:50",
+        "mem_value": 44.97057982760256,
+        "cpu_timestamp": "2024-01-18T15:24:50",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:24:40",
+        "mem_value": 44.97057982760256,
+        "cpu_timestamp": "2024-01-18T15:24:40",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:24:30",
+        "mem_value": 44.97057982760256,
+        "cpu_timestamp": "2024-01-18T15:24:30",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:24:20",
+        "mem_value": 44.97057982760256,
+        "cpu_timestamp": "2024-01-18T15:24:20",
+        "cpu_value": 13.732833957557226
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:24:10",
+        "mem_value": 44.97057982760256,
+        "cpu_timestamp": "2024-01-18T15:24:10",
+        "cpu_value": 12.484394506868911
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:24:00",
+        "mem_value": 44.97057982760256,
+        "cpu_timestamp": "2024-01-18T15:24:00",
+        "cpu_value": 12.49219237976106
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:23:50",
+        "mem_value": 44.96755378816112,
+        "cpu_timestamp": "2024-01-18T15:23:50",
+        "cpu_value": 12.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:23:40",
+        "mem_value": 44.96755378816112,
+        "cpu_timestamp": "2024-01-18T15:23:40",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:23:30",
+        "mem_value": 44.96755378816112,
+        "cpu_timestamp": "2024-01-18T15:23:30",
+        "cpu_value": 12.50781738586776
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:23:20",
+        "mem_value": 44.96878156645908,
+        "cpu_timestamp": "2024-01-18T15:23:20",
+        "cpu_value": 18.761726078793103
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:23:10",
+        "mem_value": 44.96878156645908,
+        "cpu_timestamp": "2024-01-18T15:23:10",
+        "cpu_value": 22.340425531913684
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:23:00",
+        "mem_value": 44.96924043309569,
+        "cpu_timestamp": "2024-01-18T15:23:00",
+        "cpu_value": 26.45040548969601
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:22:50",
+        "mem_value": 44.96924043309569,
+        "cpu_timestamp": "2024-01-18T15:22:50",
+        "cpu_value": 25.031210986256493
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:22:40",
+        "mem_value": 44.954395477311216,
+        "cpu_timestamp": "2024-01-18T15:22:40",
+        "cpu_value": 25.01563477173552
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:22:30",
+        "mem_value": 44.954395477311216,
+        "cpu_timestamp": "2024-01-18T15:22:30",
+        "cpu_value": 25.01563477173552
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:22:20",
+        "mem_value": 44.95641697087251,
+        "cpu_timestamp": "2024-01-18T15:22:20",
+        "cpu_value": 32.147315855166525
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:22:10",
+        "mem_value": 44.95641697087251,
+        "cpu_timestamp": "2024-01-18T15:22:10",
+        "cpu_value": 31.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:22:00",
+        "mem_value": 44.95644177447449,
+        "cpu_timestamp": "2024-01-18T15:22:00",
+        "cpu_value": 31.269543464662284
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:21:50",
+        "mem_value": 44.95644177447449,
+        "cpu_timestamp": "2024-01-18T15:21:50",
+        "cpu_value": 31.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:21:40",
+        "mem_value": 44.94560260040963,
+        "cpu_timestamp": "2024-01-18T15:21:40",
+        "cpu_value": 31.230480949402647
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:21:30",
+        "mem_value": 44.94560260040963,
+        "cpu_timestamp": "2024-01-18T15:21:30",
+        "cpu_value": 34.74415666456511
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:21:20",
+        "mem_value": 44.94482128694729,
+        "cpu_timestamp": "2024-01-18T15:21:20",
+        "cpu_value": 31.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:21:10",
+        "mem_value": 44.94482128694729,
+        "cpu_timestamp": "2024-01-18T15:21:10",
+        "cpu_value": 31.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:21:00",
+        "mem_value": 44.94482128694729,
+        "cpu_timestamp": "2024-01-18T15:21:00",
+        "cpu_value": 31.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:20:50",
+        "mem_value": 44.94482128694729,
+        "cpu_timestamp": "2024-01-18T15:20:50",
+        "cpu_value": 32.395247029391946
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:20:40",
+        "mem_value": 44.94721483453827,
+        "cpu_timestamp": "2024-01-18T15:20:40",
+        "cpu_value": 31.2695434646694
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:20:30",
+        "mem_value": 44.94721483453827,
+        "cpu_timestamp": "2024-01-18T15:20:30",
+        "cpu_value": 31.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:20:20",
+        "mem_value": 44.94565220761359,
+        "cpu_timestamp": "2024-01-18T15:20:20",
+        "cpu_value": 31.269543464662284
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:20:10",
+        "mem_value": 44.94565220761359,
+        "cpu_timestamp": "2024-01-18T15:20:10",
+        "cpu_value": 31.292941911298566
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:20:00",
+        "mem_value": 44.94488329595224,
+        "cpu_timestamp": "2024-01-18T15:20:00",
+        "cpu_value": 31.27340823971224
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:19:50",
+        "mem_value": 44.944895697753225,
+        "cpu_timestamp": "2024-01-18T15:19:50",
+        "cpu_value": 31.40186915887825
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:19:40",
+        "mem_value": 44.95464351333101,
+        "cpu_timestamp": "2024-01-18T15:19:40",
+        "cpu_value": 31.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:19:30",
+        "mem_value": 44.95464351333101,
+        "cpu_timestamp": "2024-01-18T15:19:30",
+        "cpu_value": 31.2695434646694
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:19:20",
+        "mem_value": 44.95464351333101,
+        "cpu_timestamp": "2024-01-18T15:19:20",
+        "cpu_value": 31.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:19:10",
+        "mem_value": 44.95464351333101,
+        "cpu_timestamp": "2024-01-18T15:19:10",
+        "cpu_value": 31.269543464662284
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:19:00",
+        "mem_value": 44.95464351333101,
+        "cpu_timestamp": "2024-01-18T15:19:00",
+        "cpu_value": 31.269543464662284
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:18:50",
+        "mem_value": 44.95464351333101,
+        "cpu_timestamp": "2024-01-18T15:18:50",
+        "cpu_value": 31.269543464662284
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:18:40",
+        "mem_value": 44.94769850477687,
+        "cpu_timestamp": "2024-01-18T15:18:40",
+        "cpu_value": 31.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:18:30",
+        "mem_value": 44.94769850477687,
+        "cpu_timestamp": "2024-01-18T15:18:30",
+        "cpu_value": 31.269543464662284
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:18:20",
+        "mem_value": 44.94771090657785,
+        "cpu_timestamp": "2024-01-18T15:18:20",
+        "cpu_value": 31.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:18:10",
+        "mem_value": 44.94771090657785,
+        "cpu_timestamp": "2024-01-18T15:18:10",
+        "cpu_value": 31.249999999992895
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:18:00",
+        "mem_value": 44.94692959311551,
+        "cpu_timestamp": "2024-01-18T15:18:00",
+        "cpu_value": 31.2695434646694
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:17:50",
+        "mem_value": 44.94692959311551,
+        "cpu_timestamp": "2024-01-18T15:17:50",
+        "cpu_value": 31.269543464662284
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:17:40",
+        "mem_value": 44.94692959311551,
+        "cpu_timestamp": "2024-01-18T15:17:40",
+        "cpu_value": 31.269543464662284
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:17:30",
+        "mem_value": 44.93835994863174,
+        "cpu_timestamp": "2024-01-18T15:17:30",
+        "cpu_value": 32.56250000000195
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:17:20",
+        "mem_value": 44.93835994863174,
+        "cpu_timestamp": "2024-01-18T15:17:20",
+        "cpu_value": 31.2695434646694
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:17:10",
+        "mem_value": 44.93835994863174,
+        "cpu_timestamp": "2024-01-18T15:17:10",
+        "cpu_value": 31.269543464662284
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:17:00",
+        "mem_value": 44.93835994863174,
+        "cpu_timestamp": "2024-01-18T15:17:00",
+        "cpu_value": 31.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:16:50",
+        "mem_value": 44.93835994863174,
+        "cpu_timestamp": "2024-01-18T15:16:50",
+        "cpu_value": 31.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:16:40",
+        "mem_value": 44.93835994863174,
+        "cpu_timestamp": "2024-01-18T15:16:40",
+        "cpu_value": 31.670822942645373
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:16:30",
+        "mem_value": 44.9244203243195,
+        "cpu_timestamp": "2024-01-18T15:16:30",
+        "cpu_value": 31.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:16:20",
+        "mem_value": 44.92285769739482,
+        "cpu_timestamp": "2024-01-18T15:16:20",
+        "cpu_value": 31.2695434646694
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:16:10",
+        "mem_value": 44.92285769739482,
+        "cpu_timestamp": "2024-01-18T15:16:10",
+        "cpu_value": 31.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:16:00",
+        "mem_value": 44.92469316394127,
+        "cpu_timestamp": "2024-01-18T15:16:00",
+        "cpu_value": 37.49999999999147
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:15:50",
+        "mem_value": 44.92469316394127,
+        "cpu_timestamp": "2024-01-18T15:15:50",
+        "cpu_value": 37.52345215760328
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:15:40",
+        "mem_value": 44.92391185047892,
+        "cpu_timestamp": "2024-01-18T15:15:40",
+        "cpu_value": 37.539038101194706
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:15:30",
+        "mem_value": 44.90427979951249,
+        "cpu_timestamp": "2024-01-18T15:15:30",
+        "cpu_value": 43.75
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:15:20",
+        "mem_value": 44.90427979951249,
+        "cpu_timestamp": "2024-01-18T15:15:20",
+        "cpu_value": 43.83989993745649
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:15:10",
+        "mem_value": 44.90384573647785,
+        "cpu_timestamp": "2024-01-18T15:15:10",
+        "cpu_value": 46.963055729489376
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:15:00",
+        "mem_value": 44.90393254908478,
+        "cpu_timestamp": "2024-01-18T15:15:00",
+        "cpu_value": 49.96876951905559
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:14:50",
+        "mem_value": 44.90393254908478,
+        "cpu_timestamp": "2024-01-18T15:14:50",
+        "cpu_value": 50.03126954347104
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:14:40",
+        "mem_value": 44.90348608424915,
+        "cpu_timestamp": "2024-01-18T15:14:40",
+        "cpu_value": 56.22263914946284
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:14:30",
+        "mem_value": 44.88387883688469,
+        "cpu_timestamp": "2024-01-18T15:14:30",
+        "cpu_value": 61.90476190476299
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:14:20",
+        "mem_value": 44.88153489649767,
+        "cpu_timestamp": "2024-01-18T15:14:20",
+        "cpu_value": 62.53908692932457
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:14:10",
+        "mem_value": 44.879984671373975,
+        "cpu_timestamp": "2024-01-18T15:14:10",
+        "cpu_value": 62.5
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:14:00",
+        "mem_value": 44.879203357911635,
+        "cpu_timestamp": "2024-01-18T15:14:00",
+        "cpu_value": 62.50000000001421
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:13:50",
+        "mem_value": 44.879203357911635,
+        "cpu_timestamp": "2024-01-18T15:13:50",
+        "cpu_value": 62.14865708932994
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:13:40",
+        "mem_value": 44.876487363494924,
+        "cpu_timestamp": "2024-01-18T15:13:40",
+        "cpu_value": 68.66416978777902
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:13:30",
+        "mem_value": 44.87421783391384,
+        "cpu_timestamp": "2024-01-18T15:13:30",
+        "cpu_value": 79.25000000000182
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:13:20",
+        "mem_value": 44.888207065430045,
+        "cpu_timestamp": "2024-01-18T15:13:20",
+        "cpu_value": 79.17448405254201
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:13:10",
+        "mem_value": 44.88922401311118,
+        "cpu_timestamp": "2024-01-18T15:13:10",
+        "cpu_value": 93.75
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:13:00",
+        "mem_value": 44.88922401311118,
+        "cpu_timestamp": "2024-01-18T15:13:00",
+        "cpu_value": 89.91808443603075
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:12:50",
+        "mem_value": 44.878446848051276,
+        "cpu_timestamp": "2024-01-18T15:12:50",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:12:40",
+        "mem_value": 44.877665534588935,
+        "cpu_timestamp": "2024-01-18T15:12:40",
+        "cpu_value": 94.43069306932038
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:12:30",
+        "mem_value": 44.86828977304084,
+        "cpu_timestamp": "2024-01-18T15:12:30",
+        "cpu_value": 94.87179487177562
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:12:20",
+        "mem_value": 44.83732247596996,
+        "cpu_timestamp": "2024-01-18T15:12:20",
+        "cpu_value": 94.33727442437272
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:12:10",
+        "mem_value": 44.841067819868805,
+        "cpu_timestamp": "2024-01-18T15:12:10",
+        "cpu_value": 99.87507807619966
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:12:00",
+        "mem_value": 44.83967881815797,
+        "cpu_timestamp": "2024-01-18T15:12:00",
+        "cpu_value": 99.93750000000999
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:11:50",
+        "mem_value": 44.83889750469563,
+        "cpu_timestamp": "2024-01-18T15:11:50",
+        "cpu_value": 94.1030415890708
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:11:40",
+        "mem_value": 44.83655356430861,
+        "cpu_timestamp": "2024-01-18T15:11:40",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:11:30",
+        "mem_value": 44.83264699699691,
+        "cpu_timestamp": "2024-01-18T15:11:30",
+        "cpu_value": 98.13548788069753
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:11:20",
+        "mem_value": 44.823618485876516,
+        "cpu_timestamp": "2024-01-18T15:11:20",
+        "cpu_value": 92.59028642590995
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:11:10",
+        "mem_value": 44.81736797817779,
+        "cpu_timestamp": "2024-01-18T15:11:10",
+        "cpu_value": 99.93749999998728
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:11:00",
+        "mem_value": 44.79178306273637,
+        "cpu_timestamp": "2024-01-18T15:11:00",
+        "cpu_value": 94.47583176398264
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:10:50",
+        "mem_value": 44.78787649542467,
+        "cpu_timestamp": "2024-01-18T15:10:50",
+        "cpu_value": 91.66666666666667
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:10:40",
+        "mem_value": 44.78787649542467,
+        "cpu_timestamp": "2024-01-18T15:10:40",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:10:30",
+        "mem_value": 44.787926102628624,
+        "cpu_timestamp": "2024-01-18T15:10:30",
+        "cpu_value": 99.93750000001
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:10:20",
+        "mem_value": 44.74920767993928,
+        "cpu_timestamp": "2024-01-18T15:10:20",
+        "cpu_value": 92.74546591620899
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:10:10",
+        "mem_value": 44.731497908126215,
+        "cpu_timestamp": "2024-01-18T15:10:10",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:10:00",
+        "mem_value": 44.719951831404956,
+        "cpu_timestamp": "2024-01-18T15:10:00",
+        "cpu_value": 99.93749999999864
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:09:50",
+        "mem_value": 44.71996423320595,
+        "cpu_timestamp": "2024-01-18T15:09:50",
+        "cpu_value": 92.22153080273787
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:09:40",
+        "mem_value": 44.71690098836153,
+        "cpu_timestamp": "2024-01-18T15:09:40",
+        "cpu_value": 99.93749999999864
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:09:30",
+        "mem_value": 44.71611967489919,
+        "cpu_timestamp": "2024-01-18T15:09:30",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:09:20",
+        "mem_value": 44.71478028039232,
+        "cpu_timestamp": "2024-01-18T15:09:20",
+        "cpu_value": 94.88958990536553
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:09:10",
+        "mem_value": 44.69525984563478,
+        "cpu_timestamp": "2024-01-18T15:09:10",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:09:00",
+        "mem_value": 44.69525984563478,
+        "cpu_timestamp": "2024-01-18T15:09:00",
+        "cpu_value": 95.15226848974116
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:08:50",
+        "mem_value": 44.68510277062435,
+        "cpu_timestamp": "2024-01-18T15:08:50",
+        "cpu_value": 99.93749999999864
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:08:40",
+        "mem_value": 44.680414889850304,
+        "cpu_timestamp": "2024-01-18T15:08:40",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:08:30",
+        "mem_value": 44.66713256099051,
+        "cpu_timestamp": "2024-01-18T15:08:30",
+        "cpu_value": 94.46192573946361
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:08:20",
+        "mem_value": 44.609216150369356,
+        "cpu_timestamp": "2024-01-18T15:08:20",
+        "cpu_value": 99.93749999999864
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:08:10",
+        "mem_value": 44.592039655998846,
+        "cpu_timestamp": "2024-01-18T15:08:10",
+        "cpu_value": 96.10062893081293
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:08:00",
+        "mem_value": 44.58401569075861,
+        "cpu_timestamp": "2024-01-18T15:08:00",
+        "cpu_value": 99.93749999999864
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:07:50",
+        "mem_value": 44.58673168517532,
+        "cpu_timestamp": "2024-01-18T15:07:50",
+        "cpu_value": 97.12858926342625
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:07:40",
+        "mem_value": 44.51160157478069,
+        "cpu_timestamp": "2024-01-18T15:07:40",
+        "cpu_value": 99.49999999997783
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:07:30",
+        "mem_value": 44.510063751457984,
+        "cpu_timestamp": "2024-01-18T15:07:30",
+        "cpu_value": 99.93749999999864
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:07:20",
+        "mem_value": 44.50460695902259,
+        "cpu_timestamp": "2024-01-18T15:07:20",
+        "cpu_value": 99.93749999998728
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:07:10",
+        "mem_value": 44.478811212964345,
+        "cpu_timestamp": "2024-01-18T15:07:10",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:07:00",
+        "mem_value": 44.4338174789743,
+        "cpu_timestamp": "2024-01-18T15:07:00",
+        "cpu_value": 99.93749999999864
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:06:50",
+        "mem_value": 44.42907999099629,
+        "cpu_timestamp": "2024-01-18T15:06:50",
+        "cpu_value": 97.10691823899914
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:06:40",
+        "mem_value": 44.4108121381387,
+        "cpu_timestamp": "2024-01-18T15:06:40",
+        "cpu_value": 99.93749999999864
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:06:30",
+        "mem_value": 44.4014487783916,
+        "cpu_timestamp": "2024-01-18T15:06:30",
+        "cpu_value": 96.54956085320377
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:06:20",
+        "mem_value": 44.3920854186445,
+        "cpu_timestamp": "2024-01-18T15:06:20",
+        "cpu_value": 99.93749999999864
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:06:10",
+        "mem_value": 44.38469394525473,
+        "cpu_timestamp": "2024-01-18T15:06:10",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:06:00",
+        "mem_value": 44.382970094917184,
+        "cpu_timestamp": "2024-01-18T15:06:00",
+        "cpu_value": 94.49715370018515
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:05:50",
+        "mem_value": 44.372168126255296,
+        "cpu_timestamp": "2024-01-18T15:05:50",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:05:40",
+        "mem_value": 44.35160594021464,
+        "cpu_timestamp": "2024-01-18T15:05:40",
+        "cpu_value": 95.5919395465952
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:05:30",
+        "mem_value": 44.33676098443016,
+        "cpu_timestamp": "2024-01-18T15:05:30",
+        "cpu_value": 99.93749999999864
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:05:20",
+        "mem_value": 44.32566137254452,
+        "cpu_timestamp": "2024-01-18T15:05:20",
+        "cpu_value": 99.81249999999594
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:05:10",
+        "mem_value": 44.311994587854045,
+        "cpu_timestamp": "2024-01-18T15:05:10",
+        "cpu_value": 94.42705072010361
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:05:00",
+        "mem_value": 44.30065934174961,
+        "cpu_timestamp": "2024-01-18T15:05:00",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:04:50",
+        "mem_value": 44.27791443873479,
+        "cpu_timestamp": "2024-01-18T15:04:50",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:04:40",
+        "mem_value": 44.24666190024115,
+        "cpu_timestamp": "2024-01-18T15:04:40",
+        "cpu_value": 97.13395638628714
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:04:30",
+        "mem_value": 44.224152631445136,
+        "cpu_timestamp": "2024-01-18T15:04:30",
+        "cpu_value": 97.09595959595364
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:04:20",
+        "mem_value": 44.16046938336385,
+        "cpu_timestamp": "2024-01-18T15:04:20",
+        "cpu_value": 99.93749999999864
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:04:10",
+        "mem_value": 44.12193698768935,
+        "cpu_timestamp": "2024-01-18T15:04:10",
+        "cpu_value": 96.58385093168123
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:04:00",
+        "mem_value": 44.112858869365006,
+        "cpu_timestamp": "2024-01-18T15:04:00",
+        "cpu_value": 99.93749999999864
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:03:50",
+        "mem_value": 43.949254310711,
+        "cpu_timestamp": "2024-01-18T15:03:50",
+        "cpu_value": 96.88861232109515
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:03:40",
+        "mem_value": 43.950482089008965,
+        "cpu_timestamp": "2024-01-18T15:03:40",
+        "cpu_value": 94.77987421383682
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:03:30",
+        "mem_value": 43.89314856303432,
+        "cpu_timestamp": "2024-01-18T15:03:30",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:03:20",
+        "mem_value": 43.89197039194032,
+        "cpu_timestamp": "2024-01-18T15:03:20",
+        "cpu_value": 94.31099873578988
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:03:10",
+        "mem_value": 43.89266489279573,
+        "cpu_timestamp": "2024-01-18T15:03:10",
+        "cpu_value": 99.93750000001
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:03:00",
+        "mem_value": 43.877410677578595,
+        "cpu_timestamp": "2024-01-18T15:03:00",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:02:50",
+        "mem_value": 43.84117261508716,
+        "cpu_timestamp": "2024-01-18T15:02:50",
+        "cpu_value": 95.91078066914574
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:02:40",
+        "mem_value": 43.837873736023944,
+        "cpu_timestamp": "2024-01-18T15:02:40",
+        "cpu_value": 95.69019362898963
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:02:30",
+        "mem_value": 43.83729085137744,
+        "cpu_timestamp": "2024-01-18T15:02:30",
+        "cpu_value": 99.93749999999864
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:02:20",
+        "mem_value": 43.82474022877602,
+        "cpu_timestamp": "2024-01-18T15:02:20",
+        "cpu_value": 99.56249999999045
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:02:10",
+        "mem_value": 43.81922142733568,
+        "cpu_timestamp": "2024-01-18T15:02:10",
+        "cpu_value": 99.81249999999594
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:02:00",
+        "mem_value": 43.81773321121693,
+        "cpu_timestamp": "2024-01-18T15:02:00",
+        "cpu_value": 99.87499999999727
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:01:50",
+        "mem_value": 43.78903544372714,
+        "cpu_timestamp": "2024-01-18T15:01:50",
+        "cpu_value": 96.1346633416411
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:01:40",
+        "mem_value": 43.787472816802456,
+        "cpu_timestamp": "2024-01-18T15:01:40",
+        "cpu_value": 95.679398872889
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:01:30",
+        "mem_value": 43.774748568987185,
+        "cpu_timestamp": "2024-01-18T15:01:30",
+        "cpu_value": 99.93749999999297
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:01:20",
+        "mem_value": 43.63168139277186,
+        "cpu_timestamp": "2024-01-18T15:01:20",
+        "cpu_value": 99.6849401386309
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:01:10",
+        "mem_value": 43.52106972974615,
+        "cpu_timestamp": "2024-01-18T15:01:10",
+        "cpu_value": 99.43785134292108
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:01:00",
+        "mem_value": 43.498101594313525,
+        "cpu_timestamp": "2024-01-18T15:01:00",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:00:50",
+        "mem_value": 43.42855229436419,
+        "cpu_timestamp": "2024-01-18T15:00:50",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:00:40",
+        "mem_value": 43.386646608820534,
+        "cpu_timestamp": "2024-01-18T15:00:40",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:00:30",
+        "mem_value": 43.355394070326895,
+        "cpu_timestamp": "2024-01-18T15:00:30",
+        "cpu_value": 95.20547945205759
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:00:20",
+        "mem_value": 43.12256265854928,
+        "cpu_timestamp": "2024-01-18T15:00:20",
+        "cpu_value": 91.11249223119778
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:00:10",
+        "mem_value": 42.67174479077852,
+        "cpu_timestamp": "2024-01-18T15:00:10",
+        "cpu_value": 89.57816377171088
+      },
+      {
+        "mem_timestamp": "2024-01-18T15:00:00",
+        "mem_value": 41.786516637946164,
+        "cpu_timestamp": "2024-01-18T15:00:00",
+        "cpu_value": 92.29323308270426
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:59:50",
+        "mem_value": 41.73651257635634,
+        "cpu_timestamp": "2024-01-18T14:59:50",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:59:40",
+        "mem_value": 41.14157337928614,
+        "cpu_timestamp": "2024-01-18T14:59:40",
+        "cpu_value": 97.92713567839243
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:59:30",
+        "mem_value": 40.82982930781208,
+        "cpu_timestamp": "2024-01-18T14:59:30",
+        "cpu_value": 99.93750000001
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:59:20",
+        "mem_value": 40.829047994349736,
+        "cpu_timestamp": "2024-01-18T14:59:20",
+        "cpu_value": 91.11944965604481
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:59:10",
+        "mem_value": 40.84397976274114,
+        "cpu_timestamp": "2024-01-18T14:59:10",
+        "cpu_value": 90.64254522770307
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:59:00",
+        "mem_value": 40.87863039470592,
+        "cpu_timestamp": "2024-01-18T14:59:00",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:58:50",
+        "mem_value": 40.94070140865856,
+        "cpu_timestamp": "2024-01-18T14:58:50",
+        "cpu_value": 89.92395437262307
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:58:40",
+        "mem_value": 41.64879463795732,
+        "cpu_timestamp": "2024-01-18T14:58:40",
+        "cpu_value": 97.20323182100233
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:58:30",
+        "mem_value": 39.37379586263517,
+        "cpu_timestamp": "2024-01-18T14:58:30",
+        "cpu_value": 92.36545682102492
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:58:20",
+        "mem_value": 38.97344092309085,
+        "cpu_timestamp": "2024-01-18T14:58:20",
+        "cpu_value": 8.442776735456365
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:58:10",
+        "mem_value": 39.263791887857955,
+        "cpu_timestamp": "2024-01-18T14:58:10",
+        "cpu_value": 81.8804483188012
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:58:00",
+        "mem_value": 39.177190111548,
+        "cpu_timestamp": "2024-01-18T14:58:00",
+        "cpu_value": 20.678818353235737
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:57:50",
+        "mem_value": 42.37242732389598,
+        "cpu_timestamp": "2024-01-18T14:57:50",
+        "cpu_value": 28.957286432162675
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:57:40",
+        "mem_value": 41.4270008290604,
+        "cpu_timestamp": "2024-01-18T14:57:40",
+        "cpu_value": 49.030644152594164
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:57:30",
+        "mem_value": 41.39098599898677,
+        "cpu_timestamp": "2024-01-18T14:57:30",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:57:20",
+        "mem_value": 41.39098599898677,
+        "cpu_timestamp": "2024-01-18T14:57:20",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:57:10",
+        "mem_value": 41.39117202600161,
+        "cpu_timestamp": "2024-01-18T14:57:10",
+        "cpu_value": 99.93746091307499
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:57:00",
+        "mem_value": 41.37595501618745,
+        "cpu_timestamp": "2024-01-18T14:57:00",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:56:50",
+        "mem_value": 41.37595501618745,
+        "cpu_timestamp": "2024-01-18T14:56:50",
+        "cpu_value": 99.43855271366661
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:56:40",
+        "mem_value": 41.37517370272511,
+        "cpu_timestamp": "2024-01-18T14:56:40",
+        "cpu_value": 99.8123827392136
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:56:30",
+        "mem_value": 41.374925666705316,
+        "cpu_timestamp": "2024-01-18T14:56:30",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:56:20",
+        "mem_value": 41.374925666705316,
+        "cpu_timestamp": "2024-01-18T14:56:20",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:56:10",
+        "mem_value": 41.374925666705316,
+        "cpu_timestamp": "2024-01-18T14:56:10",
+        "cpu_value": 98.25218476904024
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:56:00",
+        "mem_value": 41.374925666705316,
+        "cpu_timestamp": "2024-01-18T14:56:00",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:55:50",
+        "mem_value": 41.374925666705316,
+        "cpu_timestamp": "2024-01-18T14:55:50",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:55:40",
+        "mem_value": 41.36945647246893,
+        "cpu_timestamp": "2024-01-18T14:55:40",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:55:30",
+        "mem_value": 41.35738952010611,
+        "cpu_timestamp": "2024-01-18T14:55:30",
+        "cpu_value": 99.68789013733287
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:55:20",
+        "mem_value": 41.35670742105169,
+        "cpu_timestamp": "2024-01-18T14:55:20",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:55:10",
+        "mem_value": 41.35670742105169,
+        "cpu_timestamp": "2024-01-18T14:55:10",
+        "cpu_value": 100.0
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:55:00",
+        "mem_value": 41.35670742105169,
+        "cpu_timestamp": "2024-01-18T14:55:00",
+        "cpu_value": 99.93749999999864
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:54:50",
+        "mem_value": 41.32996913811824,
+        "cpu_timestamp": "2024-01-18T14:54:50",
+        "cpu_value": 98.05642633228872
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:54:40",
+        "mem_value": 41.32996913811824,
+        "cpu_timestamp": "2024-01-18T14:54:40",
+        "cpu_value": 99.00187149096239
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:54:30",
+        "mem_value": 41.32996913811824,
+        "cpu_timestamp": "2024-01-18T14:54:30",
+        "cpu_value": 98.86435331230386
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:54:20",
+        "mem_value": 41.333230811778485,
+        "cpu_timestamp": "2024-01-18T14:54:20",
+        "cpu_value": 99.05183312262616
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:54:10",
+        "mem_value": 41.35044451155197,
+        "cpu_timestamp": "2024-01-18T14:54:10",
+        "cpu_value": 99.18800749531334
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:54:00",
+        "mem_value": 41.3002544229473,
+        "cpu_timestamp": "2024-01-18T14:54:00",
+        "cpu_value": 98.25000000000017
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:53:50",
+        "mem_value": 41.220560449788515,
+        "cpu_timestamp": "2024-01-18T14:53:50",
+        "cpu_value": 98.13316739265879
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:53:40",
+        "mem_value": 40.814289851172184,
+        "cpu_timestamp": "2024-01-18T14:53:40",
+        "cpu_value": 97.87897691827942
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:53:30",
+        "mem_value": 38.85788094147032,
+        "cpu_timestamp": "2024-01-18T14:53:30",
+        "cpu_value": 97.24999999999966
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:53:20",
+        "mem_value": 32.573082263006235,
+        "cpu_timestamp": "2024-01-18T14:53:20",
+        "cpu_value": 96.54739485248332
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:53:10",
+        "mem_value": 30.573019013821188,
+        "cpu_timestamp": "2024-01-18T14:53:10",
+        "cpu_value": 93.19470699432934
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:53:00",
+        "mem_value": 28.541306368510835,
+        "cpu_timestamp": "2024-01-18T14:53:00",
+        "cpu_value": 6.25
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:52:50",
+        "mem_value": 28.118119713344772,
+        "cpu_timestamp": "2024-01-18T14:52:50",
+        "cpu_value": 6.187500000000057
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:52:40",
+        "mem_value": 28.10981050668178,
+        "cpu_timestamp": "2024-01-18T14:52:40",
+        "cpu_value": 6.253908692933169
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:52:30",
+        "mem_value": 28.07377087300618,
+        "cpu_timestamp": "2024-01-18T14:52:30",
+        "cpu_value": 6.253908692933169
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:52:20",
+        "mem_value": 28.066032149188704,
+        "cpu_timestamp": "2024-01-18T14:52:20",
+        "cpu_value": 6.941838649155705
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:52:10",
+        "mem_value": 28.038524954593907,
+        "cpu_timestamp": "2024-01-18T14:52:10",
+        "cpu_value": 14.321766561514163
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:52:00",
+        "mem_value": 18.043752313710996,
+        "cpu_timestamp": "2024-01-18T14:52:00",
+        "cpu_value": 89.8432601880876
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:51:50",
+        "mem_value": 9.159139290207724,
+        "cpu_timestamp": "2024-01-18T14:51:50",
+        "cpu_value": 5.808869456589678
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:51:40",
+        "mem_value": 5.637238639795271,
+        "cpu_timestamp": "2024-01-18T14:51:40",
+        "cpu_value": 29.52853598014861
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:51:30",
+        "mem_value": 2.850801993465491,
+        "cpu_timestamp": "2024-01-18T14:51:30",
+        "cpu_value": 12.234706616729238
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:51:20",
+        "mem_value": 1.6518082755977823,
+        "cpu_timestamp": "2024-01-18T14:51:20",
+        "cpu_value": 3.372891942535956
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:51:10",
+        "mem_value": 1.3794151186635324,
+        "cpu_timestamp": "2024-01-18T14:51:10",
+        "cpu_value": 5.753595997498444
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:51:00",
+        "mem_value": 1.2131441727967736,
+        "cpu_timestamp": "2024-01-18T14:51:00",
+        "cpu_value": 5.753595997498444
+      },
+      {
+        "mem_timestamp": "2024-01-18T14:50:50",
+        "mem_value": 1.2840576708549616,
+        "cpu_timestamp": "2024-01-18T14:50:50",
+        "cpu_value": 5.220633934120494
+      }
+    ]
+  }
+}
