@@ -1,7 +1,7 @@
 ---
 title: "Super-fast deduplication of large datasets using Splink and DuckDB"
 description: "Evaluating 1 billion record comparisons to deduplicate 7 million records in two minutes"
-post_date: "2023-01-20"
+post_date: "2024-01-18"
 post_category: "probabilistic_linkage"
 code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/fast_deduplication.mdx"
 prob_linkage_category: "benchmarking"
@@ -96,7 +96,7 @@ A Splink model was developed that is representative of the complexity of a typic
 [^4]: It's important to emphasise the number of comparisons (1 billion) as well as the number of input rows (7 million) because performance is primarily driven by the former. Furthermore it would be possible to 'cheat' and get a better runtimes simply by using stricter blocking, at the cost of lower recall.  See [here](https://moj-analytical-services.github.io/splink/topic_guides/blocking/blocking_rules.html?h=blocking#blocking) for further details.
 
 
-For code for estimating (training) the Splink model, and then using it to predict which record match is as follows:
+The code for estimating (training) the Splink model, and then using it to predict which record match is as follows:
 
 <details>
 <summary>Click to expand full Splink script</summary>
