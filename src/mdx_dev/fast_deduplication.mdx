@@ -15,6 +15,12 @@ import { Vega, VegaLite } from "react-vega"
 import summary_chart from "./fast_deduplication/summary_chart.vl.json"
 import cpu_mem_chart from "./fast_deduplication/cpu_mem_chart.vl.json"
 import by_function_chart from "./fast_deduplication/by_function_chart.vl.json"
+
+import metrics_spark_filtered from "./fast_deduplication/metrics_spark_filtered.vl.json"
+import spark_vs_duckdb_chart from "./fast_deduplication/spark_vs_duckdb_chart.vl.json"
+
+
+
 import DefinitionToolTip from "../components/DefinitionToolTip";
 import Subtitle from "../components/Subtitle"
 
@@ -227,6 +233,31 @@ However, there are theoretical and empirical reasons to believe Splink offers ac
 
 
 I hope to write another post at some point looking at comparative accuracy in further details
+
+## Comparison to the Apache Spark backend
+
+Splink supports various SQL backends, so the same job was run on the Apache Spark backend to compare runtimes.[^6]
+
+[^6]: The job was run in local mode on a `c6gd.4xlarge` instance, which has an SSD attached.  For Spark, this is important because some intermediate results are written to disk.  Note no results are present for the cluster step because the instance ran out of disk space before it could complete.
+
+
+<VegaLite spec={spark_vs_duckdb_chart} />
+
+We can see that Spark takes about 60% longer than DuckDB for estimating the `u` parameters, but for inference (making predictions) it takes 8.7 times longer.
+
+The following chart shows CPU usage, and goes some way to explaining the very long runtime of the `predict()` step.
+
+<VegaLite spec={metrics_spark_filtered} />
+
+We can see that whilst the predict step parallelises well at first, there are straggler tasks on some CPUs that take a long time to complete.
+
+A rough estimate suggests if problem of straggler tasks could be addressed and the CPUs could be pinned at 100%, Spark would still take around twice as long as DuckDB[^7].
+[^7]: With experimentation, the straggler tasks could probably be largely avoided, but it would take several runs to find the optimal configuration, and requires significant expertise in both Spark and Splink.
+
+Overall, it's clear that DuckDB is both intrinsically faster for data linking workloads, and also does a better job of parallelisation across all cores out of the box, resulting in substantially shorter runtimes.
+
+
+
 
 ## Reproduction materials
 
