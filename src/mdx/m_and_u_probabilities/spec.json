@@ -113,7 +113,7 @@
                             "type": "quantitative"
                         }
                     },
-                    "name": "view_30"
+                    "name": "view_2"
                 }
             ],
             "height": 30,
@@ -198,7 +198,7 @@
                         },
                         "text": {
                             "field": "bf_fmt",
-                            "type": "quantitative"
+                            "type": "nominal"
                         },
                         "x": {
                             "axis": {
@@ -223,7 +223,7 @@
                             "type": "quantitative"
                         }
                     },
-                    "name": "view_31"
+                    "name": "view_3"
                 }
             ],
             "height": 30,
@@ -333,7 +333,7 @@
                             "type": "quantitative"
                         }
                     },
-                    "name": "view_32"
+                    "name": "view_4"
                 }
             ],
             "height": 30,
@@ -341,7 +341,7 @@
         }
     ],
     "data": {
-        "name": "data-e3aadadb7f6c63fb4a430eda42f080d6"
+        "name": "data-a2e9c0bcd5dac9c2faf98f879b3e75eb"
     },
     "params": [
         {
@@ -360,16 +360,16 @@
                 }
             ],
             "views": [
-                "view_30",
-                "view_31",
-                "view_32"
+                "view_2",
+                "view_3",
+                "view_4"
             ]
         }
     ],
     "title": "Correspondence between partial match weight and Bayes factor",
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.14.1.json",
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.8.0.json",
     "datasets": {
-        "data-e3aadadb7f6c63fb4a430eda42f080d6": [
+        "data-a2e9c0bcd5dac9c2faf98f879b3e75eb": [
             {
                 "prob": 0.000975609756097561,
                 "bf": 0.0009765625,
@@ -386,7 +386,7 @@
                 "prob_fmt": "0.0011",
                 "bf_fmt": "0.00112",
                 "mw_fmt": "-9.8",
-                "int_fmt": "891.4x less likely"
+                "int_fmt": "891x less likely"
             },
             {
                 "prob": 0.0012869236375513526,
@@ -404,7 +404,7 @@
                 "prob_fmt": "0.0015",
                 "bf_fmt": "0.00148",
                 "mw_fmt": "-9.4",
-                "int_fmt": "675.6x less likely"
+                "int_fmt": "675x less likely"
             },
             {
                 "prob": 0.0016974079762232036,
@@ -413,7 +413,7 @@
                 "prob_fmt": "0.0017",
                 "bf_fmt": "0.0017",
                 "mw_fmt": "-9.2",
-                "int_fmt": "588.1x less likely"
+                "int_fmt": "588x less likely"
             },
             {
                 "prob": 0.001949317738791423,
@@ -431,7 +431,7 @@
                 "prob_fmt": "0.0022",
                 "bf_fmt": "0.00224",
                 "mw_fmt": "-8.8",
-                "int_fmt": "445.7x less likely"
+                "int_fmt": "445x less likely"
             },
             {
                 "prob": 0.0025705391874611093,
@@ -449,7 +449,7 @@
                 "prob_fmt": "0.003",
                 "bf_fmt": "0.00296",
                 "mw_fmt": "-8.4",
-                "int_fmt": "337.8x less likely"
+                "int_fmt": "337x less likely"
             },
             {
                 "prob": 0.0033890633293192944,
@@ -458,7 +458,7 @@
                 "prob_fmt": "0.0034",
                 "bf_fmt": "0.0034",
                 "mw_fmt": "-8.2",
-                "int_fmt": "294.1x less likely"
+                "int_fmt": "294x less likely"
             },
             {
                 "prob": 0.0038910505836575876,
@@ -476,7 +476,7 @@
                 "prob_fmt": "0.0045",
                 "bf_fmt": "0.00449",
                 "mw_fmt": "-7.8",
-                "int_fmt": "222.9x less likely"
+                "int_fmt": "222x less likely"
             },
             {
                 "prob": 0.0051278969149530715,
@@ -494,7 +494,7 @@
                 "prob_fmt": "0.0059",
                 "bf_fmt": "0.00592",
                 "mw_fmt": "-7.4",
-                "int_fmt": "168.9x less likely"
+                "int_fmt": "168x less likely"
             },
             {
                 "prob": 0.006755232747054526,
@@ -521,7 +521,7 @@
                 "prob_fmt": "0.0089",
                 "bf_fmt": "0.00897",
                 "mw_fmt": "-6.8",
-                "int_fmt": "111.4x less likely"
+                "int_fmt": "111x less likely"
             },
             {
                 "prob": 0.010203471479982129,
@@ -701,7 +701,7 @@
                 "prob_fmt": "0.1256",
                 "bf_fmt": "0.144",
                 "mw_fmt": "-2.8",
-                "int_fmt": "6.964x less likely"
+                "int_fmt": "6.96x less likely"
             },
             {
                 "prob": 0.14158557762986687,
@@ -710,7 +710,7 @@
                 "prob_fmt": "0.1416",
                 "bf_fmt": "0.165",
                 "mw_fmt": "-2.6",
-                "int_fmt": "6.063x less likely"
+                "int_fmt": "6.06x less likely"
             },
             {
                 "prob": 0.15928559409228404,
@@ -719,7 +719,7 @@
                 "prob_fmt": "0.1593",
                 "bf_fmt": "0.189",
                 "mw_fmt": "-2.4",
-                "int_fmt": "5.278x less likely"
+                "int_fmt": "5.28x less likely"
             },
             {
                 "prob": 0.17873760922563603,
@@ -728,7 +728,7 @@
                 "prob_fmt": "0.1787",
                 "bf_fmt": "0.218",
                 "mw_fmt": "-2.2",
-                "int_fmt": "4.595x less likely"
+                "int_fmt": "4.59x less likely"
             },
             {
                 "prob": 0.2,
@@ -746,7 +746,7 @@
                 "prob_fmt": "0.2231",
                 "bf_fmt": "0.287",
                 "mw_fmt": "-1.8",
-                "int_fmt": "3.482x less likely"
+                "int_fmt": "3.48x less likely"
             },
             {
                 "prob": 0.2480507469686566,
@@ -755,7 +755,7 @@
                 "prob_fmt": "0.2481",
                 "bf_fmt": "0.33",
                 "mw_fmt": "-1.6",
-                "int_fmt": "3.031x less likely"
+                "int_fmt": "3.03x less likely"
             },
             {
                 "prob": 0.27479957467599525,
@@ -764,7 +764,7 @@
                 "prob_fmt": "0.2748",
                 "bf_fmt": "0.379",
                 "mw_fmt": "-1.4",
-                "int_fmt": "2.639x less likely"
+                "int_fmt": "2.64x less likely"
             },
             {
                 "prob": 0.30326954502292763,
@@ -773,7 +773,7 @@
                 "prob_fmt": "0.3033",
                 "bf_fmt": "0.435",
                 "mw_fmt": "-1.2",
-                "int_fmt": "2.297x less likely"
+                "int_fmt": "2.3x less likely"
             },
             {
                 "prob": 0.3333333333333333,
@@ -791,7 +791,7 @@
                 "prob_fmt": "0.3648",
                 "bf_fmt": "0.574",
                 "mw_fmt": "-0.8",
-                "int_fmt": "1.741x less likely"
+                "int_fmt": "1.74x less likely"
             },
             {
                 "prob": 0.39750105926563917,
@@ -800,7 +800,7 @@
                 "prob_fmt": "0.3975",
                 "bf_fmt": "0.66",
                 "mw_fmt": "-0.6",
-                "int_fmt": "1.516x less likely"
+                "int_fmt": "1.52x less likely"
             },
             {
                 "prob": 0.43112592776921604,
@@ -818,7 +818,7 @@
                 "prob_fmt": "0.4654",
                 "bf_fmt": "0.871",
                 "mw_fmt": "-0.2",
-                "int_fmt": "1.149x less likely"
+                "int_fmt": "1.15x less likely"
             },
             {
                 "prob": 0.5,
@@ -834,9 +834,9 @@
                 "bf": 1.148698354997035,
                 "mw": 0.20000000000000012,
                 "prob_fmt": "0.5346",
-                "bf_fmt": "1.15",
+                "bf_fmt": "1.149",
                 "mw_fmt": "0.2",
-                "int_fmt": "1.149x more likely"
+                "int_fmt": "1.15x more likely"
             },
             {
                 "prob": 0.5688740722307839,
@@ -852,18 +852,18 @@
                 "bf": 1.515716566510398,
                 "mw": 0.5999999999999999,
                 "prob_fmt": "0.6025",
-                "bf_fmt": "1.52",
+                "bf_fmt": "1.516",
                 "mw_fmt": "0.6",
-                "int_fmt": "1.516x more likely"
+                "int_fmt": "1.52x more likely"
             },
             {
                 "prob": 0.6351831056874558,
                 "bf": 1.7411011265922482,
                 "mw": 0.7999999999999999,
                 "prob_fmt": "0.6352",
-                "bf_fmt": "1.74",
+                "bf_fmt": "1.741",
                 "mw_fmt": "0.8",
-                "int_fmt": "1.741x more likely"
+                "int_fmt": "1.74x more likely"
             },
             {
                 "prob": 0.6666666666666666,
@@ -879,36 +879,36 @@
                 "bf": 2.2973967099940693,
                 "mw": 1.1999999999999995,
                 "prob_fmt": "0.6967",
-                "bf_fmt": "2.3",
+                "bf_fmt": "2.297",
                 "mw_fmt": "1.2",
-                "int_fmt": "2.297x more likely"
+                "int_fmt": "2.3x more likely"
             },
             {
                 "prob": 0.7252004253240047,
                 "bf": 2.639015821545788,
                 "mw": 1.3999999999999997,
                 "prob_fmt": "0.7252",
-                "bf_fmt": "2.64",
+                "bf_fmt": "2.639",
                 "mw_fmt": "1.4",
-                "int_fmt": "2.639x more likely"
+                "int_fmt": "2.64x more likely"
             },
             {
                 "prob": 0.7519492530313435,
                 "bf": 3.031433133020798,
                 "mw": 1.600000000000001,
                 "prob_fmt": "0.7519",
-                "bf_fmt": "3.03",
+                "bf_fmt": "3.031",
                 "mw_fmt": "1.6",
-                "int_fmt": "3.031x more likely"
+                "int_fmt": "3.03x more likely"
             },
             {
                 "prob": 0.7768953867957377,
                 "bf": 3.4822022531844956,
                 "mw": 1.7999999999999996,
                 "prob_fmt": "0.7769",
-                "bf_fmt": "3.48",
+                "bf_fmt": "3.482",
                 "mw_fmt": "1.8",
-                "int_fmt": "3.482x more likely"
+                "int_fmt": "3.48x more likely"
             },
             {
                 "prob": 0.8,
@@ -924,36 +924,36 @@
                 "bf": 4.594793419988139,
                 "mw": 2.1999999999999997,
                 "prob_fmt": "0.8213",
-                "bf_fmt": "4.59",
+                "bf_fmt": "4.595",
                 "mw_fmt": "2.2",
-                "int_fmt": "4.595x more likely"
+                "int_fmt": "4.59x more likely"
             },
             {
                 "prob": 0.840714405907716,
                 "bf": 5.278031643091577,
                 "mw": 2.4,
                 "prob_fmt": "0.8407",
-                "bf_fmt": "5.28",
+                "bf_fmt": "5.278",
                 "mw_fmt": "2.4",
-                "int_fmt": "5.278x more likely"
+                "int_fmt": "5.28x more likely"
             },
             {
                 "prob": 0.8584144223701331,
                 "bf": 6.062866266041592,
                 "mw": 2.6,
                 "prob_fmt": "0.8584",
-                "bf_fmt": "6.06",
+                "bf_fmt": "6.063",
                 "mw_fmt": "2.6",
-                "int_fmt": "6.063x more likely"
+                "int_fmt": "6.06x more likely"
             },
             {
                 "prob": 0.8744413346659731,
                 "bf": 6.96440450636899,
                 "mw": 2.7999999999999994,
                 "prob_fmt": "0.8744",
-                "bf_fmt": "6.96",
+                "bf_fmt": "6.964",
                 "mw_fmt": "2.8",
-                "int_fmt": "6.964x more likely"
+                "int_fmt": "6.96x more likely"
             },
             {
                 "prob": 0.8888888888888888,
@@ -978,7 +978,7 @@
                 "bf": 10.55606328618315,
                 "mw": 3.3999999999999995,
                 "prob_fmt": "0.9135",
-                "bf_fmt": "10.6",
+                "bf_fmt": "10.56",
                 "mw_fmt": "3.4",
                 "int_fmt": "10.56x more likely"
             },
@@ -987,7 +987,7 @@
                 "bf": 12.12573253208319,
                 "mw": 3.6000000000000005,
                 "prob_fmt": "0.9238",
-                "bf_fmt": "12.1",
+                "bf_fmt": "12.13",
                 "mw_fmt": "3.6",
                 "int_fmt": "12.13x more likely"
             },
@@ -996,7 +996,7 @@
                 "bf": 13.928809012737982,
                 "mw": 3.8,
                 "prob_fmt": "0.933",
-                "bf_fmt": "13.9",
+                "bf_fmt": "13.93",
                 "mw_fmt": "3.8",
                 "int_fmt": "13.93x more likely"
             },
@@ -1005,7 +1005,7 @@
                 "bf": 15.999999999999996,
                 "mw": 3.9999999999999996,
                 "prob_fmt": "0.9412",
-                "bf_fmt": "16",
+                "bf_fmt": "16.00",
                 "mw_fmt": "4.0",
                 "int_fmt": "16x more likely"
             },
@@ -1014,7 +1014,7 @@
                 "bf": 18.379173679952547,
                 "mw": 4.199999999999999,
                 "prob_fmt": "0.9484",
-                "bf_fmt": "18.4",
+                "bf_fmt": "18.38",
                 "mw_fmt": "4.2",
                 "int_fmt": "18.38x more likely"
             },
@@ -1023,7 +1023,7 @@
                 "bf": 21.1121265723663,
                 "mw": 4.3999999999999995,
                 "prob_fmt": "0.9548",
-                "bf_fmt": "21.1",
+                "bf_fmt": "21.11",
                 "mw_fmt": "4.4",
                 "int_fmt": "21.11x more likely"
             },
@@ -1032,7 +1032,7 @@
                 "bf": 24.25146506416639,
                 "mw": 4.600000000000001,
                 "prob_fmt": "0.9604",
-                "bf_fmt": "24.3",
+                "bf_fmt": "24.25",
                 "mw_fmt": "4.6",
                 "int_fmt": "24.25x more likely"
             },
@@ -1041,7 +1041,7 @@
                 "bf": 27.857618025475936,
                 "mw": 4.799999999999998,
                 "prob_fmt": "0.9653",
-                "bf_fmt": "27.9",
+                "bf_fmt": "27.86",
                 "mw_fmt": "4.8",
                 "int_fmt": "27.86x more likely"
             },
@@ -1050,7 +1050,7 @@
                 "bf": 32.00000000000003,
                 "mw": 5.000000000000001,
                 "prob_fmt": "0.9697",
-                "bf_fmt": "32",
+                "bf_fmt": "32.00",
                 "mw_fmt": "5.0",
                 "int_fmt": "32x more likely"
             },
@@ -1059,7 +1059,7 @@
                 "bf": 36.7583473599051,
                 "mw": 5.199999999999999,
                 "prob_fmt": "0.9735",
-                "bf_fmt": "36.8",
+                "bf_fmt": "36.76",
                 "mw_fmt": "5.2",
                 "int_fmt": "36.76x more likely"
             },
@@ -1068,7 +1068,7 @@
                 "bf": 42.22425314473263,
                 "mw": 5.4,
                 "prob_fmt": "0.9769",
-                "bf_fmt": "42.2",
+                "bf_fmt": "42.22",
                 "mw_fmt": "5.4",
                 "int_fmt": "42.22x more likely"
             },
@@ -1077,7 +1077,7 @@
                 "bf": 48.502930128332785,
                 "mw": 5.600000000000001,
                 "prob_fmt": "0.9798",
-                "bf_fmt": "48.5",
+                "bf_fmt": "48.50",
                 "mw_fmt": "5.6",
                 "int_fmt": "48.5x more likely"
             },
@@ -1086,7 +1086,7 @@
                 "bf": 55.715236050951894,
                 "mw": 5.799999999999999,
                 "prob_fmt": "0.9824",
-                "bf_fmt": "55.7",
+                "bf_fmt": "55.72",
                 "mw_fmt": "5.8",
                 "int_fmt": "55.72x more likely"
             },
@@ -1095,7 +1095,7 @@
                 "bf": 64.00000000000023,
                 "mw": 6.000000000000005,
                 "prob_fmt": "0.9846",
-                "bf_fmt": "64",
+                "bf_fmt": "64.00",
                 "mw_fmt": "6.0",
                 "int_fmt": "64x more likely"
             },
@@ -1104,7 +1104,7 @@
                 "bf": 73.51669471981052,
                 "mw": 6.2000000000000055,
                 "prob_fmt": "0.9866",
-                "bf_fmt": "73.5",
+                "bf_fmt": "73.52",
                 "mw_fmt": "6.2",
                 "int_fmt": "73.52x more likely"
             },
@@ -1113,7 +1113,7 @@
                 "bf": 84.44850628946506,
                 "mw": 6.399999999999997,
                 "prob_fmt": "0.9883",
-                "bf_fmt": "84.4",
+                "bf_fmt": "84.45",
                 "mw_fmt": "6.4",
                 "int_fmt": "84.45x more likely"
             },
@@ -1122,7 +1122,7 @@
                 "bf": 97.00586025666546,
                 "mw": 6.6,
                 "prob_fmt": "0.9898",
-                "bf_fmt": "97",
+                "bf_fmt": "97.01",
                 "mw_fmt": "6.6",
                 "int_fmt": "97.01x more likely"
             },
@@ -1131,25 +1131,25 @@
                 "bf": 111.43047210190362,
                 "mw": 6.799999999999996,
                 "prob_fmt": "0.9911",
-                "bf_fmt": "111",
+                "bf_fmt": "111.4",
                 "mw_fmt": "6.8",
-                "int_fmt": "111.4x more likely"
+                "int_fmt": "111x more likely"
             },
             {
                 "prob": 0.9922480620155039,
                 "bf": 127.99999999999977,
                 "mw": 6.999999999999997,
                 "prob_fmt": "0.9922",
-                "bf_fmt": "128",
+                "bf_fmt": "128.0",
                 "mw_fmt": "7.0",
-                "int_fmt": "128x more likely"
+                "int_fmt": "127x more likely"
             },
             {
                 "prob": 0.9932447672529455,
                 "bf": 147.03338943962163,
                 "mw": 7.200000000000011,
                 "prob_fmt": "0.9932",
-                "bf_fmt": "147",
+                "bf_fmt": "147.0",
                 "mw_fmt": "7.2",
                 "int_fmt": "147x more likely"
             },
@@ -1158,16 +1158,16 @@
                 "bf": 168.8970125789311,
                 "mw": 7.400000000000006,
                 "prob_fmt": "0.9941",
-                "bf_fmt": "169",
+                "bf_fmt": "168.9",
                 "mw_fmt": "7.4",
-                "int_fmt": "168.9x more likely"
+                "int_fmt": "168x more likely"
             },
             {
                 "prob": 0.9948721030850469,
                 "bf": 194.0117205133306,
                 "mw": 7.599999999999997,
                 "prob_fmt": "0.9949",
-                "bf_fmt": "194",
+                "bf_fmt": "194.0",
                 "mw_fmt": "7.6",
                 "int_fmt": "194x more likely"
             },
@@ -1176,16 +1176,16 @@
                 "bf": 222.86094420380644,
                 "mw": 7.799999999999991,
                 "prob_fmt": "0.9955",
-                "bf_fmt": "223",
+                "bf_fmt": "222.9",
                 "mw_fmt": "7.8",
-                "int_fmt": "222.9x more likely"
+                "int_fmt": "222x more likely"
             },
             {
                 "prob": 0.9961089494163424,
                 "bf": 256.0000000000009,
                 "mw": 8.000000000000005,
                 "prob_fmt": "0.9961",
-                "bf_fmt": "256",
+                "bf_fmt": "256.0",
                 "mw_fmt": "8.0",
                 "int_fmt": "256x more likely"
             },
@@ -1194,25 +1194,25 @@
                 "bf": 294.06677887923865,
                 "mw": 8.199999999999989,
                 "prob_fmt": "0.9966",
-                "bf_fmt": "294",
+                "bf_fmt": "294.1",
                 "mw_fmt": "8.2",
-                "int_fmt": "294.1x more likely"
+                "int_fmt": "294x more likely"
             },
             {
                 "prob": 0.9970483540861322,
                 "bf": 337.7940251578569,
                 "mw": 8.399999999999983,
                 "prob_fmt": "0.997",
-                "bf_fmt": "338",
+                "bf_fmt": "337.8",
                 "mw_fmt": "8.4",
-                "int_fmt": "337.8x more likely"
+                "int_fmt": "337x more likely"
             },
             {
                 "prob": 0.9974294608125389,
                 "bf": 388.02344102666547,
                 "mw": 8.600000000000014,
                 "prob_fmt": "0.9974",
-                "bf_fmt": "388",
+                "bf_fmt": "388.0",
                 "mw_fmt": "8.6",
                 "int_fmt": "388x more likely"
             },
@@ -1221,43 +1221,43 @@
                 "bf": 445.72188840761476,
                 "mw": 8.799999999999997,
                 "prob_fmt": "0.9978",
-                "bf_fmt": "446",
+                "bf_fmt": "445.7",
                 "mw_fmt": "8.8",
-                "int_fmt": "445.7x more likely"
+                "int_fmt": "445x more likely"
             },
             {
                 "prob": 0.9980506822612085,
                 "bf": 511.99999999998545,
                 "mw": 8.99999999999996,
                 "prob_fmt": "0.9981",
-                "bf_fmt": "512",
+                "bf_fmt": "512.0",
                 "mw_fmt": "9.0",
-                "int_fmt": "512x more likely"
+                "int_fmt": "511x more likely"
             },
             {
                 "prob": 0.9983025920237768,
                 "bf": 588.1335577584837,
                 "mw": 9.200000000000005,
                 "prob_fmt": "0.9983",
-                "bf_fmt": "588",
+                "bf_fmt": "588.1",
                 "mw_fmt": "9.2",
-                "int_fmt": "588.1x more likely"
+                "int_fmt": "588x more likely"
             },
             {
                 "prob": 0.9985219957704938,
                 "bf": 675.5880503157424,
                 "mw": 9.400000000000045,
                 "prob_fmt": "0.9985",
-                "bf_fmt": "676",
+                "bf_fmt": "675.6",
                 "mw_fmt": "9.4",
-                "int_fmt": "675.6x more likely"
+                "int_fmt": "675x more likely"
             },
             {
                 "prob": 0.9987130763624487,
                 "bf": 776.0468820533309,
                 "mw": 9.600000000000014,
                 "prob_fmt": "0.9987",
-                "bf_fmt": "776",
+                "bf_fmt": "776.0",
                 "mw_fmt": "9.6",
                 "int_fmt": "776x more likely"
             },
@@ -1266,9 +1266,18 @@
                 "bf": 891.4437768152363,
                 "mw": 9.800000000000008,
                 "prob_fmt": "0.9989",
-                "bf_fmt": "891",
+                "bf_fmt": "891.4",
                 "mw_fmt": "9.8",
-                "int_fmt": "891.4x more likely"
+                "int_fmt": "891x more likely"
+            },
+            {
+                "prob": 0.9990243902439024,
+                "bf": 1023.9999999999991,
+                "mw": 9.999999999999998,
+                "prob_fmt": "0.999",
+                "bf_fmt": "1,024",
+                "mw_fmt": "10.0",
+                "int_fmt": "1,023x more likely"
             }
         ]
     }
