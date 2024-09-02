@@ -4,6 +4,7 @@ description: "Why I’m backing Vega-Lite as our default tool for data visualisa
 post_date: "2018-08-22"
 post_category: "data"
 code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/backing_vega_lite.mdx"
+post_latest_update: "2024-09-02"
 ---
 
 export { MDXLayout as default } from '../components/MDXLayout';
@@ -24,6 +25,8 @@ As a result, it makes sense for teams to spend time choosing a ‘sensible defau
 
 * **Consistent, disciplined API underpinned by well-designed grammar of graphics.** Data visualisation is the process of mapping different elements of a dataset to visual encodings such as positions on the x and y axes, colours, or sizes. I’ve never seen this more clearly expressed than in the Vega-Lite API. This makes the API extremely predictable, and easy to understand.
 
+* **Easily editable charts with embedded data.** Vega-Lite embeds data directly in the chart, enabling anyone with access to modify the visualization in their web browswer using the [Vega-Lite editor](https://vega.github.io/editor/), without needing to request access to the data or how the chart was generated.
+
 * **Founded on academic research.** Vega-Lite is a product of the[ UW Interactive Data Lab](http://idl.cs.washington.edu/), one of the leading academic centres for data visualisation. It’s heavily informed by research on visual perception and how to convey data visually as accurately as possible. [This](https://www.youtube.com/watch?v=vc1bq0qIKoA) is a great video intro to some of this research³.
 
 * **Advanced interactivity.** Vega-Lite provides the most powerful declarative system I’ve seen for advanced interactivity between charts — such as [brushing one chart to filter the data displayed in another one](https://vega.github.io/vega-lite/examples/interactive_seattle_weather.html).
@@ -40,7 +43,7 @@ As a result, it makes sense for teams to spend time choosing a ‘sensible defau
 
 * **GUIs and other spec generation tools.** [Voyager2](http://vega.github.io/voyager/) is visualisation recommendation tool which will allow the user to build specs using point-and-click, or will automatically build a range of Vega charts based on a dataset. [Draco](http://idl.cs.washington.edu/papers/draco/) is a cutting edge visualisation recommendation tool that won the InfoVis 2018 Best Paper Award, that suggests specs based optimising ease of visual perception. [Lyra](http://idl.cs.washington.edu/papers/lyra/) provide a GUI in which users can create heavily customised charts using point-and-click drawing tools.
 
-* **Built into key data science tools by default.** A Vega-Lite viewer is built into Jupyterlab by default. Voyager can be installed into JupyterLab as an [extension](https://github.com/altair-viz/jupyterlab_voyager), enabling datasets to be opened in Voyager.** **Pandas dataframes can be extended to support [auto-generation of vega charts](https://github.com/jakevdp/pdvega). JupyterLab looks set to become the most popular development environment for data scientists, so Vega’s popularity looks set to continue growing.
+* **Built into key data science tools by default.** A Vega-Lite viewer is built into Jupyterlab by default. Voyager can be installed into JupyterLab as an [extension](https://github.com/altair-viz/jupyterlab_voyager), enabling datasets to be opened in Voyager. Pandas dataframes can be extended to support [auto-generation of vega charts](https://github.com/jakevdp/pdvega). JupyterLab looks set to become the most popular development environment for data scientists, so Vega’s popularity looks set to continue growing.
 
 * **Reactive dataflows and strong separation of concerns result in high performance.** Vega-Lite is underpinned by a sophisticated engine that is aware of what needs to be re-computed when inputs change or in reaction to other events. This eliminates unnecessary code execution. More generally, there is a strong separation of concerns between the specification and its evaluation, enabling iterative performance enhancement behind the scenes. More details are [here](https://beta.observablehq.com/@jheer/how-vega-works).
 
