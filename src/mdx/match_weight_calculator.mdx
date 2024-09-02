@@ -1,0 +1,38 @@
+---
+title: "Match weight calculator"
+post_date: "2024-09-02"
+code_url: "https://observablehq.com/@robinl/probability-match-weight-bayes-factor-converter"
+post_category: "probabilistic_linkage"
+prob_linkage_category: "tools"
+description: "A calculator for converting between match weights, probabilities, and Bayes factors"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+
+import notebook from '@robinl/probability-match-weight-bayes-factor-converter';
+import ProbHomeNav from "../components/ProbHomeNav"
+import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
+import InteractiveCallout from "../components/InteractiveCallout"
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+<ProbHomeNav />
+# Match weight calculator
+
+
+
+<WithObservableProvider notebook={notebook}>
+
+  <ObservableCell cellName="viewof form_values" />
+
+
+
+    <br/>
+    <ObservableCell cellName="calculated_values" />
+    <br/>
+    <ObservableCell cellName="conversion_formulas" />
+
+
+</WithObservableProvider>
+
+<ProbHomeNav />
