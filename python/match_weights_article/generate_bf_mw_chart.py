@@ -1,15 +1,15 @@
+import json
+
+import altair as alt
+import pandas as pd
 from splink.misc import (
-    match_weight_to_bayes_factor,
     bayes_factor_to_prob,
+    match_weight_to_bayes_factor,
     prob_to_bayes_factor,
     prob_to_match_weight,
 )
-import altair as alt
-import pandas as pd
-import json
 
-
-start = -10
+start = -40
 end = -1 * start
 subdivisions = 5
 data = [
@@ -21,20 +21,42 @@ data = [
     {"prob": x, "bf": prob_to_bayes_factor(x), "mw": prob_to_match_weight(x)}
     for x in data
 ]
+def format_bf(bf):
+    if bf >= 1000:
+        return "{:,.0f}".format(bf)
+    elif bf >= 100:
+        return "{:,.1f}".format(bf)
+    elif bf >= 10:
+        return "{:,.2f}".format(bf)
+    elif bf >= 1:
+        return "{:,.3f}".format(bf).rstrip("0").rstrip(".")
+    else:
+        return "{:,.3g}".format(bf).rstrip("0").rstrip(".")
 
 for d in data:
     d["prob_fmt"] = "{:,.4f}".format(d["prob"]).rstrip("0")
-    d["bf_fmt"] = "{:,.3g}".format(d["bf"]).rstrip("0").rstrip(".")
+    d["bf_fmt"] = format_bf(d["bf"])
     d["mw_fmt"] = "{:,.1f}".format(d["mw"])
     if d["prob"] > 0.5:
-        d["int_fmt"] = f"{d['bf']:,.4g}x more likely"
+        bf_value = d["bf"]
+        if bf_value > 100:
+            d["int_fmt"] = f"{int(bf_value):,}x more likely"
+        else:
+            d["int_fmt"] = f"{bf_value:,.2f}".rstrip("0").rstrip(".") + "x more likely"
     elif d["prob"] < 0.5:
-        d["int_fmt"] = f"{(1/d['bf']):,.4g}x less likely"
+        bf_value = 1 / d["bf"]
+        if bf_value > 100:
+            d["int_fmt"] = f"{int(bf_value):,}x less likely"
+        else:
+            d["int_fmt"] = f"{bf_value:,.2f}".rstrip("0").rstrip(".") + "x less likely"
     else:
         d["int_fmt"] = "no more or less likely"
 
+
 data = pd.DataFrame(data)
 data
+
+
 
 c = alt.Color(
     "mw:Q",
@@ -112,7 +134,7 @@ text3 = (
     .mark_text(**mark_text_args)
     .encode(
         x=alt.X("mw:Q", axis=axis3),
-        text="bf_fmt:Q",
+        text="bf_fmt:N",
         opacity=alt.condition(nearest, alt.value(1), alt.value(0)),
     )
 )
