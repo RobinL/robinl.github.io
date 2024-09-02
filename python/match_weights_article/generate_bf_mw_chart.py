@@ -9,12 +9,12 @@ from splink.misc import (
     prob_to_match_weight,
 )
 
-start = -40
+start = -10
 end = -1 * start
 subdivisions = 5
 data = [
     bayes_factor_to_prob(match_weight_to_bayes_factor(x / subdivisions))
-    for x in range(start * subdivisions, end * subdivisions)
+    for x in range(start * subdivisions, end * subdivisions + 1)
 ]
 
 data = [
@@ -39,14 +39,14 @@ for d in data:
     d["mw_fmt"] = "{:,.1f}".format(d["mw"])
     if d["prob"] > 0.5:
         bf_value = d["bf"]
-        if bf_value > 100:
-            d["int_fmt"] = f"{int(bf_value):,}x more likely"
+        if bf_value >= 100:
+            d["int_fmt"] = f"{bf_value:,.0f}x more likely"
         else:
             d["int_fmt"] = f"{bf_value:,.2f}".rstrip("0").rstrip(".") + "x more likely"
     elif d["prob"] < 0.5:
         bf_value = 1 / d["bf"]
-        if bf_value > 100:
-            d["int_fmt"] = f"{int(bf_value):,}x less likely"
+        if bf_value >= 100:
+            d["int_fmt"] = f"{bf_value:,.0f}x less likely"
         else:
             d["int_fmt"] = f"{bf_value:,.2f}".rstrip("0").rstrip(".") + "x less likely"
     else:
@@ -111,7 +111,7 @@ text1 = (
 
 # LN2
 # format(datum.value/(1-datum.value), ',.1f')
-axis2 = alt.Axis(title="Partial Match Weight", labelExpr=f"datum.value")
+axis2 = alt.Axis(title="Partial Match Weight", labelExpr="datum.value")
 
 
 text2 = (
