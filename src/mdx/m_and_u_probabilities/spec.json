@@ -341,7 +341,7 @@
         }
     ],
     "data": {
-        "name": "data-a2e9c0bcd5dac9c2faf98f879b3e75eb"
+        "name": "data-e8a16f18fbe7155ea09c67c63289f466"
     },
     "params": [
         {
@@ -369,7 +369,7 @@
     "title": "Correspondence between partial match weight and Bayes factor",
     "$schema": "https://vega.github.io/schema/vega-lite/v5.8.0.json",
     "datasets": {
-        "data-a2e9c0bcd5dac9c2faf98f879b3e75eb": [
+        "data-e8a16f18fbe7155ea09c67c63289f466": [
             {
                 "prob": 0.000975609756097561,
                 "bf": 0.0009765625,
@@ -404,7 +404,7 @@
                 "prob_fmt": "0.0015",
                 "bf_fmt": "0.00148",
                 "mw_fmt": "-9.4",
-                "int_fmt": "675x less likely"
+                "int_fmt": "676x less likely"
             },
             {
                 "prob": 0.0016974079762232036,
@@ -431,7 +431,7 @@
                 "prob_fmt": "0.0022",
                 "bf_fmt": "0.00224",
                 "mw_fmt": "-8.8",
-                "int_fmt": "445x less likely"
+                "int_fmt": "446x less likely"
             },
             {
                 "prob": 0.0025705391874611093,
@@ -449,7 +449,7 @@
                 "prob_fmt": "0.003",
                 "bf_fmt": "0.00296",
                 "mw_fmt": "-8.4",
-                "int_fmt": "337x less likely"
+                "int_fmt": "338x less likely"
             },
             {
                 "prob": 0.0033890633293192944,
@@ -476,7 +476,7 @@
                 "prob_fmt": "0.0045",
                 "bf_fmt": "0.00449",
                 "mw_fmt": "-7.8",
-                "int_fmt": "222x less likely"
+                "int_fmt": "223x less likely"
             },
             {
                 "prob": 0.0051278969149530715,
@@ -494,7 +494,7 @@
                 "prob_fmt": "0.0059",
                 "bf_fmt": "0.00592",
                 "mw_fmt": "-7.4",
-                "int_fmt": "168x less likely"
+                "int_fmt": "169x less likely"
             },
             {
                 "prob": 0.006755232747054526,
@@ -1142,7 +1142,7 @@
                 "prob_fmt": "0.9922",
                 "bf_fmt": "128.0",
                 "mw_fmt": "7.0",
-                "int_fmt": "127x more likely"
+                "int_fmt": "128x more likely"
             },
             {
                 "prob": 0.9932447672529455,
@@ -1160,7 +1160,7 @@
                 "prob_fmt": "0.9941",
                 "bf_fmt": "168.9",
                 "mw_fmt": "7.4",
-                "int_fmt": "168x more likely"
+                "int_fmt": "169x more likely"
             },
             {
                 "prob": 0.9948721030850469,
@@ -1178,7 +1178,7 @@
                 "prob_fmt": "0.9955",
                 "bf_fmt": "222.9",
                 "mw_fmt": "7.8",
-                "int_fmt": "222x more likely"
+                "int_fmt": "223x more likely"
             },
             {
                 "prob": 0.9961089494163424,
@@ -1205,7 +1205,7 @@
                 "prob_fmt": "0.997",
                 "bf_fmt": "337.8",
                 "mw_fmt": "8.4",
-                "int_fmt": "337x more likely"
+                "int_fmt": "338x more likely"
             },
             {
                 "prob": 0.9974294608125389,
@@ -1223,7 +1223,7 @@
                 "prob_fmt": "0.9978",
                 "bf_fmt": "445.7",
                 "mw_fmt": "8.8",
-                "int_fmt": "445x more likely"
+                "int_fmt": "446x more likely"
             },
             {
                 "prob": 0.9980506822612085,
@@ -1232,7 +1232,7 @@
                 "prob_fmt": "0.9981",
                 "bf_fmt": "512.0",
                 "mw_fmt": "9.0",
-                "int_fmt": "511x more likely"
+                "int_fmt": "512x more likely"
             },
             {
                 "prob": 0.9983025920237768,
@@ -1250,7 +1250,7 @@
                 "prob_fmt": "0.9985",
                 "bf_fmt": "675.6",
                 "mw_fmt": "9.4",
-                "int_fmt": "675x more likely"
+                "int_fmt": "676x more likely"
             },
             {
                 "prob": 0.9987130763624487,
@@ -1277,7 +1277,7 @@
                 "prob_fmt": "0.999",
                 "bf_fmt": "1,024",
                 "mw_fmt": "10.0",
-                "int_fmt": "1,023x more likely"
+                "int_fmt": "1,024x more likely"
             }
         ]
     }
