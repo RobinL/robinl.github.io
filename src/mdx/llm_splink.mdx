@@ -1,0 +1,443 @@
+---
+title: "Automatically generating Splink scripts using long-context LLMs"
+description: "Prompting large language models to generate Splink scripts for record linkage"
+post_date: "2024-09-09"
+code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/llm_splink.mdx"
+post_category: "data"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+
+
+
+# Automatically generating Splink scripts using long-context LLMs
+
+One killer use cases of LLMs is writing domain-specific code.  For instance, they're great at writing charting code using, say, [matplotlib](https://matplotlib.org/) or [vega-lite](https://vega.github.io/vega-lite/). These are powerful libraries that don't require great intelligence to use, but are fiddly to use.[^1]
+
+[^1]: The user also probably doesn't care too much about code quality so long as the chart looks right.
+
+In a [previous post](llm_short_term_thoughts_questions/#impact-on-programmers) I predicted that many software libraries will be used via LLMs, and I had domain-specific libraries particularly in mind.
+
+This blog post tests this prediction by looking at the effectiveness of LLMs to generate [Splink](https://github.com/moj-analytical-services/splink) scripts.
+
+## Background
+
+[Splink](https://github.com/moj-analytical-services/splink) is a library for probabilistic data deduplication.
+
+It's a good test case because:
+-  The API is mostly declarative, but there are a range of configuration options which can be quite fiddly for beginner users.
+-  Frontier models without fine-tuning or additional context are currently poor at writing Splink code.
+
+Since my prediction, long-context LLMs have improved significantly, to the point that much of the Splink documentation can fit into context at reasonable cost. So it's a good time to put it to the test.
+
+## Writing a prompt
+
+In order to test the effectiveness of LLMs in generating Splink scripts, my first step was to generate a prompt.[^2]  I decided that the 'base' prompt should include four elements elements:
+
+1. The docstrings for all of the functions and methods in Splink's public API
+2. The example and tutorial code from the Splink documentation
+3. Some choice pages from the Splink documentation site
+4. Some [custom instructions](https://gist.github.com/RobinL/fe1739aaa405321c647f99bdd9680e3d) for how to write a Splink script. [^3]
+
+In addition to the base prompt, the user would then add specific instructions for their use case.
+
+The full prompt can be found [here](TODO: link to gist) [3].  It fills up about 50% of the context window of Claude 3.5 Sonnet pro.
+
+[^3] I used GPT-4o to write [a script](https://github.com/moj-analytical-services/splink/blob/master/scripts/create_llm_prompt_long.py) that would output these elements to a text file.
+
+## Trying it out
+
+To test this out, in addition to the base prompt, I included the following instructions:
+
+
+> I have a dataset with 2 million records in the following format:
+>
+> ```txt
+> data_1 = [
+>   {
+>       "first_name": "John",
+>       "middle_name_1": "James",
+>       "surname": "Smith",
+>       "postcodes": ["BS1 5AH", "M1 1AA"],
+>       "date_of_birth": "1980-01-01",
+>       "gender": "male",
+>
+>   },
+>   {
+>       "first_name": "Jane",
+>       "middle_name_1": "Mary",
+>       "surname": "Doe",
+>       "postcodes": ["BS1 5AH", "W1A 1AA", "EC1A 1BB"],
+>       "date_of_birth": "1985-02-02",
+>       "gender": "female"
+>   }
+> ]
+> ```
+>
+> Please write a Splink script that uses the duckdb backend to deduplicate this dataset.
+
+
+The result is as follows:
+
+<details>
+<summary>Click to expand full Splink script</summary>
+
+```python
+import pandas as pd
+import splink.comparison_library as cl
+from splink import DuckDBAPI, Linker, SettingsCreator, block_on
+
+# Create a pandas DataFrame from the data
+data = [
+    {
+        "first_name": "John",
+        "middle_name_1": "James",
+        "surname": "Smith",
+        "postcodes": ["BS1 5AH", "M1 1AA"],
+        "date_of_birth": "1980-01-01",
+        "gender": "male",
+    },
+    {
+        "first_name": "Jane",
+        "middle_name_1": "Mary",
+        "surname": "Doe",
+        "postcodes": ["BS1 5AH", "W1A 1AA", "EC1A 1BB"],
+        "date_of_birth": "1985-02-02",
+        "gender": "female"
+    }
+]
+df = pd.DataFrame(data)
+
+# Convert postcodes list to a string for easier processing
+df['postcodes'] = df['postcodes'].apply(lambda x: ','.join(x))
+
+# Define the settings for the Splink model
+settings = SettingsCreator(
+    link_type="dedupe_only",
+    blocking_rules_to_generate_predictions=[
+        block_on("first_name", "surname"),
+        block_on("date_of_birth"),
+        "l.first_name = r.first_name AND l.gender = r.gender",
+    ],
+    comparisons=[
+        cl.NameComparison("first_name"),
+        cl.NameComparison("middle_name_1"),
+        cl.NameComparison("surname"),
+        cl.DateOfBirthComparison("date_of_birth", input_is_string=True),
+        cl.ExactMatch("gender").configure(term_frequency_adjustments=True),
+        cl.LevenshteinAtThresholds("postcodes", [1, 3]),
+    ],
+    retain_intermediate_calculation_columns=True,
+    retain_matching_columns=True,
+    additional_columns_to_retain=["postcodes"]
+)
+
+# Initialize the Linker
+linker = Linker(df, settings, db_api=DuckDBAPI())
+
+# Estimate u probabilities
+linker.training.estimate_u_using_random_sampling(max_pairs=1e7)
+
+# Estimate m probabilities using Expectation-Maximization
+# We use multiple rounds to ensure all parameters are estimated
+linker.training.estimate_parameters_using_expectation_maximisation(block_on("first_name", "surname"))
+linker.training.estimate_parameters_using_expectation_maximisation(block_on("date_of_birth"))
+
+# Estimate lambda (probability that two random records match)
+deterministic_rules = [
+    block_on("first_name", "surname", "date_of_birth"),
+    "l.first_name = r.first_name AND l.surname = r.surname AND l.gender = r.gender",
+]
+linker.training.estimate_probability_two_random_records_match(deterministic_rules, recall=0.8)
+
+# Generate predictions
+df_predict = linker.inference.predict()
+
+# Cluster the predictions
+df_clusters = linker.clustering.cluster_pairwise_predictions_at_threshold(df_predict, threshold_match_probability=0.95)
+
+# Output some results
+print(df_clusters.as_pandas_dataframe(limit=10))
+
+# Generate a waterfall chart for a sample of predictions
+sample_predictions = df_predict.as_record_dict(limit=5)
+linker.visualisations.waterfall_chart(sample_predictions)
+
+# Save the trained model
+linker.misc.save_model_to_json("deduplication_model.json")
+```
+
+</details>
+
+OK - that's a very good start.  [TODO:  Try it and mention whether it's runnable]
+
+But the example data is pretty close to the examples in the docs.  Let's see how it fares on example that's out of context:
+
+
+
+> I have a dataset with 10 million records of supermarket products in the following format:
+>
+> ```python
+> product_data = [
+>   {
+>       "product_name": "Organic Whole Milk",
+>       "brand": "Happy Cows",
+>       "category": "Dairy",
+>       "weight": 800,
+>       "price": 2.99,
+>       "barcode": "1234567890123",
+>       "expiry_date": "2024-03-15",
+>       "store_id": ["ST001", "ST002", "ST003"]
+>   },
+>   {
+>       "product_name": "Wholegrain Bread",
+>       "brand": "Healthy Bakery",
+>       "category": "Bakery",
+>       "weight": 200,
+>       "price": 1.99,
+>       "barcode": "2345678901234",
+>       "expiry_date": "2024-03-10",
+>       "store_id": ["ST001", "ST004", "ST005"]
+>   }
+> ]
+> ```
+>
+> Please write a Splink script that uses the duckdb backend to deduplicate this dataset of supermarket products.
+
+
+<details>
+<summary>Click to expand full Splink script</summary>
+
+```python
+import pandas as pd
+import splink.comparison_library as cl
+from splink import SettingsCreator, Linker, DuckDBAPI, block_on
+
+# Convert the product_data list to a pandas DataFrame
+df = pd.DataFrame(product_data)
+
+# Initialize the DuckDB backend
+db_api = DuckDBAPI()
+
+# Define the settings for the Splink model
+settings = SettingsCreator(
+    # Since we're deduplicating a single dataset
+    link_type="dedupe_only",
+
+    # Blocking rules to generate predictions
+    blocking_rules_to_generate_predictions=[
+        block_on("category", "brand"),
+        block_on("barcode"),
+        block_on("product_name", "weight"),
+    ],
+
+    # Define comparisons for each relevant column
+    comparisons=[
+        cl.ExactMatch("barcode", term_frequency_adjustments=True),
+        cl.LevenshteinAtThresholds("product_name", [1, 3]),
+        cl.ExactMatch("brand", term_frequency_adjustments=True),
+        cl.ExactMatch("category", term_frequency_adjustments=True),
+        cl.NumericPercentageDifference("weight", 5),
+        cl.NumericPercentageDifference("price", 10),
+        cl.DateComparison(
+            "expiry_date",
+            input_is_string=True,
+            datetime_metrics=["day", "month", "year"],
+            datetime_thresholds=[1, 1, 1],
+        ),
+        cl.ArrayIntersectAtSizes("store_id", [1, 2]),
+    ],
+
+    # Retain original columns in the output
+    retain_matching_columns=True,
+
+    # Retain intermediate calculation columns for analysis
+    retain_intermediate_calculation_columns=True,
+)
+
+# Create the Linker object
+linker = Linker(df, settings, db_api=db_api)
+
+# Estimate u using random sampling
+linker.training.estimate_u_using_random_sampling(max_pairs=1e7)
+
+# Estimate m probabilities using Expectation-Maximization
+# We'll use multiple training sessions to ensure all parameters are estimated
+linker.training.estimate_parameters_using_expectation_maximisation(block_on("category", "brand"))
+linker.training.estimate_parameters_using_expectation_maximisation(block_on("barcode"))
+linker.training.estimate_parameters_using_expectation_maximisation(block_on("product_name", "weight"))
+
+# Estimate the probability that two random records match
+deterministic_rules = [
+    block_on("barcode"),
+    block_on("product_name", "brand", "category", "weight"),
+]
+linker.training.estimate_probability_two_random_records_match(deterministic_rules, recall=0.8)
+
+# Generate predictions
+df_predictions = linker.inference.predict()
+
+# Cluster the predictions
+df_clusters = linker.clustering.cluster_pairwise_predictions_at_threshold(df_predictions, threshold_match_probability=0.95)
+
+# Display some results
+print(df_clusters.as_pandas_dataframe(limit=10))
+
+# Generate a waterfall chart for the first few predictions
+records_to_view = df_predictions.as_record_dict(limit=5)
+linker.visualisations.waterfall_chart(records_to_view)
+
+# Save the trained model
+linker.misc.save_model_to_json("supermarket_products_model.json")
+```
+
+</details>
+
+Neither generated script is perfect, but they provide an excellent jumping off point.  They likey save the beginner user a lot of time because:
+
+- They draw attention to many of the common functions in the user-facing API
+- They provide a working example that can then be modified
+
+These examples are also one-shot.  Significantly better scripts could be achiev with some iteration such as pasting error messages into the LLM.
+
+### Example 3:  Asking for some exploratory analysis
+
+> I have a dataset with 10 million records of supermarket products in the following format:
+>
+> ```python
+> product_data = [
+>   {
+>       "product_name": "Organic Whole Milk",
+>       "brand": "Happy Cows",
+>       "category": "Dairy",
+>       "weight": 800,
+>       "price": 2.99,
+>       "barcode": "1234567890123",
+>       "expiry_date": "2024-03-15",
+>       "store_id": ["ST001", "ST002", "ST003"]
+>   },
+>   {
+>       "product_name": "Wholegrain Bread",
+>       "brand": "Healthy Bakery",
+>       "category": "Bakery",
+>       "weight": 200,
+>       "price": 1.99,
+>       "barcode": "2345678901234",
+>       "expiry_date": "2024-03-10",
+>       "store_id": ["ST001", "ST004", "ST005"]
+>   }
+> ]
+> ```
+>
+> Please write Splink code that performs exploratory analysis and analysis of potential blocking rules
+
+
+<details>
+<summary>Click to expand full Splink script</summary>
+
+```python
+import pandas as pd
+import splink.comparison_library as cl
+from splink import DuckDBAPI, Linker, SettingsCreator, block_on, splink_datasets
+from splink.exploratory import profile_columns
+from splink.blocking_analysis import (
+    count_comparisons_from_blocking_rule,
+    cumulative_comparisons_to_be_scored_from_blocking_rules_chart,
+)
+
+# First, let's create a pandas DataFrame from your data
+df = pd.DataFrame(product_data)
+
+# Convert store_id from list to string for easier processing
+df['store_id'] = df['store_id'].apply(lambda x: ','.join(x))
+
+# Initialize the DuckDB API
+db_api = DuckDBAPI()
+
+# Exploratory analysis
+print("Exploratory Analysis:")
+profile_columns(
+    df,
+    db_api=db_api,
+    column_expressions=[
+        "product_name",
+        "brand",
+        "category",
+        "barcode",
+        "store_id"
+    ]
+)
+
+# Analyze potential blocking rules
+print("\nAnalyzing Potential Blocking Rules:")
+
+potential_blocking_rules = [
+    block_on("barcode"),
+    block_on("product_name", "brand"),
+    block_on("category", "brand"),
+    "substr(l.barcode, 1, 6) = substr(r.barcode, 1, 6)",
+    "l.product_name = r.product_name AND l.category = r.category",
+]
+
+for rule in potential_blocking_rules:
+    count = count_comparisons_from_blocking_rule(
+        table_or_tables=df,
+        blocking_rule=rule,
+        link_type="dedupe_only",
+        db_api=db_api,
+    )
+    print(f"Rule: {rule}")
+    print(f"Number of comparisons: {count}")
+    print()
+
+# Visualize cumulative comparisons
+cumulative_comparisons_to_be_scored_from_blocking_rules_chart(
+    table_or_tables=df,
+    blocking_rules=potential_blocking_rules,
+    db_api=db_api,
+    link_type="dedupe_only"
+)
+
+# Create a basic Splink model for further analysis
+settings = SettingsCreator(
+    link_type="dedupe_only",
+    blocking_rules_to_generate_predictions=potential_blocking_rules,
+    comparisons=[
+        cl.ExactMatch("barcode"),
+        cl.LevenshteinAtThresholds("product_name", [2, 5]),
+        cl.ExactMatch("brand"),
+        cl.ExactMatch("category"),
+        cl.ArrayIntersectAtSizes("store_id", [1, 2])
+    ],
+    retain_intermediate_calculation_columns=True,
+    retain_matching_columns=True,
+    additional_columns_to_retain=["weight", "price", "expiry_date"]
+)
+
+linker = Linker(df, settings, db_api=db_api)
+
+# Estimate u using random sampling
+linker.training.estimate_u_using_random_sampling(max_pairs=1e7)
+
+# Estimate m probabilities using EM algorithm
+linker.training.estimate_parameters_using_expectation_maximisation(block_on("barcode"))
+linker.training.estimate_parameters_using_expectation_maximisation(block_on("product_name", "brand"))
+
+# Generate some predictions
+df_predictions = linker.inference.predict()
+
+# Display a waterfall chart for the first few predictions
+records_to_plot = df_predictions.as_record_dict(limit=5)
+linker.visualisations.waterfall_chart(records_to_plot)
+```
+
+</details>
+
+
+[^2]: It is possible in future this step will not be required because tooling will be able to do it automatically. For instance, the [cursor](https://cursor.com/) IDE allows indexing of docs of specific libraries.
+
+
+
+
+
+
