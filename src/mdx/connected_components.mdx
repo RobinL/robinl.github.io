@@ -1,0 +1,32 @@
+---
+title: "Connected components"
+post_date: "2024-09-21"
+code_url: "https://github.com/RobinL/visualise_cluster_algorithm"
+post_category: "probabilistic_linkage"
+prob_linkage_category: "tools"
+description: "A visualisation of how the connected components algorithm works"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+
+
+import ProbHomeNav from "../components/ProbHomeNav"
+import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
+
+import { SEO } from "../components/SEO"
+import { Link } from 'gatsby'
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+<ProbHomeNav />
+# Connected components
+
+See [here](https://www.robinlinacre.com/visualise_cluster_algorithm) for fullscreen, iFrame below.
+
+
+<iframe
+  src="https://www.robinlinacre.com/visualise_cluster_algorithm"
+  width="100%"
+  height="1000px"
+  style={{ border: 'none' }}
+  title="Connected Components Visualization"
+></iframe>
