@@ -9,31 +9,73 @@ code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/llm_short
 export { MDXLayout as default } from '../components/MDXLayout';
 import { SEO } from "../components/SEO"
 import Subtitle from "../components/Subtitle.jsx"
-
+import { Link } from "gatsby"
 
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
-# Two years of using LLMs: Current thoughts and reflections
+# Further thoughts on the short term impact of LLMs
 
-<Link to="/thoughts/two_years_of_llms_initial_thoughts">
-    Updating some initial impressions
-</Link>
+I've been usng LLMs intensely for two years now.  This post contains my current thoughts about their impact, around a year on from my <Link to="../llm_short_term_thoughts_questions"> previous post</Link>.
 
-I've been usng LLMs intensely for two years now.  This post contains my current thoughts about their impact, around a year on from my <Link>previous post</Link>
+### Knowlege workers will increasingly intermediate information through LLMs, rather than directly reading it
 
-## Summary
+This pattern is emerging in multiple applications, and I find it genuinely useful.  For example, Office 365 Copilot and Apple Intelligence are starting to summarise emails.  ChatGPT Search and [Perplexity](https://www.perplexity.ai/) intermediate between web pages and the reader.  Custom GPTs and Claude Projects both allow you to chat with a knowledgebase. In the year since I last <Link to="../llm_short_term_thoughts_questions">mentioned it</Link>, it feels like this has gone from a likely future development to real, working tech that's well on the path to being widespread.
 
-- I <Link>continue to think</Link> that knowlege workers will increasingly intermediate information through LLMs, rather than directly reading it.
+In the short term, fairly straightforward extensions of this are likely to be team and corporate knowledge bases that are accessed thought a chat interface.  I'm starting to wish that all the teams I work in had a person curating the team knowledge into context for an LLM to give me easier access. I have done this for my work work [here](https://moj-analytical-services.github.io/splink/topic_guides/llms/prompting_llms.html).  A year ago, this did not work well at all.  Now it's pretty good - due to a combination of longer context models and improvements in RAG implementations.
+
+### LLMs' coding abilities will improve faster than general abilities
+
+Over the past year there has been dramatic progress in the utility of LLMs to software developers, both in terms of the qualtity of models, and their integration with programming tools (e.g. [Cursor](https://www.cursor.com/) with Sonnet 3.5).
+
+Whether [scaling is over](https://futurism.com/the-byte/openai-diminishing-returns) or not, it's likely LLMs' coding ability will improve faster than general abilities, since there's a [close feedback loop](https://lexfridman.com/cursor-team-transcript/#chapter17_synthetic_data). The models themselves help developers quickly integrate them into programming tools, enabling a virtuous cycle of improvement.
+
+I see this trend continuing.  Increasingly the skill of software development will be mostly the ability to precisely describe the desired functionality, and to arbiter the quality of code outputted by the LLM and iteratively improve it. This has always been the hard part of software development, so the impact is more limited than it first appears, but it does lead to significantly increased pace of delivery and smaller teams.
+
+One key benefit is that working prototypes are much quicker, so mapping out the space of ideas, and iteratively improving is much faster.
 
 - LLMs provide something of an all-purpose tool for knowledge workers.  Some killer 'universal applications' may emerge, but much of their value is in personalised, individual use cases that users tailor to their individual jobs and ways of working. As a result, it takes time and conscious effort for people to learn how to use them effectively.
 
-- Whether [scaling is over](https://futurism.com/the-byte/openai-diminishing-returns) or not, it's likely their coding ability will improve faster than general abilities, since there's such a close feedback loop.
 
-- Over the past year there has been dramatic progress in the utility of LLMs to software developers, both in terms of the qualtity of models, and their integration with programming tools.  I see this trend continuing.  Increasingly the skill of software development will be mostly the ability to precisely describe the desired functionality, and to arbiter the quality of output. This actually changes the job of software development very little, except to increase the pace of delivery and reduce the necssary team size.
+### LLMs for education will deliver ed-tech that's always been promised
 
-- I'm convinced that applications for education are transformative.  Software has forever promised to offer personalised learning experiences and underdelivered. Even in its current state, Open AI's Advanced Voice Mode often explains things better than I can to my 6 year old.
+I'm convinced that applications for education are transformative.
+
+Since I was in school over 20 years ago, software has promised to offer personalised learning experiences and underdelivered.
+
+Even in its current state, Open AI's Advanced Voice Mode often explains things better than I can to my 6 year old.  Sure, it makes mistakes, but so do teachers.
+
+It seems likely these capabilities will develop in multiple dimensions, and the end result will be an expert personal tutor for all children:
+
+- LLMs need to develop better long term memories of past conversations. Closely related, models need to be customised to be aware of curriculums and prerequisite knowledge.
+- Advanced Voice Mode needs web search capabilities (or the ability to work with a knowledgebase)
+- Models need to improve their multimodal capabilities - the ability to output diagrams and graphics in particular.
+
+All of these seems like iterative improvements on echnisting tech rather than requireing new breakthroughts.
+
+### Less certain capabilities
 
 
+
+
+### Where's the value now?
+
+-
+- I think I'm about 50% more productive when working on programming tasks when using Cursor + Sonnet 3.5 vs. coding with no LLM
+
+### Where's the value likely to be soon?
+
+I think it's impossible to predict just how good LLMs will get, but the capabilities I think are very likely to emerge in the next two years are:
+
+
+- Effective computer use - e.g. filling out a PDF form, putting in a request to the IT catalogue
+- LLMs will begin to write PRs in response to Github issues.  Starting with small PRs to precisely described is
+- The ability to hold whole codebases in context
+- Agentic behavior in code editors
+
+
+
+----
+##
 
 It remains fairly disorganised, but I've written thoughts in three themes:
 
