@@ -1,0 +1,74 @@
+---
+title: "The emerging impact of LLMs on productivity"
+post_date: "2024-12-08"
+post_category: "data"
+description: "The emerging impact of LLMs on productivity"
+code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/two_years_of_llms.mdx"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+import Subtitle from "../components/Subtitle.jsx"
+import { Link } from "gatsby"
+
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+# The emerging impact of LLMs on productitivity
+
+This post contains reflections on the impact of LLMs after two years of <Link to="../llm_short_term_thoughts_questions"> intensive use</Link>.  I cover three areas where I've found them most useful, and how capabilities in these area may improve in the short term:
+
+1. Intermediating information to present it in easier to use format
+2. Writing code
+3. Education and personalised tutoring
+
+### 1. Knowlege workers will increasingly intermediate information through LLMs, rather than directly reading it
+
+This pattern is emerging in multiple applications, and I find it genuinely useful.  For example, [ChatGPT Search](https://openai.com/index/introducing-chatgpt-search/) and [Perplexity](https://www.perplexity.ai/) intermediate between web pages and the reader.  Office 365 Copilot and Apple Intelligence summarise emails.  Custom GPTs and Claude Projects both allow you to chat with a knowledgebase. In the year since I last <Link to="../llm_short_term_thoughts_questions">mentioned it</Link>, it feels like this has gone from a likely future development to real, working tech that's well on the path to being widespread.
+
+A straightforward extensions of this which is already emerging is that team and corporate knowledge bases will be accessed thought a chat interface.
+
+I have done this for my work work [here](https://moj-analytical-services.github.io/splink/topic_guides/llms/prompting_llms.html). In the space of a year, this has gone from not working at all to being pretty good. The improvement seems due to a combination of longer context models and improvements in RAG implementations.  In the longer term, I imagine this will largely be automated, and the knowledebase will be able to include pretty much all team communications - Slack, emails, video calls, presentations and so on.
+
+For now, I'm starting to wish that all the teams I work in had a person curating the team's knowledge into context document that I can provide to an LLM.
+
+### 2. LLMs' coding abilities will improve faster than their general abilities
+
+Over the past year there has been dramatic progress in the utility of LLMs to software developers, both in terms of the quality of models, and their integration with programming tools (e.g. [Cursor](https://www.cursor.com/) with Sonnet 3.5).
+
+Whether [scaling is over](https://futurism.com/the-byte/openai-diminishing-returns) or not, it's likely LLMs' coding ability will improve faster than their general abilities, since there's a [close feedback loop](https://lexfridman.com/cursor-team-transcript/#chapter17_synthetic_data). In addition, the models themselves help developers quickly integrate them into programming tools.
+
+I see this trend continuing.  Increasingly the skill of software development will be mostly the ability to precisely describe the desired functionality, and to arbiter the quality of code outputted by the LLM and iteratively improve it. This has always been the hard part of software development, so the impact is more limited than it first appears, but it does lead to significantly increased pace of delivery and smaller teams.
+
+One key benefit is that working prototypes are much quicker to develop, so mapping out the space of ideas, and iteratively improving is much faster.
+
+### 3. LLMs for education will deliver the ed-tech dream that's always been promised
+
+Since I was in school over 20 years ago, software has always promised to radically improve education by offering personalised to match students' abilities. But until now it's massively underdelivered.  I think that's now changing.
+
+Even in its current state, Open AI's [Advanced Voice Mode](https://help.openai.com/en/articles/8400625-voice-mode-faq) often explains things better than I can to my 6 year old.  It tailors its answers effectively to his ability.  Sure, it makes mistakes, but so do I.
+
+It seems likely these capabilities will develop in multiple dimensions, resulting in an expert personal tutor for all children:
+
+- LLMs need to develop better long term memories of past conversations. Closely related, models need to be customised to be aware of curriculums, prerequisite knowledge, and children's current abilities.
+- Advanced Voice Mode needs web search capabilities, or the ability to work from a knowledgebase or long-context prompt.
+- Models need to improve their multimodal capabilities - the ability to output diagrams and graphics in particular.
+
+I'm optimistic about this because these feel like iterative improvements on existing tech rather than requireing new breakthroughts.
+
+To be clear, from my experience using these tools with my kids, I don't think this eliminates the need for teachers. I do think it empower teachers to be much more effective.  As with most other uses of LLMs, it requires practice and effort to learn how to use them well, and the way in which teachers will use them are probably personal to their style.
+
+### Where's more value likely to emerge be soon?
+
+It's impossible to predict just how good LLMs will get, but I'm particularly excited about the possibility of more agentic behaviour and computer use - a few examples:
+
+- Agentic behavior in code editors - e.g. the ability to run a debugger to iteratively detect and fix problems
+- Effective computer use - e.g. filling out a PDF forms, doing annoying jobs like filling out and expenses sheet
+- LLMs will begin to write PRs in response to Github issues.
+
+### Final thoughts
+
+Overall, given how useful LLMs already are to my effectiveness at work, it's difficult for me to imagine them not having substantial economy-wide impacts in the long run.  However, I think adoption will be slow.   Some killer 'universal applications' may emerge, but much of their value is in personalised, individual use cases that users tailor to their individual jobs and ways of working. As a result, it takes time and conscious effort for people to learn how to use them effectively.  So in the short term, I think we'll continue to see them [everywhere except in the producivity stats](https://www.brookings.edu/articles/the-solow-productivity-paradox-what-do-computers-do-to-productivity/).
+
+
+
+
