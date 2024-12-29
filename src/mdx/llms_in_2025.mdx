@@ -1,0 +1,95 @@
+---
+title: "The emerging impact of LLMs on my productivity"
+post_date: "2024-12-08"
+post_category: "data"
+description: "The emerging impact of LLMs on productivity"
+code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/two_years_of_llms.mdx"
+post_latest_update: "2024-12-19"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+import Subtitle from "../components/Subtitle.jsx"
+import { Link } from "gatsby"
+
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+# AI probably won’t replace me in 2025
+
+## My metal model of LLMs and how to use them effectively
+
+The results from LLM benchmarks contain an apparent paradox: How can models have PhD level performance but often fail at seemingly straightforward tasks? How is it possible that these models can outperform most humans on standardised tests, yet many people do not find them useful?
+
+Even as a [prolific user](https://www.robinlinacre.com/two_years_of_llms/), I often find LLMs frustrating.  It feels like I’m not using them quite right, and if I could somehow [improve my prompts](https://bsky.app/profile/simonwillison.net/post/3leabrc7ygc2c) I’d be able to solve [whole problems in one shot](https://x.com/dwarkesh_sp/status/1871500089711382757), rather than the [highly iterative](https://www.linkedin.com/posts/robinlinacre_a-students-guide-to-writing-with-chatgpt-activity-7262837812347944963-ad5g?utm_source=share&utm_medium=member_desktop)  approach I currently rely on.
+
+The underlying issue is that LLMs have a very different skills profile to humans.  Only by understanding their relative strengths and weaknesses can we use them effectively. But benchmarks map out only a small and biased fraction of this landscape[^1], so it is up to the user to uncover the rest.
+
+In this post I set out my mental model of LLMs and the heuristics I use to figure out when and how to use them effectively.   I finish with some conclusions about what this implies about how they may evolve in 2025\.
+
+### The Mental Model I have of LLMs’ skills
+
+In basic conversations LLMs are able to imitate humans, so it’s easy to mistakenly assume that we can ‘treat them’ as human helpers. But LLMs’ skills are not human-like at all.
+
+Instead, when I think about their skills, I imagine a radar diagram a bit like this:
+![][image1]
+
+The human an all-rounder[^2] whereas the AI’s skills are very spiky: it’s really bad at some things, but vastly superior at others.  This also helps illustrate why I think at the moment, LLMs mostly complement human abilities rather than replace them \- at least for the kind of data science and data engineering work I do.
+
+To give some example of the user experience \- at least from using frontier models in December 2024:
+
+- LLMs have superhuman knowledge
+- They have superhuman speed of content creation
+- LLMs have highly unpredictable power of reasoning, sometimes superhuman, sometimes almost [non-existent](https://arcprize.org/)[^3].
+- They frequently makes ‘obvious’ errors (sometimes [misleadingly](https://x.com/karpathy/status/1733299213503787018) called hallucinations)
+- They usually aren’t able to check their answer, or quantify their confidence in the answer.
+- When given new information, they can’t make connections that require logical leaps.
+- They ‘understand’ structure and can tirelessly follow precise instructions at scale
+
+### Overall, a reasonable mental model is that LLMS interpolate imperfectly over existing knowledge.  For instance, they’re unlikely to combine information from different fields to generate new insights, but they probably can adapt existing knowledge to your context.
+
+Much of this is fairly well understood, but one interesting aspect is that recent improvements seem to be concentrated in areas the LLMs are already very good at.  The overall usefulness increases at a slower rate because the bottlenecks dominate.
+
+So what are the key bottlenecks limiting the usefulness of LLMS in my work?
+
+### LLMs lack context
+
+Many professional decisions are heavily constrained and dependent on vast amounts of institutional context that LLMs do not have.
+
+For example, whilst a piece of software may be relatively straightforward to implement in an unconstrained environment, in an institutional context it may have to align with architectural principles, conform to a range of existing APIs, and so on.
+
+In addition, the depth of an LLM’s reasoning ability is likely to be greater on pre-training data than on data provided as part of context. Whilst recall can be good, I’ve had [mixed success](https://moj-analytical-services.github.io/splink/topic_guides/llms/prompting_llms.html) in working with long context models.
+
+As a result, it’s useful to consider how much context is required to help with the task at hand, and whether it’s likely to be feasible to provide it.  Sometimes the task of assembling the context can be more costly than simply doing the task yourself.
+
+Overall, I think that one of the greatest sources of frustration with LLMs is when users fail to recognise they haven’t provided enough information to perform the task.
+
+### Humans often do not know what they want
+
+A final issue is that LLMs can only help insofar as the human prompting them is .
+
+In my experience, the human is the main bottleneck here and much of the time is spent in thinking carefully about what you want.  This isn’t really something LLMs can currently help with much.
+
+One of the best prompting strategies is to provide the LLM with examples of input/output.
+
+But I’ve found that the human is the bottleneck here.
+
+The task you’re trying to solve is often defining the problem.
+
+A good example of the amount of effort that can be needed to get good results  is [here](https://gist.github.com/dwarkeshsp/65c232298781c86b33f5e32065152f1e).
+
+## What this may mean for LLMs in 2025
+
+The announcement of o3’s better \- though still apparently fairly poor \- reasoning abilities suggests to me even if this constraint is released:
+
+-
+
+I think it’s plausible that LLMs may start making substantive contributions to significant scientific breakthroughs, whilst remaining seemingly quite stupid to everyday users.
+
+#### I suspect the trend will continue that LLMs  will get better at the things they’re already good at, but I anticipate relatively slow progress in the other areas.  For most users, this means they will not get that much better.
+
+[^1]:  They focus on areas where performance can be quantified, but since LLMs can be more easily trained on problems where performance is measurable, this gives a biased picture of performance.
+
+[^2]:  It’s important to distinguish skills from knowledge. For general knowledge, the LLM is clearly a better all-rounder.
+
+[^3]:  On completely novel problems, it’s reasoning powers are almost non existent (see the [ARC benchmark](https://arcprize.org/)).  But in real-world usage, you’re often asking it to solve problem that are novel to you, but other humans have solved, and so it appears to be good at it.  The problem is that it’s difficult to know which problems are novel and which are not.
+
