@@ -10,6 +10,8 @@ export { MDXLayout as default } from '../components/MDXLayout';
 import { SEO } from "../components/SEO"
 import Subtitle from "../components/Subtitle.jsx"
 import { Link } from "gatsby"
+import { Vega } from "react-vega"
+import skills from "./llms_in_2025/skills.vg.json"
 
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
@@ -32,7 +34,7 @@ In this post I set out my mental model of LLMs and the heuristics I use to figur
 In basic conversations LLMs are able to imitate humans, so it's easy to mistakenly treat them like a human helper. But LLMs' skills are not human-like at all.
 
 Instead, when I think about their skills, I imagine a radar diagram a bit like this:
-![][image1]
+<Vega spec={skills} />
 
 The human is an all-rounder[^1], whereas the AI's skills are very spiky: it's really bad at some things, but vastly superhuman at others.  The upshot is that at the moment, LLMs mostly complement human abilities rather than replace them—at least for the kind of data science and data engineering work I do.
 
@@ -76,7 +78,7 @@ Humans often do not know what they want. This may not initially seem like a flaw
 - LLMs do not know what is possible and what is not.  They will often attempt a solution for something that, with careful thought, is impossible, sending the user into an infinite loop of unsatisfactory answers and attempts to refine the prompt.
 - A lot of the process of knowledge work is defining precisely what work needs to be done. This is a highly iterative process, and requires a human to understand new information. Without agentic LLMs, this process still needs to be driven by a human, and however fast the LLM works, the human has to understand its answers before moving to the next step. LLMs can be verbose and not great at pinpointing the key information the human needs to make a decision
 
-That said, I think it's often underappreciated just how much the quality of results can change depending on the quality of the prompt.  A good example of the amount of effort that can be needed to get good results  is [here](https://gist.github.com/dwarkeshsp/65c232298781c86b33f5e32065152f1e) and see also \[latent space link here\].
+That said, I think it's often underappreciated just how much the quality of results can change depending on the quality of the prompt.  A good example of the amount of effort that can be needed to get good results is [here](https://gist.github.com/dwarkeshsp/65c232298781c86b33f5e32065152f1e) and see also [here](https://www.latent.space/p/learn-prompting).
 
 ### Reasoning
 
@@ -127,5 +129,3 @@ Here are some articles I've found interesting in shaping my thoughts:
 [^3]:  Certainly in the past year, I can think of several 'aha' moments when colleagues have either suggested an idea, or identified a problem \- where a previously difficult problem suddenly becomes clear
 
 [^4]:  To be clear, I fall into this trap all the time; I'm far from some sort of (probably apocryphal) superuser who's able to consistently get great results.
-
-[image1]: <data:image/png;base64,iVBORw0KGgoAAAA=>
