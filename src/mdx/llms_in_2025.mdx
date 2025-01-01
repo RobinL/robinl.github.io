@@ -43,11 +43,11 @@ To give some example of the user experience \- from my use of frontier models in
 - LLMs have superhuman knowledge
 - They have superhuman speed of content creation
 - They often 'understand' structure and can accurately (but not infallibly) follow precise instructions
-- They have highly unpredictable power of reasoning, sometimes superhuman, sometimes almost [non-existent](https://arcprize.org/)[^2]. (At least from what I've seen, this is better understood as powerful pattern matching rather than reasoning.)
+- They have highly unpredictable power of reasoning, sometimes superhuman, sometimes almost [non-existent](https://arcprize.org/)[^2]. (At least from what I've seen, this is better understood as powerful pattern matching rather than reasoning)
 - They frequently make 'obvious' errors (sometimes [misleadingly](https://x.com/karpathy/status/1733299213503787018) called hallucinations)
 - They don't know what they're capable of
-- They usually aren't able to quantify their confidence in the answer and won't usually seek clarification if you ask them something improbable.
-- When given new information, they often can't make connections that require logical leaps.
+- They usually aren't able to quantify their confidence in the answer and won't usually seek clarification if you ask them something improbable
+- When given new information, they often can't make connections that require logical leaps
 
 Overall, the mental model I often come back to is that LLMS interpolate imperfectly over existing knowledge.  When it comes to knowledge, they are a specialist in all subjects, and if they've seen a similar problem before they'll likely be useful.  But they're unlikely to combine information from different fields to generate new insights.
 
@@ -67,7 +67,7 @@ For example, whilst a piece of software may be relatively straightforward to imp
 
 In addition, the depth of an LLM's reasoning ability is likely to be greater on pre-training data than on in-context data. In my experience, whilst recall of in-context data can be good, I've had [limited success](https://moj-analytical-services.github.io/splink/topic_guides/llms/prompting_llms.html) in getting truly insightful answers from long-context models, either via automated RAG (like custom GPTs) or just putting the whole knowledgebase into long-context models.
 
-At the moment, I find that simply managing the information relevant to a decision is often too burdensome a task for the LLM to add value.  For run-of-the-mill corporate applications I don't foresee progress in this area will be very rapid as information is too disparate, or written down at all, and human curation is very time consuming.   I don't get the sense we're close to systems that can automatically manage this, and then use it intelligently.
+At the moment, I find that simply managing the information relevant to a decision is often too burdensome a task for the LLM to add value.  For run-of-the-mill corporate applications I don't foresee progress in this area will be very rapid as information is too disparate, or not written down at all, and human curation is very time consuming.   I don't get the sense we're close to systems that can automatically manage this, and then use it intelligently.
 
 Conversely, for very high value applications I can imagine, in the short term, humans will be employed to manage context and fine tune models.
 
@@ -75,7 +75,7 @@ Conversely, for very high value applications I can imagine, in the short term, h
 
 Humans often do not know what they want. This may not initially seem like a flaw with the LLM, but on closer thought, the weaknesses of LLMs amplify the problem.
 
-- LLMs do not know what is possible and what is not.  They will often attempt a solution for something that, with careful thought, is impossible, sending the user into an infinite loop of unsatisfactory answers and attempts to refine the prompt.
+- LLMs do not know what is possible and what is not.  They will often attempt a solution for something that, with careful thought, is impossible, sending the user into an infinite loop of unsatisfactory answers and attempts to refine the prompt
 - A lot of the process of knowledge work is defining precisely what work needs to be done. This is a highly iterative process, and requires a human to understand new information. Without agentic LLMs, this process still needs to be driven by a human, and however fast the LLM works, the human has to understand its answers before moving to the next step. LLMs can be verbose and not great at pinpointing the key information the human needs to make a decision
 
 That said, I think it's often underappreciated just how much the quality of results can change depending on the quality of the prompt.  A good example of the amount of effort that can be needed to get good results is [here](https://gist.github.com/dwarkeshsp/65c232298781c86b33f5e32065152f1e) and see also [here](https://www.latent.space/p/learn-prompting).
@@ -126,6 +126,6 @@ Here are some articles I've found interesting in shaping my thoughts:
 
 [^2]:  On completely novel problems, its reasoning powers are almost non existent (see the [ARC benchmark](https://arcprize.org/)).  But in real-world usage, you're often asking it to solve problem that are novel to you, but other humans have solved, and so it appears to be good at it.  The problem is that it's difficult to know which problems are novel and which are not.
 
-[^3]:  Certainly in the past year, I can think of several 'aha' moments when colleagues have either suggested an idea, or identified a problem \- where a previously difficult problem suddenly becomes clear
+[^3]:  Certainly in the past year, I can think of several 'aha' moments when colleagues have either suggested an idea, or identified a problem \- where a previously difficult problem suddenly becomes clear.  I can't think of a real eurika moment I've had from an LLM.
 
 [^4]:  To be clear, I fall into this trap all the time; I'm far from some sort of (probably apocryphal) superuser who's able to consistently get great results.
