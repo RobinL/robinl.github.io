@@ -4,6 +4,7 @@ post_date: "2025-01-01"
 post_category: "data"
 description: "My mental model of LLMs, their strengths and shortcomings"
 code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/llms_in_2025.mdx"
+post_latest_update: "2025-01-02"
 ---
 
 export { MDXLayout as default } from '../components/MDXLayout';
@@ -19,13 +20,13 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 
 <Subtitle>My mental model of LLMs, their strengths and shortcomings</Subtitle>
 
-The results from LLM benchmarks contain an apparent paradox: How can models have PhD-level performance but often fail at seemingly straightforward tasks? Why do many people not find them useful?
+The results from LLM benchmarks contain an apparent paradox: How can models have PhD-level performance but often fail at seemingly straightforward tasks to the extent that many people don't find them useful?
 
-Even as a [prolific user](https://www.robinlinacre.com/two_years_of_llms/), I often find LLMs frustrating.  It feels like I'm not using them quite right, and if I could somehow [improve my prompts](https://bsky.app/profile/simonwillison.net/post/3leabrc7ygc2c) I'd be able to solve [whole problems in one shot](https://x.com/dwarkesh_sp/status/1871500089711382757), rather than the  [iterative](https://www.linkedin.com/posts/robinlinacre_a-students-guide-to-writing-with-chatgpt-activity-7262837812347944963-ad5g?utm_source=share&utm_medium=member_desktop)  approach I rely on.
+Even as a [prolific user](https://www.robinlinacre.com/two_years_of_llms/), I often find LLMs frustrating.  It feels like I'm not using them right, and if I could somehow [improve my prompts](https://bsky.app/profile/simonwillison.net/post/3leabrc7ygc2c) I'd be able to solve [whole problems in one shot](https://x.com/dwarkesh_sp/status/1871500089711382757), rather than the  [iterative](https://www.linkedin.com/posts/robinlinacre_a-students-guide-to-writing-with-chatgpt-activity-7262837812347944963-ad5g?utm_source=share&utm_medium=member_desktop)  approach I rely on.
 
 The underlying issue is that LLMs have a very different skill profile from humans. Only by understanding their relative strengths and weaknesses can we use them effectively.
 
-But there's no simple rule or shortcut to developing this understanding. Benchmarks map out only a small and biased fraction of their capabilities, so it is up to the user to uncover the rest.
+But there's no simple rule or shortcut to developing this understanding. Benchmarks map out [only a small](https://x.com/OfficialLoganK/status/1874903855848362297) and biased fraction of their capabilities, so it is up to the user to uncover the rest.
 
 In this post I set out my mental model of LLMs and the heuristics I use to figure out when and how to use them effectively.   I finish with some conclusions about what this implies about how they may evolve in 2025\.
 
@@ -43,7 +44,7 @@ To give some example of the user experience \- from my use of frontier models in
 - LLMs have superhuman knowledge
 - They have superhuman speed of content creation
 - They often 'understand' structure and can accurately (but not infallibly) follow precise instructions
-- They have highly unpredictable power of reasoning, sometimes superhuman, sometimes almost [non-existent](https://arcprize.org/)[^2]. (At least from what I've seen, this is better understood as powerful pattern matching rather than reasoning)
+- They have highly unpredictable power of reasoning, sometimes superhuman, sometimes almost [non-existent](https://arcprize.org/)[^2]. (This is perhaps better understood as powerful pattern matching rather than reasoning)
 - They frequently make 'obvious' errors (sometimes [misleadingly](https://x.com/karpathy/status/1733299213503787018) called hallucinations)
 - They don't know what they're capable of
 - They usually aren't able to quantify their confidence in the answer and won't usually seek clarification if you ask them something improbable
@@ -101,7 +102,7 @@ Whilst this suggests LLMs may be undervalued, it's useful to think of examples t
 
 ## What this may mean for LLMs in 2025
 
-LLMs are difficult to work with because they are not human-like, I think they're going to [get even stranger](https://x.com/emollick/status/1874432586677895645) as their performance gets more spikey.  Rapid progress will continue in their areas of strength, but progress will continue to be slow in other areas.  For most users, this means they will not 'seem' that much better, but their performance will be vastly superhuman in an increasing number of areas.
+LLMs are difficult to work with because they are not human-like, I think they're going to [get even stranger](https://x.com/emollick/status/1874432586677895645) as their performance gets more spiky.  Rapid progress will continue in their areas of strength, but progress will continue to be slow in other areas.  For most users, this means they will not 'seem' that much better, but their performance will be vastly superhuman in an increasing number of areas.
 
 To give an example, it's plausible that LLMs may start making substantive contributions to scientific breakthroughs, whilst remaining seemingly quite stupid to everyday users.
 
