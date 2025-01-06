@@ -4,7 +4,7 @@ post_date: "2025-01-01"
 post_category: "data"
 description: "My mental model of LLMs, their strengths and shortcomings"
 code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/llms_in_2025.mdx"
-post_latest_update: "2025-01-02"
+post_latest_update: "2025-01-06"
 ---
 
 export { MDXLayout as default } from '../components/MDXLayout';
@@ -20,9 +20,9 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 
 <Subtitle>My mental model of LLMs, their strengths and shortcomings</Subtitle>
 
-The results from LLM benchmarks contain an apparent paradox: How can models have PhD-level performance but often fail at seemingly straightforward tasks to the extent that many people don't find them useful?
+The results from LLM benchmarks contain an apparent paradox: How can models show PhD-level performance when in practice, they often fail at seemingly straightforward tasks?
 
-Even as a [prolific user](https://www.robinlinacre.com/two_years_of_llms/), I often find LLMs frustrating.  It feels like I'm not using them right, and if I could somehow [improve my prompts](https://bsky.app/profile/simonwillison.net/post/3leabrc7ygc2c) I'd be able to solve [whole problems in one shot](https://x.com/dwarkesh_sp/status/1871500089711382757), rather than the  [iterative](https://www.linkedin.com/posts/robinlinacre_a-students-guide-to-writing-with-chatgpt-activity-7262837812347944963-ad5g?utm_source=share&utm_medium=member_desktop)  approach I rely on.
+Even as a [prolific user](https://www.robinlinacre.com/two_years_of_llms/), I often find LLMs frustrating.  It feels like I'm not using them right, and if I could somehow [improve my prompts](https://bsky.app/profile/simonwillison.net/post/3leabrc7ygc2c) I'd be able to solve whole problems in one shot rather than the iterative approach I rely on.
 
 The underlying issue is that LLMs have a very different skill profile from humans. Only by understanding their relative strengths and weaknesses can we use them effectively.
 
@@ -32,17 +32,17 @@ In this post I set out my mental model of LLMs and the heuristics I use to figur
 
 ### The Mental Model I have of LLMs' skills
 
-In basic conversations LLMs are able to imitate humans, so it's easy to treat them like a human helper. But this is a mistake because LLMs' skills are not human-like at all.
+In basic conversations LLMs are able to imitate humans, so it's natural to treat them like a human helper. But this is a mistake because LLMs' skills are not human-like at all.
 
 Instead, when I think about their skills, I imagine a radar diagram a bit like this:
 <Vega spec={skills} />
 
 The human is an all-rounder[^1], whereas the AI's skills are very spiky: it's really bad at some things, but vastly superhuman at others.  The upshot is that at the moment, LLMs mostly complement human abilities rather than replace them — at least for the kind of data science and data engineering work I do.
 
-To give some example of the user experience \- from my use of frontier models in December 2024:
+To give some examples of the user experience - from my use of frontier models in December 2024:
 
 - LLMs have superhuman knowledge
-- They have superhuman speed of content creation
+- They create content at superhuman speed
 - They often 'understand' structure and can accurately (but not infallibly) follow precise instructions
 - They have highly unpredictable power of reasoning, sometimes superhuman, sometimes almost [non-existent](https://arcprize.org/)[^2]. (This is perhaps better understood as powerful pattern matching rather than reasoning)
 - They frequently make 'obvious' errors (sometimes [misleadingly](https://x.com/karpathy/status/1733299213503787018) called hallucinations)
@@ -50,15 +50,15 @@ To give some example of the user experience \- from my use of frontier models in
 - They usually aren't able to quantify their confidence in the answer and won't usually seek clarification if you ask them something improbable
 - When given new information, they often can't make connections that require logical leaps
 
-Overall, the mental model I often come back to is that LLMs interpolate imperfectly over existing knowledge.  They have specialist knowledge of all subjects, and if they've seen a similar problem before they'll likely be useful.  But they're unlikely to combine information from different fields to generate new insights.
+Overall, the mental model I often come back to is that LLMs interpolate imperfectly over existing knowledge.  They have broad and deep knowledge of a huge range of subjects, and if they've seen a similar problem before they'll likely be useful.  But they're unlikely to combine information from different fields to generate new insights.
 
 ### Why LLMs don't look set to replace me imminently
 
 Much of the above  is fairly well understood, but I'd like to dig into the implications of this skills profile and why current-generation LLMs fall a long way short of replacing my job (a data scientist and [FOSS maintainer](http://github.com/moj-analytical-services/splink)).
 
-In  a nutshell the answer is that, if LLMs' skills are spiky and some skills remain very underdeveloped, these become bottlenecks.  Furthermore, progress has tended to be most rapid in areas of existing competence, whereas progress in the 'bottleneck' areas seems relatively slow. So the bottlenecks increasingly dominate the sense of overall progress.
+In  a nutshell the answer is that, if LLMs' skills are spiky and some skills remain very underdeveloped, these become bottlenecks.  Furthermore, progress has tended to be most rapid in areas of existing competence, whereas progress in the bottleneck areas seems relatively slow. So the bottlenecks increasingly dominate the sense of overall progress.
 
-So what are these bottlenecks, and when is it time to close ChatGPT and think for yourself?
+So what are these bottlenecks, and when should we think for ourselves rather than reaching for a chatbot?
 
 ### LLMs lack context
 
@@ -66,7 +66,7 @@ Many professional decisions are heavily constrained and dependent on vast amount
 
 For example, whilst a piece of software may be relatively straightforward to implement in an unconstrained environment, in an institutional context it may have to align with architectural principles, conform to a range of existing APIs, and so on.
 
-In addition, an LLM's reasoning ability is likely to be greater on pre-training data than on in-context data. In my experience, whilst recall of in-context data can be good, I've had [limited success](https://moj-analytical-services.github.io/splink/topic_guides/llms/prompting_llms.html) in getting truly insightful answers from long-context models, either via automated RAG (like custom GPTs) or just putting the whole knowledgebase into long-context models.
+In addition, an LLM's reasoning ability is likely to be greater on pre-training data than on in-context data. In my experience, whilst recall of in-context data can be good, I've had [limited success](https://moj-analytical-services.github.io/splink/topic_guides/llms/prompting_llms.html) in getting truly insightful answers from long-context models, either via automated RAG (like custom GPTs) or just putting the whole knowledgebase into context.
 
 At the moment, I find that simply managing the information relevant to a decision is often too burdensome a task for the LLM to add value.  For run-of-the-mill corporate applications I don't foresee progress in this area will be very rapid as information is too disparate, or not written down at all, and human curation is very time consuming.   I don't get the sense we're close to systems that can automatically manage this, and then use it intelligently.
 
@@ -76,8 +76,8 @@ Conversely, for very high value applications I can imagine, in the short term, h
 
 Humans often do not know what they want. This may not initially seem like a flaw with the LLM, but on closer thought, the weaknesses of LLMs amplify the problem.
 
-- LLMs do not know what is possible and what is not.  They will often attempt a solution for something that, with careful thought, is impossible, sending the user into an infinite loop of unsatisfactory answers and attempts to refine the prompt
-- A lot of the process of knowledge work is defining precisely what work needs to be done. This is a highly iterative process, and requires a human to understand new information. Without agentic LLMs, this process still needs to be driven by a human, and however fast the LLM works, the human has to understand its answers before moving to the next step. LLMs can be verbose and not great at pinpointing the key information the human needs to make a decision
+- LLMs do not know what is possible and what is not.  They will often attempt a solution for something that, with careful thought, is impossible, sending the user into an infinite loop of unsatisfactory answers and attempts to refine the prompt.  They probably won't tell you what you're trying to do is the wrong way of approaching the problem, or that the problem cannot be solved.
+- A lot of the process of knowledge work is defining precisely what the problem is. Often you only understand the problem after making several different attempts at solutions. This is a highly iterative process, and requires a human to understand new information. Without agentic LLMs, this process still needs to be driven by a human, and however fast the LLM works, the human has to understand its answers before moving to the next step. LLMs can be verbose and not great at pinpointing the key information the human needs to make a decision
 
 That said, I think it's often underappreciated just how much the quality of results can change depending on the quality of the prompt.  A good example of the amount of effort that can be needed to get good results is [here](https://gist.github.com/dwarkeshsp/65c232298781c86b33f5e32065152f1e) and see also [here](https://www.latent.space/p/learn-prompting).
 
@@ -95,7 +95,7 @@ Putting all of this together, I think you end up in a situation where a typical 
 
 Since the bottlenecks dominate many users' experience, it obscures the almost [unbelievable progress](https://www.youtube.com/watch?v=SKBG1sqdyIU&t=1s) at the other end of the spectrum: on things like symbolic maths and competitive programming that few users are chatting to LLMs about.
 
-Whilst this suggests LLMs may be undervalued, it's useful to think of examples that I think are currently way outside of LLMs capabilities to illustrate their real-life shortcomings.  Two recent examples have stuck in my mind are:
+Whilst this suggests LLMs may be undervalued, it's useful to think of examples that I think are currently way outside of LLMs capabilities to illustrate their real-life shortcomings.  Two recent examples that have stuck in my mind are:
 
 - [Moon by Bartosz Ciechanowski](https://ciechanow.ski/moon/) Such an article requires not just immense skill in computer programming, but deep thought about how to connect and present ideas.  In my mind, if a computer could produce such an article, I would consider it to be generally intelligent
 - John Burn-Murdoch's visualisations for the FT [e.g. here](https://x.com/jburnmurdoch/status/1641799627128143873). At first glance, he's good at data visualisation.  But on second thoughts, the primary skill is in collecting data and identifying interesting insights, the data visualisation is merely the icing on the cake.  Whilst I've seen LLMs analyse data and produce charts, they currently seem to have no capability of identifying and presenting interesting insights.
@@ -125,8 +125,8 @@ Here are some articles I've found interesting in shaping my thoughts:
 
 [^1]:  It's important to distinguish skills from knowledge. For general knowledge, the LLM is clearly a better all-rounder.
 
-[^2]:  On completely novel problems, its reasoning powers are almost non existent (see the [ARC benchmark](https://arcprize.org/)).  But in real-world usage, you're often asking it to solve problem that are novel to you, but other humans have solved, and so it appears to be good at it.  The problem is that it's difficult to know which problems are novel and which are not.
+[^2]:  On completely novel problems, its reasoning powers are almost non existent (see the [ARC benchmark](https://arcprize.org/)).  But in real-world usage, you're often asking it to solve problems that are novel to you, but other humans have solved, and so it appears to be good at it.  The problem is that it's difficult to know which problems are novel and which are not.
 
-[^3]:  Certainly in the past year, I can think of several 'aha' moments when colleagues have either suggested an idea, or identified a problem \- where a previously difficult problem suddenly becomes clear.  I can't think of a real eurika moment I've had from an LLM.
+[^3]:  Certainly in the past year, I can think of several 'aha' moments when colleagues have either suggested an idea, or identified a problem \- where a previously difficult problem suddenly becomes clear.  I can't think of a real eureka moment I've had from an LLM.
 
 [^4]:  To be clear, I fall into this trap all the time; I'm far from some sort of (probably apocryphal) superuser who's able to consistently get great results.
