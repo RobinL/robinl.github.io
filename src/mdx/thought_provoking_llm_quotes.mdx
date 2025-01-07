@@ -9,9 +9,9 @@ post_latest_update: "2025-01-07"
 
 export { MDXLayout as default } from '../components/MDXLayout';
 import { SEO } from "../components/SEO"
-import Subtitle from "../components/Subtitle.jsx"
+
 import { Link } from "gatsby"
-import { Vega } from "react-vega"
+
 
 
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
@@ -20,9 +20,13 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 
 > One very important thing to understand about the future: the economics of AI are about to change completely. We'll soon be in a world where you can turn test-time compute into competence -- for the first time in the history of software, marginal cost will become critical.  [François Chollet](https://x.com/fchollet/status/1870175296537907588),  Dec 20, 2024
 
-> Chat-driven programming. [...] It requires at least as much messing about to get value out of LLM chat as it does to learn to use a slide rule, with the added annoyance that it is a non-deterministic service that is regularly changing its behavior and user interface. Indeed, the long-term goal in my work is to replace the need for chat-driven programming, to bring the power of these models to a developer in a way that is not so off-putting. But as of now I am dedicated to approaching the problem incrementally, which means figuring out how to do best with what we have and improve it. [David Crawshaw](https://crawshaw.io/blog/programming-with-llms) 2025-01-06
+> Chat-driven programming. [...] It requires at least as much messing about to get value out of LLM chat as it does to learn to use a slide rule, with the added annoyance that it is a non-deterministic service that is regularly changing its behavior and user interface. Indeed, the long-term goal in my work is to replace the need for chat-driven programming, to bring the power of these models to a developer in a way that is not so off-putting. But as of now I am dedicated to approaching the problem incrementally, which means figuring out how to do best with what we have and improve it. [David Crawshaw, Former staff engineer at Google and co-founder/CTO of Tailscale.](https://crawshaw.io/blog/programming-with-llms) 2025-01-06
+
+> A lot of the value I personally get out of chat-driven programming is I reach a point in the day when I know what needs to be written, I can describe it, but I don’t have the energy to create a new file, start typing, then start looking up the libraries I need... LLMs perform that service for me in programming. They give me a first draft, with some good ideas, with several of the dependencies I need, and often some mistakes. Often, I find fixing those mistakes is a lot easier than starting from scratch. [David Crawshaw](https://crawshaw.io/blog/programming-with-llms) 2025-01-06
 
 > I think telling people that this whole field is environmentally catastrophic plagiarism machines that constantly make things up is doing those people a disservice, no matter how much truth that represents. There is genuine value to be had here, but getting to that value is unintuitive and needs guidance. [Simon Willison](https://simonwillison.net/2024/Dec/31/llms-in-2024/) Dec 31, 2024
+
+> A lot of better informed people have sworn off LLMs entirely because they can’t see how anyone could benefit from a tool with so many flaws. The key skill in getting the most out of LLMs is learning to work with tech that is both inherently unreliable and incredibly powerful at the same time. This is a decidedly non-obvious skill to acquire! [Simon Willison](https://simonwillison.net/2024/Dec/31/llms-in-2024/) Dec 31, 2024
 
 > General consensus in the replies and quotes of this seems to be that the entire concept of "AI skills" is a joke - how hard is typing text into a chatbot, really? I will continue to argue that it's genuinely difficult, and that the challenge in using these tools is widely underestimated  [Simon Willison](https://bsky.app/profile/simonwillison.net/post/3le7xzlt3ec2i) Dec 26th, 2024
 
@@ -33,3 +37,4 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 > Easy prediction for 2025 is that the gains in AI model capability will continue to grow much faster than (a) the vast majority of people’s understanding of what AI can do & (b) organizations’ ability to absorb the pace of change. Social change is slower than technological change.  [Ethan Mollick](https://x.com/emollick/status/1874431948766208374) Jan 1st 2025
 
 > The efficiency thing is really important for everyone who is concerned about the environmental impact of LLMs. These price drops tie directly to how much energy is being used for running prompts. There’s still plenty to worry about with respect to the environmental impact of the great AI datacenter buildout, but a lot of the concerns over the energy cost of individual prompts are no longer credible. [Simon Willison](https://simonwillison.net/2024/Dec/31/llms-in-2024/) Dec 31, 2024
+
