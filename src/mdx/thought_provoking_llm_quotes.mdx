@@ -1,0 +1,35 @@
+---
+title: "LLM links and quotes"
+post_date: "2025-01-07"
+post_category: "non_blog_post"
+description: "An assortment of quotes that I like"
+code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/llms_in_2025.mdx"
+post_latest_update: "2025-01-07"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+import Subtitle from "../components/Subtitle.jsx"
+import { Link } from "gatsby"
+import { Vega } from "react-vega"
+
+
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+# Assorted AI/LLM links and quotes
+
+> One very important thing to understand about the future: the economics of AI are about to change completely. We'll soon be in a world where you can turn test-time compute into competence -- for the first time in the history of software, marginal cost will become critical.  [François Chollet](https://x.com/fchollet/status/1870175296537907588),  Dec 20, 2024
+
+> Chat-driven programming. [...] It requires at least as much messing about to get value out of LLM chat as it does to learn to use a slide rule, with the added annoyance that it is a non-deterministic service that is regularly changing its behavior and user interface. Indeed, the long-term goal in my work is to replace the need for chat-driven programming, to bring the power of these models to a developer in a way that is not so off-putting. But as of now I am dedicated to approaching the problem incrementally, which means figuring out how to do best with what we have and improve it. [David Crawshaw](https://crawshaw.io/blog/programming-with-llms) 2025-01-06
+
+> I think telling people that this whole field is environmentally catastrophic plagiarism machines that constantly make things up is doing those people a disservice, no matter how much truth that represents. There is genuine value to be had here, but getting to that value is unintuitive and needs guidance. [Simon Willison](https://simonwillison.net/2024/Dec/31/llms-in-2024/) Dec 31, 2024
+
+> General consensus in the replies and quotes of this seems to be that the entire concept of "AI skills" is a joke - how hard is typing text into a chatbot, really? I will continue to argue that it's genuinely difficult, and that the challenge in using these tools is widely underestimated  [Simon Willison](https://bsky.app/profile/simonwillison.net/post/3le7xzlt3ec2i) Dec 26th, 2024
+
+> ARC is a silly benchmark, the other results in math and coding are much more impressive. o3 is just o1 scaled up, the main takeaway from this line of work that people should walk away with is that we now have a proven way to RL our way to super human performance on tasks where it’s cheap to sample and easy to verify the final output. Programming falls in that category, they focused on known benchmarks but the same process can be done for normal programs, using parsers, compilers, existing functions and unit tests as verifiers. Pre o1 we only really had next token prediction, which required high quality human produced data, with o1 you optimize for success instead of MLE of next token. [m_ke](https://news.ycombinator.com/item?id=42477766) 21st Dec 2024
+
+> The world needs [more, better, harder, etc] evals for AI. This is one of the most important problems of our lifetime, and critical for continual progress. [Logan Kilpatrick](https://x.com/OfficialLoganK/status/1874903855848362297) 2nd Jan 2025
+
+> Easy prediction for 2025 is that the gains in AI model capability will continue to grow much faster than (a) the vast majority of people’s understanding of what AI can do & (b) organizations’ ability to absorb the pace of change. Social change is slower than technological change.  [Ethan Mollick](https://x.com/emollick/status/1874431948766208374) Jan 1st 2025
+
+> The efficiency thing is really important for everyone who is concerned about the environmental impact of LLMs. These price drops tie directly to how much energy is being used for running prompts. There’s still plenty to worry about with respect to the environmental impact of the great AI datacenter buildout, but a lot of the concerns over the energy cost of individual prompts are no longer credible. [Simon Willison](https://simonwillison.net/2024/Dec/31/llms-in-2024/) Dec 31, 2024
