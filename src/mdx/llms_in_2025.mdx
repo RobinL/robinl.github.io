@@ -4,7 +4,7 @@ post_date: "2025-01-01"
 post_category: "data"
 description: "My mental model of LLMs, their strengths and shortcomings"
 code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/llms_in_2025.mdx"
-post_latest_update: "2025-01-06"
+post_latest_update: "2025-01-07"
 ---
 
 export { MDXLayout as default } from '../components/MDXLayout';
@@ -91,22 +91,31 @@ Another aspect to this constraint is that humans take an iterative approach to p
 
 ## Undervaluing LLMs
 
-Putting all of this together, I think you end up in a situation where a typical user treats the LLMs too much like a human[^4] \- and as a result they get unsatisfactory results and undervalue LLMs.
+Putting all of this together, I think you end up in a situation where a typical user treats the LLMs too much like a human[^4]. They get unsatisfactory results for some use cases, and therefore place too much empahsis on models' shortcomings without more fully exploring their capabilities.
 
-Since the bottlenecks dominate many users' experience, it obscures the almost [unbelievable progress](https://www.youtube.com/watch?v=SKBG1sqdyIU&t=1s) at the other end of the spectrum: on things like symbolic maths and competitive programming that few users are chatting to LLMs about.
+As such, the shortcomings obscure the almost [unbelievable progress](https://www.youtube.com/watch?v=SKBG1sqdyIU&t=1s) at the other end of the spectrum: on things like symbolic maths and competitive programming that few users are chatting to LLMs about.
 
-Whilst this suggests LLMs may be undervalued, it's useful to think of examples that I think are currently way outside of LLMs capabilities to illustrate their real-life shortcomings.  Two recent examples that have stuck in my mind are:
+On the other hand, there remain many technical tasks that are way outside LLMs' current capabilities to solve in a single prompt.  Two recent examples that have stuck in my mind are:
 
-- [Moon by Bartosz Ciechanowski](https://ciechanow.ski/moon/) Such an article requires not just immense skill in computer programming, but deep thought about how to connect and present ideas.  In my mind, if a computer could produce such an article, I would consider it to be generally intelligent
+- [Moon by Bartosz Ciechanowski](https://ciechanow.ski/moon/) Such an article requires not just immense skill in computer programming, but deep thought about how to connect and present ideas.  In my mind, if a computer could produce such an article from a single prompt, I would consider it to be generally intelligent.
 - John Burn-Murdoch's visualisations for the FT [e.g. here](https://x.com/jburnmurdoch/status/1641799627128143873). At first glance, he's good at data visualisation.  But on second thoughts, the primary skill is in collecting data and identifying interesting insights, the data visualisation is merely the icing on the cake.  Whilst I've seen LLMs analyse data and produce charts, they currently seem to have no capability of identifying and presenting interesting insights.
+
+To be clear, LLMs can help with many 'sub tasks' to assist with the above, but they seem incapable of the 'bigger picture' thinking needed to make such work coherent.
 
 ## What this may mean for LLMs in 2025
 
-LLMs are difficult to work with because they are not human-like, I think they're going to [get even stranger](https://x.com/emollick/status/1874432586677895645) as their performance gets more spiky.  Rapid progress will continue in their areas of strength, but progress will continue to be slow in other areas.  For most users, this means they will not 'seem' that much better, but their performance will be vastly superhuman in an increasing number of areas.
+It can be difficult to fully exploit LLMs' capabilities because they are not human-like, and I think this is going to [get even more difficult](https://x.com/emollick/status/1874432586677895645) as their performance gets more spiky.  Rapid progress will continue in their areas of strength, but progress will continue to be slow in other areas.  For many users, they will not 'seem' that much better, but their performance will be vastly superhuman in an increasing number of areas.
 
-To give an example, it's plausible that LLMs may start making substantive contributions to scientific breakthroughs, whilst remaining seemingly quite stupid to everyday users.
+For example, I think it's plausible that LLMs may start making substantive contributions to scientific breakthroughs, whilst remaining seemingly quite stupid to everyday users.
 
-As a result, in the short term, I don't see an imminent prospect of LLMs replacing knowledge workers wholesale, though I do think they enable increased productivity, and in turn smaller teams.
+In the short term, I don't see an imminent prospect of LLMs replacing knowledge workers wholesale, though I do think they enable increased productivity, and in turn smaller teams.
+
+In 2025 I anticipate:
+- Further progress against benchmarks in areas such as maths and computer programming due to the [feedback loop](https://lexfridman.com/cursor-team-transcript/#chapter17_synthetic_data) that allows synthetic data to be used to improve models as part of larger training runs
+- Continued progress in how software helps users create and manage prompts, particularly long-context prompts.  For programming, tools like [Cursor](https://www.cursor.com/) will continue to improve and will start to become pervasive and indispensible.   We will see similar progress in tools like Copilot of Microsoft Office. This will make progress in model performance feel rapid because models it will be easier to get the best out of them.
+- No dramatic improvements in models' reasoning abilities - at least, not cheaply and quickly.
+- [Agentic behaviour](https://anthropic.com/research/building-effective-agents) will start to creep in for some tasks with clear feedback (e.g. linting, test failures), but the problem of compounding errors will hamper progress more generally.
+
 
 ## Annex: Further reading
 
@@ -122,6 +131,7 @@ Here are some articles I've found interesting in shaping my thoughts:
 - [Moon by Bartosz Ciechanowski](https://ciechanow.ski/moon/) Not directly relevant to LLMs, but it's interesting to think at what point an LLM could produce an article like this.  I feel like they're a long way off.
 - [Latent Space Ultimate Guide to Prompting](https://www.latent.space/p/learn-prompting) Prompting can go very deep!
 - [LLM Challenge: Writing Non-Biblical Sentences](https://gwern.net/note/note#llm-challenge-writing-non-biblical-sentences) There are lots of examples of strange capabilities like this you'd never see in a benchmark
+- [Building effective agents](https://anthropic.com/research/building-effective-agents).  What are agents and how do we expect them to evolve
 
 [^1]:  It's important to distinguish skills from knowledge. For general knowledge, the LLM is clearly a better all-rounder.
 
@@ -129,4 +139,4 @@ Here are some articles I've found interesting in shaping my thoughts:
 
 [^3]:  Certainly in the past year, I can think of several 'aha' moments when colleagues have either suggested an idea, or identified a problem \- where a previously difficult problem suddenly becomes clear.  I can't think of a real eureka moment I've had from an LLM.
 
-[^4]:  To be clear, I fall into this trap all the time; I'm far from some sort of (probably apocryphal) superuser who's able to consistently get great results.
+[^4]:  I fall into this trap all the time; I'm far from some sort of (probably apocryphal) superuser who's able to consistently get great results.
