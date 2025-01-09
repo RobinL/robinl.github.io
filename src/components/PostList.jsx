@@ -49,7 +49,10 @@ const groupPostsByCategory = (posts, includeLatest = false) => {
     }, {});
 
     if (includeLatest) {
-        categorizedPosts = { latest: posts.slice(0, 3), ...categorizedPosts };
+        const nonQuotesPosts = posts.filter(
+            post => post.frontmatter.post_category !== 'quotes_links'
+        );
+        categorizedPosts = { latest: nonQuotesPosts.slice(0, 3), ...categorizedPosts };
     }
 
     return categorizedPosts;
@@ -68,6 +71,7 @@ const PostList = () => {
         'probabilistic_linkage',
         'energy',
         'other',
+        'quotes_links'
     ];
 
     const categoryTitles = {
@@ -76,6 +80,7 @@ const PostList = () => {
         probabilistic_linkage: 'Probabilistic record linkage',
         energy: 'Energy and climate change',
         other: 'Other',
+        quotes_links: 'Quotes and Links'
     };
 
     const allCategories = [
