@@ -11,6 +11,7 @@ import {
 import { SlLink } from 'react-icons/sl';
 import ResponsiveLink from './ResponsiveIcon';
 
+
 import '../styles/shimmer.css';
 
 const Header = () => {
