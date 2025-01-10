@@ -10,7 +10,7 @@ const usePosts = () => {
                 filter: {
                     frontmatter: { post_category: { ne: "non_blog_post" } }
                 }
-                sort: { fields: frontmatter___post_date, order: DESC }
+                sort: { frontmatter: { post_date: DESC } }
             ) {
                 nodes {
                     fields {
