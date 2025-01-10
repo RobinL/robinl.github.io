@@ -15,7 +15,7 @@ const config = {
   pathPrefix: "",
   flags: {
     FAST_DEV: true,
-    FAST_REFRESH: true,
+    PARALLEL_SOURCING: true,
   },
   siteMetadata: {
     title: `Robin Linacre's blog`,
