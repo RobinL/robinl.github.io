@@ -16,6 +16,7 @@
     "version": "gatsby -v"
   },
   "dependencies": {
+    "@babel/eslint-parser": "^7.25.9",
     "@babel/plugin-transform-class-properties": "^7.25.9",
     "@babel/plugin-transform-nullish-coalescing-operator": "^7.25.9",
     "@babel/plugin-transform-numeric-separator": "^7.25.9",
@@ -86,5 +87,10 @@
     "gatsby-plugin-postcss": "^6.11.0",
     "postcss": "^8.4.27",
     "tailwindcss": "^3.3.3"
+  },
+  "overrides": {
+    "react-server-dom-webpack@0.0.0-experimental-c8b778b7f-20220825": {
+      "react": "^18.0.0"
+    }
   }
 }
