@@ -54,7 +54,7 @@
     "@robinl/unsupervised-probabalistic-data-matching-using-the-expec": "https://api.observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec@1041.tgz?v=3",
     "@robinl/updating-a-prior-simplified": "https://api.observablehq.com/@robinl/updating-a-prior-simplified@672.tgz?v=3",
     "@robinl/visualising-fellegi-sunter": "https://api.observablehq.com/@robinl/visualising-fellegi-sunter@1011.tgz?v=3",
-    "gatsby": "^5.12.4",
+    "gatsby": "^5.14.1",
     "gatsby-plugin-feed": "^5.11.0",
     "gatsby-plugin-google-fonts": "^1.0.1",
     "gatsby-plugin-google-gtag": "^5.11.0",
