@@ -1,10 +1,11 @@
+import { env } from 'process';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
 
 import * as dotenv from 'dotenv';
 dotenv.config({ path: '.env' });
-const siteUrl = process.env.URL || `https://www.robinlinacre.com`
+const siteUrl = env.URL || `https://www.robinlinacre.com`
 
 
 
@@ -12,6 +13,10 @@ const siteUrl = process.env.URL || `https://www.robinlinacre.com`
 
 const config = {
   pathPrefix: "",
+  flags: {
+    FAST_DEV: true,
+    FAST_REFRESH: true,
+  },
   siteMetadata: {
     title: `Robin Linacre's blog`,
     description: `Probabilistic record linkage, Data Deduplication, Data Science, Engineering and the Environment`,
@@ -48,8 +53,8 @@ const config = {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
         fonts: [
-          `source serif pro\:600`,
-          `source sans pro\:400`
+          `source serif pro:600`,
+          `source sans pro:400`
         ],
         display: 'swap'
       }
