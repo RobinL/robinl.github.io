@@ -21,7 +21,7 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
     date="Dec 20, 2024"
     source="https://x.com/fchollet/status/1870175296537907588"
 >
-One very important thing to understand about the future: the economics of AI are about to change completely. We'll soon be in a world where you can turn **test-time compute** into competence -- for the first time in the history of software, *marginal cost* will become critical.
+    One very important thing to understand about the future: the economics of AI are about to change completely. We'll soon be in a world where you can turn test-time compute into competence -- for the first time in the history of software, *marginal cost* will become critical.
 </Quote>
 
 <Quote
@@ -29,27 +29,81 @@ One very important thing to understand about the future: the economics of AI are
     date="6th Nov 2024"
     source="https://www.bcs.org/articles-opinion-and-research/does-current-ai-represent-a-dead-end/"
 >
-A central property in formal software engineering is **compositionality**: the idea that composite systems can be understood in terms of the meanings of their parts and the nature of the composition, rather than by having to look at the parts themselves.
+    A central property in formal software engineering is compositionality: the idea that composite systems can be understood in terms of the meanings of their parts and the nature of the composition, rather than by having to look at the parts themselves.
 
-This idea lies at the heart of piecewise development: parts can be engineered (and verified) separately and hence in parallel, and reused in the form of modules, libraries and the like [...]
+    This idea lies at the heart of piecewise development: parts can be engineered (and verified) separately and hence in parallel, and reused in the form of modules, libraries and the like [...]
 
-Current AI systems have no internal structure that relates meaningfully to their functionality. They cannot be developed, or reused, as components. There can be no separation of concerns or piecewise development.
+    Current AI systems have no internal structure that relates meaningfully to their functionality. They cannot be developed, or reused, as components. There can be no separation of concerns or piecewise development.
 </Quote>
 
-> A lot of better informed people have sworn off LLMs entirely because they can’t see how anyone could benefit from a tool with so many flaws. The key skill in getting the most out of LLMs is learning to work with tech that is both inherently unreliable and incredibly powerful at the same time. This is a decidedly non-obvious skill to acquire! [Simon Willison](https://simonwillison.net/2024/Dec/31/llms-in-2024/) Dec 31, 2024
+<Quote
+    author="Simon Willison"
+    date="Dec 31, 2024"
+    source="https://simonwillison.net/2024/Dec/31/llms-in-2024/"
+>
+    A lot of better informed people have sworn off LLMs entirely because they can't see how anyone could benefit from a tool with so many flaws. The key skill in getting the most out of LLMs is learning to work with tech that is both inherently unreliable and incredibly powerful at the same time. This is a decidedly non-obvious skill to acquire!
+</Quote>
 
-> General consensus in the replies and quotes of this seems to be that the entire concept of "AI skills" is a joke - how hard is typing text into a chatbot, really? I will continue to argue that it's genuinely difficult, and that the challenge in using these tools is widely underestimated  [Simon Willison](https://bsky.app/profile/simonwillison.net/post/3le7xzlt3ec2i) Dec 26th, 2024
+<Quote
+    author="Simon Willison"
+    date="Dec 26th, 2024"
+    source="https://bsky.app/profile/simonwillison.net/post/3le7xzlt3ec2i"
+>
+    General consensus in the replies and quotes of this seems to be that the entire concept of "AI skills" is a joke - how hard is typing text into a chatbot, really? I will continue to argue that it's genuinely difficult, and that the challenge in using these tools is widely underestimated
+</Quote>
 
-> ARC is a silly benchmark, the other results in math and coding are much more impressive. o3 is just o1 scaled up, the main takeaway from this line of work that people should walk away with is that we now have a proven way to RL our way to super human performance on tasks where it’s cheap to sample and easy to verify the final output. Programming falls in that category, they focused on known benchmarks but the same process can be done for normal programs, using parsers, compilers, existing functions and unit tests as verifiers. Pre o1 we only really had next token prediction, which required high quality human produced data, with o1 you optimize for success instead of MLE of next token. [m_ke](https://news.ycombinator.com/item?id=42477766) 21st Dec 2024
+<Quote
+    author="m_ke"
+    date="21st Dec 2024"
+    source="https://news.ycombinator.com/item?id=42477766"
+>
+    ARC is a silly benchmark, the other results in math and coding are much more impressive. o3 is just o1 scaled up, the main takeaway from this line of work that people should walk away with is that we now have a proven way to RL our way to super human performance on tasks where it's cheap to sample and easy to verify the final output. Programming falls in that category, they focused on known benchmarks but the same process can be done for normal programs, using parsers, compilers, existing functions and unit tests as verifiers. Pre o1 we only really had next token prediction, which required high quality human produced data, with o1 you optimize for success instead of MLE of next token.
+</Quote>
 
-> The world needs [more, better, harder, etc] evals for AI. This is one of the most important problems of our lifetime, and critical for continual progress. [Logan Kilpatrick](https://x.com/OfficialLoganK/status/1874903855848362297) 2nd Jan 2025
+<Quote
+    author="Logan Kilpatrick"
+    date="2nd Jan 2025"
+    source="https://x.com/OfficialLoganK/status/1874903855848362297"
+>
+    The world needs [more, better, harder, etc] evals for AI. This is one of the most important problems of our lifetime, and critical for continual progress.
+</Quote>
 
-> Easy prediction for 2025 is that the gains in AI model capability will continue to grow much faster than (a) the vast majority of people’s understanding of what AI can do & (b) organizations’ ability to absorb the pace of change. Social change is slower than technological change.  This all means that things will get weirder and the weirdness will be unevenly distributed.  [Ethan Mollick](https://x.com/emollick/status/1874431948766208374) Jan 1st 2025
+<Quote
+    author="Ethan Mollick"
+    date="Jan 1st 2025"
+    source="https://x.com/emollick/status/1874431948766208374"
+>
+    Easy prediction for 2025 is that the gains in AI model capability will continue to grow much faster than (a) the vast majority of people's understanding of what AI can do & (b) organizations' ability to absorb the pace of change. Social change is slower than technological change. This all means that things will get weirder and the weirdness will be unevenly distributed.
+</Quote>
 
-> The efficiency thing is really important for everyone who is concerned about the environmental impact of LLMs. These price drops tie directly to how much energy is being used for running prompts. There’s still plenty to worry about with respect to the environmental impact of the great AI datacenter buildout, but a lot of the concerns over the energy cost of individual prompts are no longer credible. [Simon Willison](https://simonwillison.net/2024/Dec/31/llms-in-2024/) Dec 31, 2024
+<Quote
+    author="Simon Willison"
+    date="Dec 31, 2024"
+    source="https://simonwillison.net/2024/Dec/31/llms-in-2024/"
+>
+    The efficiency thing is really important for everyone who is concerned about the environmental impact of LLMs. These price drops tie directly to how much energy is being used for running prompts. There's still plenty to worry about with respect to the environmental impact of the great AI datacenter buildout, but a lot of the concerns over the energy cost of individual prompts are no longer credible.
+</Quote>
 
-> Chat-driven programming. [...] It requires at least as much messing about to get value out of LLM chat as it does to learn to use a slide rule, with the added annoyance that it is a non-deterministic service that is regularly changing its behavior and user interface. Indeed, the long-term goal in my work is to replace the need for chat-driven programming, to bring the power of these models to a developer in a way that is not so off-putting. But as of now I am dedicated to approaching the problem incrementally, which means figuring out how to do best with what we have and improve it. [David Crawshaw, Former staff engineer at Google and co-founder/CTO of Tailscale.](https://crawshaw.io/blog/programming-with-llms) 2025-01-06
+<Quote
+    author="David Crawshaw"
+    date="2025-01-06"
+    source="https://crawshaw.io/blog/programming-with-llms"
+>
+    Chat-driven programming. [...] It requires at least as much messing about to get value out of LLM chat as it does to learn to use a slide rule, with the added annoyance that it is a non-deterministic service that is regularly changing its behavior and user interface. Indeed, the long-term goal in my work is to replace the need for chat-driven programming, to bring the power of these models to a developer in a way that is not so off-putting. But as of now I am dedicated to approaching the problem incrementally, which means figuring out how to do best with what we have and improve it.
+</Quote>
 
-> A lot of the value I personally get out of chat-driven programming is I reach a point in the day when I know what needs to be written, I can describe it, but I don’t have the energy to create a new file, start typing, then start looking up the libraries I need... LLMs perform that service for me in programming. They give me a first draft, with some good ideas, with several of the dependencies I need, and often some mistakes. Often, I find fixing those mistakes is a lot easier than starting from scratch. [David Crawshaw](https://crawshaw.io/blog/programming-with-llms) 2025-01-06
+<Quote
+    author="David Crawshaw"
+    date="2025-01-06"
+    source="https://crawshaw.io/blog/programming-with-llms"
+>
+    A lot of the value I personally get out of chat-driven programming is I reach a point in the day when I know what needs to be written, I can describe it, but I don't have the energy to create a new file, start typing, then start looking up the libraries I need... LLMs perform that service for me in programming. They give me a first draft, with some good ideas, with several of the dependencies I need, and often some mistakes. Often, I find fixing those mistakes is a lot easier than starting from scratch.
+</Quote>
 
-> There's a variety of words that I wish we had, which we do not yet have. One word is we have the concept of "alpha" in finance, and alpha - one Greek letter smuggles in a huge amount of understanding about how the world works. I would love to be able to describe someone's alpha above the LLM baseline in discussing a topic. Because there are a lot of human writers in the world who have no alpha above the LLM baseline, and that's been true since before LLMs were a thing. The Twitterism is sometimes "this person is an NPC" - there is no intellectual content here, the performance of class and similar can allow one to pretend that there is intellectual content, but there is no intellectual content.  [patio11](https://www.complexsystemspodcast.com/episodes/outside-view-yatharth/) Jan 2nd 2025
+<Quote
+    author="patio11"
+    date="Jan 2nd 2025"
+    source="https://www.complexsystemspodcast.com/episodes/outside-view-yatharth/"
+>
+    There's a variety of words that I wish we had, which we do not yet have. One word is we have the concept of "alpha" in finance, and alpha - one Greek letter smuggles in a huge amount of understanding about how the world works. I would love to be able to describe someone's alpha above the LLM baseline in discussing a topic. Because there are a lot of human writers in the world who have no alpha above the LLM baseline, and that's been true since before LLMs were a thing. The Twitterism is sometimes "this person is an NPC" - there is no intellectual content here, the performance of class and similar can allow one to pretend that there is intellectual content, but there is no intellectual content.
+</Quote>
