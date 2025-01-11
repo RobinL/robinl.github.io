@@ -9,16 +9,11 @@ const formatDate = (isoDate) => {
     const date = new Date(isoDate);
     if (isNaN(date.getTime())) return isoDate; // Return original if invalid
 
-    // Add ordinal suffix to day
-    const day = date.getDate();
-    const suffix = ['th', 'st', 'nd', 'rd'][
-        day % 10 > 3 ? 0 : day % 100 - 20 >= 0 && day % 100 - 20 <= 3 ? 0 : day % 10
-    ];
-
-    const month = date.toLocaleString('en-GB', { month: 'short' });
-    const year = date.getFullYear();
-
-    return `${day}${suffix} ${month} ${year}`;
+    return date.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+    });
 };
 
 const Quote = ({ children, author, date, source }) => {
