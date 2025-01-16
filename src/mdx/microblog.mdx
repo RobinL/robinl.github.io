@@ -16,6 +16,35 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 # Microblog
 
 <Microblog
+    title="Understanding DuckDB Connection Types in Python"
+    date="2024-01-16"
+    tags={["python", "duckdb", "database"]}
+>
+DuckDB offers special connection types in Python:
+
+- `:memory:name` - Creates/connects to a named in-memory database that can be shared across connections
+- `:default:` - Uses the default connection stored in the DuckDB module
+
+Example:
+```python
+import duckdb
+
+# Create table in default connection
+duckdb.execute("CREATE TABLE tbl AS SELECT 42 as value")
+
+# Access same table through explicit default connection
+con = duckdb.connect(":default:")
+con.sql("SELECT * FROM tbl")  # Works!
+
+# Shared named memory connection
+con3 = duckdb.connect(":memory:shared_db")
+con4 = duckdb.connect(":memory:shared_db")  # Same database as con3
+```
+
+See docs [here](https://duckdb.org/docs/api/python/dbapi.html)
+</Microblog>
+
+<Microblog
     title="Configuring Python Path Visibility in VS Code interactive window (Jupyter)"
     date="2024-01-16"
     tags={["vscode", "jupyter", "tips"]}
@@ -32,3 +61,4 @@ When working with Jupyter notebooks in VS Code, add these settings to your `.vsc
 
 Now, the interactive window will run any script as if it's running from the root directory even if it's nested
 </Microblog>
+
