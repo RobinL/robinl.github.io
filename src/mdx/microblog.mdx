@@ -1,0 +1,34 @@
+---
+title: "Microblog"
+post_date: "2025-01-16"
+post_category: "quotes_links"
+description: "My microblog"
+code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/microblog.mdx"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+import Microblog from "../components/Microblog"
+import { Link } from "gatsby"
+
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+# Microblog
+
+<Microblog
+    title="Configuring Python Path Visibility in VS Code interactive window (Jupyter)"
+    date="2024-01-16"
+    tags={["vscode", "jupyter", "tips"]}
+>
+When working with Jupyter notebooks in VS Code, add these settings to your `.vscode/settings.json`:
+```json
+{
+    "jupyter.notebookFileRoot": "${workspaceFolder}",
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}"
+    ]
+}
+```
+
+Now, the interactive window will run any script as if it's running from the root directory even if it's nested
+</Microblog>
