@@ -16,6 +16,21 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 # Microblog
 
 <Microblog
+    title="ClickHouse Obfuscator - Data Anonymization Tool"
+    date="2024-01-16"
+    tags={["clickhouse", "data", "privacy"]}
+>
+The [ClickHouse obfuscator](https://clickhouse.com/docs/en/operations/utilities/clickhouse-obfuscator) is a tool for anonymizing production data while preserving its key statistical properties. It maintains:
+
+- Value cardinalities and distributions
+- Data compression ratios
+- String lengths and UTF-8 validity
+- Time series continuity
+
+</Microblog>
+
+
+<Microblog
     title="National Data Library thoughts"
     date="2024-01-16"
     tags={["data", "governance", "AI"]}
@@ -75,4 +90,5 @@ When working with Jupyter notebooks in VS Code, add these settings to your `.vsc
 
 Now, the interactive window will run any script as if it's running from the root directory even if it's nested
 </Microblog>
+
 
