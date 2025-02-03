@@ -25,6 +25,8 @@ Since it's possible to run [DuckDB WASM](https://duckdb.org/docs/api/wasm/overvi
 
 The app is in an iFrame below, and you can see the demo [here](https://www.robinlinacre.com/vite_splink_in_browser) in fullscreen.
 
+Using [`vite-plugin-singlefile`](https://www.npmjs.com/package/vite-plugin-singlefile) this entire app is bundled into a single `.html` file, so no webserver is needed to host it, a user can just double click it to open.  The only external dependency is the DuckDB WASM file, which is loaded from a CDN.
+
 <iframe
   src="https://www.robinlinacre.com/vite_splink_in_browser"
   width="100%"
