@@ -1,0 +1,34 @@
+---
+title: "Live DuckDB WASM Splink model"
+post_date: "2025-02-03"
+code_url: "https://github.com/RobinL/vite_splink_in_browser"
+post_category: "probabilistic_linkage"
+prob_linkage_category: "tools"
+description: "A demo of a live Splink model in the browser"
+---
+
+export { MDXLayoutWide as default } from '../components/MDXLayout';
+
+
+import ProbHomeNav from "../components/ProbHomeNav"
+import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
+
+import { SEO } from "../components/SEO"
+import { Link } from 'gatsby'
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+<ProbHomeNav />
+
+# Live DuckDB WASM Splink model
+
+Since it's possible to run [DuckDB WASM](https://duckdb.org/docs/api/wasm/overview.html) in the browser, I thought it would be fun to try and run a Splink model in the browser.  So I made a demo of a Vite app, code [here](https://github.com/RobinL/vite_splink_in_browser).
+
+You can see the demo [here](https://www.robinlinacre.com/vite_splink_in_browser) for fullscreen, iFrame below.
+
+<iframe
+  src="https://www.robinlinacre.com/vite_splink_in_browser"
+  width="100%"
+  height="1000px"
+  style={{ border: 'none' }}
+  title="Live DuckDB WASM Splink model"
+></iframe>
