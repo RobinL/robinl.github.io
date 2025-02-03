@@ -23,9 +23,11 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 
 Since it's possible to run [DuckDB WASM](https://duckdb.org/docs/api/wasm/overview.html) in the browser, I thought it would be fun to try and run a Splink model in the browser.  So I made a demo of a Vite app, code [here](https://github.com/RobinL/vite_splink_in_browser).
 
-The app is in an iFrame below, and you can see the demo [here](https://www.robinlinacre.com/vite_splink_in_browser) in fullscreen.
+
 
 Using [`vite-plugin-singlefile`](https://www.npmjs.com/package/vite-plugin-singlefile) this entire app is bundled into a single `.html` file, so no webserver is needed to host it, a user can just double click it to open.  The only external dependency is the DuckDB WASM file, which is loaded from a CDN.
+
+You can see the app in an iFrame below.  For a better experience, open it fullscreen [here](https://www.robinlinacre.com/vite_splink_in_browser).
 
 <iframe
   src="https://www.robinlinacre.com/vite_splink_in_browser"
