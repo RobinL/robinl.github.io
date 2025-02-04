@@ -4,15 +4,24 @@ import { FaCalendar, FaTags } from 'react-icons/fa6';
 const formatDate = (isoDate) => {
     if (!isoDate) return null;
 
-    const date = new Date(isoDate);
-    if (isNaN(date.getTime())) return isoDate;
+    try {
 
-    return new Intl.DateTimeFormat('en-GB', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-        timeZone: 'UTC' // Ensures consistency across SSR and CSR
-    }).format(date);
+        const date = new Date(isoDate);
+        if (isNaN(date.getTime())) return isoDate;
+
+        // Create a UTC date string to ensure consistency
+        const formatter = new Intl.DateTimeFormat('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            timeZone: 'UTC'
+        });
+
+        return formatter.format(date);
+    } catch (e) {
+        console.error('Date formatting error:', e);
+        return isoDate;
+    }
 };
 
 const Microblog = ({ children, title, date, tags = [] }) => {

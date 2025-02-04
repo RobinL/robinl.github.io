@@ -22,7 +22,11 @@ export function MDXLayout({ children, pageContext }) {
         <Layout>
             <MDXProvider components={components}>
                 <PostInfo frontmatter={frontmatter} />
-                <div id="mdx-container-div" className="mdx-content space-y-4">
+                <div
+                    key={typeof window === 'undefined' ? 'server' : 'client'}
+                    id="mdx-container-div"
+                    className="mdx-content space-y-4"
+                >
                     {children}
                 </div>
             </MDXProvider>
