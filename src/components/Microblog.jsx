@@ -1,7 +1,5 @@
 import React from 'react';
-import { MDXProvider } from '@mdx-js/react';
-import { FaCalendar } from 'react-icons/fa6';
-import { FaTags } from 'react-icons/fa6';
+import { FaCalendar, FaTags } from 'react-icons/fa6';
 
 const formatDate = (isoDate) => {
     if (!isoDate) return null;
@@ -27,11 +25,9 @@ const Microblog = ({ children, title, date, tags = [] }) => {
                     <h3 className="text-xl font-semibold text-gray-800 mb-2">{title}</h3>
                 )}
                 <div className="text-gray-700 mb-4">
-                    <MDXProvider>
-                        <div className="space-y-4">
-                            {children}
-                        </div>
-                    </MDXProvider>
+                    <div className="space-y-4">
+                        {children}
+                    </div>
                 </div>
                 <footer className="text-sm flex items-center flex-wrap gap-4 text-gray-600">
                     {formattedDate && (

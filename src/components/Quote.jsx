@@ -1,19 +1,19 @@
 import React from 'react';
-import { MDXProvider } from '@mdx-js/react';
-import { FaExternalLinkAlt } from 'react-icons/fa';
-import { FaQuoteLeft } from 'react-icons/fa';
+import { FaQuoteLeft } from 'react-icons/fa6';
+import { FaUpRightFromSquare } from 'react-icons/fa6';
 
 const formatDate = (isoDate) => {
     if (!isoDate) return null;
 
     const date = new Date(isoDate);
-    if (isNaN(date.getTime())) return isoDate; // Return original if invalid
+    if (isNaN(date.getTime())) return isoDate;
 
-    return date.toLocaleDateString('en-GB', {
+    return new Intl.DateTimeFormat('en-GB', {
         day: '2-digit',
         month: 'short',
-        year: 'numeric'
-    });
+        year: 'numeric',
+        timeZone: 'UTC'
+    }).format(date);
 };
 
 const Quote = ({ children, author, date, source }) => {
@@ -24,11 +24,9 @@ const Quote = ({ children, author, date, source }) => {
             <blockquote className="py-3 px-6 bg-gray-50 rounded not-italic relative">
                 <FaQuoteLeft className="absolute top-2 left-2 text-gray-200 w-4 h-4" />
                 <div className="text-gray-700 mb-4 relative z-10 pl-4">
-                    <MDXProvider>
-                        <div className="space-y-4">
-                            {children}
-                        </div>
-                    </MDXProvider>
+                    <div className="space-y-4">
+                        {children}
+                    </div>
                 </div>
                 <footer className="text-sm flex items-center pl-4">
                     <span className="font-semibold text-gray-700">{author}</span>
@@ -47,7 +45,7 @@ const Quote = ({ children, author, date, source }) => {
                                 rel="noopener noreferrer"
                             >
                                 <span>source</span>
-                                <FaExternalLinkAlt className="ml-1 w-3 h-3" />
+                                <FaUpRightFromSquare className="ml-1 w-3 h-3" />
                             </a>
                         </>
                     )}

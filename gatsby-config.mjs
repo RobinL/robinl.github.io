@@ -16,6 +16,7 @@ const config = {
   flags: {
     FAST_DEV: true,
     PARALLEL_SOURCING: true,
+    DEV_SSR: true
   },
   siteMetadata: {
     title: `Robin Linacre's blog`,
@@ -36,16 +37,16 @@ const config = {
             [rehypeKatex, { strict: 'ignore' }],
           ],
         },
-
         gatsbyRemarkPlugins: [
           {
             resolve: `gatsby-remark-images`,
             options: {
               maxWidth: 1200,
+              withWebp: true,
+              quality: 80,
+              loading: "lazy"
             },
-
           },
-
         ],
       },
     },
@@ -176,7 +177,7 @@ const config = {
           },
         ],
       }
-    }
+    },
 
   ]
 };
