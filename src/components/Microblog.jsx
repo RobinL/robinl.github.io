@@ -1,6 +1,7 @@
 import React from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { FaCalendar, FaTags } from 'react-icons/fa';
+import { FaCalendar } from 'react-icons/fa6';
+import { FaTags } from 'react-icons/fa6';
 
 const formatDate = (isoDate) => {
     if (!isoDate) return null;
@@ -8,11 +9,12 @@ const formatDate = (isoDate) => {
     const date = new Date(isoDate);
     if (isNaN(date.getTime())) return isoDate;
 
-    return date.toLocaleDateString('en-GB', {
+    return new Intl.DateTimeFormat('en-GB', {
         day: '2-digit',
         month: 'short',
-        year: 'numeric'
-    });
+        year: 'numeric',
+        timeZone: 'UTC' // Ensures consistency across SSR and CSR
+    }).format(date);
 };
 
 const Microblog = ({ children, title, date, tags = [] }) => {
@@ -42,8 +44,8 @@ const Microblog = ({ children, title, date, tags = [] }) => {
                         <div className="flex items-center">
                             <FaTags className="w-3 h-3 mr-2" />
                             <div className="flex gap-2">
-                                {tags.map((tag, index) => (
-                                    <span key={index} className="bg-gray-200 px-2 py-0.5 rounded-full text-xs">
+                                {tags.map((tag) => (
+                                    <span key={tag} className="bg-gray-200 px-2 py-0.5 rounded-full text-xs">
                                         {tag}
                                     </span>
                                 ))}

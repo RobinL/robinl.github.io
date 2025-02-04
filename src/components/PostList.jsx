@@ -110,10 +110,10 @@ const PostList = () => {
                 />
             </div>
             {headerOrder.map(
-                (categoryKey, index) =>
+                (categoryKey) =>
                     postsByCategory[categoryKey]?.length > 0 && (
                         <CategoryPostList
-                            key={index}
+                            key={categoryKey} // Use categoryKey as the key
                             categoryKey={categoryKey}
                             posts={postsByCategory[categoryKey]}
                             categoryTitles={categoryTitles}
