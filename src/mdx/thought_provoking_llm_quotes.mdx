@@ -19,11 +19,15 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 ## Quotes
 
 <Quote
-    author="Dylan Patel"
+    author="Nathan Lambert"
     date="2025-02-03"
-    source="https://lexfridman.com/deepseek-dylan-patel-nathan-lambert-transcript/#:~:text=believed%20in%20mixture,is%20truly%20YOLO"
+    source="https://lexfridman.com/deepseek-dylan-patel-nathan-lambert-transcript/#:~:text=The%20remarkable%20thing%20about%20these%20reasoning%20results%20and"
 >
-    I think it’s even more impressive what OpenAI did in 2022. At the time, no one believed in mixture of experts models at Google who had all the researchers. OpenAI had such little compute and they devoted all of their compute for many months, all of it, 100% for many months to GPT-4 with a brand-new architecture with no belief that, “Hey, let me spend a couple of hundred million dollars, which is all of the money I have on this model.” That is truly YOLO.
+    The remarkable thing about these reasoning results and especially the DeepSeek-R1 paper, is this result that they call DeepSeek-R1-0, which is they took one of these pre-trained models, they took DeepSeek-V3-Base, and then they do this reinforcement learning optimization on verifiable questions or verifiable rewards for a lot of questions and a lot of training. And these reasoning behaviors emerge naturally. So these things like, “Wait, let me see. Wait, let me check this. Oh, that might be a mistake.” And they emerge from only having questions and answers. And when you’re using the model, the part that you look at is the completion. So in this case, all of that just emerges from this large-scale RL training and that model, which the weights are available, has no human preferences added into the post-training.
+
+    But the very remarkable thing is that you can get these reasoning behaviors, and it’s very unlikely that there’s humans writing out reasoning chains. It’s very unlikely that they somehow hacked OpenAI and they got access to OpenAI o-1’s reasoning chains. It’s something about the pre-trained language models and this RL training where you reward the model for getting the question right, and therefore it’s trying multiple solutions and it emerges this chain of thought.
+
+
 </Quote>
 
 <Quote
