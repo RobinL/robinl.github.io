@@ -17,6 +17,18 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 
 
 <Microblog
+    title="LLMs for government productivity"
+    date="2025-02-13"
+    tags={["llms", "government", "productivity"]}
+>
+
+I think the single most productivity-enhancing use of LLMs in government would be give all government devs and data scientists access to Cursor (or similar). I am not yet convinced of the widespread value of 'behind the scenes' use cases of LLMs, but very bullish on skilled human-in-the-loop applications, especially coding.
+
+Undoubtably this situation will change as models improve, but at the moment there's usually not enough 9s of reliability to use in fully automated use cases.
+
+</Microblog>
+
+<Microblog
     title="LLMs getting better at coding"
     date="2025-02-05"
     tags={["llms", "coding", "ai"]}
@@ -60,7 +72,7 @@ Note: I could not get png generation to work because the `vl_convert_python` whe
     tags={["python", "uv", "tips"]}
 >
 Rob Allen says:
-> I create a fair few scripts in my ~/bin/ directory to automate tasks. Since discovering [uv and inline script metadata](https://akrabat.com/defining-python-dependencies-at-the-top-of-the-file/), I’ve started using Python far more for these.
+> I create a fair few scripts in my ~/bin/ directory to automate tasks. Since discovering [uv and inline script metadata](https://akrabat.com/defining-python-dependencies-at-the-top-of-the-file/), I've started using Python far more for these.
 >
 >
 > As `~/bin` is on my path, I want to run the script by calling it directly on the command line. To do this, I use this shebang:
