@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaCalendar, FaLink, FaTags } from 'react-icons/fa6';
+import { FaCalendar, FaLink, FaTags, FaPodcast } from 'react-icons/fa6';
 import { FaUpRightFromSquare } from 'react-icons/fa6';
 
 const formatDate = (isoDate) => {
@@ -16,13 +16,15 @@ const formatDate = (isoDate) => {
     }).format(date);
 };
 
-const LinkCard = ({ title, description, url, date, tags = [] }) => {
+const LinkCard = ({ title, description, url, date, tags = [], type }) => {
     const formattedDate = formatDate(date);
+
+    const IconComponent = type === 'podcast' ? FaPodcast : FaLink;
 
     return (
         <div className="my-8">
             <div className="py-3 px-6 bg-gray-50 rounded relative">
-                <FaLink className="absolute top-2 left-2 text-gray-200 w-4 h-4" />
+                <IconComponent className="absolute top-2 left-2 text-gray-200 w-4 h-4" />
                 <div className="text-gray-700 mb-4 relative z-10 pl-4">
                     <a
                         href={url}

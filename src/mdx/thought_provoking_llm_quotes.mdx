@@ -253,6 +253,23 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
         ARC is a silly benchmark, the other results in math and coding are much more impressive. o3 is just o1 scaled up, the main takeaway from this line of work that people should walk away with is that we now have a proven way to RL our way to super human performance on tasks where it's cheap to sample and easy to verify the final output. Programming falls in that category, they focused on known benchmarks but the same process can be done for normal programs, using parsers, compilers, existing functions and unit tests as verifiers. Pre o1 we only really had next token prediction, which required high quality human produced data, with o1 you optimize for success instead of MLE of next token.
     </Quote>
 
+    <LinkCard
+        title="Latent Space Ultimate Guide to Prompting"
+        description="Prompting can go very deep!"
+        url="https://www.latent.space/p/learn-prompting"
+        date="2024-12-20"
+        tags={["LLMs"]}
+    />
+
+
+    <LinkCard
+        title="Moon by Bartosz Ciechanowski"
+        description="Not directly relevant to LLMs, but it's interesting to think at what point an LLM could produce an article like this. I feel like they're a long way off."
+        url="https://ciechanow.ski/moon/"
+        date="2024-12-17"
+        tags={["LLMs"]}
+    />
+
     <Quote
         author="François Chollet"
         date="2024-12-20"
@@ -261,6 +278,14 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
     >
         One very important thing to understand about the future: the economics of AI are about to change completely. We'll soon be in a world where you can turn test-time compute into competence -- for the first time in the history of software, marginal cost will become critical.
     </Quote>
+
+    <LinkCard
+        title="Is AI progress slowing down?"
+        description="A good guide to thinking about whether scaling is dead"
+        url="https://www.aisnakeoil.com/p/is-ai-progress-slowing-down"
+        date="2024-12-18"
+        tags={["LLMs"]}
+    />
 
     <Quote
         author="Hannes Mühleisen"
@@ -280,6 +305,34 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
         We showed with DuckDB that you can actually have a full transactional ACID compliant transactional semantics in an analytical system without punishing performance
     </Quote>
 
+
+
+    <LinkCard
+        title="Building effective agents"
+        description="What are agents and how do we expect them to evolve"
+        url="https://anthropic.com/research/building-effective-agents"
+        date="2024-12-19"
+        tags={["LLMs"]}
+    />
+
+    <LinkCard
+        title="Chris Olah on Lex Fridman"
+        description="Interpretability"
+        url="https://youtu.be/ugvHCXCOmm4?si=Dt7kdxIiHb6ljfnn&t=15476"
+        date="2024-11-11"
+        tags={["LLMs", "Podcast"]}
+        type="podcast"
+    />
+
+    <LinkCard
+        title="Amanda Askell on Lex Fridman"
+        description="How LLMs are trained to be useful, the importance of prompting"
+        url="https://youtu.be/ugvHCXCOmm4?si=z1sfzRWzSc67988q&t=9921"
+        date="2024-11-11"
+        tags={["LLMs", "Podcast"]}
+        type="podcast"
+    />
+
     <Quote
         author="Eerke Boiten"
         date="2024-11-06"
@@ -292,6 +345,50 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 
         Current AI systems have no internal structure that relates meaningfully to their functionality. They cannot be developed, or reused, as components. There can be no separation of concerns or piecewise development.
     </Quote>
+
+
+
+    <LinkCard
+        title="Does current AI represent a dead end?"
+        description="This article made me think of LLMs as like really software with no tests, no documentation, and lots of bugs. And yet very useful."
+        url="https://www.bcs.org/articles-opinion-and-research/does-current-ai-represent-a-dead-end/"
+        date="2024-11-06"
+        tags={["LLMs"]}
+    />
+
+    <LinkCard
+        title="Machines of Loving Grace"
+        description="The CEO of Anthropic outlines how AI could transform the world for the better"
+        url="https://darioamodei.com/machines-of-loving-grace"
+        date="2024-10-11"
+        tags={["LLMs"]}
+    />
+
+    <LinkCard
+        title="Cursor Team: Future of Programming with AI"
+        description="How AI is being integrated into software development"
+        url="https://www.youtube.com/watch?v=oFfVt3S51T4"
+        date="2024-10-06"
+        tags={["LLMs", "Programming", "Podcast"]}
+        type="podcast"
+    />
+
+    <LinkCard
+        title="LLM Challenge: Writing Non-Biblical Sentences"
+        description="There are lots of examples of strange capabilities like this you'd never see in a benchmark"
+        url="https://gwern.net/note/note#llm-challenge-writing-non-biblical-sentences"
+        date="2024-09-15"
+        tags={["LLMs"]}
+    />
+
+    <LinkCard
+        title="Francois Chollet on the Dwarkesh podcast - LLMs won't lead to AGI"
+        description="Understanding LLMs reasoning abilities"
+        url="https://www.dwarkeshpatel.com/p/francois-chollet"
+        date="2024-06-11"
+        tags={["LLMs", "Podcast"]}
+        type="podcast"
+    />
 
     <Quote
         author="Andrej Karpathy"
@@ -326,102 +423,15 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 
 </TagFilter>
 
-## Links
 
-<TagFilter>
-    <LinkCard
-        title="Does current AI represent a dead end?"
-        description="This article made me think of LLMs as like really software with no tests, no documentation, and lots of bugs. And yet very useful."
-        url="https://www.bcs.org/articles-opinion-and-research/does-current-ai-represent-a-dead-end/"
-        date="2024-11-06"
-        tags={["LLMs"]}
-    />
 
-    <LinkCard
-        title="Is AI progress slowing down?"
-        description="A good guide to thinking about whether scaling is dead"
-        url="https://www.aisnakeoil.com/p/is-ai-progress-slowing-down"
-        date="2024-12-20"
-        tags={["LLMs"]}
-    />
 
-    <LinkCard
-        title="Machines of Loving Grace"
-        description="The CEO of Anthropic outlines how AI could transform the world for the better"
-        url="https://darioamodei.com/machines-of-loving-grace"
-        date="2024-12-20"
-        tags={["LLMs"]}
-    />
 
-    <LinkCard
-        title="Moon by Bartosz Ciechanowski"
-        description="Not directly relevant to LLMs, but it's interesting to think at what point an LLM could produce an article like this. I feel like they're a long way off."
-        url="https://ciechanow.ski/moon/"
-        date="2024-12-20"
-        tags={["LLMs"]}
-    />
 
-    <LinkCard
-        title="Latent Space Ultimate Guide to Prompting"
-        description="Prompting can go very deep!"
-        url="https://www.latent.space/p/learn-prompting"
-        date="2024-12-20"
-        tags={["LLMs"]}
-    />
 
-    <LinkCard
-        title="LLM Challenge: Writing Non-Biblical Sentences"
-        description="There are lots of examples of strange capabilities like this you'd never see in a benchmark"
-        url="https://gwern.net/note/note#llm-challenge-writing-non-biblical-sentences"
-        date="2024-12-20"
-        tags={["LLMs"]}
-    />
 
-    <LinkCard
-        title="Building effective agents"
-        description="What are agents and how do we expect them to evolve"
-        url="https://anthropic.com/research/building-effective-agents"
-        date="2024-12-20"
-        tags={["LLMs"]}
-    />
-</TagFilter>
 
-## Podcast Episodes
 
-<TagFilter>
-    <LinkCard
-        title="Francois Chollet on the Dwarkesh podcast - LLMs won't lead to AGI"
-        description="Understanding LLMs reasoning abilities"
-        url="https://www.dwarkeshpatel.com/p/francois-chollet"
-        date="2024-12-15"
-        tags={["LLMs", "Podcast"]}
-        type="podcast"
-    />
 
-    <LinkCard
-        title="Cursor Team: Future of Programming with AI"
-        description="How AI is being integrated into software development"
-        url="https://www.youtube.com/watch?v=oFfVt3S51T4"
-        date="2024-12-10"
-        tags={["LLMs", "Programming", "Podcast"]}
-        type="podcast"
-    />
 
-    <LinkCard
-        title="Amanda Askell on Lex Fridman"
-        description="How LLMs are trained to be useful, the importance of prompting"
-        url="https://youtu.be/ugvHCXCOmm4?si=z1sfzRWzSc67988q&t=9921"
-        date="2024-12-05"
-        tags={["LLMs", "Podcast"]}
-        type="podcast"
-    />
 
-    <LinkCard
-        title="Chris Olah on Lex Fridman"
-        description="Interpretability"
-        url="https://youtu.be/ugvHCXCOmm4?si=Dt7kdxIiHb6ljfnn&t=15476"
-        date="2024-12-05"
-        tags={["LLMs", "Podcast"]}
-        type="podcast"
-    />
-</TagFilter>
