@@ -11,6 +11,7 @@ export { MDXLayout as default } from '../components/MDXLayout';
 import { SEO } from "../components/SEO"
 import Quote from "../components/Quote"
 import { Link } from "gatsby"
+import TagFilter from "../components/TagFilter"
 
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
@@ -18,262 +19,291 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 
 ## Quotes
 
-<Quote
-    author="Jeremy Howard"
-    date="2025-02-09"
-    source="https://x.com/jeremyphoward/status/1888470970131693653"
->
-    One way to think of it is that these models largely interpolate, not extrapolate. In these incredibly high-dimensional spaces interpolation is *extremely* powerful. But still limited.
+<TagFilter>
+    <Quote
+        author="Jeremy Howard"
+        date="2025-02-09"
+        source="https://x.com/jeremyphoward/status/1888470970131693653"
+        tags={["LLMs"]}
+    >
+        One way to think of it is that these models largely interpolate, not extrapolate. In these incredibly high-dimensional spaces interpolation is *extremely* powerful. But still limited.
 
-    (In response to [this tweet](https://x.com/dwarkesh_sp/status/1727004083113128327) asking why LLMs aren't good at making connections between subjects - see the Dwarkesh quote below)
-</Quote>
+        (In response to [this tweet](https://x.com/dwarkesh_sp/status/1727004083113128327) asking why LLMs aren't good at making connections between subjects - see the Dwarkesh quote below)
+    </Quote>
 
-<Quote
-    author="Nathan Lambert"
-    date="2025-02-03"
-    source="https://lexfridman.com/deepseek-dylan-patel-nathan-lambert-transcript/#:~:text=The%20remarkable%20thing%20about%20these%20reasoning%20results%20and"
->
-    The remarkable thing about these reasoning results and especially the DeepSeek-R1 paper, is this result that they call DeepSeek-R1-0, which is they took one of these pre-trained models, they took DeepSeek-V3-Base, and then they do this reinforcement learning optimization on verifiable questions or verifiable rewards for a lot of questions and a lot of training. And these reasoning behaviors emerge naturally. So these things like, “Wait, let me see. Wait, let me check this. Oh, that might be a mistake.” And they emerge from only having questions and answers. And when you’re using the model, the part that you look at is the completion. So in this case, all of that just emerges from this large-scale RL training and that model, which the weights are available, has no human preferences added into the post-training.
+    <Quote
+        author="Nathan Lambert"
+        date="2025-02-03"
+        source="https://lexfridman.com/deepseek-dylan-patel-nathan-lambert-transcript/#:~:text=The%20remarkable%20thing%20about%20these%20reasoning%20results%20and"
+        tags={["LLMs"]}
+    >
+        The remarkable thing about these reasoning results and especially the DeepSeek-R1 paper, is this result that they call DeepSeek-R1-0, which is they took one of these pre-trained models, they took DeepSeek-V3-Base, and then they do this reinforcement learning optimization on verifiable questions or verifiable rewards for a lot of questions and a lot of training. And these reasoning behaviors emerge naturally. So these things like, "Wait, let me see. Wait, let me check this. Oh, that might be a mistake." And they emerge from only having questions and answers. And when you're using the model, the part that you look at is the completion. So in this case, all of that just emerges from this large-scale RL training and that model, which the weights are available, has no human preferences added into the post-training.
 
-    But the very remarkable thing is that you can get these reasoning behaviors, and it’s very unlikely that there’s humans writing out reasoning chains. It’s very unlikely that they somehow hacked OpenAI and they got access to OpenAI o-1’s reasoning chains. It’s something about the pre-trained language models and this RL training where you reward the model for getting the question right, and therefore it’s trying multiple solutions and it emerges this chain of thought.
-</Quote>
+        But the very remarkable thing is that you can get these reasoning behaviors, and it's very unlikely that there's humans writing out reasoning chains. It's very unlikely that they somehow hacked OpenAI and they got access to OpenAI o-1's reasoning chains. It's something about the pre-trained language models and this RL training where you reward the model for getting the question right, and therefore it's trying multiple solutions and it emerges this chain of thought.
+    </Quote>
 
-<Quote
-    author="Andrej Karpathy"
-    date="2025-01-30"
-    source="https://x.com/karpathy/status/1885026028428681698"
->
-    We have to take the LLMs to school.
+    <Quote
+        author="Andrej Karpathy"
+        date="2025-01-30"
+        source="https://x.com/karpathy/status/1885026028428681698"
+        tags={["LLMs"]}
+    >
+        We have to take the LLMs to school.
 
-When you open any textbook, you'll see three major types of information:
+        When you open any textbook, you'll see three major types of information:
 
-1. Background information / exposition. The meat of the textbook that explains concepts. As you attend over it, your brain is training on that data. This is equivalent to pretraining, where the model is reading the internet and accumulating background knowledge.
+        1. Background information / exposition. The meat of the textbook that explains concepts. As you attend over it, your brain is training on that data. This is equivalent to pretraining, where the model is reading the internet and accumulating background knowledge.
 
-2. Worked problems with solutions. These are concrete examples of how an expert solves problems. They are demonstrations to be imitated. This is equivalent to supervised finetuning, where the model is finetuning on "ideal responses" for an Assistant, written by humans.
+        2. Worked problems with solutions. These are concrete examples of how an expert solves problems. They are demonstrations to be imitated. This is equivalent to supervised finetuning, where the model is finetuning on "ideal responses" for an Assistant, written by humans.
 
-3. Practice problems. These are prompts to the student, usually without the solution, but always with the final answer. There are usually many, many of these at the end of each chapter. They are prompting the student to learn by trial & error - they have to try a bunch of stuff to get to the right answer. This is equivalent to reinforcement learning.
+        3. Practice problems. These are prompts to the student, usually without the solution, but always with the final answer. There are usually many, many of these at the end of each chapter. They are prompting the student to learn by trial & error - they have to try a bunch of stuff to get to the right answer. This is equivalent to reinforcement learning.
 
-We've subjected LLMs to a ton of 1 and 2, but 3 is a nascent, emerging frontier. When we're creating datasets for LLMs, it's no different from writing textbooks for them, with these 3 types of data. They have to read, and they have to practice.
-</Quote>
+        We've subjected LLMs to a ton of 1 and 2, but 3 is a nascent, emerging frontier. When we're creating datasets for LLMs, it's no different from writing textbooks for them, with these 3 types of data. They have to read, and they have to practice.
+    </Quote>
 
-<Quote
-    author="Andrej Karpathy"
-    date="2025-01-27"
-    source="https://x.com/karpathy/status/1883941452738355376"
->
-    Deep Learning has a legendary ravenous appetite for compute, like no other algorithm that has ever been developed in AI. You may not always be utilizing it fully but I would never bet against compute as the upper bound for achievable intelligence in the long run. Not just for an individual final training run, but also for the entire innovation/experimentation engine that silently underlies all the algorithmic innovations.
+    <Quote
+        author="Andrej Karpathy"
+        date="2025-01-27"
+        source="https://x.com/karpathy/status/1883941452738355376"
+        tags={["LLMs"]}
+    >
+        Deep Learning has a legendary ravenous appetite for compute, like no other algorithm that has ever been developed in AI. You may not always be utilizing it fully but I would never bet against compute as the upper bound for achievable intelligence in the long run. Not just for an individual final training run, but also for the entire innovation/experimentation engine that silently underlies all the algorithmic innovations.
 
-    Data has historically been seen as a separate category from compute, but even data is downstream of compute to a large extent - you can spend compute to create data. Tons of it. You've heard this called synthetic data generation, but less obviously, there is a very deep connection (equivalence even) between "synthetic data generation" and "reinforcement learning".
+        Data has historically been seen as a separate category from compute, but even data is downstream of compute to a large extent - you can spend compute to create data. Tons of it. You've heard this called synthetic data generation, but less obviously, there is a very deep connection (equivalence even) between "synthetic data generation" and "reinforcement learning".
 
-    In the trial-and-error learning process in RL, the "trial" is model generating (synthetic) data, which it then learns from based on the "error" (/reward). Conversely, when you generate synthetic data and then rank or filter it in any way, your filter is straight up equivalent to a 0-1 advantage function - congrats you're doing crappy RL.
+        In the trial-and-error learning process in RL, the "trial" is model generating (synthetic) data, which it then learns from based on the "error" (/reward). Conversely, when you generate synthetic data and then rank or filter it in any way, your filter is straight up equivalent to a 0-1 advantage function - congrats you're doing crappy RL.
 
-    There are two major types of learning, in both children and in deep learning:
-    1) Imitation learning (watch and repeat, i.e. pretraining, supervised finetuning)
-    2) Trial-and-error learning (reinforcement learning)
+        There are two major types of learning, in both children and in deep learning:
+        1) Imitation learning (watch and repeat, i.e. pretraining, supervised finetuning)
+        2) Trial-and-error learning (reinforcement learning)
 
-    My favorite simple example is AlphaGo - 1) is learning by imitating expert players, 2) is reinforcement learning to win the game. Almost every single shocking result of deep learning, and the source of all *magic* is always 2. 2 is significantly more powerful. 2 is what surprises you.
+        My favorite simple example is AlphaGo - 1) is learning by imitating expert players, 2) is reinforcement learning to win the game. Almost every single shocking result of deep learning, and the source of all *magic* is always 2. 2 is significantly more powerful. 2 is what surprises you.
 
-    2 is when the paddle learns to hit the ball behind the blocks in Breakout. 2 is when AlphaGo beats even Lee Sedol. And 2 is the "aha moment" when the DeepSeek (or o1 etc.) discovers that it works well to re-evaluate your assumptions, backtrack, try something else, etc.
+        2 is when the paddle learns to hit the ball behind the blocks in Breakout. 2 is when AlphaGo beats even Lee Sedol. And 2 is the "aha moment" when the DeepSeek (or o1 etc.) discovers that it works well to re-evaluate your assumptions, backtrack, try something else, etc.
 
-    It's the solving strategies you see this model use in its chain of thought. It's how it goes back and forth thinking to itself. These thoughts are *emergent* (!!!) and this is actually seriously incredible, impressive and new. The model could never learn this with 1 (by imitation), because the cognition of the model and the cognition of the human labeler is different.
+        It's the solving strategies you see this model use in its chain of thought. It's how it goes back and forth thinking to itself. These thoughts are *emergent* (!!!) and this is actually seriously incredible, impressive and new. The model could never learn this with 1 (by imitation), because the cognition of the model and the cognition of the human labeler is different.
 
-    The human would never know to correctly annotate these kinds of solving strategies and what they should even look like. They have to be discovered during reinforcement learning as empirically and statistically useful towards a final outcome.
+        The human would never know to correctly annotate these kinds of solving strategies and what they should even look like. They have to be discovered during reinforcement learning as empirically and statistically useful towards a final outcome.
 
-    (Last thought: RL is powerful but RLHF is not. RLHF is not RL.)
-</Quote>
+        (Last thought: RL is powerful but RLHF is not. RLHF is not RL.)
+    </Quote>
 
-<Quote
-    author="Gary Marcus"
-    date="2025-01-26"
-    source="https://garymarcus.substack.com/p/the-race-for-ai-supremacy-is-over"
->
+    <Quote
+        author="Gary Marcus"
+        date="2025-01-26"
+        source="https://garymarcus.substack.com/p/the-race-for-ai-supremacy-is-over"
+        tags={["LLMs"]}
+    >
 
-A rumor I heard at Davos, which fits with some earlier reporting from the Wall Street Journal and another well-placed source I read recently, is that OpenAI is struggling to build GPT-5, focusing instead on the user interface in an effort to find a different, less technical advanta
-
-
-</Quote>
-<Quote
-    author="Gary Marcus"
-    date="2025-01-26"
-    source="https://garymarcus.substack.com/p/the-race-for-ai-supremacy-is-over"
->
-    My bet is that [...] advances will be more incremental than before and quickly matched. GPT-5 or a similarly impressive model will come eventually, perhaps led by OpenAI, a Chinese company, or maybe a competitor like Google will get there first. Whichever way it falls out, the advantage will be short-lived.
-
-</Quote>
-
-<Quote
-    author="swyx"
-    date="2025-01-25"
-    source="https://news.ycombinator.com/item?id=42823992"
->
-    R1 + Sonnet > R1 or O1 or R1+R1 or O1+Sonnet or any other combo
-</Quote>
-
-<Quote
-    author="The Economist"
-    date="2025-01-23"
-    source="https://www.economist.com/briefing/2025/01/23/chinas-ai-industry-has-almost-caught-up-with-americas"
->
-
-Not only was the model trained on the cheap, running it costs less as well. DeepSeek splits tasks over multiple chips more efficiently than its peers and begins the next step of a process before the previous one is finished. This allows it to keep chips working at full capacity with little redundancy. As a result, in February, when DeepSeek starts to let other firms create services that make use of v3, it will charge less than a tenth of what Anthropic does for use of Claude, its LLM
-
-</Quote>
+        A rumor I heard at Davos, which fits with some earlier reporting from the Wall Street Journal and another well-placed source I read recently, is that OpenAI is struggling to build GPT-5, focusing instead on the user interface in an effort to find a different, less technical advanta
 
 
-<Quote
-    author="roon"
-    date="2025-01-19"
-    source="https://x.com/tszzl/status/1880779145988444633"
->
-    Contra Tyler Cowen / Dwarkesh discussion: the correct economic model is not doubling the workforce, it's the AlphaZero moment for literally everything. Plumbing new vistas of mind. It's better to imagine a handful of unimaginably bright minds than a billion mid chatbots.
-</Quote>
+    </Quote>
+    <Quote
+        author="Gary Marcus"
+        date="2025-01-26"
+        source="https://garymarcus.substack.com/p/the-race-for-ai-supremacy-is-over"
+        tags={["LLMs"]}
+    >
+        My bet is that [...] advances will be more incremental than before and quickly matched. GPT-5 or a similarly impressive model will come eventually, perhaps led by OpenAI, a Chinese company, or maybe a competitor like Google will get there first. Whichever way it falls out, the advantage will be short-lived.
 
-<Quote
-    author="gwern"
-    date="2025-01-15"
-    source="https://www.lesswrong.com/posts/HiTjDZyWdLEGCDzqu/implications-of-the-inference-scaling-paradigm-for-ai-safety"
->
-    Much of the point of a model like o1 is not to deploy it, but to generate training data for the next model. Every problem that an o1 solves is now a training data point for an o3[...] I am actually mildly surprised OA has bothered to deploy o1-pro at all, instead of keeping it private and investing the compute into more bootstrapping of o3 training etc. (This is apparently what happened with Anthropic and Claude-3.6-opus - it didn't 'fail', they just chose to keep it private and distill it down into a small cheap but strangely smart Claude-3.6-sonnet.)
+    </Quote>
 
-</Quote>
+    <Quote
+        author="swyx"
+        date="2025-01-25"
+        source="https://news.ycombinator.com/item?id=42823992"
+        tags={["LLMs"]}
+    >
+        R1 + Sonnet > R1 or O1 or R1+R1 or O1+Sonnet or any other combo
+    </Quote>
 
-<Quote
-    author="Tyler Cowen"
-    date="2025-01-09"
-    source="https://www.dwarkeshpatel.com/p/tyler-cowen-4"
->
-    My next book, I'm writing even more for the AIs. Again, human readers are welcome. It will be free.
+    <Quote
+        author="The Economist"
+        date="2025-01-23"
+        source="https://www.economist.com/briefing/2025/01/23/chinas-ai-industry-has-almost-caught-up-with-americas"
+        tags={["LLMs"]}
+    >
 
-    But who reviews it? Is TLS going to pick it up? It doesn't matter anymore. The AIs will trawl it and know I've done this, and that will shape how they see me in, I hope, a very salient and important way.
-</Quote>
+        Not only was the model trained on the cheap, running it costs less as well. DeepSeek splits tasks over multiple chips more efficiently than its peers and begins the next step of a process before the previous one is finished. This allows it to keep chips working at full capacity with little redundancy. As a result, in February, when DeepSeek starts to let other firms create services that make use of v3, it will charge less than a tenth of what Anthropic does for use of Claude, its LLM
 
-<Quote
-    author="David Crawshaw"
-    date="2025-01-06"
-    source="https://crawshaw.io/blog/programming-with-llms"
->
-    Chat-driven programming. [...] It requires at least as much messing about to get value out of LLM chat as it does to learn to use a slide rule, with the added annoyance that it is a non-deterministic service that is regularly changing its behavior and user interface. Indeed, the long-term goal in my work is to replace the need for chat-driven programming, to bring the power of these models to a developer in a way that is not so off-putting. But as of now I am dedicated to approaching the problem incrementally, which means figuring out how to do best with what we have and improve it.
-</Quote>
+    </Quote>
 
-<Quote
-    author="David Crawshaw"
-    date="2025-01-06"
-    source="https://crawshaw.io/blog/programming-with-llms"
->
-    A lot of the value I personally get out of chat-driven programming is I reach a point in the day when I know what needs to be written, I can describe it, but I don't have the energy to create a new file, start typing, then start looking up the libraries I need... LLMs perform that service for me in programming. They give me a first draft, with some good ideas, with several of the dependencies I need, and often some mistakes. Often, I find fixing those mistakes is a lot easier than starting from scratch.
-</Quote>
 
-<Quote
-    author="Logan Kilpatrick"
-    date="2025-01-02"
-    source="https://x.com/OfficialLoganK/status/1874903855848362297"
->
-    The world needs [more, better, harder, etc] evals for AI. This is one of the most important problems of our lifetime, and critical for continual progress.
-</Quote>
+    <Quote
+        author="roon"
+        date="2025-01-19"
+        source="https://x.com/tszzl/status/1880779145988444633"
+        tags={["LLMs"]}
+    >
+        Contra Tyler Cowen / Dwarkesh discussion: the correct economic model is not doubling the workforce, it's the AlphaZero moment for literally everything. Plumbing new vistas of mind. It's better to imagine a handful of unimaginably bright minds than a billion mid chatbots.
+    </Quote>
 
-<Quote
-    author="patio11"
-    date="2025-01-02"
-    source="https://www.complexsystemspodcast.com/episodes/outside-view-yatharth/"
->
-    There's a variety of words that I wish we had, which we do not yet have. One word is we have the concept of "alpha" in finance, and alpha - one Greek letter smuggles in a huge amount of understanding about how the world works. I would love to be able to describe someone's alpha above the LLM baseline in discussing a topic. Because there are a lot of human writers in the world who have no alpha above the LLM baseline, and that's been true since before LLMs were a thing. The Twitterism is sometimes "this person is an NPC" - there is no intellectual content here, the performance of class and similar can allow one to pretend that there is intellectual content, but there is no intellectual content.
-</Quote>
+    <Quote
+        author="gwern"
+        date="2025-01-15"
+        source="https://www.lesswrong.com/posts/HiTjDZyWdLEGCDzqu/implications-of-the-inference-scaling-paradigm-for-ai-safety"
+        tags={["LLMs"]}
+    >
+        Much of the point of a model like o1 is not to deploy it, but to generate training data for the next model. Every problem that an o1 solves is now a training data point for an o3[...] I am actually mildly surprised OA has bothered to deploy o1-pro at all, instead of keeping it private and investing the compute into more bootstrapping of o3 training etc. (This is apparently what happened with Anthropic and Claude-3.6-opus - it didn't 'fail', they just chose to keep it private and distill it down into a small cheap but strangely smart Claude-3.6-sonnet.)
 
-<Quote
-    author="Ethan Mollick"
-    date="2025-01-01"
-    source="https://x.com/emollick/status/1874431948766208374"
->
-    Easy prediction for 2025 is that the gains in AI model capability will continue to grow much faster than (a) the vast majority of people's understanding of what AI can do & (b) organizations' ability to absorb the pace of change. Social change is slower than technological change. This all means that things will get weirder and the weirdness will be unevenly distributed.
-</Quote>
+    </Quote>
 
-<Quote
-    author="Simon Willison"
-    date="2024-12-31"
-    source="https://simonwillison.net/2024/Dec/31/llms-in-2024/"
->
-    A lot of better informed people have sworn off LLMs entirely because they can't see how anyone could benefit from a tool with so many flaws. The key skill in getting the most out of LLMs is learning to work with tech that is both inherently unreliable and incredibly powerful at the same time. This is a decidedly non-obvious skill to acquire!
-</Quote>
+    <Quote
+        author="Tyler Cowen"
+        date="2025-01-09"
+        source="https://www.dwarkeshpatel.com/p/tyler-cowen-4"
+        tags={["LLMs"]}
+    >
+        My next book, I'm writing even more for the AIs. Again, human readers are welcome. It will be free.
 
-<Quote
-    author="Simon Willison"
-    date="2024-12-31"
-    source="https://simonwillison.net/2024/Dec/31/llms-in-2024/"
->
-    The efficiency thing is really important for everyone who is concerned about the environmental impact of LLMs. These price drops tie directly to how much energy is being used for running prompts. There's still plenty to worry about with respect to the environmental impact of the great AI datacenter buildout, but a lot of the concerns over the energy cost of individual prompts are no longer credible.
-</Quote>
+        But who reviews it? Is TLS going to pick it up? It doesn't matter anymore. The AIs will trawl it and know I've done this, and that will shape how they see me in, I hope, a very salient and important way.
+    </Quote>
 
-<Quote
-    author="Simon Willison"
-    date="2024-12-26"
-    source="https://bsky.app/profile/simonwillison.net/post/3le7xzlt3ec2i"
->
-    General consensus in the replies and quotes of this seems to be that the entire concept of "AI skills" is a joke - how hard is typing text into a chatbot, really? I will continue to argue that it's genuinely difficult, and that the challenge in using these tools is widely underestimated
-</Quote>
+    <Quote
+        author="David Crawshaw"
+        date="2025-01-06"
+        source="https://crawshaw.io/blog/programming-with-llms"
+        tags={["LLMs"]}
+    >
+        Chat-driven programming. [...] It requires at least as much messing about to get value out of LLM chat as it does to learn to use a slide rule, with the added annoyance that it is a non-deterministic service that is regularly changing its behavior and user interface. Indeed, the long-term goal in my work is to replace the need for chat-driven programming, to bring the power of these models to a developer in a way that is not so off-putting. But as of now I am dedicated to approaching the problem incrementally, which means figuring out how to do best with what we have and improve it.
+    </Quote>
 
-<Quote
-    author="Andrej Karpathy"
-    date="2024-12-24"
-    source="https://x.com/karpathy/status/1855644945224479072"
->
-    The interesting part is that they will crush tests but you wouldn't hire them over a person for the most menial jobs. It's a neat challenge how to properly evaluate the "easy stuff" that is secretly hard because of Moravec's paradox. Very long contexts, autonomy, common sense, …
-</Quote>
+    <Quote
+        author="David Crawshaw"
+        date="2025-01-06"
+        source="https://crawshaw.io/blog/programming-with-llms"
+        tags={["LLMs"]}
+    >
+        A lot of the value I personally get out of chat-driven programming is I reach a point in the day when I know what needs to be written, I can describe it, but I don't have the energy to create a new file, start typing, then start looking up the libraries I need... LLMs perform that service for me in programming. They give me a first draft, with some good ideas, with several of the dependencies I need, and often some mistakes. Often, I find fixing those mistakes is a lot easier than starting from scratch.
+    </Quote>
 
-<Quote
-    author="m_ke"
-    date="2024-12-21"
-    source="https://news.ycombinator.com/item?id=42477766"
->
-    ARC is a silly benchmark, the other results in math and coding are much more impressive. o3 is just o1 scaled up, the main takeaway from this line of work that people should walk away with is that we now have a proven way to RL our way to super human performance on tasks where it's cheap to sample and easy to verify the final output. Programming falls in that category, they focused on known benchmarks but the same process can be done for normal programs, using parsers, compilers, existing functions and unit tests as verifiers. Pre o1 we only really had next token prediction, which required high quality human produced data, with o1 you optimize for success instead of MLE of next token.
-</Quote>
+    <Quote
+        author="Logan Kilpatrick"
+        date="2025-01-02"
+        source="https://x.com/OfficialLoganK/status/1874903855848362297"
+        tags={["LLMs"]}
+    >
+        The world needs [more, better, harder, etc] evals for AI. This is one of the most important problems of our lifetime, and critical for continual progress.
+    </Quote>
 
-<Quote
-    author="François Chollet"
-    date="2024-12-20"
-    source="https://x.com/fchollet/status/1870175296537907588"
->
-    One very important thing to understand about the future: the economics of AI are about to change completely. We'll soon be in a world where you can turn test-time compute into competence -- for the first time in the history of software, marginal cost will become critical.
-</Quote>
+    <Quote
+        author="patio11"
+        date="2025-01-02"
+        source="https://www.complexsystemspodcast.com/episodes/outside-view-yatharth/"
+        tags={["LLMs"]}
+    >
+        There's a variety of words that I wish we had, which we do not yet have. One word is we have the concept of "alpha" in finance, and alpha - one Greek letter smuggles in a huge amount of understanding about how the world works. I would love to be able to describe someone's alpha above the LLM baseline in discussing a topic. Because there are a lot of human writers in the world who have no alpha above the LLM baseline, and that's been true since before LLMs were a thing. The Twitterism is sometimes "this person is an NPC" - there is no intellectual content here, the performance of class and similar can allow one to pretend that there is intellectual content, but there is no intellectual content.
+    </Quote>
 
-<Quote
-    author="Eerke Boiten"
-    date="2024-11-06"
-    source="https://www.bcs.org/articles-opinion-and-research/does-current-ai-represent-a-dead-end/"
->
-    A central property in formal software engineering is compositionality: the idea that composite systems can be understood in terms of the meanings of their parts and the nature of the composition, rather than by having to look at the parts themselves.
+    <Quote
+        author="Ethan Mollick"
+        date="2025-01-01"
+        source="https://x.com/emollick/status/1874431948766208374"
+        tags={["LLMs"]}
+    >
+        Easy prediction for 2025 is that the gains in AI model capability will continue to grow much faster than (a) the vast majority of people's understanding of what AI can do & (b) organizations' ability to absorb the pace of change. Social change is slower than technological change. This all means that things will get weirder and the weirdness will be unevenly distributed.
+    </Quote>
 
-    This idea lies at the heart of piecewise development: parts can be engineered (and verified) separately and hence in parallel, and reused in the form of modules, libraries and the like [...]
+    <Quote
+        author="Simon Willison"
+        date="2024-12-31"
+        source="https://simonwillison.net/2024/Dec/31/llms-in-2024/"
+        tags={["LLMs"]}
+    >
+        A lot of better informed people have sworn off LLMs entirely because they can't see how anyone could benefit from a tool with so many flaws. The key skill in getting the most out of LLMs is learning to work with tech that is both inherently unreliable and incredibly powerful at the same time. This is a decidedly non-obvious skill to acquire!
+    </Quote>
 
-    Current AI systems have no internal structure that relates meaningfully to their functionality. They cannot be developed, or reused, as components. There can be no separation of concerns or piecewise development.
-</Quote>
+    <Quote
+        author="Simon Willison"
+        date="2024-12-31"
+        source="https://simonwillison.net/2024/Dec/31/llms-in-2024/"
+        tags={["LLMs"]}
+    >
+        The efficiency thing is really important for everyone who is concerned about the environmental impact of LLMs. These price drops tie directly to how much energy is being used for running prompts. There's still plenty to worry about with respect to the environmental impact of the great AI datacenter buildout, but a lot of the concerns over the energy cost of individual prompts are no longer credible.
+    </Quote>
 
-<Quote
-    author="Andrej Karpathy"
-    date="2023-12-09"
-    source="https://x.com/karpathy/status/1733299213503787018"
->
-    I always struggle a bit with I'm asked about the "hallucination problem" in LLMs. Because, in some sense, hallucination is all LLMs do. They are dream machines.
+    <Quote
+        author="Simon Willison"
+        date="2024-12-26"
+        source="https://bsky.app/profile/simonwillison.net/post/3le7xzlt3ec2i"
+        tags={["LLMs"]}
+    >
+        General consensus in the replies and quotes of this seems to be that the entire concept of "AI skills" is a joke - how hard is typing text into a chatbot, really? I will continue to argue that it's genuinely difficult, and that the challenge in using these tools is widely underestimated
+    </Quote>
 
-</Quote>
+    <Quote
+        author="Andrej Karpathy"
+        date="2024-12-24"
+        source="https://x.com/karpathy/status/1855644945224479072"
+        tags={["LLMs"]}
+    >
+        The interesting part is that they will crush tests but you wouldn't hire them over a person for the most menial jobs. It's a neat challenge how to properly evaluate the "easy stuff" that is secretly hard because of Moravec's paradox. Very long contexts, autonomy, common sense, …
+    </Quote>
 
-<Quote
-    author="Dwarkesh Patel"
-    date="2023-08-08"
-    source="https://www.dwarkeshpatel.com/p/dario-amodei#:~:text=One%20question%20I%20had%20for%20you"
->
-    What do you make of the fact that these things have basically the entire corpus of human knowledge memorized and they haven't been able to make a single new connection that has led to a discovery?
-    Whereas if even a moderately intelligent person had this much stuff memorized, they would notice Oh, this thing causes this symptom. This other thing also causes this symptom. There's a medical cure right here.
-    Shouldn't we be expecting that kind of stuff?
-</Quote>
+    <Quote
+        author="m_ke"
+        date="2024-12-21"
+        source="https://news.ycombinator.com/item?id=42477766"
+        tags={["LLMs"]}
+    >
+        ARC is a silly benchmark, the other results in math and coding are much more impressive. o3 is just o1 scaled up, the main takeaway from this line of work that people should walk away with is that we now have a proven way to RL our way to super human performance on tasks where it's cheap to sample and easy to verify the final output. Programming falls in that category, they focused on known benchmarks but the same process can be done for normal programs, using parsers, compilers, existing functions and unit tests as verifiers. Pre o1 we only really had next token prediction, which required high quality human produced data, with o1 you optimize for success instead of MLE of next token.
+    </Quote>
 
-<Quote
-    author="Wojciech Zaremba"
-    date="2021-08-29"
-    source="https://www.youtube.com/watch?v=U5OD8MjYnOM&t=6067s"
->
-    One more exciting thing about the programs is that I said that in case of language, one of the troubles is even evaluating language. When the things are made up, you need somehow either a human to say that this doesn't make sense or so in case of program, there is one extra lever that we can actually execute programs and see what they evaluate to. So that process might be somewhat more automated in order to improve the qualities of generations.
-</Quote>
+    <Quote
+        author="François Chollet"
+        date="2024-12-20"
+        source="https://x.com/fchollet/status/1870175296537907588"
+        tags={["LLMs"]}
+    >
+        One very important thing to understand about the future: the economics of AI are about to change completely. We'll soon be in a world where you can turn test-time compute into competence -- for the first time in the history of software, marginal cost will become critical.
+    </Quote>
 
+    <Quote
+        author="Eerke Boiten"
+        date="2024-11-06"
+        source="https://www.bcs.org/articles-opinion-and-research/does-current-ai-represent-a-dead-end/"
+        tags={["LLMs"]}
+    >
+        A central property in formal software engineering is compositionality: the idea that composite systems can be understood in terms of the meanings of their parts and the nature of the composition, rather than by having to look at the parts themselves.
+
+        This idea lies at the heart of piecewise development: parts can be engineered (and verified) separately and hence in parallel, and reused in the form of modules, libraries and the like [...]
+
+        Current AI systems have no internal structure that relates meaningfully to their functionality. They cannot be developed, or reused, as components. There can be no separation of concerns or piecewise development.
+    </Quote>
+
+    <Quote
+        author="Andrej Karpathy"
+        date="2023-12-09"
+        source="https://x.com/karpathy/status/1733299213503787018"
+        tags={["LLMs"]}
+    >
+        I always struggle a bit with I'm asked about the "hallucination problem" in LLMs. Because, in some sense, hallucination is all LLMs do. They are dream machines.
+
+    </Quote>
+
+    <Quote
+        author="Dwarkesh Patel"
+        date="2023-08-08"
+        source="https://www.dwarkeshpatel.com/p/dario-amodei#:~:text=One%20question%20I%20had%20for%20you"
+        tags={["LLMs"]}
+    >
+        What do you make of the fact that these things have basically the entire corpus of human knowledge memorized and they haven't been able to make a single new connection that has led to a discovery?
+        Whereas if even a moderately intelligent person had this much stuff memorized, they would notice Oh, this thing causes this symptom. This other thing also causes this symptom. There's a medical cure right here.
+        Shouldn't we be expecting that kind of stuff?
+    </Quote>
+
+    <Quote
+        author="Wojciech Zaremba"
+        date="2021-08-29"
+        source="https://www.youtube.com/watch?v=U5OD8MjYnOM&t=6067s"
+        tags={["LLMs"]}
+    >
+        One more exciting thing about the programs is that I said that in case of language, one of the troubles is even evaluating language. When the things are made up, you need somehow either a human to say that this doesn't make sense or so in case of program, there is one extra lever that we can actually execute programs and see what they evaluate to. So that process might be somewhat more automated in order to improve the qualities of generations.
+    </Quote>
+
+
+</TagFilter>
 
 ## Links
 

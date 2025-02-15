@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaQuoteLeft } from 'react-icons/fa6';
+import { FaCalendar, FaQuoteLeft, FaTags } from 'react-icons/fa6';
 import { FaUpRightFromSquare } from 'react-icons/fa6';
 
 const formatDate = (isoDate) => {
@@ -16,7 +16,7 @@ const formatDate = (isoDate) => {
     }).format(date);
 };
 
-const Quote = ({ children, author, date, source }) => {
+const Quote = ({ children, author, date, source, tags = [] }) => {
     const formattedDate = formatDate(date);
 
     return (
@@ -28,26 +28,36 @@ const Quote = ({ children, author, date, source }) => {
                         {children}
                     </div>
                 </div>
-                <footer className="text-sm flex items-center pl-4">
+                <footer className="text-sm flex items-center flex-wrap gap-4 pl-4 text-gray-600">
                     <span className="font-semibold text-gray-700">{author}</span>
                     {formattedDate && (
-                        <span className="text-gray-500 ml-2">
-                            • {formattedDate}
-                        </span>
+                        <div className="flex items-center">
+                            <FaCalendar className="w-3 h-3 mr-2" />
+                            <span>{formattedDate}</span>
+                        </div>
+                    )}
+                    {tags && tags.length > 0 && (
+                        <div className="flex items-center">
+                            <FaTags className="w-3 h-3 mr-2" />
+                            <div className="flex gap-2">
+                                {tags.map((tag) => (
+                                    <span key={tag} className="bg-gray-200 px-2 py-0.5 rounded-full text-xs">
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
                     )}
                     {source && (
-                        <>
-                            <span className="text-gray-500 ml-2">•</span>
-                            <a
-                                href={source}
-                                className="ml-2 text-blue-600 hover:text-blue-800 inline-flex items-center"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <span>source</span>
-                                <FaUpRightFromSquare className="ml-1 w-3 h-3" />
-                            </a>
-                        </>
+                        <a
+                            href={source}
+                            className="text-blue-600 hover:text-blue-800 inline-flex items-center"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <span>source</span>
+                            <FaUpRightFromSquare className="ml-1 w-3 h-3" />
+                        </a>
                     )}
                 </footer>
             </blockquote>
