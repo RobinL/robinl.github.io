@@ -1,5 +1,5 @@
 ---
-title: "LLM links and quotes"
+title: "Quotes, links and podcasts"
 post_date: "2025-01-07"
 post_category: "quotes_links"
 description: "An assortment of quotes that I like"
@@ -20,6 +20,8 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 # Links, quotes, and podcast episodes
 
 ## Quotes
+
+
 
 
 
@@ -288,6 +290,14 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
         tags={["LLMs"]}
     />
 
+    <LinkCard
+        title="Dropping Spark for DuckDB Discussion"
+        url="https://news.ycombinator.com/item?id=42419224"
+        description="Hacker News discussion about companies moving from Apache Spark to DuckDB"
+        date="2024-12-14"
+        tags={["duckdb", "data"]}
+    />
+
     <Quote
         author="Hannes Mühleisen"
         date="2024-12-12"
@@ -352,6 +362,14 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
         url="https://www.bcs.org/articles-opinion-and-research/does-current-ai-represent-a-dead-end/"
         date="2024-11-06"
         tags={["LLMs"]}
+    />
+
+    <LinkCard
+        title="Analytics-Optimized Concurrent Transactions"
+        url="https://duckdb.org/2024/10/30/analytics-optimized-concurrent-transactions.html"
+        description="DuckDB's approach to handling concurrent transactions for analytics workloads"
+        date="2024-10-30"
+        tags={["duckdb"]}
     />
 
     <LinkCard
