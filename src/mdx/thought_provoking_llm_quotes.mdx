@@ -14,6 +14,7 @@ import { Link } from "gatsby"
 import TagFilter from "../components/TagFilter"
 import LinkCard from "../components/LinkCard"
 import PodcastCard from "../components/PodcastCard"
+import ContentFilter from "../components/ContentFilter"
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
 # Links, quotes, and podcast episodes
@@ -22,7 +23,7 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 
 
 
-<TagFilter>
+<ContentFilter key="content-filter">
     <Quote
         author="Jeremy Howard"
         date="2025-02-09"
@@ -416,7 +417,7 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
     </Quote>
 
 
-</TagFilter>
+</ContentFilter>
 
 
 

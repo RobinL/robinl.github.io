@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaCalendar, FaQuoteLeft, FaTags } from 'react-icons/fa6';
 import { FaUpRightFromSquare } from 'react-icons/fa6';
+import { CONTENT_TYPES } from '../constants/contentTypes';
 
 const formatDate = (isoDate) => {
     if (!isoDate) return null;
@@ -65,4 +66,5 @@ const Quote = ({ children, author, date, source, tags = [] }) => {
     );
 };
 
+Quote.contentType = CONTENT_TYPES.QUOTE;
 export default Quote;
