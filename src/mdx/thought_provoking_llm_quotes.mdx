@@ -13,7 +13,7 @@ import Quote from "../components/Quote"
 import { Link } from "gatsby"
 import TagFilter from "../components/TagFilter"
 import LinkCard from "../components/LinkCard"
-
+import PodcastCard from "../components/PodcastCard"
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
 # Links, quotes, and podcast episodes
@@ -306,7 +306,6 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
     </Quote>
 
 
-
     <LinkCard
         title="Building effective agents"
         description="What are agents and how do we expect them to evolve"
@@ -315,22 +314,20 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
         tags={["LLMs"]}
     />
 
-    <LinkCard
+    <PodcastCard
         title="Chris Olah on Lex Fridman"
         description="Interpretability"
         url="https://youtu.be/ugvHCXCOmm4?si=Dt7kdxIiHb6ljfnn&t=15476"
         date="2024-11-11"
-        tags={["LLMs", "Podcast"]}
-        type="podcast"
+        tags={["LLMs"]}
     />
 
-    <LinkCard
+    <PodcastCard
         title="Amanda Askell on Lex Fridman"
         description="How LLMs are trained to be useful, the importance of prompting"
         url="https://youtu.be/ugvHCXCOmm4?si=z1sfzRWzSc67988q&t=9921"
         date="2024-11-11"
-        tags={["LLMs", "Podcast"]}
-        type="podcast"
+        tags={["LLMs"]}
     />
 
     <Quote
@@ -364,13 +361,12 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
         tags={["LLMs"]}
     />
 
-    <LinkCard
+    <PodcastCard
         title="Cursor Team: Future of Programming with AI"
         description="How AI is being integrated into software development"
         url="https://www.youtube.com/watch?v=oFfVt3S51T4"
         date="2024-10-06"
-        tags={["LLMs", "Programming", "Podcast"]}
-        type="podcast"
+        tags={["LLMs"]}
     />
 
     <LinkCard
@@ -381,13 +377,12 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
         tags={["LLMs"]}
     />
 
-    <LinkCard
+    <PodcastCard
         title="Francois Chollet on the Dwarkesh podcast - LLMs won't lead to AGI"
         description="Understanding LLMs reasoning abilities"
         url="https://www.dwarkeshpatel.com/p/francois-chollet"
         date="2024-06-11"
-        tags={["LLMs", "Podcast"]}
-        type="podcast"
+        tags={["LLMs"]}
     />
 
     <Quote

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaCalendar, FaLink, FaTags, FaPodcast } from 'react-icons/fa6';
+import { FaCalendar, FaLink, FaTags } from 'react-icons/fa6';
 import { FaUpRightFromSquare } from 'react-icons/fa6';
 
 const formatDate = (isoDate) => {
@@ -16,10 +16,9 @@ const formatDate = (isoDate) => {
     }).format(date);
 };
 
-const LinkCard = ({ title, description, url, date, tags = [], type }) => {
+// Base card component that can be extended
+export const BaseCard = ({ title, description, url, date, tags = [], IconComponent }) => {
     const formattedDate = formatDate(date);
-
-    const IconComponent = type === 'podcast' ? FaPodcast : FaLink;
 
     return (
         <div className="my-8">
@@ -62,6 +61,11 @@ const LinkCard = ({ title, description, url, date, tags = [], type }) => {
             </div>
         </div>
     );
+};
+
+// Default LinkCard component
+const LinkCard = (props) => {
+    return <BaseCard {...props} IconComponent={FaLink} />;
 };
 
 export default LinkCard;
