@@ -7,10 +7,9 @@ import {
     FaHome,
     FaInfoCircle,
 } from 'react-icons/fa';
-
+import { RiBlueskyFill } from "react-icons/ri";
 import { SlLink } from 'react-icons/sl';
 import ResponsiveLink from './ResponsiveIcon';
-
 
 import '../styles/shimmer.css';
 
@@ -76,6 +75,14 @@ const Header = () => {
                         rel="noopener noreferrer"
                     >
                         <FaLinkedin className="w-4.5 h-4.5" />
+                    </a>
+                    <a
+                        href="https://bsky.app/profile/robinlinacre.bsky.social"
+                        className="text-gray-600 hover:text-blue-700 transition ease-in duration-200"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <RiBlueskyFill className="w-4.5 h-4.5" />
                     </a>
                 </div>
             </div>
