@@ -18,15 +18,41 @@ const formatDate = (isoDate) => {
 const QuoteCard = ({ frontmatter, html }) => {
     const formattedDate = formatDate(frontmatter.date);
 
+    // Split the HTML into quote and non-quote parts
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+
+    // Get blockquote content
+    const blockquote = tempDiv.querySelector('blockquote');
+    const quoteContent = blockquote ? blockquote.innerHTML : '';
+
+    // Get remaining content (excluding the blockquote)
+    blockquote?.remove();
+    const additionalContent = tempDiv.innerHTML.trim();
+
     return (
         <div className="my-8">
-            <blockquote className="py-3 px-6 bg-gray-50 rounded not-italic relative">
-                <FaQuoteLeft className="absolute top-2 left-2 text-gray-200 w-4 h-4" />
-                <div className="text-gray-700 mb-4 relative z-10 pl-4">
-                    <div className="space-y-4" dangerouslySetInnerHTML={{ __html: html }} />
+            <div className="py-3 px-6 bg-gray-50 rounded">
+                <div className="relative">
+                    <FaQuoteLeft className="absolute -top-1 -left-1 text-gray-200 w-4 h-4" />
+                    <blockquote className="not-italic pl-4">
+                        <div className="text-gray-700 relative z-10">
+                            <div className="space-y-4" dangerouslySetInnerHTML={{ __html: quoteContent }} />
+                            <div className="mt-3 font-semibold text-gray-700">
+                                — {frontmatter.author}
+                            </div>
+                        </div>
+                    </blockquote>
+
+                    {additionalContent && (
+                        <div
+                            className="mt-4 text-gray-700 prose max-w-none"
+                            dangerouslySetInnerHTML={{ __html: additionalContent }}
+                        />
+                    )}
                 </div>
-                <footer className="text-sm flex items-center flex-wrap gap-4 pl-4 text-gray-600">
-                    <span className="font-semibold text-gray-700">{frontmatter.author}</span>
+
+                <footer className="mt-4 text-sm flex items-center flex-wrap gap-4 text-gray-600  border-gray-200 pt-3">
                     {formattedDate && (
                         <div className="flex items-center">
                             <FaCalendar className="w-3 h-3 mr-2" />
@@ -57,7 +83,7 @@ const QuoteCard = ({ frontmatter, html }) => {
                         </a>
                     )}
                 </footer>
-            </blockquote>
+            </div>
         </div>
     );
 };
