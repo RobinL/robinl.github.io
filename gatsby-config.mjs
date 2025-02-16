@@ -186,6 +186,13 @@ const config = {
         "path": "./src/links_quotes_markdown/"
       }
     },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        "name": "content",
+        "path": "./src/microblog_md/"
+      }
+    },
 
   ]
 };
