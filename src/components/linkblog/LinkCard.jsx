@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaCalendar, FaTags } from 'react-icons/fa6';
 import { FaUpRightFromSquare } from 'react-icons/fa6';
-import { CONTENT_TYPES } from '../constants/contentTypes';
+import { CONTENT_TYPES } from '../../constants/contentTypes';
 
 const formatDate = (isoDate) => {
     if (!isoDate) return null;
