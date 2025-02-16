@@ -179,6 +179,13 @@ const config = {
         ],
       }
     },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        "name": "content",
+        "path": "./src/links_quotes_markdown/"
+      }
+    },
 
   ]
 };
