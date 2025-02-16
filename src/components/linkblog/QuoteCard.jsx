@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaCalendar, FaQuoteLeft, FaTags } from 'react-icons/fa6';
 import { FaUpRightFromSquare } from 'react-icons/fa6';
 
@@ -17,18 +17,22 @@ const formatDate = (isoDate) => {
 
 const QuoteCard = ({ frontmatter, html }) => {
     const formattedDate = formatDate(frontmatter.date);
+    const [quoteContent, setQuoteContent] = useState('');
+    const [additionalContent, setAdditionalContent] = useState('');
 
-    // Split the HTML into quote and non-quote parts
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = html;
+    useEffect(() => {
+        // Move HTML parsing to client-side
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
 
-    // Get blockquote content
-    const blockquote = tempDiv.querySelector('blockquote');
-    const quoteContent = blockquote ? blockquote.innerHTML : '';
+        // Get blockquote content
+        const blockquote = tempDiv.querySelector('blockquote');
+        setQuoteContent(blockquote ? blockquote.innerHTML : '');
 
-    // Get remaining content (excluding the blockquote)
-    blockquote?.remove();
-    const additionalContent = tempDiv.innerHTML.trim();
+        // Get remaining content (excluding the blockquote)
+        blockquote?.remove();
+        setAdditionalContent(tempDiv.innerHTML.trim());
+    }, [html]);
 
     return (
         <div className="my-8">
