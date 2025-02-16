@@ -38,8 +38,19 @@ const QuoteCard = ({ frontmatter, html }) => {
                     <blockquote className="not-italic pl-4">
                         <div className="text-gray-700 relative z-10">
                             <div className="space-y-4" dangerouslySetInnerHTML={{ __html: quoteContent }} />
-                            <div className="mt-3 font-semibold text-gray-700">
-                                — {frontmatter.author}
+                            <div className="mt-3 font-semibold text-gray-700 flex items-center gap-3">
+                                <span>— {frontmatter.author}</span>
+                                {frontmatter.url && (
+                                    <a
+                                        href={frontmatter.url}
+                                        className="text-blue-600 hover:text-blue-800 inline-flex items-center text-sm font-normal"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <span>source</span>
+                                        <FaUpRightFromSquare className="ml-1 w-3 h-3" />
+                                    </a>
+                                )}
                             </div>
                         </div>
                     </blockquote>
@@ -52,7 +63,7 @@ const QuoteCard = ({ frontmatter, html }) => {
                     )}
                 </div>
 
-                <footer className="mt-4 text-sm flex items-center flex-wrap gap-4 text-gray-600  border-gray-200 pt-3">
+                <footer className="mt-4 text-sm flex items-center flex-wrap gap-4 text-gray-600 border-gray-200 pt-3">
                     {formattedDate && (
                         <div className="flex items-center">
                             <FaCalendar className="w-3 h-3 mr-2" />
@@ -70,17 +81,6 @@ const QuoteCard = ({ frontmatter, html }) => {
                                 ))}
                             </div>
                         </div>
-                    )}
-                    {frontmatter.url && (
-                        <a
-                            href={frontmatter.url}
-                            className="text-blue-600 hover:text-blue-800 inline-flex items-center"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <span>source</span>
-                            <FaUpRightFromSquare className="ml-1 w-3 h-3" />
-                        </a>
                     )}
                 </footer>
             </div>
