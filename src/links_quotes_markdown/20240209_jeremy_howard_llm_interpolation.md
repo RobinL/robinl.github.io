@@ -2,7 +2,7 @@
 type: "quote"
 author: "Jeremy Howard"
 date: "2025-02-09"
-source: "https://x.com/jeremyphoward/status/1888470970131693653"
+url: "https://x.com/jeremyphoward/status/1888470970131693653"
 tags: ["LLMs"]
 ---
 
