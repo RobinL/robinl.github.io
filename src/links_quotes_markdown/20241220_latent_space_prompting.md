@@ -7,4 +7,4 @@ date: "2024-12-20"
 tags: ["LLMs"]
 ---
 
-Prompting can go deep!
+Prompting can go very deep!
