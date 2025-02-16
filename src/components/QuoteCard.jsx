@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaCalendar, FaPodcast, FaTags } from 'react-icons/fa6';
+import { FaCalendar, FaQuoteLeft, FaTags } from 'react-icons/fa6';
 import { FaUpRightFromSquare } from 'react-icons/fa6';
 
 const formatDate = (isoDate) => {
@@ -15,28 +15,18 @@ const formatDate = (isoDate) => {
     }).format(date);
 };
 
-const PodcastCard = ({ frontmatter }) => {
+const QuoteCard = ({ frontmatter, html }) => {
     const formattedDate = formatDate(frontmatter.date);
 
     return (
         <div className="my-8">
-            <div className="py-3 px-6 bg-gray-50 rounded relative">
-                <FaPodcast className="absolute top-2 left-2 text-gray-200 w-4 h-4" />
+            <blockquote className="py-3 px-6 bg-gray-50 rounded not-italic relative">
+                <FaQuoteLeft className="absolute top-2 left-2 text-gray-200 w-4 h-4" />
                 <div className="text-gray-700 mb-4 relative z-10 pl-4">
-                    <a
-                        href={frontmatter.url}
-                        className="text-blue-600 hover:text-blue-800 font-semibold text-lg inline-flex items-center"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {frontmatter.title}
-                        <FaUpRightFromSquare className="ml-2 w-3 h-3" />
-                    </a>
-                    {frontmatter.description && (
-                        <p className="mt-2 text-gray-600">{frontmatter.description}</p>
-                    )}
+                    <div className="space-y-4" dangerouslySetInnerHTML={{ __html: html }} />
                 </div>
                 <footer className="text-sm flex items-center flex-wrap gap-4 pl-4 text-gray-600">
+                    <span className="font-semibold text-gray-700">{frontmatter.author}</span>
                     {formattedDate && (
                         <div className="flex items-center">
                             <FaCalendar className="w-3 h-3 mr-2" />
@@ -55,10 +45,21 @@ const PodcastCard = ({ frontmatter }) => {
                             </div>
                         </div>
                     )}
+                    {frontmatter.url && (
+                        <a
+                            href={frontmatter.url}
+                            className="text-blue-600 hover:text-blue-800 inline-flex items-center"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <span>source</span>
+                            <FaUpRightFromSquare className="ml-1 w-3 h-3" />
+                        </a>
+                    )}
                 </footer>
-            </div>
+            </blockquote>
         </div>
     );
 };
 
-export default PodcastCard;
+export default QuoteCard;

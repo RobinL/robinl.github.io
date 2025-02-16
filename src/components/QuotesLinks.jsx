@@ -1,5 +1,8 @@
 import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
+import QuoteCard from './QuoteCard';
+import LinkCard from './LinkCard';
+import PodcastCard from './PodcastCard';
 
 const QuotesLinks = () => {
     const data = useStaticQuery(graphql`
@@ -24,14 +27,24 @@ const QuotesLinks = () => {
     }
   `);
 
+    const renderContent = (node) => {
+        switch (node.frontmatter.type) {
+            case 'quote':
+                return <QuoteCard frontmatter={node.frontmatter} html={node.html} />;
+            case 'link':
+                return <LinkCard frontmatter={node.frontmatter} />;
+            case 'podcast':
+                return <PodcastCard frontmatter={node.frontmatter} />;
+            default:
+                return null;
+        }
+    };
+
     return (
-        <div>
+        <div className="max-w-3xl mx-auto">
             {data.allMarkdownRemark.nodes.map((node, index) => (
-                <div key={index} className="mb-8 p-4 border rounded">
-                    <div dangerouslySetInnerHTML={{ __html: node.html }} />
-                    <pre className="mt-4 p-2 bg-gray-100 rounded">
-                        {JSON.stringify(node.frontmatter, null, 2)}
-                    </pre>
+                <div key={index}>
+                    {renderContent(node)}
                 </div>
             ))}
         </div>
