@@ -4,15 +4,15 @@ import { navigate } from 'gatsby';
 import QuoteCard from './QuoteCard';
 import LinkCard from './LinkCard';
 
-const QuotesLinks = ({ location = { search: '' } }) => {
+const QuotesLinks = () => {
   const [selectedTypes, setSelectedTypes] = useState(new Set(['Quote', 'Link']));
   const [selectedTags, setSelectedTags] = useState(new Set());
 
   // Parse URL params on component mount and when URL changes
   useEffect(() => {
-    if (!location?.search) return;
+    if (typeof window === 'undefined') return;
 
-    const params = new URLSearchParams(location.search);
+    const params = new URLSearchParams(window.location.search);
     const typesParam = params.get('types');
     const tagsParam = params.get('tags');
 
@@ -22,11 +22,11 @@ const QuotesLinks = ({ location = { search: '' } }) => {
     if (tagsParam) {
       setSelectedTags(new Set(tagsParam.split(',')));
     }
-  }, [location?.search]);
+  }, []);
 
   // Update URL when filters change
   const updateURL = (types, tags) => {
-    if (typeof window === 'undefined') return; // Check if we're in the browser
+    if (typeof window === 'undefined') return;
 
     const params = new URLSearchParams();
 
@@ -38,8 +38,10 @@ const QuotesLinks = ({ location = { search: '' } }) => {
     }
 
     const search = params.toString();
-    const pathname = location?.pathname || '/quotes-links';
-    navigate(`${pathname}${search ? '?' + search : ''}`, { replace: true });
+    navigate(
+      `${window.location.pathname}${search ? '?' + search : ''}`,
+      { replace: true }
+    );
   };
 
   const data = useStaticQuery(graphql`
