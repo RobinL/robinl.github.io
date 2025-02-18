@@ -13,28 +13,73 @@ import { SEO } from "../components/SEO"
 export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
 
 import Subtitle from "../components/Subtitle"
-import decisionBoundary from "./em_intuition/decision_boundary.png"
+
 import TutorialNav from '../components/TutorialNav';
 import CompactTutorialNav from '../components/CompactTutorialNav';
 
+export const Calc = ({ children }) => {
+  let result;
+  try {
+    result = new Function(`return (${children})`)();
+  } catch (error) {
+    result = "Error";
+  }
+
+  return <>{result}</>;
+};
+
+
 # An alternative way to think about predicted probabilities in the Fellegi Sunter model
 
-In the Fellegi Sunter model, the 'prior' is the probability that two records drawn at random (without replacement) are a match.
+To compute match probability in the Fellegi Sunter model, we have so far thought about this calculation from the perspective of pairwise record comparisons.
 
-In our explanation of the Fellegi Sunter model, this is treated as the 'starting point' of the model, whereby we could be looking at an two records from all
+We begin with the 'prior' - probability that two records drawn at random are a match.  This is equivalent to taking random draw from the set of all possible pairwise comparisons of records *add footnote here to clearify this is without replacement.
 
-$$\frac{n(n-1)}{2}$$
+To compute the match probability, we observe information in the comparison (e.g. an exact match on first name), and update our beliefs using Bayesian conditioning. For example, if we observe an exact match on first name, then we are no longer in the space of all $$\frac{n(n-1)}{2}$$ comparisons, and instead need to restrict our attention to the subset of all comparisons where first name matches. In this subset, the probability of a match is higher.
 
-possible comparisons of any record to any other record.
+There is an alternative and equivalent way to think about the computation of the match probability that may be more intuitive.  This explanation starts from the perspective of a single record.
 
-To compute the match probability, we observe information in the comparison (e.g. an exact match on first name), and update our beliefs using \textit{Bayesian conditioning}. For example, if we observe an exact match on first name, then we are no longer in the space of all
+Given this record, let's define two variables: **footnote* We will define these more precisely later
 
-$$\frac{n(n-1)}{2}$$
+- $$s$$: how many records for the _same_ individual are there in the dataset?
+- $$d$$ how many records for _different_ individuals who share the same information are there in the dataset?
 
-comparisons, and instead need to restrict our attention to the subset of all comparisons where first name matches. In this subset, the probability of a match is higher.
+With these to variables, it's straightforward to compute the probability of a match when observing a second record that matches the first:
 
-There is an alternative and equivalent way to think about the computation of the match probability that may be more intuitive:  Given a record, how likely is it that another different person has exists in the dataset with the same information?
+$$
+P(match) = \frac{s}{s+d}
+$$
 
-To clarify, let's look at an example.  Suppose we have a dataset of 1,000 records.
+To clarify, let's look at an example:
 
-$$\Large{p = \frac{2^{\omega}}{1 + 2^{\omega}}}$$
+Suppose we have a dataset of 100,000 records.  Each record has, on average, one duplicate, so there are 50,000 distinct individuals in this dataset.
+
+Take an example record from this data.  Let's say we observe the full name 'John Smith', and that:
+
+- 1 in 20 people are called John in the population
+- 1 in 50 people are called Smith in the
+
+In this example $$s = 1$$ because we assumed that each record has, on average, one duplicate.
+
+How many records are there for in the dataset for _different_ John Smiths?
+
+There are 50,000 distinct individuals in the dataset, so there are 49,998 records for different individuals
+
+Amongst these 49,998 reecords there are:
+
+$$d = 49,998 \times \frac{1}{20} \times \frac{1}{50} = 49.998$$ other John Smiths.
+
+So if we find another "John Smith" in the dataset, the probability that this is a duplicate is:
+
+$$ P(match) = \frac{s}{s+d} = \frac{1}{1+49.998} = $$ <Calc>1/(1+49.998)</Calc>
+
+
+
+
+
+
+
+## What is the equivalent maths using our previous approach?
+
+
+
