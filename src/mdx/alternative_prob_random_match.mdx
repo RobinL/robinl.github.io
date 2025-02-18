@@ -82,7 +82,7 @@ Suppose we have a dataset of 100,000 records.  Each record has, on average, one 
 Take an example record from this data.  Let's say we observe the full name 'John Smith', with all other fields null. Further assume that:
 
 - 1 in 20 people are called John in the population
-- 1 in 50 people are called Smith in the
+- 1 in 50 people are called Smith in the population
 
 In this example $$s = 1$$ because we assumed that each record has, on average, one duplicate.
 
@@ -100,10 +100,9 @@ $$ P(match) = \frac{s}{s+d} = \frac{1}{1+99.998} = $$ <Calc format="percentage">
 
 This approach is mathematically equivalent to the pairwise comparison approach.
 
-With the pairwise comaprison approach we have:
+With the pairwise comparison approach we have:
 
 Total number of possible comparisons = $$\frac{n(n-1)}{2}$$ = <Calc format="0">100000 * (100000-1) / 2</Calc>
-
 
 $$\lambda$$ = probability two random records match = 50,000  / 4,999,950,000
 
