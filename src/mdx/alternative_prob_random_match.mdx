@@ -1,0 +1,148 @@
+---
+title: "An alternative way to think about predicted probabilities in the Fellegi Sunter model"
+description: "A second equivalent mental model to help think about how we arrive at predicted probabilities in the Fellegi Sunter model"
+post_date: "2025-02-18"
+post_category: "probabilistic_linkage"
+code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/alternative_prob_random_match.mdx"
+prob_linkage_category: "tutorial"
+tutorial_number: 9
+---
+
+export { ProbLinkageLayout as default} from '../components/ProbLinkageLayout'
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import Subtitle from "../components/Subtitle"
+
+import TutorialNav from '../components/TutorialNav';
+import CompactTutorialNav from '../components/CompactTutorialNav';
+import { Link } from "gatsby";
+export const Calc = ({ children, format }) => {
+  let result;
+
+  // Ensure children is treated as a string
+  const expression = Array.isArray(children) ? children.join("") : children;
+
+  try {
+    result = new Function(`return (${expression})`)();
+    if (!isFinite(result)) throw new Error("Calculation resulted in Infinity");
+  } catch (error) {
+    result = error.toString();
+  }
+
+  if (typeof result === "number") {
+    if (format === "currency") {
+      result = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" }).format(result);
+    } else if (format === "percentage") {
+      result = new Intl.NumberFormat("en-GB", { style: "percent", maximumFractionDigits: 6 }).format(result);
+    } else if (format === "scientific") {
+      result = result.toExponential(5);
+    } else if (!isNaN(format)) {
+      result = new Intl.NumberFormat("en-GB", { minimumFractionDigits: Number(format), maximumFractionDigits: Number(format) }).format(result);
+    } else {
+      result = new Intl.NumberFormat("en-GB").format(result);
+    }
+  }
+
+  return <>{result}</>;
+};
+
+
+# An alternative way to think about predicted probabilities in the Fellegi Sunter model
+
+So far, we have thought about the calculation of the Fellegi-Sunter model from the perspective of pairwise record comparisons.
+
+In this view, we begin by imagining a random draw from the set of all possible pairwise comparisons of records.  The probability that these records match is the 'prior' -  our assessment of the match probability before we begin to take into account the information we observe in the records.
+
+To compute the match probability for a specific pairwise comparison, we then update our beliefs based on the information in the records using <Link to="/posterior_treemap/">Bayesian conditioning</Link>.
+
+For example, if we observe an exact match on first name, then we are no longer in the space of all $$\frac{n(n-1)}{2}$$ comparisons, and instead need to restrict our attention to the subset of all comparisons where first name matches. In this subset, the probability of a match is higher, and so we update the match probability to reflect this.
+
+In this post, we look at an alternative and equivalent way to think about the computation of the match probability that may be more intuitive.  This explanation starts from the perspective of a single record, rather than the space of all pairwise comparisons.
+
+Given this record, let's define two variables[^1]:
+
+[^1]: These are defined loosely here for the sake of exposition.  In reality, they should be defined in relation to a specific specific comparison vector.
+
+- $$s$$: how many other records for the **same individual** are there in the dataset?
+- $$d$$ how many records are there in the dataset for **different** individuals who, by coincidence, share the same information? (We can think of these as 'red herrings')
+
+Using these variables, we can compute the probability that two records like this one are a match:
+
+$$
+P(match) = \frac{\text{true matches}}{\text{true matches} + \text{'red herring' matches}} = \frac{s}{s+d}
+$$
+
+## Simple example
+
+To clarify, let's look at a simple example:
+
+Suppose we have a dataset of 100,000 records.  Each record has, on average, one duplicate, so there are 50,000 distinct individuals in this dataset.
+
+Take an example record from this data.  Let's say we observe the full name 'John Smith', with all other fields null. Further assume that:
+
+- 1 in 20 people are called John in the population
+- 1 in 50 people are called Smith in the
+
+In this example $$s = 1$$ because we assumed that each record has, on average, one duplicate.
+
+But what is $$d$$? How many records are there for in the dataset for _different_ John Smiths?
+
+There are 99,998 records for different individuals, so we can compute the expected number of John Smiths as:
+
+$$d = 99,998 \times \frac{1}{20} \times \frac{1}{50} = $$ <Calc format="3">99998 * (1/20) * (1/50)</Calc> other John Smiths.
+
+So if we find another "John Smith" in the dataset, the probability that this is a duplicate is:
+
+$$ P(match) = \frac{s}{s+d} = \frac{1}{1+99.998} = $$ <Calc format="percentage">1/(1+99.998)</Calc>
+
+## What is the equivalent maths using our previous approach?
+
+This approach is mathematically equivalent to the pairwise comparison approach.
+
+With the pairwise comaprison approach we have:
+
+Total number of possible comparisons = $$\frac{n(n-1)}{2}$$ = <Calc format="0">100000 * (100000-1) / 2</Calc>
+
+
+$$\lambda$$ = probability two random records match = 50,000  / 4,999,950,000
+
+Recall from <Link to="/maths_of_fellegi_sunter/">our article on the maths of the Fellegi Sunter model</Link> that:
+
+$\text{posterior odds of match} = \frac{\lambda }{1- \lambda}K_1 K_2 \dots K_n$
+
+where $$K_i$$ is the Bayes Factor for the $$i$$th comparison vector.
+
+The relevant Bayes Factors are 20 and 50, so we have:
+
+$$ \text{posterior odds of match} = \left( \frac{50,000}{4,999,950,000} \right) \times 50 \times 20$$
+
+=<Calc format="10">20 * 50 * ((50000 /4999950000) / (1 - (50000 /  4999950000)))</Calc>
+
+Which we can convert into a probability using:
+
+$$P(match) = \frac{\text{odds}}{1 + \text{odds}}$$
+
+= <Calc format="percentage">0.0100002000/(1.0 + 0.0100002000)</Calc>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
