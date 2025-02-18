@@ -1,0 +1,40 @@
+---
+title: "An alternative way to think about predicted probabilities in the Fellegi Sunter model"
+description: "A second equivalent mental model to help think about how we arrive at predicted probabilities in the Fellegi Sunter model"
+post_date: "2025-02-18"
+post_category: "probabilistic_linkage"
+code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/alternative_prob_random_match.mdx"
+prob_linkage_category: "tutorial"
+tutorial_number: 9
+---
+
+export { ProbLinkageLayout as default} from '../components/ProbLinkageLayout'
+import { SEO } from "../components/SEO"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+import Subtitle from "../components/Subtitle"
+import decisionBoundary from "./em_intuition/decision_boundary.png"
+import TutorialNav from '../components/TutorialNav';
+import CompactTutorialNav from '../components/CompactTutorialNav';
+
+# An alternative way to think about predicted probabilities in the Fellegi Sunter model
+
+In the Fellegi Sunter model, the 'prior' is the probability that two records drawn at random (without replacement) are a match.
+
+In our explanation of the Fellegi Sunter model, this is treated as the 'starting point' of the model, whereby we could be looking at an two records from all
+
+$$\frac{n(n-1)}{2}$$
+
+possible comparisons of any record to any other record.
+
+To compute the match probability, we observe information in the comparison (e.g. an exact match on first name), and update our beliefs using \textit{Bayesian conditioning}. For example, if we observe an exact match on first name, then we are no longer in the space of all
+
+$$\frac{n(n-1)}{2}$$
+
+comparisons, and instead need to restrict our attention to the subset of all comparisons where first name matches. In this subset, the probability of a match is higher.
+
+There is an alternative and equivalent way to think about the computation of the match probability that may be more intuitive:  Given a record, how likely is it that another different person has exists in the dataset with the same information?
+
+To clarify, let's look at an example.  Suppose we have a dataset of 1,000 records.
+
+$$\Large{p = \frac{2^{\omega}}{1 + 2^{\omega}}}$$
