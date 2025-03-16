@@ -68,7 +68,7 @@ There's even a DuckDB UI with autocomplete - see [here](https://duckdb.org/docs/
 
 The DuckDB team has implemented a wide range of innovations in its SQL dialect that make it a joy to use. See the following blog posts [1](https://duckdb.org/2022/05/04/friendlier-sql.html) [2](https://duckdb.org/2023/08/23/even-friendlier-sql.html) [3](https://duckdb.org/docs/stable/sql/dialect/friendly_sql.html) [4](https://duckdb.org/2024/08/19/duckdb-tricks-part-1.html) [5](https://duckdb.org/2024/10/11/duckdb-tricks-part-2.html) [6](https://duckdb.org/2024/11/29/duckdb-tricks-part-3.html).
 
-Some of my favourites are the [`EXCLUDE`](https://duckdb.org/docs/stable/sql/expressions/star.html#exclude-clause) keyword, and the [`COLUMNS`](https://duckdb.org/docs/stable/sql/query_syntax/select.html) keyword which allows you to select and regex-replace a subset of columns.[^5].  I also like `QUALIFY` and the aggregate modifiers on window functions, see [here](https://duckdb.org/2025/02/10/window-catchup.html#qualify-clause).
+Some of my favourites are the [`EXCLUDE`](https://duckdb.org/docs/stable/sql/expressions/star.html#exclude-clause) keyword, and the [`COLUMNS`](https://duckdb.org/docs/stable/sql/query_syntax/select.html) keyword which allows you to select and regex-replace a subset of columns.[^5]  I also like `QUALIFY` and the aggregate modifiers on window functions, see [here](https://duckdb.org/2025/02/10/window-catchup.html#qualify-clause).
 
 [^5]: For instance, we can select all columns prefixed with `emp_` and rename to remove the prefix as follows: `SELECT COLUMNS('emp_(.*)') AS '\1'`
 
