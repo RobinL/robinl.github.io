@@ -1,6 +1,6 @@
 ---
 title: "Why DuckDB is my first choice for data processing"
-description: ""
+description: "Why DuckDB has become my go-to tool for data processing, offering simplicity, speed, and powerful features."
 post_date: "2025-03-16"
 post_category: "data"
 code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/recommend_duckdb.mdx"
@@ -32,7 +32,7 @@ DuckDB is an open source in-process SQL engine that is optimised for analytics q
 - 'In-process' means its similar to SQLite in that it runs within your application. You don't need to start a separate service such as Postgres to run it.
 - 'Optimised for analytics queries' means that it's designed for operations like large joins and aggregations involving large numbers of rows, as opposed to atomic transactions.
 
-The performance difference of of analytics-optimised engines ([OLAP](https://en.wikipedia.org/wiki/Online_analytical_processing)) vs. transactions-optimised engines ([OLTP](https://en.wikipedia.org/wiki/Online_transaction_processing)) should not be underestimated. A query running in DuckDB can be 100 or even 1,000 times faster than exactly the same query running in (say) SQlite or Postgres.
+The performance difference of analytics-optimised engines ([OLAP](https://en.wikipedia.org/wiki/Online_analytical_processing)) vs. transactions-optimised engines ([OLTP](https://en.wikipedia.org/wiki/Online_transaction_processing)) should not be underestimated. A query running in DuckDB can be 100 or even 1,000 times faster than exactly the same query running in (say) SQLite or Postgres.
 
 A core use-case of DuckDB is where you have one or more large datasets on disk in formats like `csv`, `parquet` or `json` which you want to batch process.  You may want to perform cleaning, joins, aggregation, derivation of new columns - that sort of thing.
 
@@ -44,7 +44,7 @@ But you can also use DuckDB for many other simpler tasks like viewing a csv file
 
 DuckDB consistently benchmarks as one of the fastest data processing engines.  The benchmarks I've seen[^3] show there's not much in it between the leading open source engines - which at the moment seem to be [polars](https://pola.rs/), [DuckDB](https://duckdb.org/), [DataFusion](https://datafusion.apache.org/),  [Spark](https://spark.apache.org/) and [Dask](https://www.dask.org/).  Spark and Dask can be competitive on large data, but slower on small data.
 
-[^3]: For instance see [here](https://docs.coiled.io/blog/tpch.html), [here](https://duckdblabs.github.io/db-benchmark/) and [here](https://milescole.dev/data-engineering/2024/12/12/Should-You-Ditch-Spark-DuckDB-Polars.html)/[discusson](https://news.ycombinator.com/item?id=42419224).
+[^3]: For instance see [here](https://docs.coiled.io/blog/tpch.html), [here](https://duckdblabs.github.io/db-benchmark/) and [here](https://milescole.dev/data-engineering/2024/12/12/Should-You-Ditch-Spark-DuckDB-Polars.html)/[discussion](https://news.ycombinator.com/item?id=42419224).
 
 ## Simple to install, no dependencies
 
