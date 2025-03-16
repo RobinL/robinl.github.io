@@ -42,11 +42,25 @@ But DuckDB is also very effective for many other simpler tasks like simply viewi
 
 DuckDB consistently benchmarks as one of the fastest data processing engines.  The benchmarks I've seen[^3] show there's not much in it between the leading open source engines - which at the moment seem to be [polars](https://pola.rs/), [duckdb](https://duckdb.org/) and [Datafusion](https://datafusion.apache.org/),  [Spark](https://spark.apache.org/) and [Dask](https://www.dask.org/).  Spark and Dask can be competitive on large data, but slower on small data.
 
-
-
 [^3]: For instance see [here](https://docs.coiled.io/blog/tpch.html), [here](https://duckdblabs.github.io/db-benchmark/) and [here](https://milescole.dev/data-engineering/2024/12/12/Should-You-Ditch-Spark-DuckDB-Polars.html)/[discusson](https://news.ycombinator.com/item?id=42419224).
 
-## Simple to install, no dependencies.
+## Simple to install, no dependencies
+
+DuckDB itself is a single precompiled binary.  In Python, it can be installed `pip install` with no dependencies.  This makes it a joy to install compared to other more heavyweight options like Spark.
+
+Combined with its speed and almost-zero startup time, this is particularly important because it enables much easier CI and testing of data engineering pipelines.  Historically this has been fiddly and running a large suite of tests in e.g. Apache Spark has been time consuming and frustrating.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
