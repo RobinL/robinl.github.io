@@ -13,12 +13,12 @@ import { Link } from "gatsby";
 
 # Why DuckDB is my first choice for data processing
 
-Over the past few years, I've found myself using DuckDB more and more for data processing, to the point where I now use it almost exclusively, usually from within Python.
+Over the past few years I've found myself using DuckDB more and more for data processing, to the point where I now use it almost exclusively, usually from within Python.
 
 I believe we're moving towards a simpler world where most tabular data can be processed on a single large machine:[^1] and the era of clusters is coming to an end for all but the largest datasets.[^2]
 
 [^1]: As a long-time Spark user, I am glad to be rid of needing to know lots of intricate configuration options for Spark tuning
-[^2]: With 192 core processors such as [this](https://www.tomshardware.com/pc-components/cpus/amd-launches-epyc-turin-9005-series-our-benchmarks-of-fifth-gen-zen-5-chips-with-up-to-192-cores-500w-tdp) available in the cloud and only costing around $15,000, the complexity of clusters can avoided unless you have genuinely huge data.  It's also worth noting there is actually now a distributed version of DuckDB, see [here](https://news.ycombinator.com/item?id=43248947).
+[^2]: With 192 core processors such as [this](https://www.tomshardware.com/pc-components/cpus/amd-launches-epyc-turin-9005-series-our-benchmarks-of-fifth-gen-zen-5-chips-with-up-to-192-cores-500w-tdp) available in the cloud and only costing around $15,000, the complexity of clusters can be avoided unless you have genuinely huge data.  It's also worth noting there is actually now a distributed version of DuckDB, see [here](https://news.ycombinator.com/item?id=43248947).
 
 This post sets out some of my favourite features of DuckDB that set it apart from other SQL-based tools.    In a nutshell, it's simple to install, ergonomic, fast, and more fully featured.
 
@@ -29,7 +29,7 @@ An <Link to ="/recommend_sql/">earlier post</Link> explains why I favour SQL ove
 
 DuckDB is an open source in-process SQL engine that is optimised for analytics queries.
 
-- 'In-process' means its similar to SQLite in that it runs within your application. You don't need to start a separate service such as Postgres to run it.
+- 'In-process' means it's similar to SQLite in that it runs within your application. You don't need to start a separate service such as Postgres to run it.
 - 'Optimised for analytics queries' means that it's designed for operations like large joins and aggregations involving large numbers of rows, as opposed to atomic transactions.
 
 The performance difference of analytics-optimised engines ([OLAP](https://en.wikipedia.org/wiki/Online_analytical_processing)) vs. transactions-optimised engines ([OLTP](https://en.wikipedia.org/wiki/Online_transaction_processing)) should not be underestimated. A query running in DuckDB can be 100 or even 1,000 times faster than exactly the same query running in (say) SQLite or Postgres.
