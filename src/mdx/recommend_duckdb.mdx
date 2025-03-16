@@ -15,7 +15,7 @@ import { Link } from "gatsby";
 
 Over the past few years, I've found myself using DuckDB more and more for data processing, to the point where I now use it almost exclusively, usually from within Python.
 
-With DuckDB, I believe we're moving towards a simpler world where most tabular data can be processed on a single large machine. To my great pleasure [^1], the era of clusters is coming to an end for all but the largest datasets. [^2]
+With DuckDB, I believe we're moving towards a simpler world where most tabular data can be processed on a single large machine: to my great pleasure [^1], the era of clusters is coming to an end for all but the largest datasets. [^2]
 
 [^1]: As a long-time Spark user, I am glad to be rid of needing to know lots of intricate configuration options for Spark tuning
 [^2]: There is actually now a distributed version of DuckDB, see [here](https://mehdio.substack.com/p/duckdb-goes-distributed-deepseeks)
@@ -36,7 +36,7 @@ A core use-case of DuckDB is that you have one or more large datasets on disk in
 
 But DuckDB is also very effective for many other simpler tasks like simply viewing a csv file on the command line.
 
-# What are my favourite features
+# My favourite features
 
 ## Speed
 
@@ -46,20 +46,93 @@ DuckDB consistently benchmarks as one of the fastest data processing engines.  T
 
 ## Simple to install, no dependencies
 
-DuckDB itself is a single precompiled binary.  In Python, it can be installed `pip install` with no dependencies.  This makes it a joy to install compared to other more heavyweight options like Spark.
+DuckDB itself is a single precompiled binary.  In Python, it can be installed `pip install` with no dependencies.  This makes it a joy to install compared to other more heavyweight options like Spark.  Combined with `uv`, you can stand up a fresh DuckDB Python environment from nothing in less than a second - see [here](https://akrabat.com/using-uv-as-your-shebang-line/).
 
-Combined with its speed and almost-zero startup time, this is particularly important because it enables much easier CI and testing of data engineering pipelines.  Historically this has been fiddly and running a large suite of tests in e.g. Apache Spark has been time consuming and frustrating.
+## CI, testing,  and writing new code
+
+With its speed and almost-zero startup time, DuckDB is ideally suited for CI and testing of data engineering pipelines.
+
+Historically this has been fiddly and running a large suite of tests in e.g. Apache Spark has been time consuming and frustrating.  Now it's much simpler to set up the test environment, and there's less scope for differences between it and your production pipelines.
+
+This also applies to simply trying to get syntax right before running it on a large dataset.  Historically I have found this annoying in engines like Spark (where it takes a few seconds to start Spark in local mode), or even worse when you're forced to run queries in a proprietary tool like AWS Athena.[^4]
+
+[^4]: To be clear, Athena is a very powerful and useful tool.  I just find it frustrating for developing and quickly iterating queries of moderate complexity.  An example of why it's easier in DuckDB is [this kind](https://github.com/duckdb/duckdb/discussions/16338#discussioncomment-12267144) of reprex.
+
+## Friendly SQL
+
+The DuckDB team has implemented a wide range of innovations in its SQL dialect that make it a joy to use. See the following blog posts [1](https://duckdb.org/2022/05/04/friendlier-sql.html) [2](https://duckdb.org/2023/08/23/even-friendlier-sql.html) [3](https://duckdb.org/docs/stable/sql/dialect/friendly_sql.html) [4](https://duckdb.org/2024/08/19/duckdb-tricks-part-1.html) [5](https://duckdb.org/2024/10/11/duckdb-tricks-part-2.html) [6](https://duckdb.org/2024/11/29/duckdb-tricks-part-3.html).
+
+Some of my favourites are the [`EXCLUDE`](https://duckdb.org/docs/stable/sql/expressions/star.html#exclude-clause) keyword, and the [`COLUMNS`](https://duckdb.org/docs/stable/sql/query_syntax/select.html) keyword which allows you to select and regex-replace a subset of columns. [^5]
+
+[^5]: For instance, we can select all columns prefixed with `emp_` and rename to remove the prefix as follows: `SELECT COLUMNS('emp_(.*)') AS '\1'`
 
 
+## Fast support for all your favourite filetypes
+
+You can query data directly from files, including on s3, or on the web.
+
+For example to query a folder of parquet files:
+
+```sql
+select *
+from read_parquet('path/to/*.parquet')
+```
+
+or even (on CORS enabled files) you can run SQL directly:
+
+```sql
+select *
+from read_parquet('https://raw.githubusercontent.com/plotly/datasets/master/2015_flights.parquet')
+limit 2;
+```
+
+Click [here](https://shell.duckdb.org/#queries=v0,select-*-from-read_parquet('https%3A%2F%2Fraw.githubusercontent.com%2Fplotly%2Fdatasets%2Fmaster%2F2015_flights.parquet')-limit-2~) to try this query yourself in the DuckDB web shell.
+
+You have lots of options for ensuring data is loaded into the desired data types from csv - see [here](https://duckdb.org/docs/stable/data/csv/overview.html).
 
 
+## ACID compliance
+
+Hello
+
+## Extension ecosystem
 
 
+## Python API
 
+Many data pipelines effectively boil down to a long sequence of CTEs:
 
+```sql
+WITH
+input_data AS (
+    SELECT * FROM read_parquet('...')
+),
+step_1 AS (
+    SELECT ... FROM input_data JOIN ...
+),
+step_2 AS (
+    SELECT ... FROM step_1
+)
+SELECT ... FROM step_2;
+```
 
+When developing a pipeline like this, we often want to inspect what's happened at each step.
 
+In Python, we can write
 
+```python
+
+input_data = duckdb.sql("SELECT * FROM read_parquet('...')")
+step_1 = duckdb.sql("SELECT ... FROM input_data JOIN ...")
+step_2 = duckdb.sql("SELECT ... FROM step_1")
+final = duckdb.sql("SELECT ... FROM step_2;")
+```
+
+This makes it easy to inspect what the data looks like at `step_2` with no performance loss, since these steps will be executed lazily when they're run all at once.
+
+This also facilitates easier testing of SQL in CI.
+
+## Docs and LLM support
 
 
 
