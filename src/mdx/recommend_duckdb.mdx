@@ -142,7 +142,7 @@ A longstanding difficulty with data processing engines has been the difficulty i
 
 For example, in PySpark, you will generally get best performance by writing custom Scala, compiling to a JAR, and registering it with Spark.  But this is cumbersome and in practice, you will encounter a lot of issues around Spark version compatibility and security restrictions environments such as DataBricks.
 
-In DuckDB high performance custom UDFs can be written in C++.  Whilst writing these functions is certainly not trivial, DuckDB [community extensions](https://duckdb.org/2024/07/05/community-extensions.html) offers a very low-friction way of distributing the code. Community extensions can be installed almost instantly with a single command such as `INSTALL h3 FROM community` to install hierarchical hexagonal indexing for geospatial data.
+In DuckDB high performance custom UDFs can be written in C++.  Whilst writing these functions is certainly not trivial, DuckDB [community extensions](https://duckdb.org/2024/07/05/community-extensions.html) offers a low-friction way of distributing the code. Community extensions can be installed almost instantly with a single command such as `INSTALL h3 FROM community` to install hierarchical hexagonal indexing for geospatial data.
 
 
 
