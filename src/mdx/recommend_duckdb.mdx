@@ -17,20 +17,33 @@ Over the past few years, I've found myself using DuckDB more and more for data p
 
 With DuckDB, I believe we're moving towards a simpler world where most tabular data can be processed on a single large machine. The era of clusters is coming to an end for all but the largest datasets. [^1]
 
-[^1]: [DuckDB Goes Distributed - DeepSeeks](https://mehdio.substack.com/p/duckdb-goes-distributed-deepseeks)
+[^1]: There is actually now a distributed version of DuckDB, see [here](https://mehdio.substack.com/p/duckdb-goes-distributed-deepseeks)
 
 This post sets out some of my favourite features of DuckDB that set it apart from other SQL-based tools.  An  <Link to ="/recommend_sql/">earlier post</Link> explains why I favour SQL.   In a nutshell, it's simple to manage, ergonomic, fast, and more fully featured than other SQL-based tools.
 
 
+## What is DuckDB?
 
-In a nutshell, its killer features are:
-- Speed.  DuckDB on a single node is sufficient for all but the largest datasets.
-- Simple to install - extremely easy and use to install anywhere.  This makes it ideal for use in Github Actions or other CI.
-- Suppo
+DuckDB is an open source SQL engine designed for analytics.  It's similar to SQLite in that it's an 'in-process' engine, meaning that in runs within your application and you don't need to start a separate server to run it.  It differs from SQLite in that it's optimised for processing large datasets rather tha atomic transactions.
+
+The performance difference of these two applications should not be underestimated.  The same query running in a SQL engine optimised for transactions such as SQlite or Postgres can be orders of magnitude slower than the same query running in a SQL engine optimised for analytics such as DuckDB.
+
+The most common question I've seen asked about DuckDB is 'what is it for'.
+
+
 
 ## Speed
 
-DuckDB consistently benchmarks as one of the fastest data processing engines.  The benchmarks I've seen show there's not much in it between the leading open source engines - which at the moment seem to be polars, duckdb and datafusion.
+DuckDB consistently benchmarks as one of the fastest data processing engines.  The benchmarks I've seen[^2] show there's not much in it between the leading open source engines - which at the moment seem to be [polars](https://pola.rs/), [duckdb](https://duckdb.org/) and [Datafusion](https://datafusion.apache.org/),  [Spark](https://spark.apache.org/) and [Dask](https://www.dask.org/).  Spark and Dask can be competitive on large data, but slower on small data.
+
+
+
+[^2]: For instance see [here](https://docs.coiled.io/blog/tpch.html), [here](https://duckdblabs.github.io/db-benchmark/) and [here](https://milescole.dev/data-engineering/2024/12/12/Should-You-Ditch-Spark-DuckDB-Polars.html)/[discusson](https://news.ycombinator.com/item?id=42419224).
 
 ## Simple to install, no dependencies.
 
+
+
+
+
+Finally, I love that DuckDB is has the duckdb foundation, so the business model seems good.
