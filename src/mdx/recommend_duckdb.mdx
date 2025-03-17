@@ -70,6 +70,8 @@ The DuckDB team has implemented a wide range of innovations in its SQL dialect t
 
 Some of my favourites are the [`EXCLUDE`](https://duckdb.org/docs/stable/sql/expressions/star.html#exclude-clause) keyword, and the [`COLUMNS`](https://duckdb.org/docs/stable/sql/query_syntax/select.html) keyword which allows you to select and regex-replace a subset of columns.[^5]  I also like `QUALIFY` and the aggregate modifiers on window functions, see [here](https://duckdb.org/2025/02/10/window-catchup.html#qualify-clause).
 
+Another is the ability to [function chain](https://duckdb.org/2023/08/23/even-friendlier-sql.html#function-chaining), like `first_name.lower().trim()`.
+
 [^5]: For instance, we can select all columns prefixed with `emp_` and rename to remove the prefix as follows: `SELECT COLUMNS('emp_(.*)') AS '\1'`
 
 
