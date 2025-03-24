@@ -17,13 +17,13 @@ Now if I write any SQL statement, it will return the output in the format of a S
 
 Example:
 
-```bash
-SELECT struct_pack(key1 := 'value1', key2 := 42) AS s;
+```sql
+SELECT ARRAY[struct_pack(key1 := 'value1', key2 := 42::float),struct_pack(key1 := 'value1', key2 := 43.2::float)] AS s;
 ```
 
 returns:
 
-```
+```sql
 INSERT INTO "table"(s) VALUES('[{''key1'': value1, ''key2'': 42}, {''key1'': value1, ''key2'': 43}]');
 ```
 
