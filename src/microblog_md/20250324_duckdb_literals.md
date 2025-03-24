@@ -27,3 +27,4 @@ returns:
 INSERT INTO "table"(s) VALUES('[{''key1'': value1, ''key2'': 42}, {''key1'': value1, ''key2'': 43}]');
 ```
 
+Of course, you could also `SELECT` from the first row of an existing dataframe to see how to create literals for each column.
