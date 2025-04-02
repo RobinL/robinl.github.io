@@ -3,6 +3,18 @@ import { FaCalendar, FaTags } from 'react-icons/fa6';
 import CodeBlock from '../CodeBlock';
 import { createRoot } from 'react-dom/client'; // Add this import
 
+// Helper function to generate slugs
+const slugify = (str) => {
+    if (!str) return '';
+    return String(str)
+        .toLowerCase()
+        .replace(/\s+/g, '-') // Replace spaces with -
+        .replace(/[^\w-]+/g, '') // Remove all non-word chars
+        .replace(/--+/g, '-') // Replace multiple - with single -
+        .replace(/^-+/, '') // Trim - from start of text
+        .replace(/-+$/, ''); // Trim - from end of text
+};
+
 const formatDate = (isoDate) => {
     if (!isoDate) return null;
     const date = new Date(isoDate);
@@ -60,50 +72,50 @@ const MicroblogCard = ({ frontmatter, html }) => {
     const [processedContent, setProcessedContent] = useState({ processedHtml: html, codeBlocks: [] });
     const contentRef = useRef(null);
 
+    // Generate slug from title or date as fallback
+    const postSlug = slugify(frontmatter.title || frontmatter.date || '');
+
     useEffect(() => {
         const result = processHtmlWithCodeBlocks(html);
         setProcessedContent(result);
     }, [html]);
 
-    // Effect to insert code blocks at their placeholder positions
     useEffect(() => {
         if (!contentRef.current) return;
 
-        // Find all placeholder elements in the rendered HTML
         const placeholders = contentRef.current.querySelectorAll('[data-code-block-id]');
 
-        // Replace each placeholder with its corresponding code block
         placeholders.forEach(placeholder => {
             const blockId = parseInt(placeholder.getAttribute('data-code-block-id'), 10);
             const codeBlock = processedContent.codeBlocks.find(block => block.id === blockId);
 
             if (codeBlock) {
-                // Create a new wrapper element for the code block
                 const wrapper = document.createElement('div');
                 wrapper.className = 'my-4';
 
-                // Render the code block into the DOM
-                const root = createRoot(wrapper); // Use imported createRoot
+                const root = createRoot(wrapper);
                 root.render(
                     <CodeBlock className={codeBlock.language}>
                         {codeBlock.code}
                     </CodeBlock>
                 );
 
-                // Replace the placeholder with the code block
                 placeholder.replaceWith(wrapper);
             }
         });
     }, [processedContent, contentRef.current]);
 
     return (
-        <div className="my-8">
+        <div className="my-8" id={postSlug}>
             <article className="py-4 px-6 bg-gray-50 rounded shadow-sm">
                 {frontmatter.title && (
-                    <h3 className="text-xl font-semibold text-gray-800 mb-2">{frontmatter.title}</h3>
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                        <a href={`#${postSlug}`} className="text-inherit hover:underline focus:underline focus:outline-none">
+                            {frontmatter.title}
+                        </a>
+                    </h3>
                 )}
                 <div className="text-gray-700 mb-4">
-                    {/* Render the HTML with placeholders */}
                     <div
                         ref={contentRef}
                         className="space-y-4 prose max-w-none"

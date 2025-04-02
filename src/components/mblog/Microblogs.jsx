@@ -3,6 +3,18 @@ import { useStaticQuery, graphql } from 'gatsby';
 import { navigate } from 'gatsby';
 import MicroblogCard from './MicroblogCard';
 
+// Helper function to generate slugs
+const slugify = (str) => {
+    if (!str) return '';
+    return String(str)
+        .toLowerCase()
+        .replace(/\s+/g, '-') // Replace spaces with -
+        .replace(/[^\w-]+/g, '') // Remove all non-word chars
+        .replace(/--+/g, '-') // Replace multiple - with single -
+        .replace(/^-+/, '') // Trim - from start of text
+        .replace(/-+$/, ''); // Trim - from end of text
+};
+
 const Microblogs = () => {
     const [selectedTags, setSelectedTags] = useState(new Set());
 
@@ -103,13 +115,17 @@ const Microblogs = () => {
                 </div>
             </div>
 
-            {filteredNodes.map((node, index) => (
-                <MicroblogCard
-                    key={index}
-                    frontmatter={node.frontmatter}
-                    html={node.html}
-                />
-            ))}
+            {filteredNodes.map((node, index) => {
+                const postSlug = slugify(node.frontmatter.title || node.frontmatter.date || '');
+                return (
+                    <div key={index} id={postSlug} className="my-8">
+                        <MicroblogCard
+                            frontmatter={node.frontmatter}
+                            html={node.html}
+                        />
+                    </div>
+                );
+            })}
         </div>
     );
 };
