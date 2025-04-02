@@ -18,8 +18,9 @@ const formatDate = (isoDate) => {
 
 
 // Default LinkCard component
-const LinkCard = ({ frontmatter, html }) => {
+const LinkCard = ({ frontmatter, html, onDateClick }) => {
     const formattedDate = formatDate(frontmatter.date);
+    const originalDate = frontmatter.date;
 
     return (
         <div className="my-8">
@@ -48,10 +49,16 @@ const LinkCard = ({ frontmatter, html }) => {
                 </div>
 
                 <footer className="mt-4 text-sm flex items-center flex-wrap gap-4 text-gray-600 border-gray-200 pt-3">
-                    {formattedDate && (
+                    {formattedDate && originalDate && (
                         <div className="flex items-center">
                             <FaCalendar className="w-3 h-3 mr-2" />
-                            <span>{formattedDate}</span>
+                            <button
+                                onClick={() => onDateClick && onDateClick(originalDate)}
+                                className="hover:text-blue-600 hover:underline focus:outline-none focus:ring-1 focus:ring-blue-300 rounded px-0.5"
+                                aria-label={`Filter by date ${formattedDate}`}
+                            >
+                                {formattedDate}
+                            </button>
                         </div>
                     )}
                     {frontmatter.tags && frontmatter.tags.length > 0 && (
