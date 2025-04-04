@@ -4,4 +4,4 @@ date: "2025-04-04"
 tags: ["LLMs"]
 ---
 
-There's too much focuss on AI engineering and trying to find applications AI to help other people 'at scale' with their jobs.  There's much more to be gained by upskilling everyone on how to use AI effectively for their own job.
+I see too much focus on trying to find applications of LLMs to help other people 'at scale' with their jobs. At the moment, the output of LLMs is rarely useful for business rules or passive consumption. The lower hanging fruit is encouraging and helping people use AI directly, interactively, and however they see fit for their own jobs.
