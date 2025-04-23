@@ -13,4 +13,6 @@ tags: []
 
 > That's what YIMBYism does. It says how much housing have you built, not much how, not how much have you spent on housing. That's what YIMBYism for clean energy would be for. Not just how much have you authorized to spend on solar, how much solar have you deployed.
 
+> This idea that in many places, people who call themselves liberals and progressives, and even sometimes people that have lawn signs in their front yards that say kindness is everything, nonetheless sit in houses zoned for single families and resist and often sue to block the development of affordable housing units that would, you know, cast a shadow over their own house. And so a part of this project is redefining liberalism away from the liberalism of the clenched fist toward a liberalism that recognizes that growth itself can be a good.
+
 [Transcript](https://gist.github.com/RobinL/8f7dee0a33dfa1071492f1e73cf48480)
