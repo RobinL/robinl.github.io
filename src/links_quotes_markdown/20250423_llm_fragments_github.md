@@ -1,8 +1,9 @@
 ---
 type: "quote"
 title: "llm-fragments-github plugin: Importing Issues and Repo Context"
-source: "Simon Willison"
+author: "Simon Willison"
 date: "2025-04-23"
+url: "https://x.com/simonw/status/1913962050088317291"
 tags: ["LLMs"]
 ---
 

@@ -1,7 +1,7 @@
 ---
 type: "quote"
 title: "Robin Hanson on the Age of AI and Large Language Models"
-source: "Robin Hanson"
+author: "Robin Hanson"
 url: "https://www.podbean.com/site/EpisodeDownload/PB1889E31FEINU"
 date: "2025-04-29"
 tags: ["LLMs"]

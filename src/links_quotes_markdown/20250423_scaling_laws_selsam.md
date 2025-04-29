@@ -1,7 +1,8 @@
 ---
 type: "quote"
 title: "Scaling Laws and Compression in AI"
-source: "Daniel Selsam"
+author: "Daniel Selsam"
+url: "https://www.youtube.com/watch?v=6nJZopACRuQ"
 date: "2025-04-11"
 tags: ["LLMs"]
 ---
