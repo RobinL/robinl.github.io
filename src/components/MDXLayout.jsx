@@ -50,4 +50,19 @@ export function MDXLayoutWide({ children, pageContext }) {
     );
 }
 
+export function MDXLayoutFull({ children, pageContext }) {
+    const { frontmatter } = pageContext;
+
+    return (
+        <Layout className={'text-base w-full px-4'}>
+            <MDXProvider components={components}>
+                <PostInfo frontmatter={frontmatter} />
+                <div id="mdx-container-div" className="mdx-content space-y-4 w-full">
+                    {children}
+                </div>
+            </MDXProvider>
+        </Layout>
+    );
+}
+
 export default MDXLayout;
