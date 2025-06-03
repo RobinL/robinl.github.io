@@ -4,7 +4,7 @@ term: 'activate'
 
 A scenario is 'activated' when it is conditions are met for the pairwise record comparison at hand.
 
-For example, consider the pariwise comparison of first name of 'Robyn' vs 'Robin'.
+For example, consider the pairwise comparison of first name of 'Robyn' vs 'Robin'.
 
 The following scenarios may be defined for the `first_name` column:
 
