@@ -1,7 +1,7 @@
 ---
 title: "Why don't AI models ask for clarification?"
 date: "2025-02-17"
-tags: ["ai", "llms"]
+tags: ["ai", "LLMs"]
 ---
 
 Why don't AI models ask for clarification more often? I've often under-specified a question and can remember very few times the model has asked for more info before proceeding. Only later do I realise I didn't provide enough context,

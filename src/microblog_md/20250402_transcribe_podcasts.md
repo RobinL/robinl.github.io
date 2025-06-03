@@ -1,7 +1,7 @@
 ---
 title: "Easily Transcribe Podcasts with Gemini 2.5 Pro"
 date: "2025-04-02"
-tags: ["llms", "audio", "productivity"]
+tags: ["LLMs", "audio", "productivity"]
 ---
 
 Here's a simple workflow for transcribing podcasts using Gemini 2.5 Pro in [Google AI Studio](https://aistudio.google.com/). Initial tests suggest it works very well.
