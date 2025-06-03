@@ -1,5 +1,5 @@
 ---
-type: "podcast"
+type: "link"
 title: "Introducing DuckLake"
 url: "https://www.youtube.com/watch?v=zeonmOO9jm4"
 date: "2025-05-27"
