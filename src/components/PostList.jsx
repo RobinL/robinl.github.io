@@ -87,7 +87,7 @@ const PostList = () => {
         ...new Set(
             allPosts.map(post => post.frontmatter.post_category || 'other')
         ),
-    ];
+    ].filter(category => headerOrder.includes(category));
 
     const sortedCategories = allCategories.sort((a, b) => {
         const indexA = headerOrder.indexOf(a);
