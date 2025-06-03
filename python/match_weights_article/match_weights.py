@@ -133,7 +133,7 @@ with open(
 
 alt.Chart.from_dict(chart_dict)
 
-# Waterfall cahrt
+# Waterfall chart
 df_predict = linker.predict()
 records_to_view = df_predict.as_record_dict(limit=1)
 chart = linker.waterfall_chart(records_to_view, filter_nulls=False)
