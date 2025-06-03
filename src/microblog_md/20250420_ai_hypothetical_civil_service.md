@@ -1,7 +1,7 @@
 ---
 title: "AI hypothetical in the Civil Service"
 date: "2025-04-20"
-tags: [LLMs"]
+tags: ["LLMs"]
 ---
 
 AI hypothetical: If you assigned a motivated person with an IQ of 200 to a random civil service position, would they be exceptionally productive, they were given all available recorded context?   I suspect the returns to intelligence would be relatively modest at the moment.
