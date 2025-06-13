@@ -1,0 +1,60 @@
+---
+title: "Address Matching"
+post_date: "2025-06-13"
+post_category: "data"
+description: ""
+code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/address_matching.mdx"
+prob_linkage_category: "address_matching"
+tutorial_number: 1
+date: "2025-06-13"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+import Subtitle from "../components/Subtitle.jsx"
+import { Link } from "gatsby"
+
+
+
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+# Building Accurate Address Matching Systems
+
+<Subtitle>Feature engineering tricks to improve matching accuracy</Subtitle>
+
+Address matching (geocoding) is a notoriously difficult problem due to the unpredictable characteristics of addresses.[^1].
+
+Consider the example the following two matching addresses:
+
+- 23A Marchant House, Jubilee Street, London, LO1 23D
+- Flat A, Top Floor, Marchant House, 23 Jubilee Street, Fulham, LO1 23D
+
+The above addresses exhibit far more variation than the following two non-matching addresses:
+
+- Flat A 24 Jubilee Street, London, LO1 23D
+- Flat A 25 Jubilee Street, London, LO1 23D
+
+One of the most common record linkage approaches - known as the Fellegi-Sunter model - is not well suited to address matching because:
+- there is correlation between different parts of an address, violating the statistical assumptions of the Fellegi-Sunter model
+- the same address can be represented in multiple different ways, and it it almost impossible to parse any arbitrary address into a standardised/canonical form
+
+To get the best accuracy in record linkage, we need a model that uses as much information from the input data as possible.
+
+In this post, I share some tricks and techniques we can use to exploit the information in addresses as much as possible to maximise accuracy.  These tricks are used in my work-in-progress free and open source address matching library, [`uk_address_matcher`](https://github.com/RobinL/uk_address_matcher).
+
+## Blocking stage
+
+The purpose of blocking is to recover a list of candidate matches.
+
+## Scoring stage
+
+
+
+
+
+
+
+
+
+
+[^1]: See, for example, [Falsehoods Programmers Believe About Addresses](https://www.mjt.me.uk/posts/falsehoods-programmers-believe-about-addresses/)
