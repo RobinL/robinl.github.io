@@ -42,11 +42,52 @@ To get the best accuracy in record linkage, we need a model that uses as much in
 
 In this post, I share some tricks and techniques we can use to exploit the information in addresses as much as possible to maximise accuracy.  These tricks are used in my work-in-progress free and open source address matching library, [`uk_address_matcher`](https://github.com/RobinL/uk_address_matcher).
 
+## High level ideas
+
+In an ideal world, we'd use something like libpostal to parse addresses into a canonical form - e.g. splitting out flat number, house number, street name and so on.
+
+In my experience, this approach suffers a fatal flaw: the hardest addresses to match are also the hardest to parse, because inherent ambiguities mean they can't be parsed reliably (consistently) into canonical form.  As a result:
+- We can reliably parse the easy addresses, but it's straightforward to match those without sophisticated parsing approaches
+- We can't reliably parse the hard addresses, so it doesn't help us to match where it's most needed.
+
+
 ## Blocking stage
 
-The purpose of blocking is to recover a list of candidate matches.
+The purpose of blocking is to recover a list of candidate matches which will be put through the scoring.  The aim of the blocking stage is to have high recall (i.e. not to miss the true match).  Precision is less important, because we will be scoring the candidates to find the true match at the next stage.
+
+A simple blocking strategy could be to simply find all addresses in the postcode of the query address.  This is a good start, but in practice suffers two flaws:
+- The list of candidates can be excessively long, resulting in slower performance
+- The query address may not have a postcode, or the postcode may be incorrect
+
+Further blocking strategies are more tricky because of the unpredictable nature of addresses.  In particular, since we can't reliably parse the addresses into a canonical form, simply blocking techniques such as 'street name plus number' are not reliable.
+
+The following blocking tricks can help - and are best used in combination to maximise recall whilst maintaining a managable list of candidates.
+
+### n-grams combined with term frequencies
+
+We can pre-processes addresses to extract n-grams and their associated term frequencies (frequency of occurrence across the corpus of all addresses).   This allows us to identify which tokens are uncommon enough to be useful for blocking (i.e. will restrict the number of candidates to a manageable number).
+
+Many strategies are possible here, but a simple approach could be to identify the least common bigram or trigram in each address, and to block on that (after filtering out any excessively common bigrams).
+
+### Numerics plus postcode
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Scoring stage
+
+
 
 
 
