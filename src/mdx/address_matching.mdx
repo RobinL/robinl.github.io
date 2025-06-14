@@ -1,5 +1,5 @@
 ---
-title: "Address Matching"
+title: "Building Accurate Address Matching Systems"
 post_date: "2025-06-13"
 post_category: "data"
 description: ""
@@ -13,6 +13,7 @@ export { MDXLayout as default } from '../components/MDXLayout';
 import { SEO } from "../components/SEO"
 import Subtitle from "../components/Subtitle.jsx"
 import { Link } from "gatsby"
+import AddressComparison from "./address_matching/AddressComparison.jsx"
 
 
 
@@ -20,23 +21,37 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 
 # Building Accurate Address Matching Systems
 
-<Subtitle>Feature engineering tricks to improve matching accuracy</Subtitle>
+<Subtitle>Feature engineering tricks to improve the accuracy of geocoding</Subtitle>
 
-Address matching (geocoding) is a notoriously difficult problem due to the unpredictable characteristics of addresses.[^1].
 
-Consider the example the following two matching addresses:
+## The challenge
 
-- 23A Marchant House, Jubilee Street, London, LO1 23D
-- Flat A, Top Floor, Marchant House, 23 Jubilee Street, Fulham, LO1 23D
 
-The above addresses exhibit far more variation than the following two non-matching addresses:
+Address matching (geocoding) is a notoriously difficult problem due to the unpredictable characteristics of addresses.
 
-- Flat A 24 Jubilee Street, London, LO1 23D
-- Flat A 25 Jubilee Street, London, LO1 23D
 
-One of the most common record linkage approaches - known as the Fellegi-Sunter model - is not well suited to address matching because:
-- there is correlation between different parts of an address, violating the statistical assumptions of the Fellegi-Sunter model
-- the same address can be represented in multiple different ways, and it it almost impossible to parse any arbitrary address into a standardised/canonical form
+The following example illustrates how substantial variation can exist between two matching addresses:
+
+
+<AddressComparison
+  addressA="23A Marchant House, Jubilee Street, London, LO1 23D"
+  addressB="Flat A, Top Floor, Marchant House, 23 Jubilee Street, Fulham, LO1 23D"
+  isMatch={true}
+/>
+
+Whereas the following example has far less variation, but does not match:
+
+<AddressComparison
+  addressA="Flat A 24 Jubilee Street, London, LO1 23D"
+  addressB="Flat A 25 Jubilee Street, London, LO1 23D"
+  isMatch={false}
+/>
+
+Unfortunately one of the most effective record linkage approaches – known as the <Link to="/intro_to_probabilistic_linkage/">Fellegi-Sunter model</Link> – is not well suited to address matching because:
+- there is correlation between different parts of an address, violating model's statistical assumptions
+- the model assumes input data is consistently split across multiple columns (e.g. first name, surname, DoB etc.), but address data often comes as a single string, and reliably parsing this into a set of standardised columns is very difficult
+
+## Structuring the problem
 
 To get the best accuracy in record linkage, we need a model that uses as much information from the input data as possible.
 
@@ -88,14 +103,22 @@ Many strategies are possible here, but a simple approach could be to identify th
 ## Scoring stage
 
 
+## Further reading
+
+- A variety of interesting edge casees can be found in [Falsehoods Programmers Believe About Addresses](https://www.mjt.me.uk/posts/falsehoods-programmers-believe-about-addresses/)
+
+
+### Some examples of different ways to represent the same address
+
+- Maisonette First And Second Floors, 14, Hadyn Park Road,
+- Top Floor Flat 14 Hadyn Park Road, London
 
 
 
 
 
-
-
-
-
-
-[^1]: See, for example, [Falsehoods Programmers Believe About Addresses](https://www.mjt.me.uk/posts/falsehoods-programmers-believe-about-addresses/)
+<AddressComparison
+  addressA="23A Marchant House, Jubilee Street, London, LO1 23D"
+  addressB="Flat A, Top Floor, Marchant House, 23 Jubilee Street, Fulham, LO1 23D"
+  isMatch={true}
+/>
