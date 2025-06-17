@@ -27,15 +27,15 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 ## The challenge
 
 
-Address matching (geocoding) is a notoriously difficult problem due to the unpredictable characteristics of addresses.
+Address matching (geocoding) is a notoriously difficult problem due to unpredictable structure of addresses and the many different ways an address can be written.
 
 
-The following example illustrates how substantial variation can exist between two matching addresses:
+Substantial variation can exist between two matching addresses - for instance:
 
 
 <AddressComparison
-  addressA="23A Marchant House, Jubilee Street, London, LO1 23D"
-  addressB="Flat A, Top Floor, Marchant House, 23 Jubilee Street, Fulham, LO1 23D"
+  addressA="Flat 165 Block 3 Philpot Square, Hammersmith And Fulham"
+  addressB="165, Philpot Square, London"
   isMatch={true}
 />
 
@@ -47,23 +47,27 @@ Whereas the following example has far less variation, but does not match:
   isMatch={false}
 />
 
-Unfortunately one of the most effective record linkage approaches – known as the <Link to="/intro_to_probabilistic_linkage/">Fellegi-Sunter model</Link> – is not well suited to address matching because:
+Unfortunately one of the most effective general record linkage approaches – known as the <Link to="/intro_to_probabilistic_linkage/">Fellegi-Sunter model</Link> – is not well suited to address matching because:
 - there is correlation between different parts of an address, violating model's statistical assumptions
 - the model assumes input data is consistently split across multiple columns (e.g. first name, surname, DoB etc.), but address data often comes as a single string, and reliably parsing this into a set of standardised columns is very difficult
 
 ## Structuring the problem
 
-To get the best accuracy in record linkage, we need a model that uses as much information from the input data as possible.
+To maximise accuracy, we need a model that 'wrings' as much information out of the input data as possible.
 
-In this post, I share some tricks and techniques we can use to exploit the information in addresses as much as possible to maximise accuracy.  These tricks are used in my work-in-progress free and open source address matching library, [`uk_address_matcher`](https://github.com/RobinL/uk_address_matcher).
+In this post, I share some tricks and techniques we can use to exploit the information in addresses as much as possible to maximise accuracy.  Tangible implementations of tricks are used in my work-in-progress free and open source address matching library, [`uk_address_matcher`](https://github.com/RobinL/uk_address_matcher) and another promising library [`whereabouts`](https://github.com/ajl2718/whereabouts).
 
-## High level ideas
 
-In an ideal world, we'd use something like libpostal to parse addresses into a canonical form - e.g. splitting out flat number, house number, street name and so on.
 
-In my experience, this approach suffers a fatal flaw: the hardest addresses to match are also the hardest to parse, because inherent ambiguities mean they can't be parsed reliably (consistently) into canonical form.  As a result:
+## High level approach
+
+In an ideal world, we'd use something like  [libpostal](https://github.com/openvenues/libpostal) or a [Conditional Random Fields](https://www.ons.gov.uk/methodology/methodologicalpublications/generalmethodology/onsworkingpaperseries/onsworkingpaperseriesno17usingdatasciencefortheaddressmatchingservice) model to _reliably_ parse addresses into a canonical form - e.g. splitting out flat number, house number, street name and so on.
+
+In practice, this approach suffers from a paradox: the hardest addresses to match are also the hardest to parse, because the harder addresses contain ambiguities that they can't be parsed reliably (consistently) into canonical form.  As a result:
 - We can reliably parse the easy addresses, but it's straightforward to match those without sophisticated parsing approaches
 - We can't reliably parse the hard addresses, so it doesn't help us to match where it's most needed.
+
+The `Philpot Square` addresses shown above is a good practical example: what field should the `165` go in from `165, Philpot Square, London`?  In some sense, solving this problem amounts to figuring out what the true address is - so we have a circular problem.
 
 
 ## Blocking stage
