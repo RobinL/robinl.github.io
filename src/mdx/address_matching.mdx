@@ -114,6 +114,63 @@ This is particularly useful to avoid the problem of missing or misordered tokens
 
 Blocking on postcode only may result in a list of candidates that is too long to be practical. A simple extension is to find only addresses that contain the postcode and any of the numbers in the address.
 
+## Scoring stage: Creating the score
+
+The purpose of the scoring stage is to identify the highest scoring candidate found in the blocking stage, to try to identify the correct match.
+
+There are many different scoring approaches, and a weighted combination of approaches will often yield the best results.
+
+
+### Token frequencies
+
+A simple sc
+
+### Highly-discriminative tokens within candidates
+
+Some tokens or n-grams may be common across the corpus of all addresses, but rare within the candidates.  For instance, suppose we have the following messy address:
+
+Messy address:
+`### Highly-discriminative tokens within candidates, London`
+
+And candidates:
+`1 Coronation Street, London`
+`2 Coronation Street, London`
+`3 Coronation Street, London`
+
+Then the token `1` is unique (highly discriminative) amongst the candidate, despite being a common token across the corpus of all addresses.
+
+A match on a highly discriminative token is a strong, but not definitive, indicator that the candidate is the correct match.
+
+### Highly-discriminative amongst neighbouring addresses
+
+A drawback of using the list of candidates to identify discriminative tokens is that the n-gram approaches to blocking tends to favour a list of candidates that contain discriminative tokens.  For example, if we'd used `1 Coronation Street` as a tri-gram for blocking, we'd have retrieved several different `1 Coronation Street` candidates!
+
+A second approach to identifying discriminative tokens is to look at the candidates in the context of their neighbours.  If we sort addresses by the reverse of the full address string, we can remove common tokens.  For instance:
+
+
+```
+24 Jubilee Street, London, LO1 23D
+25 Jubilee Street, London, LO1 23D
+Flat A 25 Jubilee Street, London, LO1 23D
+Flat B 25 Jubilee Street, London, LO1 23D
+```
+
+Can be used to pull out
+
+```
+24
+NULL
+Flat A
+Flat B
+```
+
+During scoring, this can be used to determine that - for example - the number `25` does not uniquely determine the match, but `24` does.
+
+## Scoring stage: Interpreting the score
+
+
+
+### Distinguishability of the top scoring address
 
 
 
@@ -124,7 +181,8 @@ Blocking on postcode only may result in a list of candidates that is too long to
 
 
 
-## Scoring stage
+
+
 
 
 ## Further reading
@@ -132,13 +190,7 @@ Blocking on postcode only may result in a list of candidates that is too long to
 - A variety of interesting edge casees can be found in [Falsehoods Programmers Believe About Addresses](https://www.mjt.me.uk/posts/falsehoods-programmers-believe-about-addresses/)
 
 
-### Some examples of different ways to represent the same address
-
-- Maisonette First And Second Floors, 14, Hadyn Park Road,
-- Top Floor Flat 14 Hadyn Park Road, London
-
-
-
+### Some examples that highlight the challenges of address matching
 
 
 <AddressComparison
@@ -148,9 +200,40 @@ Blocking on postcode only may result in a list of candidates that is too long to
 />
 
 
-Exampels;
-Flat 39 Evans House White City Estate
-39, EVANS HOUSE, AUSTRALIA ROAD, LONDON
+<AddressComparison
+  addressA="FLAT 3 ST LEGER HOUSE GREAT LINFORD MK14 5HA"
+  addressB="3 ST LEGER HOUSE 4A ST LEGER COURT GREAT LINFORD MILTON KEYNES MK14 5HA"
+  isMatch={true}
+/>
+
+
+<AddressComparison
+  addressA="FLAT 62 BLOCK 3 PHILPOT SQUARE SW6 3HX"
+  addressB="62 PHILPOT SQUARE LONDON SW6 3HX"
+  isMatch={true}
+/>
+
+
+<AddressComparison
+  addressA="6, PADDOCK CLOSE CASTLETHORPE MK19 7AY"
+  addressB="PIPIT HOUSE, 6, PADDOCK CLOSE, CASTLETHORPE MK19 7AY"
+  isMatch={true}
+/>
+
+<AddressComparison
+  addressA="Maisonette First And Second Floors, 14, Hadyn Park Road"
+  addressB="Top Floor Flat 14 Hadyn Park Road, London"
+  isMatch={true}
+/>
+
+
+<AddressComparison
+  addressA="Flat 39 Evans House White City Estate"
+  addressB="39, EVANS HOUSE, AUSTRALIA ROAD, LONDON"
+  isMatch={true}
+/>
+
+
 
 
 
