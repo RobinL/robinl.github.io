@@ -23,7 +23,6 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 
 <Subtitle>Feature engineering tricks to improve the accuracy of geocoding</Subtitle>
 
-
 ## The challenge
 
 
@@ -48,39 +47,54 @@ Whereas the following example has far less variation, but does not match:
 />
 
 Unfortunately one of the most effective general record linkage approaches – known as the <Link to="/intro_to_probabilistic_linkage/">Fellegi-Sunter model</Link> – is not well suited to address matching because:
-- there is correlation between different parts of an address, violating model's statistical assumptions
-- the model assumes input data is consistently split across multiple columns (e.g. first name, surname, DoB etc.), but address data often comes as a single string, and reliably parsing this into a set of standardised columns is very difficult
+- there is correlation between different parts of an address, violating the model's statistical assumptions
+- the model assumes input data is split across multiple columns (e.g. first name, surname, DoB etc.), but address data often comes as a single string, and reliably parsing this into a set of standardised columns is very difficult
 
-## Structuring the problem
 
 To maximise accuracy, we need a model that 'wrings' as much information out of the input data as possible.
 
-In this post, I share some tricks and techniques we can use to exploit the information in addresses as much as possible to maximise accuracy.  Tangible implementations of tricks are used in my work-in-progress free and open source address matching library, [`uk_address_matcher`](https://github.com/RobinL/uk_address_matcher) and another promising library [`whereabouts`](https://github.com/ajl2718/whereabouts).
+In this post, I share some tricks and techniques we can use to exploit the information in addresses as much as possible.
+
+Tangible implementations of some these tricks can be found in two open source address matching libraries by the author(s) of this post:
+-  [`uk_address_matcher`](https://github.com/RobinL/uk_address_matcher) a Splink-based address matching library focussed on UK addresses
+-  [`whereabouts`](https://github.com/ajl2718/whereabouts), a duckdb-powered address matching library, initially focussed on Australian addresses, but [now supporting any addresses?]
 
 
 
-## High level approach
+# Structuring the problem
 
-In an ideal world, we'd use something like  [libpostal](https://github.com/openvenues/libpostal) or a [Conditional Random Fields](https://www.ons.gov.uk/methodology/methodologicalpublications/generalmethodology/onsworkingpaperseries/onsworkingpaperseriesno17usingdatasciencefortheaddressmatchingservice) model to _reliably_ parse addresses into a canonical form - e.g. splitting out flat number, house number, street name and so on.
+The problem can be structured into two main stages:
+- [blocking](https://moj-analytical-services.github.io/splink/topic_guides/blocking/blocking_rules.html?h=blocking#blocking) (finding a small number of plausible candidates)
+- scoring (to rank the candidates).
 
-In practice, this approach suffers from a paradox: the hardest addresses to match are also the hardest to parse, because the harder addresses contain ambiguities that they can't be parsed reliably (consistently) into canonical form.  As a result:
-- We can reliably parse the easy addresses, but it's straightforward to match those without sophisticated parsing approaches
-- We can't reliably parse the hard addresses, so it doesn't help us to match where it's most needed.
+These steps are indpendent, so we can mix and match different blocking and scoring techniques.
 
-The `Philpot Square` addresses shown above is a good practical example: what field should the `165` go in from `165, Philpot Square, London`?  In some sense, solving this problem amounts to figuring out what the true address is - so we have a circular problem.
+However, prior to either of these steps, we need to decide how best to represent the address data.
+
+
+## How to represent the address data
+
+A tempting first step is to start by parsing addresses semantically - e.g. splitting out flat number, house number, street name and so on.  A [Conditional Random Fields](https://www.ons.gov.uk/methodology/methodologicalpublications/generalmethodology/onsworkingpaperseries/onsworkingpaperseriesno17usingdatasciencefortheaddressmatchingservice) model could be used for this, or existing libraries such as [libpostal](https://github.com/openvenues/libpostal).
+
+This is appealing because it appears to enable powerful scoring rules, such as 'if the building number is different, the addresses do not match'.
+
+In practice, this approach suffers from a paradox: the hardest addresses to match often contain ambiguities which make them the hardest to parse.
+
+The `Philpot Square` addresses shown above is a good practical example:  how should we interpret the `165` in `165, Philpot Square, London`?  For difficult examples, solving this problem amounts to figuring out what the true address is - so the problem is circular.
+
+As a result, it may be better to treat the address as a single string from which we can extract certain features such as 'the first number', without attaching semanitic meaning. This allows us more flexibility in our scoring approach.  Many of the blocking and scoring tricks below are based on different ways of extracting features from the address string.
 
 
 ## Blocking stage
 
 The purpose of blocking is to recover a list of candidate matches which will be put through the scoring.  The aim of the blocking stage is to have high recall (i.e. not to miss the true match).  Precision is less important, because we will be scoring the candidates to find the true match at the next stage.
 
-A simple blocking strategy could be to simply find all addresses in the postcode of the query address.  This is a good start, but in practice suffers two flaws:
+For example, a simple blocking strategy could be to simply find all addresses in the postcode of the query address.  This is a good start, but in practice suffers two flaws:
 - The list of candidates can be excessively long, resulting in slower performance
 - The query address may not have a postcode, or the postcode may be incorrect
 
-Further blocking strategies are more tricky because of the unpredictable nature of addresses.  In particular, since we can't reliably parse the addresses into a canonical form, simply blocking techniques such as 'street name plus number' are not reliable.
-
-The following blocking tricks can help - and are best used in combination to maximise recall whilst maintaining a managable list of candidates.
+As a result we need to supplement[^1] a postcode-based blocking strategy with some additional blocking techniques:
+[^1]: Blocking techniques are best used in combination to maximise recall whilst maintaining a managable list of candidates:  we simply apply all approaches, and then combine the results into a single list of candidates.
 
 ### n-grams combined with term frequencies
 
@@ -126,3 +140,52 @@ Many strategies are possible here, but a simple approach could be to identify th
   addressB="Flat A, Top Floor, Marchant House, 23 Jubilee Street, Fulham, LO1 23D"
   isMatch={true}
 />
+
+
+Exampels;
+Flat 39 Evans House White City Estate
+39, EVANS HOUSE, AUSTRALIA ROAD, LONDON
+
+
+
+
+
+
+Example 6:
+MESSY ADDRESS: FLAT 3 ST LEGER HOUSE GREAT LINFORD MK14 5HA
+
+🏠 CANDIDATE ADDRESSES:
+  1. UPRN: 10093309723, Address: GREAT LINFORD PARISH COUNCIL GREAT LINFORD PARISH COUNCIL GREAT LINFORD HOUSE 1 ST LEGER COURT GREAT LINFORD MILTON KEYNES MK14 5HA
+  ✅ [certain] UPRN: 10096063932, Address: 3 ST LEGER HOUSE 4A ST LEGER COURT GREAT LINFORD MILTON KEYNES MK14 5HA
+  3. UPRN: 10090356637, Address: LIFE INTERNATIONAL CHRISTIAN FELLOWSHIP 3 ST LEGER COURT GREAT LINFORD MILTON KEYNES MK14 5HA
+  4. UPRN: 10093309720, Address: UNIT 3 GREAT LINFORD HOUSE 1 ST LEGER COURT GREAT LINFORD MILTON KEYNES MK14 5HA
+  5. UPRN: 25048329, Address: 3 FULWELL COURT ST LEGER DRIVE GREAT LINFORD MILTON KEYNES MK14 5HB
+
+This is certain - it's reasonably common for the name of the court to be missed out if leaving it out leaves no ambiguity.
+
+
+
+
+Example 4:
+
+MESSY ADDRESS: FLAT 62 BLOCK 3 PHILPOT SQUARE SW6 3HX
+
+🏠 CANDIDATE ADDRESSES:
+  1, UPRN: 34156657, Address: FLAT 62 LOCKSIDE HOUSE 3 THURSTAN STREET LONDON SW6 2XB
+  2. UPRN: 34064438, Address: 69 PHILPOT SQUARE LONDON SW6 3HX
+  ✅ [probable] UPRN: 34064431, Address: 62 PHILPOT SQUARE LONDON SW6 3HX
+  4. UPRN: 34064409, Address: 40 PHILPOT SQUARE LONDON SW6 3HX
+  5. UPRN: 34064434, Address: 65 PHILPOT SQUARE LONDON SW6 3HX
+
+This is a hard one:  Usually a flat designation (FLAT 62 BLOCK 3) should not match an apparent building designation ( 62 PHILPOT SQUARE).  However, the flat is clearly at philpot square, and the closest match amongst the addresses at philpot square is  62 PHILPOT SQUARE.  However, due to the disrepency between the flat designation and the lack of block 3, this is probable only.
+
+
+
+MESSY ADDRESS: 6, PADDOCK CLOSE CASTLETHORPE MK19 7AY
+
+🏠 CANDIDATE ADDRESSES:
+✅ [certain] UPRN: 10090355324, Address: PIPIT HOUSE, 6, PADDOCK CLOSE, CASTLETHORPE MK19 7AY
+2. UPRN: 10096062004, Address: 11, PADDOCK CLOSE, CASTLETHORPE MK19 7AY
+3. UPRN: 10096062005, Address: 12, PADDOCK CLOSE, CASTLETHORPE MK19 7AY
+4. UPRN: 10096061976, Address: 13, PADDOCK CLOSE, CASTLETHORPE MK19 7AY
+5. UPRN: 10096062003, Address: 10, PADDOCK CLOSE, CASTLETHORPE MK19 7AY
