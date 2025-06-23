@@ -96,17 +96,23 @@ For example, a simple blocking strategy could be to simply find all addresses in
 As a result we need to supplement[^1] a postcode-based blocking strategy with some additional blocking techniques:
 [^1]: Blocking techniques are best used in combination to maximise recall whilst maintaining a managable list of candidates:  we simply apply all approaches, and then combine the results into a single list of candidates.
 
-### n-grams combined with term frequencies
+### Surmounting problems of common words: n-grams combined with term frequencies
 
 We can pre-processes addresses to extract n-grams and their associated term frequencies (frequency of occurrence across the corpus of all addresses).   This allows us to identify which tokens are uncommon enough to be useful for blocking (i.e. will restrict the number of candidates to a manageable number).
 
-Many strategies are possible here, but a simple approach could be to identify the least common bigram or trigram in each address, and to block on that (after filtering out any excessively common bigrams).
+Many strategies are possible here, but a simple approach could be to identify the least common bigram or trigram in each address, and to block on that (after filtering out any excessively common ones).
 
-### Numerics plus postcode
+For example each individual token in `Flat A 24 Jubilee Street, London` is very common, but the tri-gram `A 24 Jubilee` will appear in at most a handful of addresses in the country.
 
+### Word order: Single words sorted by term frequency
 
+A variation on the n-gram approach is to extract the most unusual single tokens (words) in the address, and block on (say) the two least common words in the address.
 
+This is particularly useful to avoid the problem of missing or misordered tokens.  For example, in the Philpot Square example, `Philpot` and `165` are unusual tokens and there may only be a single address in the country with both tokens, but they don't predictable appear next to each other.
 
+### Narrowing down postcode using numerics
+
+Blocking on postcode only may result in a list of candidates that is too long to be practical. A simple extension is to find only addresses that contain the postcode and any of the numbers in the address.
 
 
 
