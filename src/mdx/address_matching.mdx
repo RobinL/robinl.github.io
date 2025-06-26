@@ -148,9 +148,32 @@ The purpose of the scoring stage is to identify the highest scoring candidate fo
 There are many different scoring approaches, and a weighted combination of approaches will often yield the best results.
 
 
-### Token frequencies
+### 1. Token frequencies
 
-A simple sc
+A simple 'first cut' of a scoring approach can be simply to look at the number of common tokens/words between the messy address and candidate address, weighted by token frequency in the corpus of all addresses.
+
+For example:
+
+<div style={{display: "grid", gridTemplateColumns: "max-content auto", rowGap: "0.25rem"}}>
+  <strong>Messy address:</strong><mark>24</mark> <mark>Jubilee</mark> St, <mark>London</mark>
+  <br />
+  <strong>Canonical address:</strong> <mark>24</mark> <mark>Jubilee</mark> Street, <mark>London</mark> LO1 23D
+</div>
+
+| Overlapping token | Share of all addresses containing token|
+|-------------------|---------------------------------------|
+| <mark>24</mark>              | 0.15 % |
+| <mark>Jubilee</mark>         | 0.003 % |
+| <mark>London</mark>          | 5.0 % |
+
+0.0015 × 0.00003 × 0.05 ≈ 2.25 × 10⁻⁹
+
+
+This is surprisingly effective, but there are several drawbacks that mean it possible to improve on this approach:
+- Token frequency in the corpus of all addresses in not a very good metric of the strength of match within a small group of candidates.  For instance, the token 'London' is very common in the overall corpus, but for an address in Manchester, it may be highly discriminative.
+- Similarly, a token may be very uncommon in the overal corpus, but useless to distinguish between candidates.  For example, consider the token 'Rainbow' in the above list of addresses.
+- Sometimes the true match may have fewer overlapping tokens than a false match.  For example, in the `Philpot Square` example, a different and incorrect candidate may include the tokens `Block 3`
+
 
 ### Highly-discriminative tokens within candidates
 
