@@ -116,11 +116,32 @@ A variation on the n-gram approach is to extract the most unusual single tokens 
 
 This is particularly useful to avoid the problem of missing or misordered tokens.  For example, in the Philpot Square example, `Philpot` and `165` are unusual tokens and there may only be a single address in the country with both tokens, but they don't predictable appear next to each other.
 
-### 3. Narrowing down postcode using numerics
+### 3. Discriminating tokens
+
+By working backwards and eliminating common tokens, we can identify the following discriminating tokens (highlighted):
+
+<pre style={{
+  display: 'inline-block',
+  width: 'max-content',
+  textAlign: 'right',
+  background: 'none',
+  border: 'none',
+  padding: 0
+}}>
+  <mark style={{ backgroundColor: 'yellow' }}>1</mark> Rainbow Lane Taunton TA1 1AB
+  <mark style={{ backgroundColor: 'yellow' }}>2</mark> Rainbow Lane Taunton TA1 1AB
+  <mark style={{ backgroundColor: 'yellow' }}>Highfield</mark> Rainbow Lane Taunton TA1 1AB
+  <mark style={{ backgroundColor: 'yellow' }}>Old Station House</mark> Rainbow Lane Taunton TA1 1AB
+  <mark style={{ backgroundColor: 'yellow' }}>5</mark> Rainbow Lane Taunton TA1 1AB
+</pre>
+
+These highlighted n-grams can be used for blocking and can be especially used for non-numeric house names, combined with (say) the first half of the postcode.
+
+### 4. Narrowing down postcode using numerics
 
 Blocking on postcode only may result in a list of candidates that is too long to be practical. A simple extension is to find only addresses that contain the postcode and any of the numbers in the address.
 
-## Scoring stage: Creating the score
+## Scoring stage
 
 The purpose of the scoring stage is to identify the highest scoring candidate found in the blocking stage, to try to identify the correct match.
 
@@ -182,7 +203,7 @@ During scoring, this can be used to determine that - for example - the number `2
 
 
 
-
+## Data Cleaning Stage
 
 
 
