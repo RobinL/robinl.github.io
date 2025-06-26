@@ -21,16 +21,14 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 
 # Building Accurate Address Matching Systems
 
-<Subtitle>Feature engineering tricks to improve the accuracy of geocoding</Subtitle>
+<Subtitle>A bag of tricks to improve the accuracy of geocoding</Subtitle>
 
 ## The challenge
 
 
 Address matching (geocoding) is a notoriously difficult problem due to unpredictable structure of addresses and the many different ways an address can be written.
 
-
 Substantial variation can exist between two matching addresses - for instance:
-
 
 <AddressComparison
   addressA="Flat 165 Block 3 Philpot Square, Hammersmith And Fulham"
@@ -46,26 +44,31 @@ Whereas the following example has far less variation, but does not match:
   isMatch={false}
 />
 
-Unfortunately one of the most effective general record linkage approaches – known as the <Link to="/intro_to_probabilistic_linkage/">Fellegi-Sunter model</Link> – is not well suited to address matching because:
+The challenge is therefore to develop an algorithm that can somehow 'see' that the pair of addresses are more similar than the second pair.
+
+
+Unfortunately one of the most effective general approaches to record linkage – known as the <Link to="/intro_to_probabilistic_linkage/">Fellegi-Sunter model</Link> – is not well suited to address matching because:
 - there is correlation between different parts of an address, violating the model's statistical assumptions
-- the model assumes input data is split across multiple columns (e.g. first name, surname, DoB etc.), but address data often comes as a single string, and reliably parsing this into a set of standardised columns is very difficult
+- the model assumes input data is split across multiple columns (e.g. first name, surname, DoB etc.), but address data is often received as a single string, and reliably parsing this into a set of standardised columns is very difficult
 
 
-To maximise accuracy, we need a model that 'wrings' as much information out of the input data as possible.
-
-In this post, I share some tricks and techniques we can use to exploit the information in addresses as much as possible.
+In this post, I share some tricks and feature engineering techniques we can use to exploit the information in addresses as much as possible, to maximise geocoding accuracy.
 
 Tangible implementations of some these tricks can be found in two open source address matching libraries by the author(s) of this post:
 -  [`uk_address_matcher`](https://github.com/RobinL/uk_address_matcher) a Splink-based address matching library focussed on UK addresses
 -  [`whereabouts`](https://github.com/ajl2718/whereabouts), a duckdb-powered address matching library, initially focussed on Australian addresses, but [now supporting any addresses?]
 
-
-
 # Structuring the problem
 
-The problem can be structured into two main stages:
-- [blocking](https://moj-analytical-services.github.io/splink/topic_guides/blocking/blocking_rules.html?h=blocking#blocking) (finding a small number of plausible candidates)
-- scoring (to rank the candidates).
+I will assume that we have:
+- A list of messy addresses (e.g. addresses that have been entered by hand by users)
+- A canonical address file (e.g. in the UK, an Ordnance Survey product such as [Built Address](https://docs.os.uk/osngd/data-structure/address/gb-address))
+
+To be as general as possible, we'll assume the address in these files just is a single string.
+
+The address matching problem can be structured into two main stages:
+- [blocking](https://moj-analytical-services.github.io/splink/topic_guides/blocking/blocking_rules.html?h=blocking#blocking) (finding a small number of plausible candidates from the canonical address file)
+- scoring (to rank the candidates and thereby identify the best match).
 
 These steps are indpendent, so we can mix and match different blocking and scoring techniques.
 
@@ -73,8 +76,9 @@ However, prior to either of these steps, we need to decide how best to represent
 
 
 ## How to represent the address data
+A tempting first step is to attempt to parse the messy addresses semantically - e.g. splitting out flat number, house number, street name and so on.[^1]
 
-A tempting first step is to start by parsing addresses semantically - e.g. splitting out flat number, house number, street name and so on.  A [Conditional Random Fields](https://www.ons.gov.uk/methodology/methodologicalpublications/generalmethodology/onsworkingpaperseries/onsworkingpaperseriesno17usingdatasciencefortheaddressmatchingservice) model could be used for this, or existing libraries such as [libpostal](https://github.com/openvenues/libpostal).
+[^1]: A [Conditional Random Fields](https://www.ons.gov.uk/methodology/methodologicalpublications/generalmethodology/onsworkingpaperseries/onsworkingpaperseriesno17usingdatasciencefortheaddressmatchingservice) or [hidden Markov](https://pmc.ncbi.nlm.nih.gov/articles/PMC140019/) model could be used for this, or existing libraries such as [libpostal](https://github.com/openvenues/libpostal).
 
 This is appealing because it appears to enable powerful scoring rules, such as 'if the building number is different, the addresses do not match'.
 
@@ -82,21 +86,23 @@ In practice, this approach suffers from a paradox: the hardest addresses to matc
 
 The `Philpot Square` addresses shown above is a good practical example:  how should we interpret the `165` in `165, Philpot Square, London`?  For difficult examples, solving this problem amounts to figuring out what the true address is - so the problem is circular.
 
-As a result, it may be better to treat the address as a single string from which we can extract certain features such as 'the first number', without attaching semanitic meaning. This allows us more flexibility in our scoring approach.  Many of the blocking and scoring tricks below are based on different ways of extracting features from the address string.
+As a result, it may be better to treat the address as a single string from which we can extract certain features such as 'the first number', without attaching too much semanitic meaning.
 
+This prevents us being too rigid later in our blocking and scoring approaches - for example, it avoids the trap of logic like 'if the building number is different it's not a match' - which contains an implicit assumption of complete information that's correctly parsed.
+
+It also gives us greater flexibility in feature engineering, because we can find features that have no semantic meaning but are nonetheless useful for matching.
 
 ## Blocking stage
 
-The purpose of blocking is to recover a list of candidate matches which will be put through the scoring.  The aim of the blocking stage is to have high recall (i.e. not to miss the true match).  Precision is less important, because we will be scoring the candidates to find the true match at the next stage.
+The purpose of blocking is to recover a list of candidate addresses.  The aim of the blocking stage is to have high recall (i.e. not to miss the true match).  Precision is less important, because we will be scoring the candidates to find the true match at the next stage.
 
 For example, a simple blocking strategy could be to simply find all addresses in the postcode of the query address.  This is a good start, but in practice suffers two flaws:
 - The list of candidates can be excessively long, resulting in slower performance
 - The query address may not have a postcode, or the postcode may be incorrect
 
-As a result we need to supplement[^1] a postcode-based blocking strategy with some additional blocking techniques:
-[^1]: Blocking techniques are best used in combination to maximise recall whilst maintaining a managable list of candidates:  we simply apply all approaches, and then combine the results into a single list of candidates.
+As a result we need to supplement[^2] a postcode-based blocking strategy with some additional blocking techniques.  The idea is that any of these techniques in isolation may miss the true match, but the combination of the rules should almost always find it.
 
-### Surmounting problems of common words: n-grams combined with term frequencies
+### 1. Surmounting problems of common words: n-grams combined with term frequencies
 
 We can pre-processes addresses to extract n-grams and their associated term frequencies (frequency of occurrence across the corpus of all addresses).   This allows us to identify which tokens are uncommon enough to be useful for blocking (i.e. will restrict the number of candidates to a manageable number).
 
@@ -104,13 +110,13 @@ Many strategies are possible here, but a simple approach could be to identify th
 
 For example each individual token in `Flat A 24 Jubilee Street, London` is very common, but the tri-gram `A 24 Jubilee` will appear in at most a handful of addresses in the country.
 
-### Word order: Single words sorted by term frequency
+### 2. Word order: Single words sorted by term frequency
 
 A variation on the n-gram approach is to extract the most unusual single tokens (words) in the address, and block on (say) the two least common words in the address.
 
 This is particularly useful to avoid the problem of missing or misordered tokens.  For example, in the Philpot Square example, `Philpot` and `165` are unusual tokens and there may only be a single address in the country with both tokens, but they don't predictable appear next to each other.
 
-### Narrowing down postcode using numerics
+### 3. Narrowing down postcode using numerics
 
 Blocking on postcode only may result in a list of candidates that is too long to be practical. A simple extension is to find only addresses that contain the postcode and any of the numbers in the address.
 
