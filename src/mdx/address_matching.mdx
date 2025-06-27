@@ -204,8 +204,21 @@ An improvement on using whole-corpus token frequencies is to instead use the fre
 
 Similarly, we could use the frequency of n-grams within the set of candidates.
 
-<details>
-  <summary>Example - click to expand</summary>
+<details
+  style={{
+    border: '1px solid #e5e7eb',
+    borderRadius: '6px',
+    padding: '0.5em',
+    margin: '1em 0',
+    background: '#fafbfc'
+  }}
+>
+  <summary
+    style={{
+      fontWeight: 'normal',
+      textAlign: 'left'
+    }}
+  > Example - click to expand</summary>
 
 For example, consider how the token 'front' is the only token that appears just once amongst the candidates, making it uniquely powerful because it is the only token that discriminates fully between the candidates.
 
@@ -257,9 +270,22 @@ For example, consider how the token 'front' is the only token that appears just 
 
 Sometimes a token (or n-gram) from the messy address will be present in _other_ candidates, but no in the one being scored.  This is a strong indicator _against_ the candidate being the true match.
 
-<details>
 
-  <summary>Example - click to expand</summary>
+<details
+  style={{
+    border: '1px solid #e5e7eb',
+    borderRadius: '6px',
+    padding: '0.5em',
+    margin: '1em 0',
+    background: '#fafbfc'
+  }}
+>
+  <summary
+    style={{
+      fontWeight: 'normal',
+      textAlign: 'left'
+    }}
+  > Example - click to expand</summary>
 
 Consider:
 

@@ -40,6 +40,7 @@ export default function AddressCandidatesComparison({
                 flexDirection: "column",
                 gap: "0.75rem",
                 fontSize: "0.85rem",
+                marginBottom: "0.5em", // add spacing under the component
             }}
         >
             {/* Messy address */}
