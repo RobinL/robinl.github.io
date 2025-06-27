@@ -28,6 +28,7 @@ export default function AddressCandidatesComparison({
         letterSpacing: "0.01em",
     };
 
+    const candidateLabel = candidates.length === 1 ? "Candidate address" : "Candidate addresses";
     return (
         <div
             style={{
@@ -51,7 +52,7 @@ export default function AddressCandidatesComparison({
 
             {/* Candidate addresses */}
             <div>
-                <span style={labelStyle}>Candidate addresses</span>
+                <span style={labelStyle}>{candidateLabel}</span>
                 <div
                     style={{
                         display: "flex",

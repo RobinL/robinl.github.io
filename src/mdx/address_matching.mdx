@@ -57,7 +57,9 @@ Unfortunately one of the most effective general approaches to record linkage –
 - the model assumes input data is split across multiple columns (e.g. first name, surname, DoB etc.), but address data is often received as a single string, and reliably parsing this into a set of standardised columns is very difficult
 
 
-In this post, I share some tricks and feature engineering techniques we can use to exploit the information in addresses as much as possible, to maximise geocoding accuracy.
+In this post, I share some tricks and feature engineering techniques we can use to exploit the information in addresses as much as possible, to maximise geocoding accuracy.[^3]
+
+[^3]: To ensure high performance, I've included only techniques that can be implemented in SQL, meaning we can use high performance engines like DuckDB to implement the address matching system.
 
 Concrete implementations of some these tricks can be found in two open source address matching libraries:
  -  [`uk_address_matcher`](https://github.com/RobinL/uk_address_matcher)<span style={{marginLeft: '0.25em', verticalAlign: '0.0em'}} aria-label="external link" title="External link"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.414l-9.293 9.293-1.414-1.414L17.586 5H14V3z" fill="#2563eb"/><path d="M5 5h5v2H7v10h10v-3h2v5H5V5z" fill="#2563eb"/></svg></span> a [Splink](https://github.com/moj-analytical-services/splink) based address matching library focussed on UK addresses
@@ -182,25 +184,70 @@ For example:
   }]}
 />
 
-| Overlapping token | Share of all addresses containing token|
-|-------------------|---------------------------------------|
-| <mark>24</mark>              | 0.15 % |
-| <mark>Jubilee</mark>         | 0.003 % |
-| <mark>London</mark>          | 5.0 % |
+| Overlapping token   | Share of all addresses containing token |
+|---------------------|----------------------------------------|
+| <mark>24</mark>     | 0.15%                                  |
+| <mark>Jubilee</mark>| 0.003%                                 |
+| <mark>London</mark> | 5.0%                                   |
 
 0.0015 × 0.00003 × 0.05 ≈ 2.25 × 10⁻⁹
 
 
 This is surprisingly effective, but there are several drawbacks that mean it is possible to improve on this approach:
-- Token frequency in the corpus of all addresses in not a very good metric of the strength of match within a small group of candidates.  For instance, the token 'London' is very common in the overall corpus, but for an address in Manchester, it may be highly discriminative.
-- Similarly, a token may be very uncommon in the overal corpus, but useless to distinguish between candidates.  For example, consider the token 'Rainbow' in the above list of addresses.
+- Token frequency in the corpus of all addresses in not a very good metric of the strength of match within a small group of candidates.  For instance, the token `London` is very common in the overall corpus, but for an address in Manchester, it may be highly discriminative.
+- Similarly, a token may be very uncommon in the overal corpus, but useless to distinguish between candidates.  For example, consider the token `Rainbow` in the above list of addresses.
 - Sometimes the true match may have fewer overlapping tokens than a false match.  For example, in the `Philpot Square` example, a different and incorrect candidate may include the tokens `Block 3`
 
 ### 2. Token (or n-gram) frequencies within candidates
 
 An improvement on using whole-corpus token frequencies is to instead use the frequencies of tokens within the set of candidates.  This is a better measure of the power of the token to distinguish between the candidates.
 
-Similarly, we can use the frequency of n-grams within the set of candidates.
+Similarly, we could use the frequency of n-grams within the set of candidates.
+
+For example, consider how the token 'front' is the only token that appears just once amongst the candidates.
+
+<AddressCandidatesComparison
+  messyAddress={<>
+    <mark>Front</mark> Ground Floor Flat 57 Fulham Park Gardens
+    SW6 4LB
+  </>}
+  candidates={[
+    {
+      address: (
+        <>
+          Flat Ground Floor <mark>Front</mark>, 57, Fulham Park Gardens, London
+          SW6 4LB
+        </>
+      ),
+      isMatch: true,
+    },
+    {
+      address: (
+        <>
+          Flat First Floor, 57, Fulham Park Gardens, London
+          SW6 4LB
+        </>
+      ),
+      isMatch: false,
+    },
+    {
+      address: (
+        <>
+          Flat Ground Floor, 66, Fulham Park Gardens, London SW6 4LB
+        </>
+      ),
+      isMatch: false,
+    },
+    {
+      address: (
+        <>
+          Flat Ground Floor Rear, 57, Fulham Park Gardens, London SW6 4LB
+        </>
+      ),
+      isMatch: false,
+    },
+  ]}
+/>
 
 ### 4. Absence of tokens:  Matching tokens that exist within other candidates, but not the present candidate
 
@@ -360,4 +407,7 @@ During scoring, this can be used to determine that - for example - the number `2
     },
   ]}
 />
+
+
+
 
