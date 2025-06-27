@@ -36,7 +36,7 @@ Substantial variation can exist between two matching addresses - for instance:
   isMatch={true}
 />
 
-Whereas the following example has far less variation, but does not match:
+Whereas the following example has far less variation, yet does not match:
 
 <AddressComparison
   addressA="Flat A 24 Jubilee Street, London, LO1 23D"
@@ -114,9 +114,9 @@ For example each individual token in `Flat A 24 Jubilee Street, London` is very 
 
 A variation on the n-gram approach is to extract the most unusual single tokens (words) in the address, and block on (say) the two least common words in the address.
 
-This is particularly useful to avoid the problem of missing or misordered tokens.  For example, in the Philpot Square example, `Philpot` and `165` are unusual tokens and there may only be a single address in the country with both tokens, but they don't predictable appear next to each other.
+This is particularly useful to avoid the problem of missing or misordered tokens.  For example, in the Philpot Square example, `Philpot` and `165` are unusual tokens and there may only be a single address in the country with both tokens, but they don't predictably appear next to each other.
 
-### 3. Discriminating tokens
+### 3.  Discriminating tokens amongst neighbouring addresses
 
 By working backwards and eliminating common tokens, we can identify the following discriminating tokens (highlighted):
 
@@ -137,7 +137,18 @@ By working backwards and eliminating common tokens, we can identify the followin
 
 These highlighted n-grams can be used for blocking and can be especially used for non-numeric house names, combined with (say) the first half of the postcode.
 
-### 4. Narrowing down postcode using numerics
+### 4. Deriving multiple variations of the canonical address
+
+In many cases, the list of canonical addresses will be high quality data split robustly and semantically across multiple columns ((e.g. see Built Adddress spec [here](https://docs.os.uk/osngd/data-structure/address/gb-address/built-address)).
+In this case, we can derive multiple variations of the canonical address by combining these columns in different ways.  This gives a greater chance for blocking to recover the true match, and also means scoring will be more reliable because it increases the similarity between the messy address and the closest representation of the canonical address.
+
+For example, the 'standard' representation may not contain [floor qualifiers] like 'top floor', but if this is observed in the messy addresses, adding this as a variation on to the canonical address.
+
+It also increases the change of finding an exact match.
+
+This adds little complexity:  we can treat the variations as additional candidates in the blocking stage, and then simply take the highest score for each candidate in the scoring stage.
+
+### 5. Narrowing down postcode using numerics
 
 Blocking on postcode only may result in a list of candidates that is too long to be practical. A simple extension is to find only addresses that contain the postcode and any of the numbers in the address.
 
@@ -148,7 +159,7 @@ The purpose of the scoring stage is to identify the highest scoring candidate fo
 There are many different scoring approaches, and a weighted combination of approaches will often yield the best results.
 
 
-### 1. Token frequencies
+### 1. Token frequencies within the corpus of all addresses
 
 A simple 'first cut' of a scoring approach can be simply to look at the number of common tokens/words between the messy address and candidate address, weighted by token frequency in the corpus of all addresses.
 
@@ -169,15 +180,49 @@ For example:
 0.0015 × 0.00003 × 0.05 ≈ 2.25 × 10⁻⁹
 
 
-This is surprisingly effective, but there are several drawbacks that mean it possible to improve on this approach:
+This is surprisingly effective, but there are several drawbacks that mean it is possible to improve on this approach:
 - Token frequency in the corpus of all addresses in not a very good metric of the strength of match within a small group of candidates.  For instance, the token 'London' is very common in the overall corpus, but for an address in Manchester, it may be highly discriminative.
 - Similarly, a token may be very uncommon in the overal corpus, but useless to distinguish between candidates.  For example, consider the token 'Rainbow' in the above list of addresses.
 - Sometimes the true match may have fewer overlapping tokens than a false match.  For example, in the `Philpot Square` example, a different and incorrect candidate may include the tokens `Block 3`
 
+### 2. Token frequencies within candidates
 
-### Highly-discriminative tokens within candidates
+A simple extension of using whole-corpus token frequencies is to instead use the frequencies of tokens within the set of candidates.
 
-Some tokens or n-grams may be common across the corpus of all addresses, but rare within the candidates.  For instance, suppose we have the following messy address:
+This provides a measure of the importance of the token to distinguish between the candidates.
+
+### 3. n-gram frequencies within candidates
+
+A further extension to to consider not just token frequencies, but n-gram frequencies within the set of candidates.
+
+This is particularly helpful in cases where no single token is uniquely distinguishing, but a n-gram is.
+
+[TODO: Include example]
+
+One drawback of techniques (2) and (3) the n-gram approaches to blocking tends to favour a list of candidates that contain discriminative tokens.  For example, if we'd used `1 Coronation Street` as a tri-gram for blocking, we'd have retrieved several different `1 Coronation Street` candidates!
+
+### 3. Discriminating tokens amongst neighbouring addresses
+
+We can use the technique desribed above (Rainbow Lane example) to identify discriminating tokens amongst neighbouring addresses.
+
+On the face of it, these tokens are essential information to uniquely pin down the address, and so a match should require a match on these tokens.
+
+In practice, addresses are not this simple,
+
+[Example e.g. 'top floor']
+
+As a result, instead of requiring a match, we can simply place greater weight on these tokens when scoring.
+
+### 4. Distinguishability of the top scoring address
+
+
+
+
+
+
+Some tokens or n-grams may be common across the corpus of all addresses, but rare within the set of candidates.
+
+For instance, suppose we have the following messy address:
 
 Messy address:
 `### Highly-discriminative tokens within candidates, London`
@@ -193,7 +238,7 @@ A match on a highly discriminative token is a strong, but not definitive, indica
 
 ### Highly-discriminative amongst neighbouring addresses
 
-A drawback of using the list of candidates to identify discriminative tokens is that the n-gram approaches to blocking tends to favour a list of candidates that contain discriminative tokens.  For example, if we'd used `1 Coronation Street` as a tri-gram for blocking, we'd have retrieved several different `1 Coronation Street` candidates!
+A drawback of using the list of candidates to identify discriminative tokens is that
 
 A second approach to identifying discriminative tokens is to look at the candidates in the context of their neighbours.  If we sort addresses by the reverse of the full address string, we can remove common tokens.  For instance:
 
