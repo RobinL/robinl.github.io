@@ -33,16 +33,19 @@ Address matching (geocoding) is a notoriously difficult problem due to unpredict
 Substantial variation can exist between two matching addresses - for instance:
 
 <AddressComparison
-  addressA="Flat 165 Block 3 Philpot Square, Hammersmith And Fulham"
-  addressB="165, Philpot Square, London"
+  addressA={<><mark>Flat</mark> 165 <mark>Block 3</mark> Philpot Square, <mark>Hammersmith And Fulham</mark></>}
+  addressB={<>165, Philpot Square, <mark>London</mark></>}
   isMatch={true}
 />
+
+
+
 
 Whereas the following example has far less variation, yet does not match:
 
 <AddressComparison
-  addressA="Flat A 24 Jubilee Street, London, LO1 23D"
-  addressB="Flat A 25 Jubilee Street, London, LO1 23D"
+  addressA={<>Flat A 2<mark>4</mark> Jubilee Street, London, LO1 23D</>}
+  addressB={<>Flat A 2<mark>5</mark> Jubilee Street, London, LO1 23D</>}
   isMatch={false}
 />
 
@@ -86,31 +89,33 @@ This is appealing because it appears to enable powerful scoring rules, such as '
 
 In practice, this approach suffers from a paradox: the hardest addresses to match often contain ambiguities which make them the hardest to parse.
 
-The `Philpot Square` addresses shown above is a good practical example:  how should we interpret the `165` in `165, Philpot Square, London`?  For difficult examples, solving this problem amounts to figuring out what the true address is - so the problem is circular.
+The `Philpot Square` addresses shown above is a good practical example:  how should we interpret the `165` in `165, Philpot Square, London`?  In difficult examples like this, solving this problem amounts to figuring out what the true address is - so the problem is circular.
 
 As a result, it may be better to treat the address as a single string from which we can extract certain features such as 'the first number', without attaching too much semanitic meaning.
 
 This prevents us being too rigid later in our blocking and scoring approaches - for example, it avoids the trap of logic like 'if the building number is different it's not a match' - which contains an implicit assumption of complete information that's correctly parsed.
 
-It also gives us greater flexibility in feature engineering, because we can find features that have no semantic meaning but are nonetheless useful for matching.
+It also gives us greater flexibility in feature engineering, because we can find features that have no particular structural or semantic meaning but are nonetheless useful for matching.
 
 ## Blocking stage
 
 The purpose of blocking is to recover a list of candidate addresses.  The aim of the blocking stage is to have high recall (i.e. not to miss the true match).  Precision is less important, because we will be scoring the candidates to find the true match at the next stage.
 
-For example, a simple blocking strategy could be to simply find all addresses in the postcode of the query address.  This is a good start, but in practice suffers two flaws:
+For example, a simple blocking strategy could be to simply find all addresses in the postcode of the query address[^2].  This is a good start, but in practice suffers two flaws:
 - The list of candidates can be excessively long, resulting in slower performance
 - The query address may not have a postcode, or the postcode may be incorrect
 
-As a result we need to supplement[^2] a postcode-based blocking strategy with some additional blocking techniques.  The idea is that any of these techniques in isolation may miss the true match, but the combination of the rules should almost always find it.
+[^2]: Blocking on postcode only may result in a list of candidates that is too long for performance reasons. In practice, a simple extension could be to limit to addresses that contain the postcode and any of the numbers in the address.
+
+As a result we need to supplement a postcode-based blocking strategy with some additional blocking techniques.  The idea is that any of these techniques in isolation may miss the true match, but the  combined results should almost always contain it.
 
 ### 1. Surmounting problems of common words: n-grams combined with term frequencies
 
 We can pre-processes addresses to extract n-grams and their associated term frequencies (frequency of occurrence across the corpus of all addresses).   This allows us to identify which tokens are uncommon enough to be useful for blocking (i.e. will restrict the number of candidates to a manageable number).
 
-Many strategies are possible here, but a simple approach could be to identify the least common bigram or trigram in each address, and to block on that (after filtering out any excessively common ones).
+Many strategies are possible here, but a simple approach could be to identify the least common bigram or trigram in each address, and to block on that.  For performance reasons, we'd want to filter out any excessively common ones.
 
-For example each individual token in `Flat A 24 Jubilee Street, London` is very common, but the tri-gram `A 24 Jubilee` will appear in at most a handful of addresses in the country.
+For example each individual token in `Flat A 24 Jubilee Street London` is very common, but the tri-gram `A 24 Jubilee` will appear in at most a handful of addresses in the country.
 
 ### 2. Word order: Single words sorted by term frequency
 
@@ -130,11 +135,11 @@ By working backwards and eliminating common tokens, we can identify the followin
   border: 'none',
   padding: 0
 }}>
-  <mark style={{ backgroundColor: 'yellow' }}>1</mark> Rainbow Lane Taunton TA1 1AB
-  <mark style={{ backgroundColor: 'yellow' }}>2</mark> Rainbow Lane Taunton TA1 1AB
-  <mark style={{ backgroundColor: 'yellow' }}>Highfield</mark> Rainbow Lane Taunton TA1 1AB
-  <mark style={{ backgroundColor: 'yellow' }}>Old Station House</mark> Rainbow Lane Taunton TA1 1AB
-  <mark style={{ backgroundColor: 'yellow' }}>5</mark> Rainbow Lane Taunton TA1 1AB
+  <pre><code><mark>1</mark> Rainbow Lane Taunton TA1 1AB</code></pre>
+  <pre><code><mark>2</mark> Rainbow Lane Taunton TA1 1AB</code></pre>
+  <pre><code><mark>Highfield</mark> Rainbow Lane Taunton TA1 1AB</code></pre>
+  <pre><code><mark>Old Station House</mark> Rainbow Lane Taunton TA1 1AB</code></pre>
+  <pre><code><mark>5</mark> Rainbow Lane Taunton TA1 1AB</code></pre>
 </pre>
 
 These highlighted n-grams can be used for blocking and can be especially used for non-numeric house names, combined with (say) the first half of the postcode.
@@ -142,17 +147,19 @@ These highlighted n-grams can be used for blocking and can be especially used fo
 ### 4. Deriving multiple variations of the canonical address
 
 In many cases, the list of canonical addresses will be high quality data split robustly and semantically across multiple columns ((e.g. see Built Adddress spec [here](https://docs.os.uk/osngd/data-structure/address/gb-address/built-address)).
-In this case, we can derive multiple variations of the canonical address by combining these columns in different ways.  This gives a greater chance for blocking to recover the true match, and also means scoring will be more reliable because it increases the similarity between the messy address and the closest representation of the canonical address.
 
-For example, the 'standard' representation may not contain [floor qualifiers] like 'top floor', but if this is observed in the messy addresses, adding this as a variation on to the canonical address.
+If so, we can derive multiple representations of the canonical address by combining these columns in different ways.  This gives a greater chance for blocking to recover the true match, and also means scoring will be more reliable because it increases the similarity between the messy address and the closest representation of the canonical address.
 
-It also increases the change of finding an exact match.
+For example, the 'standard' representation may not contain 'floor descriptors' like 'top floor', but if this is sometimes observed in the messy addresses, we could add this as a variation on to the canonical address.
 
 This adds little complexity:  we can treat the variations as additional candidates in the blocking stage, and then simply take the highest score for each candidate in the scoring stage.
 
-### 5. Narrowing down postcode using numerics
+This technique also increases the change of finding an exact match, so the run time performance tradeoff is not unambiguously negative.
 
-Blocking on postcode only may result in a list of candidates that is too long to be practical. A simple extension is to find only addresses that contain the postcode and any of the numbers in the address.
+
+
+
+
 
 ## Scoring stage
 
@@ -290,64 +297,65 @@ During scoring, this can be used to determine that - for example - the number `2
 
 
 <AddressComparison
-  addressA="23A Marchant House, Jubilee Street, London, LO1 23D"
-  addressB="Flat A, Top Floor, Marchant House, 23 Jubilee Street, Fulham, LO1 23D"
-  isMatch={true}
-/>
-
-
-<AddressComparison
-  addressA="FLAT 3 ST LEGER HOUSE GREAT LINFORD MK14 5HA"
-  addressB="3 ST LEGER HOUSE 4A ST LEGER COURT GREAT LINFORD MILTON KEYNES MK14 5HA"
-  isMatch={true}
-/>
-
-
-<AddressComparison
-  addressA="FLAT 62 BLOCK 3 PHILPOT SQUARE SW6 3HX"
-  addressB="62 PHILPOT SQUARE LONDON SW6 3HX"
-  isMatch={true}
-/>
-
-
-<AddressComparison
-  addressA="6, PADDOCK CLOSE CASTLETHORPE MK19 7AY"
-  addressB="PIPIT HOUSE, 6, PADDOCK CLOSE, CASTLETHORPE MK19 7AY"
+  addressA={<>23A Marchant House, Jubilee Street, London, LO1 23D</>}
+  addressB={<>Flat A, Top Floor, Marchant House, 23 Jubilee Street, Fulham, LO1 23D</>}
   isMatch={true}
 />
 
 <AddressComparison
-  addressA="Maisonette First And Second Floors, 14, Hadyn Park Road"
-  addressB="Top Floor Flat 14 Hadyn Park Road, London"
+  addressA={<>FLAT 3 ST LEGER HOUSE GREAT LINFORD MK14 5HA</>}
+  addressB={<>3 ST LEGER HOUSE 4A ST LEGER COURT GREAT LINFORD MILTON KEYNES MK14 5HA</>}
   isMatch={true}
 />
-
 
 <AddressComparison
-  addressA="Flat 39 Evans House White City Estate"
-  addressB="39, EVANS HOUSE, AUSTRALIA ROAD, LONDON"
+  addressA={<>FLAT 62 BLOCK 3 PHILPOT SQUARE SW6 3HX</>}
+  addressB={<>62 PHILPOT SQUARE LONDON SW6 3HX</>}
   isMatch={true}
 />
+
+<AddressComparison
+  addressA={<>6, PADDOCK CLOSE CASTLETHORPE MK19 7AY</>}
+  addressB={<>PIPIT HOUSE, 6, PADDOCK CLOSE, CASTLETHORPE MK19 7AY</>}
+  isMatch={true}
+/>
+
+<AddressComparison
+  addressA={<>Maisonette First And Second Floors, 14, Hadyn Park Road</>}
+  addressB={<>Top Floor Flat 14 Hadyn Park Road, London</>}
+  isMatch={true}
+/>
+
+<AddressComparison
+  addressA={<>Flat 39 Evans House White City Estate</>}
+  addressB={<>39, EVANS HOUSE, AUSTRALIA ROAD, LONDON</>}
+  isMatch={true}
+/>
+
+
 
 
 
 
 <AddressCandidatesComparison
-  messyAddress="FLAT 3 ST LEGER HOUSE GREAT LINFORD MK14 5HA"
+  messyAddress={<>FLAT 3 ST LEGER HOUSE GREAT LINFORD MK14 5HA</>}
   candidates={[
     {
-      address: "GREAT LINFORD HOUSE 1 ST LEGER COURT GREAT LINFORD MK14 5HA",
+      address: <>GREAT LINFORD HOUSE 1 ST LEGER COURT GREAT LINFORD MK14 5HA</>,
       isMatch: false,
     },
     {
-      address: "3 ST LEGER HOUSE 4A ST LEGER COURT GREAT LINFORD MK14 5HA",
+      address: (
+        <>
+          3 ST LEGER HOUSE <mark>4A</mark> ST LEGER COURT GREAT LINFORD MK14 5HA
+        </>
+      ),
       isMatch: true,
     },
     {
-      address: "3 ST LEGER COURT GREAT LINFORD MK14 5HA",
+      address: <>3 ST LEGER COURT GREAT LINFORD MK14 5HA</>,
       isMatch: false,
     },
-,
   ]}
 />
 

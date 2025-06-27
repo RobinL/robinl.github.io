@@ -2,13 +2,14 @@ import React from "react";
 
 /**
  * Compact component that compares a single messy address with a list of
- * candidate addresses.
+ * candidate addresses, allowing portions of each address to be arbitrary JSX.
  *
- * @param {string} messyAddress  The original (messy) address string.
- * @param {Array<{address: string; isMatch: boolean}>} candidates  Candidate
- *        addresses with a flag indicating the true match.
+ * @param {{ messyAddress: React.ReactNode; candidates: Array<{ address: React.ReactNode; isMatch: boolean }> }} props
  */
-export default function AddressCandidatesComparison({ messyAddress, candidates = [] }) {
+export default function AddressCandidatesComparison({
+    messyAddress,
+    candidates = [],
+}) {
     const preStyle = {
         margin: 0,
         padding: "0.25rem",
@@ -43,7 +44,9 @@ export default function AddressCandidatesComparison({ messyAddress, candidates =
             {/* Messy address */}
             <div>
                 <span style={labelStyle}>Messy address</span>
-                <pre style={{ ...preStyle, marginTop: "0.25rem" }}>{messyAddress}</pre>
+                <pre style={{ ...preStyle, marginTop: "0.25rem" }}>
+                    {messyAddress}
+                </pre>
             </div>
 
             {/* Candidate addresses */}
@@ -59,7 +62,7 @@ export default function AddressCandidatesComparison({ messyAddress, candidates =
                 >
                     {candidates.map(({ address, isMatch }, idx) => {
                         const matchColor = "#16a34a"; // tailwind green-600
-                        const nonMatchTextColor = "#7f1d1d"; // tailwind red-800 for subtle dark red
+                        const nonMatchTextColor = "#7f1d1d"; // tailwind red-800
                         return (
                             <div
                                 key={idx}
@@ -67,7 +70,9 @@ export default function AddressCandidatesComparison({ messyAddress, candidates =
                                     display: "flex",
                                     alignItems: "center",
                                     gap: "0.6rem",
-                                    border: isMatch ? `1px solid ${matchColor}` : "1px solid transparent",
+                                    border: isMatch
+                                        ? `1px solid ${matchColor}`
+                                        : "1px solid transparent",
                                     borderRadius: "0.25rem",
                                     padding: "0.25rem",
                                 }}

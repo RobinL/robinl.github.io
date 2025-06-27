@@ -1,5 +1,11 @@
 import React from "react";
 
+/**
+ * Compact component that compares two addresses, allowing portions of each
+ * address to be arbitrary JSX (e.g. <mark>…</mark>).
+ *
+ * @param {{ addressA: React.ReactNode; addressB: React.ReactNode; isMatch: boolean }} props
+ */
 export default function AddressComparison({ addressA, addressB, isMatch }) {
     const colour = isMatch ? "#16a34a" : "#dc2626";
     const word = isMatch ? "match" : "non-match";
@@ -31,7 +37,9 @@ export default function AddressComparison({ addressA, addressB, isMatch }) {
             {/* address column */}
             <div style={{ flex: 1 }}>
                 <pre style={preStyle}>{addressA}</pre>
-                <pre style={{ ...preStyle, marginTop: "0.35rem" }}>{addressB}</pre>
+                <pre style={{ ...preStyle, marginTop: "0.35rem" }}>
+                    {addressB}
+                </pre>
             </div>
 
             {/* indicator column */}
