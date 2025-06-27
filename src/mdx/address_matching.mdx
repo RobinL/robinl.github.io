@@ -210,7 +210,6 @@ Similarly, we could use the frequency of n-grams within the set of candidates.
     borderRadius: '6px',
     padding: '0.5em',
     margin: '1em 0',
-    background: '#fafbfc'
   }}
 >
   <summary
@@ -277,7 +276,6 @@ Sometimes a token (or n-gram) from the messy address will be present in _other_ 
     borderRadius: '6px',
     padding: '0.5em',
     margin: '1em 0',
-    background: '#fafbfc'
   }}
 >
   <summary
@@ -293,23 +291,23 @@ Consider:
   messyAddress={<><mark>Flat</mark> A, 1 Primrose <mark>Apartments</mark>, London</>}
   candidates={[
     {
-      address: <>Basement A, Block 1 Primrose Apartments, London</>,
+      address: <>Basement A, Block 1 Primrose <mark>Apartments</mark>, London</>,
       isMatch: false,
     },
     {
-      address: <>Flat A, Block 1 Primrose Apartments, London</>,
+      address: <><mark>Flat A</mark>, Block 1 Primrose <mark>Apartments</mark>, London</>,
       isMatch: true,
     },
     {
-      address: <>Flat A, Block 2 Primrose Apartments, London</>,
+      address: <><mark>Flat A</mark>, Block 2 Primrose <mark>Apartments</mark>, London</>,
       isMatch: false,
     },
     {
-      address: <>Flat A, 1 Primrose Street, London</>,
+      address: <><mark>Flat A</mark>, 1 Primrose Street, London</>,
       isMatch: false,
     },
     {
-      address: <>Flat A, 2 Primrose Street, London</>,
+      address: <><mark>Flat A</mark>, 2 Primrose Street, London</>,
       isMatch: false,
     },
   ]}
@@ -317,13 +315,15 @@ Consider:
 
 
 
+Note that the word `flat` is present in the messy address, and most candidates.
 
+As a result `flat` is a common token within the candidate set, and does not help discriminate between the `flat` candidates. The score increment due to 'flat' on the basis of token frequencies will be modest, and so will not strongly differentiate the basement candidate from the others.
 
-In this case, 'Flat' does not help discriminate between most of the candidates, because there are many flats, so token frequencies do not help much.
+However, the absence of `flat` in candidate 1 strongly suggests this cannot be the match, particularly because we know the word `flat` exists in other addresses  (if it existed in no candidates, it would be irrelavant for the purpose of scoring.) To to ensure a more highly differentiated score for address 1, we need to apply some sort of score penalty.
 
-However, :
-- the _absence_ of `Flat` in the `Basement` address strongly suggests this cannot be the match, particularly because we know the word 'flat' exists in other addresses but not this one.
-- the _absenece_ of 'Apartments' strongly suggests that candidate 4 cannot be the match, particularly because we know the word 'Apartments' exists in other addresses but not this one.
+In summary, this enables the differential between (say) address 1 and addresses 2-5 to be greater than the 'reward' 2-5 will gain from matching on the word 'flat'.
+
+Note that in this example, the token `apartments` also plays a similar role to `flat` in ruling out candidates 4 and 5.
 
 
 </details>
