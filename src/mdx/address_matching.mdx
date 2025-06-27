@@ -46,7 +46,7 @@ Whereas the following example has far less variation, yet does not match:
   isMatch={false}
 />
 
-The challenge is therefore to develop an algorithm that can somehow 'see' that the pair of addresses are more similar than the second pair.
+The challenge is therefore to develop an algorithm that can somehow 'see' that the first pair of addresses are more similar than the second pair.
 
 
 Unfortunately one of the most effective general approaches to record linkage – known as the <Link to="/intro_to_probabilistic_linkage/">Fellegi-Sunter model</Link> – is not well suited to address matching because:
@@ -56,9 +56,9 @@ Unfortunately one of the most effective general approaches to record linkage –
 
 In this post, I share some tricks and feature engineering techniques we can use to exploit the information in addresses as much as possible, to maximise geocoding accuracy.
 
-Tangible implementations of some these tricks can be found in two open source address matching libraries by the author(s) of this post:
--  [`uk_address_matcher`](https://github.com/RobinL/uk_address_matcher) a Splink-based address matching library focussed on UK addresses
--  [`whereabouts`](https://github.com/ajl2718/whereabouts), a duckdb-powered address matching library, initially focussed on Australian addresses, but [now supporting any addresses?]
+Concrete implementations of some these tricks can be found in two open source address matching libraries:
+ -  [`uk_address_matcher`](https://github.com/RobinL/uk_address_matcher)<span style={{marginLeft: '0.25em', verticalAlign: '0.0em'}} aria-label="external link" title="External link"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.414l-9.293 9.293-1.414-1.414L17.586 5H14V3z" fill="#2563eb"/><path d="M5 5h5v2H7v10h10v-3h2v5H5V5z" fill="#2563eb"/></svg></span> a [Splink](https://github.com/moj-analytical-services/splink) based address matching library focussed on UK addresses
+ -  [`whereabouts`](https://github.com/ajl2718/whereabouts)<span style={{marginLeft: '0.25em', verticalAlign: '0.0em'}} aria-label="external link" title="External link"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.414l-9.293 9.293-1.414-1.414L17.586 5H14V3z" fill="#2563eb"/><path d="M5 5h5v2H7v10h10v-3h2v5H5V5z" fill="#2563eb"/></svg></span>, a duckdb-powered address matching library, initially focussed on Australian addresses, but [now supporting any addresses?]
 
 # Structuring the problem
 
@@ -332,50 +332,22 @@ During scoring, this can be used to determine that - for example - the number `2
 
 
 
-
-
-
-
-Example 6:
-MESSY ADDRESS: FLAT 3 ST LEGER HOUSE GREAT LINFORD MK14 5HA
-
-🏠 CANDIDATE ADDRESSES:
-  1. UPRN: 10093309723, Address: GREAT LINFORD PARISH COUNCIL GREAT LINFORD PARISH COUNCIL GREAT LINFORD HOUSE 1 ST LEGER COURT GREAT LINFORD MILTON KEYNES MK14 5HA
-  ✅ [certain] UPRN: 10096063932, Address: 3 ST LEGER HOUSE 4A ST LEGER COURT GREAT LINFORD MILTON KEYNES MK14 5HA
-  3. UPRN: 10090356637, Address: LIFE INTERNATIONAL CHRISTIAN FELLOWSHIP 3 ST LEGER COURT GREAT LINFORD MILTON KEYNES MK14 5HA
-  4. UPRN: 10093309720, Address: UNIT 3 GREAT LINFORD HOUSE 1 ST LEGER COURT GREAT LINFORD MILTON KEYNES MK14 5HA
-  5. UPRN: 25048329, Address: 3 FULWELL COURT ST LEGER DRIVE GREAT LINFORD MILTON KEYNES MK14 5HB
-
-This is certain - it's reasonably common for the name of the court to be missed out if leaving it out leaves no ambiguity.
-
-
-
-
-Example 4:
-
-MESSY ADDRESS: FLAT 62 BLOCK 3 PHILPOT SQUARE SW6 3HX
-
-🏠 CANDIDATE ADDRESSES:
-  1, UPRN: 34156657, Address: FLAT 62 LOCKSIDE HOUSE 3 THURSTAN STREET LONDON SW6 2XB
-  2. UPRN: 34064438, Address: 69 PHILPOT SQUARE LONDON SW6 3HX
-  ✅ [probable] UPRN: 34064431, Address: 62 PHILPOT SQUARE LONDON SW6 3HX
-  4. UPRN: 34064409, Address: 40 PHILPOT SQUARE LONDON SW6 3HX
-  5. UPRN: 34064434, Address: 65 PHILPOT SQUARE LONDON SW6 3HX
-
-This is a hard one:  Usually a flat designation (FLAT 62 BLOCK 3) should not match an apparent building designation ( 62 PHILPOT SQUARE).  However, the flat is clearly at philpot square, and the closest match amongst the addresses at philpot square is  62 PHILPOT SQUARE.  However, due to the disrepency between the flat designation and the lack of block 3, this is probable only.
-
-
-
 <AddressCandidatesComparison
-  messyAddress="6, PADDOCK CLOSE CASTLETHORPE MK19 7AY"
+  messyAddress="FLAT 3 ST LEGER HOUSE GREAT LINFORD MK14 5HA"
   candidates={[
     {
-      address: "PIPIT HOUSE, 6, PADDOCK CLOSE, CASTLETHORPE MK19 7AY",
-      isMatch: true,   // ✅ the known match
+      address: "GREAT LINFORD HOUSE 1 ST LEGER COURT GREAT LINFORD MK14 5HA",
+      isMatch: false,
     },
-    { address: "11, PADDOCK CLOSE, CASTLETHORPE MK19 7AY", isMatch: false },
-    { address: "12, PADDOCK CLOSE, CASTLETHORPE MK19 7AY", isMatch: false },
-    { address: "13, PADDOCK CLOSE, CASTLETHORPE MK19 7AY", isMatch: false },
-    { address: "10, PADDOCK CLOSE, CASTLETHORPE MK19 7AY", isMatch: false },
+    {
+      address: "3 ST LEGER HOUSE 4A ST LEGER COURT GREAT LINFORD MK14 5HA",
+      isMatch: true,
+    },
+    {
+      address: "3 ST LEGER COURT GREAT LINFORD MK14 5HA",
+      isMatch: false,
+    },
+,
   ]}
 />
+
