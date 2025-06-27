@@ -204,19 +204,22 @@ An improvement on using whole-corpus token frequencies is to instead use the fre
 
 Similarly, we could use the frequency of n-grams within the set of candidates.
 
-For example, consider how the token 'front' is the only token that appears just once amongst the candidates.
+<details>
+  <summary>Example - click to expand</summary>
+
+For example, consider how the token 'front' is the only token that appears just once amongst the candidates, making it uniquely powerful because it is the only token that discriminates fully between the candidates.
 
 <AddressCandidatesComparison
   messyAddress={<>
     <mark>Front</mark> Ground Floor Flat 57 Fulham Park Gardens
-    SW6 4LB
+
   </>}
   candidates={[
     {
       address: (
         <>
-          Flat Ground Floor <mark>Front</mark>, 57, Fulham Park Gardens, London
-          SW6 4LB
+          Flat Ground Floor <mark>Front</mark>, 57, Fulham Park Gardens
+
         </>
       ),
       isMatch: true,
@@ -224,8 +227,8 @@ For example, consider how the token 'front' is the only token that appears just 
     {
       address: (
         <>
-          Flat First Floor, 57, Fulham Park Gardens, London
-          SW6 4LB
+          Flat First Floor, 57, Fulham Park Gardens
+
         </>
       ),
       isMatch: false,
@@ -233,7 +236,7 @@ For example, consider how the token 'front' is the only token that appears just 
     {
       address: (
         <>
-          Flat Ground Floor, 66, Fulham Park Gardens, London SW6 4LB
+          Flat Ground Floor, 66, Fulham Park Gardens
         </>
       ),
       isMatch: false,
@@ -241,14 +244,14 @@ For example, consider how the token 'front' is the only token that appears just 
     {
       address: (
         <>
-          Flat Ground Floor Rear, 57, Fulham Park Gardens, London SW6 4LB
+          Flat Ground Floor Rear, 57, Fulham Park Gardens
         </>
       ),
       isMatch: false,
     },
   ]}
 />
-
+</details>
 ### 4. Absence of tokens:  Matching tokens that exist within other candidates, but not the present candidate
 
 Sometimes a token (or n-gram) from the messy address will be present in _other_ candidates, but no in the one being scored.  This is a strong indicator _against_ the candidate being the true match.
