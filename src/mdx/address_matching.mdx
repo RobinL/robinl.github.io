@@ -14,6 +14,8 @@ import { SEO } from "../components/SEO"
 import Subtitle from "../components/Subtitle.jsx"
 import { Link } from "gatsby"
 import AddressComparison from "./address_matching/AddressComparison.jsx"
+import AddressCandidatesComparison from "./address_matching/AddressCandidateComparison.jsx"
+
 
 
 
@@ -185,21 +187,22 @@ This is surprisingly effective, but there are several drawbacks that mean it is 
 - Similarly, a token may be very uncommon in the overal corpus, but useless to distinguish between candidates.  For example, consider the token 'Rainbow' in the above list of addresses.
 - Sometimes the true match may have fewer overlapping tokens than a false match.  For example, in the `Philpot Square` example, a different and incorrect candidate may include the tokens `Block 3`
 
-### 2. Token frequencies within candidates
+### 2. Token (or n-gram) frequencies within candidates
 
-A simple extension of using whole-corpus token frequencies is to instead use the frequencies of tokens within the set of candidates.
+An improvement on using whole-corpus token frequencies is to instead use the frequencies of tokens within the set of candidates.  This is a better measure of the power of the token to distinguish between the candidates.
 
-This provides a measure of the importance of the token to distinguish between the candidates.
+Similarly, we can use the frequency of n-grams within the set of candidates.
 
-### 3. n-gram frequencies within candidates
+### 4. Absence of tokens:  Matching tokens that exist within other candidates, but not the present candidate
 
-A further extension to to consider not just token frequencies, but n-gram frequencies within the set of candidates.
+Sometimes a token (or n-gram) from the messy address will be present in _other_ candidates, but no in the one being scored.  This is a strong indicator _against_ the candidate being the true match.
 
-This is particularly helpful in cases where no single token is uniquely distinguishing, but a n-gram is.
-
-[TODO: Include example]
+### Scoring stage additional considerations
 
 One drawback of techniques (2) and (3) the n-gram approaches to blocking tends to favour a list of candidates that contain discriminative tokens.  For example, if we'd used `1 Coronation Street` as a tri-gram for blocking, we'd have retrieved several different `1 Coronation Street` candidates!
+
+
+
 
 ### 3. Discriminating tokens amongst neighbouring addresses
 
@@ -214,8 +217,6 @@ In practice, addresses are not this simple,
 As a result, instead of requiring a match, we can simply place greater weight on these tokens when scoring.
 
 ### 4. Distinguishability of the top scoring address
-
-
 
 
 
@@ -365,11 +366,16 @@ This is a hard one:  Usually a flat designation (FLAT 62 BLOCK 3) should not mat
 
 
 
-MESSY ADDRESS: 6, PADDOCK CLOSE CASTLETHORPE MK19 7AY
-
-🏠 CANDIDATE ADDRESSES:
-✅ [certain] UPRN: 10090355324, Address: PIPIT HOUSE, 6, PADDOCK CLOSE, CASTLETHORPE MK19 7AY
-2. UPRN: 10096062004, Address: 11, PADDOCK CLOSE, CASTLETHORPE MK19 7AY
-3. UPRN: 10096062005, Address: 12, PADDOCK CLOSE, CASTLETHORPE MK19 7AY
-4. UPRN: 10096061976, Address: 13, PADDOCK CLOSE, CASTLETHORPE MK19 7AY
-5. UPRN: 10096062003, Address: 10, PADDOCK CLOSE, CASTLETHORPE MK19 7AY
+<AddressCandidatesComparison
+  messyAddress="6, PADDOCK CLOSE CASTLETHORPE MK19 7AY"
+  candidates={[
+    {
+      address: "PIPIT HOUSE, 6, PADDOCK CLOSE, CASTLETHORPE MK19 7AY",
+      isMatch: true,   // ✅ the known match
+    },
+    { address: "11, PADDOCK CLOSE, CASTLETHORPE MK19 7AY", isMatch: false },
+    { address: "12, PADDOCK CLOSE, CASTLETHORPE MK19 7AY", isMatch: false },
+    { address: "13, PADDOCK CLOSE, CASTLETHORPE MK19 7AY", isMatch: false },
+    { address: "10, PADDOCK CLOSE, CASTLETHORPE MK19 7AY", isMatch: false },
+  ]}
+/>
