@@ -252,9 +252,59 @@ For example, consider how the token 'front' is the only token that appears just 
   ]}
 />
 </details>
+
 ### 4. Absence of tokens:  Matching tokens that exist within other candidates, but not the present candidate
 
 Sometimes a token (or n-gram) from the messy address will be present in _other_ candidates, but no in the one being scored.  This is a strong indicator _against_ the candidate being the true match.
+
+<details>
+
+  <summary>Example - click to expand</summary>
+
+Consider:
+
+<AddressCandidatesComparison
+  messyAddress={<><mark>Flat</mark> A, 1 Primrose <mark>Apartments</mark>, London</>}
+  candidates={[
+    {
+      address: <>Basement A, Block 1 Primrose Apartments, London</>,
+      isMatch: false,
+    },
+    {
+      address: <>Flat A, Block 1 Primrose Apartments, London</>,
+      isMatch: true,
+    },
+    {
+      address: <>Flat A, Block 2 Primrose Apartments, London</>,
+      isMatch: false,
+    },
+    {
+      address: <>Flat A, 1 Primrose Street, London</>,
+      isMatch: false,
+    },
+    {
+      address: <>Flat A, 2 Primrose Street, London</>,
+      isMatch: false,
+    },
+  ]}
+/>
+
+
+
+
+
+In this case, 'Flat' does not help discriminate between most of the candidates, because there are many flats, so token frequencies do not help much.
+
+However, :
+- the _absence_ of `Flat` in the `Basement` address strongly suggests this cannot be the match, particularly because we know the word 'flat' exists in other addresses but not this one.
+- the _absenece_ of 'Apartments' strongly suggests that candidate 4 cannot be the match, particularly because we know the word 'Apartments' exists in other addresses but not this one.
+
+
+</details>
+
+
+
+
 
 ### Scoring stage additional considerations
 

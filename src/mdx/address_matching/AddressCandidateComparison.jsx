@@ -85,35 +85,62 @@ export default function AddressCandidatesComparison({
                                 key={idx}
                                 style={{
                                     display: "flex",
-                                    alignItems: "center",
-                                    gap: "0.6rem",
-                                    border: borderStyle,
-                                    borderRadius: "0.25rem",
-                                    padding: "0.25rem",
+                                    flexDirection: "row",
+                                    alignItems: "stretch",
                                 }}
                             >
-                                <pre
-                                    style={{
-                                        ...preStyle,
-                                        margin: 0,
-                                        color: textColor,
-                                    }}
-                                >
-                                    {address}
-                                </pre>
-                                {/* Tick only for the match */}
+                                {/* Numbering at the leftmost edge */}
                                 <span
                                     style={{
-                                        fontSize: "1.1rem",
-                                        lineHeight: 1,
-                                        color: tickColor,
+                                        fontFamily: "inherit",
+                                        fontWeight: 500,
+                                        fontSize: "0.85rem",
+                                        color: "#6b7280", // tailwind slate-500
+                                        minWidth: "1.5rem",
+                                        textAlign: "right",
+                                        marginRight: "0.0rem",
                                         userSelect: "none",
-                                        width: "1.25rem",
-                                        textAlign: "center",
+                                        display: "flex",
+                                        alignItems: "flex-start",
+                                        paddingTop: "0.25rem",
                                     }}
                                 >
-                                    {tick}
+                                    {idx + 1}.
                                 </span>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        flex: 1,
+                                        alignItems: "center",
+                                        gap: "0.6rem",
+                                        border: borderStyle,
+                                        borderRadius: "0.25rem",
+                                        padding: "0.25rem",
+                                    }}
+                                >
+                                    <pre
+                                        style={{
+                                            ...preStyle,
+                                            margin: 0,
+                                            color: textColor,
+                                        }}
+                                    >
+                                        {address}
+                                    </pre>
+                                    {/* Tick only for the match */}
+                                    <span
+                                        style={{
+                                            fontSize: "1.1rem",
+                                            lineHeight: 1,
+                                            color: tickColor,
+                                            userSelect: "none",
+                                            width: "1.25rem",
+                                            textAlign: "center",
+                                        }}
+                                    >
+                                        {tick}
+                                    </span>
+                                </div>
                             </div>
                         );
                     })}
