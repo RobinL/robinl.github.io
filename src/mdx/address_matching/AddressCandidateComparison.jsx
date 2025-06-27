@@ -63,6 +63,22 @@ export default function AddressCandidatesComparison({
                     {candidates.map(({ address, isMatch }, idx) => {
                         const matchColor = "#16a34a"; // tailwind green-600
                         const nonMatchTextColor = "#7f1d1d"; // tailwind red-800
+                        // Determine border and text color only if isMatch is explicitly true/false
+                        let borderStyle = "1px solid transparent";
+                        let textColor = undefined;
+                        let tick = "";
+                        let tickColor = undefined;
+                        if (isMatch === true) {
+                            borderStyle = `1px solid ${matchColor}`;
+                            tick = "✅";
+                            tickColor = matchColor;
+                        } else if (isMatch === false) {
+                            // No border, but red text for non-match
+                            textColor = nonMatchTextColor;
+                            tick = "";
+                            tickColor = nonMatchTextColor;
+                        }
+                        // If isMatch is undefined, no special formatting
                         return (
                             <div
                                 key={idx}
@@ -70,9 +86,7 @@ export default function AddressCandidatesComparison({
                                     display: "flex",
                                     alignItems: "center",
                                     gap: "0.6rem",
-                                    border: isMatch
-                                        ? `1px solid ${matchColor}`
-                                        : "1px solid transparent",
+                                    border: borderStyle,
                                     borderRadius: "0.25rem",
                                     padding: "0.25rem",
                                 }}
@@ -81,7 +95,7 @@ export default function AddressCandidatesComparison({
                                     style={{
                                         ...preStyle,
                                         margin: 0,
-                                        color: isMatch ? undefined : nonMatchTextColor,
+                                        color: textColor,
                                     }}
                                 >
                                     {address}
@@ -91,13 +105,13 @@ export default function AddressCandidatesComparison({
                                     style={{
                                         fontSize: "1.1rem",
                                         lineHeight: 1,
-                                        color: isMatch ? matchColor : nonMatchTextColor,
+                                        color: tickColor,
                                         userSelect: "none",
                                         width: "1.25rem",
                                         textAlign: "center",
                                     }}
                                 >
-                                    {isMatch ? "✅" : ""}
+                                    {tick}
                                 </span>
                             </div>
                         );

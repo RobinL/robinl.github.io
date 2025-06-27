@@ -174,11 +174,13 @@ A simple 'first cut' of a scoring approach can be simply to look at the number o
 
 For example:
 
-<div style={{display: "grid", gridTemplateColumns: "max-content auto", rowGap: "0.25rem"}}>
-  <strong>Messy address:</strong><mark>24</mark> <mark>Jubilee</mark> St, <mark>London</mark>
-  <br />
-  <strong>Canonical address:</strong> <mark>24</mark> <mark>Jubilee</mark> Street, <mark>London</mark> LO1 23D
-</div>
+<AddressCandidatesComparison
+  messyAddress={<><mark>24</mark> <mark>Jubilee</mark> St, <mark>London</mark></>}
+  candidates={[{
+    address: <><mark>24</mark> <mark>Jubilee</mark> Street, <mark>London</mark> LO1 23D</>,
+
+  }]}
+/>
 
 | Overlapping token | Share of all addresses containing token|
 |-------------------|---------------------------------------|
