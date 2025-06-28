@@ -28,7 +28,8 @@ export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter
 ## The challenge
 
 
-Address matching (geocoding) is a notoriously difficult problem due to unpredictable structure of addresses and the many different ways an address can be written.
+Address matching (geocoding) is a notoriously difficult problem due to unpredictable structure of addresses[^8] and the many different ways an address can be written.
+[^8]: A variety of interesting edge casees can be found in [Falsehoods Programmers Believe About Addresses](https://www.mjt.me.uk/posts/falsehoods-programmers-believe-about-addresses/).
 
 Substantial variation can exist between two matching addresses - for instance:
 
@@ -360,7 +361,13 @@ As a result, instead of requiring a match, we can simply place greater weight on
     }}
   > Example - click to expand</summary>
 
+The following example illustrates how this simple technique can fail:
+
+**Messy address**:
+
 `Flat A 10 Station Street`
+
+**Candidates:**
 <pre style={{
   display: 'inline-block',
   width: 'max-content',
@@ -377,36 +384,58 @@ As a result, instead of requiring a match, we can simply place greater weight on
   <pre><code><mark>10B</mark> Station Street</code></pre>
 </pre>
 
+Note how the simple rule 'require a match on the discriminating (highlighted) token(s)' would fail in this example; we'd incorretly match to the `9 Station Street` candidate.
+
 </details>
-
-
-
 
 
 ## Scoring stage: Interpreting the score
 
+Many record linkage approaches simply treat the score as a simple ordinal variable, the higher the better.  A score threshold is set, and any candidate above the threshold is considered a match.
+
+In the context of address matching, this approach is not very useful because:
+- There should be a single match - we do not want to match a single messy address to multiple candidate addresses
+- There isn't a strong relationship between 'raw' score and the true match status.  For example, the matcher may correctly 'find' the true match for a simple address like `1 London Road, Birmingham, B1 1AA`.  But whilst the top-scoring match may be correct, its score may be relatively low due to the simplicity of the address, and the commonness of the tokens.
+
+As a result, we need a more nuanced approach to scoring.  The goal is that we want a measure of match confidence.
+
 ### Using 'distinguishability' to determine match confidence
 
-A good metric of confidence is the difference between the score of the top candidate and the second best candidate.
+A powerful technique is to measure the score differential between the top candidate and the second best candidate. We could call this the 'distinguishability' score of the match.
 
-### Scoring stage additional considerations
-
-One drawback of techniques (2) and (3) the n-gram approaches to blocking tends to favour a list of candidates that contain discriminative tokens.  For example, if we'd used `1 Coronation Street` as a tri-gram for blocking, we'd have retrieved several different `1 Coronation Street` candidates!
+The final match confidence score could the be defined as a combination of the raw score and the distinguishability score - often with more weight placed on the distinguishability score, and  perhaps a minimum threshold on the raw score.
 
 
 
+## Final thoughts
+
+Many of the techniques described above are initially appealing, and can even seem like 'knock out' solutions.  However, I have found through bitter experience that there is always an edge case that undermines their effectiveness, and often there is tension between the information the different techniques seem to provide.
+
+One important reason for this is that the process of candidate search by its nature retrieves a set of candidates that are similar to the messy address - often specifically weighted towards candidates that contain highly discriminative n-grams or other features that 'work against' the scoring rules.
+
+I have come to believe that the most powerful address matching solutions are those that:
+
+- Apply clever feature engineering tricks to uncover hidden information in the structure of the addresses
+- Combine this information using match weights to decide how important different features are, as opposed to crafting deterministic logic
+- And learn these match weights from the data itself
+
+I will conclude with some examples that highlight the challenges of address matching - and are interesting to consider in the context of the techniques described above.
 
 
-
-
-
-
-
-
-
-## Further reading
-
-- A variety of interesting edge casees can be found in [Falsehoods Programmers Believe About Addresses](https://www.mjt.me.uk/posts/falsehoods-programmers-believe-about-addresses/)
+<details
+  style={{
+    border: '1px solid #e5e7eb',
+    borderRadius: '6px',
+    padding: '0.5em',
+    margin: '1em 0',
+  }}
+>
+  <summary
+    style={{
+      fontWeight: 'normal',
+      textAlign: 'left'
+    }}
+  > Some examples that highlight the challenges of address matching - click to expand</summary>
 
 
 ## Some examples that highlight the challenges of address matching
@@ -500,3 +529,6 @@ One drawback of techniques (2) and (3) the n-gram approaches to blocking tends t
     },
   ]}
 />
+
+
+</details>
