@@ -1,0 +1,534 @@
+---
+title: "Building Accurate Address Matching Systems"
+post_date: "2025-06-13"
+post_category: non_blog_post
+description: ""
+code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/address_matching.mdx"
+
+
+date: "2025-06-13"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+import Subtitle from "../components/Subtitle.jsx"
+import { Link } from "gatsby"
+import AddressComparison from "./address_matching/AddressComparison.jsx"
+import AddressCandidatesComparison from "./address_matching/AddressCandidateComparison.jsx"
+
+
+
+
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+# Building Accurate Address Matching Systems
+
+<Subtitle>A bag of tricks to improve the accuracy of geocoding</Subtitle>
+
+## The challenge
+
+
+Address matching (geocoding) is a notoriously difficult problem due to unpredictable structure of addresses[^8] and the many different ways an address can be written.
+[^8]: A variety of interesting edge casees can be found in [Falsehoods Programmers Believe About Addresses](https://www.mjt.me.uk/posts/falsehoods-programmers-believe-about-addresses/).
+
+Substantial variation can exist between two matching addresses - for instance:
+
+<AddressComparison
+  addressA={<><mark>Flat</mark> 165 <mark>Block 3</mark> Philpot Square, <mark>Hammersmith And Fulham</mark></>}
+  addressB={<>165, Philpot Square, <mark>London</mark></>}
+  isMatch={true}
+/>
+
+
+
+
+Whereas the following example has far less variation, yet does not match:
+
+<AddressComparison
+  addressA={<>Flat A 2<mark>4</mark> Jubilee Street, London, LO1 23D</>}
+  addressB={<>Flat A 2<mark>5</mark> Jubilee Street, London, LO1 23D</>}
+  isMatch={false}
+/>
+
+The challenge is therefore to develop an algorithm that can somehow 'see' that the first pair of addresses are more similar than the second pair.
+
+
+Unfortunately one of the most effective general approaches to record linkage – known as the <Link to="/intro_to_probabilistic_linkage/">Fellegi-Sunter model</Link> – is not well suited to address matching because:
+- there is strong correlation between different parts of an address, violating the model's statistical assumptions
+- the model assumes input data is split across multiple columns (e.g. first name, surname, DoB etc.), but address data is often received as a single string, and reliably parsing this into a set of standardised columns is very difficult
+
+
+In this post, I share some tricks and feature engineering techniques we can use to exploit the information in addresses as much as possible, to maximise geocoding accuracy.[^3]
+
+[^3]: To ensure high performance, I've included only techniques that can be implemented in SQL, meaning we can use high performance engines like DuckDB to implement the address matching system.
+
+Concrete implementations of some these tricks can be found in two open source address matching libraries:
+ -  [`uk_address_matcher`](https://github.com/RobinL/uk_address_matcher)<span style={{marginLeft: '0.25em', verticalAlign: '0.0em'}} aria-label="external link" title="External link"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.414l-9.293 9.293-1.414-1.414L17.586 5H14V3z" fill="#2563eb"/><path d="M5 5h5v2H7v10h10v-3h2v5H5V5z" fill="#2563eb"/></svg></span> a [Splink](https://github.com/moj-analytical-services/splink) based address matching library focussed on UK addresses
+ -  [`whereabouts`](https://github.com/ajl2718/whereabouts)<span style={{marginLeft: '0.25em', verticalAlign: '0.0em'}} aria-label="external link" title="External link"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.414l-9.293 9.293-1.414-1.414L17.586 5H14V3z" fill="#2563eb"/><path d="M5 5h5v2H7v10h10v-3h2v5H5V5z" fill="#2563eb"/></svg></span>, a duckdb-powered address matching library, initially focussed on Australian addresses, but [now supporting any addresses?]
+
+## Structuring the problem
+
+I will assume that we have:
+- A list of messy addresses (e.g. addresses that have been entered by hand by users)
+- A canonical address file (e.g. in the UK, an Ordnance Survey product such as [Built Address](https://docs.os.uk/osngd/data-structure/address/gb-address))
+
+To be as general as possible, we'll assume the address in these files just is a single string.
+
+The address matching problem can be structured into two main stages:
+- [Blocking](https://moj-analytical-services.github.io/splink/topic_guides/blocking/blocking_rules.html?h=blocking#blocking) (finding a small number of plausible candidates from the canonical address file)
+- Scoring (to rank the candidates and thereby identify the best match).
+
+These steps are indpendent, so we can mix and match different blocking and scoring techniques.
+
+However, prior to either of these steps, we need to decide how best to represent the address data.
+
+
+## How to represent the address data
+A tempting first step is to attempt to parse the messy addresses semantically - e.g. splitting out flat number, house number, street name and so on.[^1]
+
+[^1]: A [Conditional Random Fields](https://www.ons.gov.uk/methodology/methodologicalpublications/generalmethodology/onsworkingpaperseries/onsworkingpaperseriesno17usingdatasciencefortheaddressmatchingservice) or [hidden Markov](https://pmc.ncbi.nlm.nih.gov/articles/PMC140019/) model could be used for this, or existing libraries such as [libpostal](https://github.com/openvenues/libpostal).
+
+This is appealing because it appears to enable powerful scoring rules, such as 'if the building number is different, the addresses do not match'.
+
+In practice, this approach suffers from a paradox: the hardest addresses to match often contain ambiguities which make them the hardest to parse.
+
+The `Philpot Square` address at the top of this article is a good practical example:  how should we interpret the `165` in `165, Philpot Square, London`?  In difficult examples like this, solving this problem amounts to figuring out what the true address is - so the problem is circular.
+
+As a result, it may be better to treat the address as a single string from which we can extract certain features such as 'the first number' or 'most unusual bigram' without attaching too much semanitic meaning.
+
+This prevents us being too rigid later in our blocking and scoring approaches - for example, it avoids the trap of logic like 'if the building number is different then it's not a match' - which contains an implicit assumption of complete information that's correctly parsed.
+
+It also gives us greater flexibility in feature engineering, because we can find features that have no particular structural or semantic meaning but are nonetheless useful for matching.
+
+## Blocking stage
+
+The purpose of blocking is to recover a list of candidate addresses.  The aim of the blocking stage is to have high recall (i.e. not to miss the true match).  Precision is less important, because we will be scoring the candidates to find the true match at the next stage.
+
+For example, a simple blocking strategy could be to find all addresses in the postcode of the query address[^2].  This is a good start, but in practice suffers two flaws:
+- The list of candidates can be excessively long, resulting in slower scoring performance
+- The query address may not have a postcode, or the postcode may be incorrect
+
+[^2]: Blocking on postcode only may result in a list of candidates that is too long for performance reasons. In practice, a simple extension could be to limit to addresses that contain the postcode and any of the numbers in the address.
+
+As a result we need to supplement a postcode-based blocking strategy with some additional techniques.  The idea is that any of these techniques in isolation may miss the true match, but the  combined results should almost always contain it.
+
+### 1. Surmounting problems of common tokens: n-grams combined with term frequencies
+
+We can pre-processes addresses to extract n-grams and their associated term frequencies (frequency of occurrence across the corpus of all addresses).   This allows us to identify which tokens are uncommon enough to be useful for blocking (i.e. will restrict the number of candidates to a manageable number).
+
+Many strategies are possible here, but a simple approach could be to identify the least common bigram or trigram in each address, and to block on[^4] that.  For performance reasons, we'd want to filter out any excessively common ones.
+
+[^4]: The terminology 'block on' means 'candidate addresses are found using this condition'.   So in this example, we would find any address whose least common bigram  matches the least common bigram in the messy address.  This is conceptually equivalent to an inverted index.
+
+For example each individual token in `Flat A 24 Jubilee Street London` is very common, but the tri-gram `A 24 Jubilee` will appear in at most a handful of addresses in the country.
+
+### 2. Word order: Single words sorted by term frequency
+
+A variation on the n-gram approach is to extract the most unusual single tokens (words) in the address, and block on (say) the two least common tokens in the address.
+
+This is useful to avoid the problem of missing or misordered tokens.  For example, in the Philpot Square example, `Philpot` and `165` are unusual tokens and there may only be a single address in the country with both tokens, but they don't predictably appear next to each other.
+
+### 3.  Discriminating tokens amongst neighbouring addresses
+
+By working back to front and eliminating common tokens, we can identify the following discriminating tokens (highlighted):
+
+<pre style={{
+  display: 'inline-block',
+  width: 'max-content',
+  textAlign: 'right',
+  background: 'none',
+  border: 'none',
+  padding: 0
+}}>
+  <pre><code><mark>1</mark> Rainbow Lane Taunton TA1 1AB</code></pre>
+  <pre><code><mark>2</mark> Rainbow Lane Taunton TA1 1AB</code></pre>
+  <pre><code><mark>Highfield</mark> Rainbow Lane Taunton TA1 1AB</code></pre>
+  <pre><code><mark>Old Station House</mark> Rainbow Lane Taunton TA1 1AB</code></pre>
+  <pre><code><mark>5</mark> Rainbow Lane Taunton TA1 1AB</code></pre>
+</pre>
+
+These highlighted n-grams can be used for blocking and can be especially used for non-numeric house names, combined with (say) the first half of the postcode.
+
+### 4. Deriving multiple variations of the canonical address
+
+In many cases, the list of canonical addresses will be split robustly and semantically across multiple columns (e.g. see Built Adddress spec [here](https://docs.os.uk/osngd/data-structure/address/gb-address/built-address)).
+
+If so, we can derive multiple representations of the canonical address by combining these columns in different ways.  This gives a greater chance for blocking to recover the true match, and also means scoring will be more reliable because it increases the similarity between the messy address and the closest representation of the canonical address.
+
+For example, the 'standard' representation may not contain 'floor descriptors' like 'top floor', but if this is sometimes observed in the messy addresses, we could add this as a variation on to the canonical address.  Or we may want to ensure that we have both the address with business name and without.
+
+This adds accuracy without significantly increasing complexity:  we can treat the variations as additional candidates in the blocking stage, and then the 'score' for each candidate is simply the highest score across all variations of the canonical address.
+
+This technique also increases the change of finding an exact match, so the run time performance tradeoff is not unambiguously negative.
+
+
+## Scoring stage
+
+The purpose of the scoring stage is to identify the highest scoring candidate found in the blocking stage, to try to identify the correct match.
+
+There are many different scoring approaches, and a weighted combination[^6] of approaches will often yield the best results[^7].
+
+[^7]: In my experience, weighted scoring is better than trying to apply deterministic logic because there are too many edge cases so the 'tree' of if statements quickly becomes unmanagable.
+[^6]: In `uk_address_matcher`, gradient descent has been used to optimise weights, see [here](https://github.com/RobinL/uk_address_matcher/blob/main/scripts/improve_parameters_using_gradient_descent.py).
+
+
+### 1. Token frequencies within the corpus of all addresses
+
+A simple 'first cut' of a scoring approach can be simply to look at the number of common tokens/words between the messy address and candidate address, weighted by token frequency in the corpus of all addresses.
+
+For example:
+
+<AddressCandidatesComparison
+  messyAddress={<><mark>24</mark> <mark>Jubilee</mark> St, <mark>London</mark></>}
+  candidates={[{
+    address: <><mark>24</mark> <mark>Jubilee</mark> Street, <mark>London</mark> LO1 23D</>,
+
+  }]}
+/>
+
+| Overlapping token   | Share of all addresses containing token |
+|---------------------|----------------------------------------|
+| <mark>24</mark>     | 0.15%                                  |
+| <mark>Jubilee</mark>| 0.003%                                 |
+| <mark>London</mark> | 5.0%                                   |
+
+0.0015 × 0.00003 × 0.05 ≈ 2.25 × 10⁻⁹
+
+
+This is surprisingly effective, but there are several drawbacks that mean it is possible to improve on this approach:
+- Token frequency in the corpus of all addresses in not a very good metric of the strength of match within a small group of candidates.  For instance, the token `London` is very common in the overall corpus, but for an address in Manchester, it may be highly discriminative.
+- Similarly, a token may be very uncommon in the overal corpus, but useless to distinguish between candidates.  For example, consider the token `Rainbow` in the above list of addresses.
+- Sometimes the true match may have fewer overlapping tokens than a false match.  For example, in the `Philpot Square` example, a different and incorrect candidate may include the tokens `Block 3`
+
+### 2. Token (or n-gram) frequencies within candidates
+
+An improvement on using whole-corpus token frequencies is to instead use the frequencies of tokens within the set of candidates.  This is a better measure of the power of the token to distinguish between the candidates.
+
+Similarly, we could use the frequency of n-grams within the set of candidates.
+
+<details
+  style={{
+    border: '1px solid #e5e7eb',
+    borderRadius: '6px',
+    padding: '0.5em',
+    margin: '1em 0',
+  }}
+>
+  <summary
+    style={{
+      fontWeight: 'normal',
+      textAlign: 'left'
+    }}
+  > Example - click to expand</summary>
+
+For example, consider how the token 'front' is the only token that appears just once amongst the candidates, making it uniquely powerful because it is the only token that discriminates fully between the candidates.
+
+<AddressCandidatesComparison
+  messyAddress={<>
+    <mark>Front</mark> Ground Floor Flat 57 Fulham Park Gardens
+
+  </>}
+  candidates={[
+    {
+      address: (
+        <>
+          Flat Ground Floor <mark>Front</mark>, 57, Fulham Park Gardens
+
+        </>
+      ),
+      isMatch: true,
+    },
+    {
+      address: (
+        <>
+          Flat First Floor, 57, Fulham Park Gardens
+
+        </>
+      ),
+      isMatch: false,
+    },
+    {
+      address: (
+        <>
+          Flat Ground Floor, 66, Fulham Park Gardens
+        </>
+      ),
+      isMatch: false,
+    },
+    {
+      address: (
+        <>
+          Flat Ground Floor Rear, 57, Fulham Park Gardens
+        </>
+      ),
+      isMatch: false,
+    },
+  ]}
+/>
+</details>
+
+### 3. Absence of tokens:  Matching tokens that exist within other candidates, but not the present candidate
+
+Sometimes a token (or n-gram) from the messy address will be present in _other_ candidates, but not in the one being scored.  This is a strong indicator _against_ the candidate being the true match.
+
+
+<details
+  style={{
+    border: '1px solid #e5e7eb',
+    borderRadius: '6px',
+    padding: '0.5em',
+    margin: '1em 0',
+  }}
+>
+  <summary
+    style={{
+      fontWeight: 'normal',
+      textAlign: 'left'
+    }}
+  > Example - click to expand</summary>
+
+Consider:
+
+<AddressCandidatesComparison
+  messyAddress={<><mark>Flat</mark> A, 1 Primrose <mark>Apartments</mark>, London</>}
+  candidates={[
+    {
+      address: <>Basement A, Block 1 Primrose <mark>Apartments</mark>, London</>,
+      isMatch: false,
+    },
+    {
+      address: <><mark>Flat A</mark>, Block 1 Primrose <mark>Apartments</mark>, London</>,
+      isMatch: true,
+    },
+    {
+      address: <><mark>Flat A</mark>, Block 2 Primrose <mark>Apartments</mark>, London</>,
+      isMatch: false,
+    },
+    {
+      address: <><mark>Flat A</mark>, 1 Primrose Street, London</>,
+      isMatch: false,
+    },
+    {
+      address: <><mark>Flat A</mark>, 2 Primrose Street, London</>,
+      isMatch: false,
+    },
+  ]}
+/>
+
+
+
+Note that the word `flat` is present in the messy address, and most candidates.
+
+As a result `flat` is a common token within the candidate set, and does not help discriminate between the `flat` candidates. The score increment due to 'flat' on the basis of token frequencies will be modest, and so will not strongly differentiate the basement candidate from the others.
+
+However, the absence of `flat` in candidate 1 strongly suggests this cannot be the match, particularly because we know the word `flat` exists in other addresses  (if it existed in no candidates, it would be irrelavant for the purpose of scoring.) To to ensure a more highly differentiated score for address 1, we need to apply some sort of score penalty.
+
+In summary, this enables the differential between (say) address 1 and addresses 2-5 to be greater than the 'reward' 2-5 will gain from matching on the word 'flat'.
+
+Note that in this example, the token `apartments` also plays a similar role to `flat` in ruling out candidates 4 and 5.
+
+Also note in this example, there is no bigram or trigram that uniquely identifies the match.
+
+</details>
+
+
+
+### 4. Discriminating tokens amongst neighbouring addresses
+
+In the `Rainbow Lane` example above, we illustrated a technique to find highly discriminating tokens amongst neighbouring addresses.
+
+On the face of it, these tokens are essential information to uniquely pin down the address.
+
+In practice, addresses are not this simple, and there's no guarantee that:
+-  the messy address will contain these tokens
+-  the tokens are uniquely discriminating amongst the candidates
+
+As a result, instead of requiring a match, we can simply place greater weight on these tokens when scoring.
+
+
+<details
+  style={{
+    border: '1px solid #e5e7eb',
+    borderRadius: '6px',
+    padding: '0.5em',
+    margin: '1em 0',
+  }}
+>
+  <summary
+    style={{
+      fontWeight: 'normal',
+      textAlign: 'left'
+    }}
+  > Example - click to expand</summary>
+
+The following example illustrates how this simple technique can fail:
+
+**Messy address**:
+
+`Flat A 10 Station Street`
+
+**Candidates:**
+<pre style={{
+  display: 'inline-block',
+  width: 'max-content',
+  textAlign: 'right',
+  background: 'none',
+  border: 'none',
+  padding: 0
+}}>
+  <pre><code>9 Station Street</code></pre>
+  <pre><code><mark>Flat A</mark> 9 Station Street</code></pre>
+  <pre><code>10 Station Street</code></pre>
+  <pre><code><mark>Basement Flat</mark> 10 Station Street</code></pre>
+  <pre><code><mark>10A</mark> Station Street</code></pre>
+  <pre><code><mark>10B</mark> Station Street</code></pre>
+</pre>
+
+Note how the simple rule 'require a match on the discriminating (highlighted) token(s)' would fail in this example; we'd incorretly match to the `9 Station Street` candidate.
+
+</details>
+
+
+## Scoring stage: Interpreting the score
+
+Many record linkage approaches simply treat the score as a simple ordinal variable, the higher the better.  A score threshold is set, and any candidate above the threshold is considered a match.
+
+In the context of address matching, this approach is not very useful because:
+- There should be a single match - we do not want to match a single messy address to multiple candidate addresses
+- There isn't a strong relationship between 'raw' score and the true match status.  For example, the matcher may correctly 'find' the true match for a simple address like `1 London Road, Birmingham, B1 1AA`.  But whilst the top-scoring match may be correct, its score may be relatively low due to the simplicity of the address, and the commonness of the tokens.
+
+As a result, we need a more nuanced approach to scoring.  The goal is that we want a measure of match confidence.
+
+### Using 'distinguishability' to determine match confidence
+
+A powerful technique is to measure the score differential between the top candidate and the second best candidate. We could call this the 'distinguishability' score of the match.
+
+The final match confidence score could the be defined as a combination of the raw score and the distinguishability score - often with more weight placed on the distinguishability score, and  perhaps a minimum threshold on the raw score.
+
+
+
+## Final thoughts
+
+Many of the techniques described above are initially appealing, and can even seem like 'knock out' solutions.  However, I have found through bitter experience that there is always an edge case that undermines their effectiveness, and often there is tension between the information the different techniques seem to provide.
+
+One important reason for this is that the process of candidate search by its nature retrieves a set of candidates that are similar to the messy address - often specifically weighted towards candidates that contain highly discriminative n-grams or other features that 'work against' the scoring rules.
+
+I have come to believe that the most powerful address matching solutions are those that:
+
+- Apply clever feature engineering tricks to uncover hidden information in the structure of the addresses
+- Combine this information using match weights to decide how important different features are, as opposed to crafting deterministic logic
+- And learn these match weights from the data itself
+
+I will conclude with some examples that highlight the challenges of address matching - and are interesting to consider in the context of the techniques described above.
+
+
+<details
+  style={{
+    border: '1px solid #e5e7eb',
+    borderRadius: '6px',
+    padding: '0.5em',
+    margin: '1em 0',
+  }}
+>
+  <summary
+    style={{
+      fontWeight: 'normal',
+      textAlign: 'left'
+    }}
+  > Some examples that highlight the challenges of address matching - click to expand</summary>
+
+
+## Some examples that highlight the challenges of address matching
+
+
+<AddressComparison
+  addressA={<>23A Marchant House, Jubilee Street, London, LO1 23D</>}
+  addressB={<>Flat A, Top Floor, Marchant House, 23 Jubilee Street, Fulham, LO1 23D</>}
+  isMatch={true}
+/>
+
+<AddressComparison
+  addressA={<>FLAT 3 ST LEGER HOUSE GREAT LINFORD MK14 5HA</>}
+  addressB={<>3 ST LEGER HOUSE 4A ST LEGER COURT GREAT LINFORD MILTON KEYNES MK14 5HA</>}
+  isMatch={true}
+/>
+
+<AddressComparison
+  addressA={<>FLAT 62 BLOCK 3 PHILPOT SQUARE SW6 3HX</>}
+  addressB={<>62 PHILPOT SQUARE LONDON SW6 3HX</>}
+  isMatch={true}
+/>
+
+<AddressComparison
+  addressA={<>6, PADDOCK CLOSE CASTLETHORPE MK19 7AY</>}
+  addressB={<>PIPIT HOUSE, 6, PADDOCK CLOSE, CASTLETHORPE MK19 7AY</>}
+  isMatch={true}
+/>
+
+<AddressComparison
+  addressA={<>Maisonette First And Second Floors, 14, Hadyn Park Road</>}
+  addressB={<>Top Floor Flat 14 Hadyn Park Road, London</>}
+  isMatch={true}
+/>
+
+<AddressComparison
+  addressA={<>Flat 39 Evans House White City Estate</>}
+  addressB={<>39, EVANS HOUSE, AUSTRALIA ROAD, LONDON</>}
+  isMatch={true}
+/>
+
+
+
+
+
+
+<AddressCandidatesComparison
+  messyAddress={<>FLAT 3 ST LEGER HOUSE GREAT LINFORD MK14 5HA</>}
+  candidates={[
+    {
+      address: <>GREAT LINFORD HOUSE 1 ST LEGER COURT GREAT LINFORD MK14 5HA</>,
+      isMatch: false,
+    },
+    {
+      address: (
+        <>
+          3 ST LEGER HOUSE <mark>4A</mark> ST LEGER COURT GREAT LINFORD MK14 5HA
+        </>
+      ),
+      isMatch: true,
+    },
+    {
+      address: <>3 ST LEGER COURT GREAT LINFORD MK14 5HA</>,
+      isMatch: false,
+    },
+  ]}
+/>
+
+
+
+
+
+<AddressCandidatesComparison
+  messyAddress={<>Rear Studio Flat 191a Uxbridge Road W12 9RA</>}
+  candidates={[
+    {
+      address: <>FLAT GROUND FLOOR REAR, 191A, UXBRIDGE ROAD, LONDON W12 9RA</>,
+      isMatch: true,
+    },
+    {
+      address: <>NEALE-ROBINSON, 191A, UXBRIDGE ROAD, LONDON W12 9RA </>,
+      isMatch: false,
+    },
+    {
+      address: <>FIRST FLOOR FLAT, 191A, UXBRIDGE ROAD, LONDON W12 9RA</>,
+      isMatch: false,
+    },
+    {
+      address: <>REAR OF, 191E, UXBRIDGE ROAD, LONDON, W12 9RA</>,
+      isMatch: false,
+    },
+  ]}
+/>
+
+
+</details>
