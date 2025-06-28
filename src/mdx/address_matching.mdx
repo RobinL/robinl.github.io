@@ -165,7 +165,10 @@ This technique also increases the change of finding an exact match, so the run t
 
 The purpose of the scoring stage is to identify the highest scoring candidate found in the blocking stage, to try to identify the correct match.
 
-There are many different scoring approaches, and a weighted combination of approaches will often yield the best results.
+There are many different scoring approaches, and a weighted combination[^6] of approaches will often yield the best results[^7].
+
+[^7]: In my experience, weighted scoring is better than trying to apply deterministic logic because there are too many edge cases so the 'tree' of if statements quickly becomes unmanagable.
+[^6]: In `uk_address_matcher`, gradient descent has been used to optimise weights, see [here](https://github.com/RobinL/uk_address_matcher/blob/main/scripts/improve_parameters_using_gradient_descent.py).
 
 
 ### 1. Token frequencies within the corpus of all addresses
@@ -265,7 +268,7 @@ For example, consider how the token 'front' is the only token that appears just 
 
 ### 3. Absence of tokens:  Matching tokens that exist within other candidates, but not the present candidate
 
-Sometimes a token (or n-gram) from the messy address will be present in _other_ candidates, but no in the one being scored.  This is a strong indicator _against_ the candidate being the true match.
+Sometimes a token (or n-gram) from the messy address will be present in _other_ candidates, but not in the one being scored.  This is a strong indicator _against_ the candidate being the true match.
 
 
 <details
@@ -331,16 +334,56 @@ Also note in this example, there is no bigram or trigram that uniquely identifie
 
 ### 4. Discriminating tokens amongst neighbouring addresses
 
-We can use the technique desribed above (Rainbow Lane example) to identify discriminating tokens amongst neighbouring addresses.
+In the `Rainbow Lane` example above, we illustrated a technique to find highly discriminating tokens amongst neighbouring addresses.
 
-On the face of it, these tokens are essential information to uniquely pin down the address, and so a match should require a match on these tokens.
+On the face of it, these tokens are essential information to uniquely pin down the address.
 
-In practice, addresses are not this simple,
-
-[Example e.g. 'top floor']
+In practice, addresses are not this simple, and there's no guarantee that:
+-  the messy address will contain these tokens
+-  the tokens are uniquely discriminating amongst the candidates
 
 As a result, instead of requiring a match, we can simply place greater weight on these tokens when scoring.
 
+
+<details
+  style={{
+    border: '1px solid #e5e7eb',
+    borderRadius: '6px',
+    padding: '0.5em',
+    margin: '1em 0',
+  }}
+>
+  <summary
+    style={{
+      fontWeight: 'normal',
+      textAlign: 'left'
+    }}
+  > Example - click to expand</summary>
+
+`Flat A 10 Station Street`
+<pre style={{
+  display: 'inline-block',
+  width: 'max-content',
+  textAlign: 'right',
+  background: 'none',
+  border: 'none',
+  padding: 0
+}}>
+  <pre><code>9 Station Street</code></pre>
+  <pre><code><mark>Flat A</mark> 9 Station Street</code></pre>
+  <pre><code>10 Station Street</code></pre>
+  <pre><code><mark>Basement Flat</mark> 10 Station Street</code></pre>
+  <pre><code><mark>10A</mark> Station Street</code></pre>
+  <pre><code><mark>10B</mark> Station Street</code></pre>
+</pre>
+
+</details>
+
+
+
+
+
+## Scoring stage: Interpreting the score
 
 ### Using 'distinguishability' to determine match confidence
 
@@ -350,12 +393,9 @@ A good metric of confidence is the difference between the score of the top candi
 
 One drawback of techniques (2) and (3) the n-gram approaches to blocking tends to favour a list of candidates that contain discriminative tokens.  For example, if we'd used `1 Coronation Street` as a tri-gram for blocking, we'd have retrieved several different `1 Coronation Street` candidates!
 
-## Scoring stage: Interpreting the score
 
 
 
-
-## Data Cleaning Stage
 
 
 
@@ -438,3 +478,25 @@ One drawback of techniques (2) and (3) the n-gram approaches to blocking tends t
 
 
 
+
+<AddressCandidatesComparison
+  messyAddress={<>Rear Studio Flat 191a Uxbridge Road W12 9RA</>}
+  candidates={[
+    {
+      address: <>FLAT GROUND FLOOR REAR, 191A, UXBRIDGE ROAD, LONDON W12 9RA</>,
+      isMatch: true,
+    },
+    {
+      address: <>NEALE-ROBINSON, 191A, UXBRIDGE ROAD, LONDON W12 9RA </>,
+      isMatch: false,
+    },
+    {
+      address: <>FIRST FLOOR FLAT, 191A, UXBRIDGE ROAD, LONDON W12 9RA</>,
+      isMatch: false,
+    },
+    {
+      address: <>REAR OF, 191E, UXBRIDGE ROAD, LONDON, W12 9RA</>,
+      isMatch: false,
+    },
+  ]}
+/>
