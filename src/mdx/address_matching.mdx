@@ -55,7 +55,7 @@ The challenge is therefore to develop an algorithm that can somehow 'see' that t
 
 Unfortunately one of the most effective general approaches to record linkage – known as the <Link to="/intro_to_probabilistic_linkage/">Fellegi-Sunter model</Link> – is not well suited to address matching because:
 - there is strong correlation between different parts of an address, violating the model's statistical assumptions
-- the model assumes input data is split across multiple columns (e.g. first name, surname, DoB etc.), but address data is often received as a single string, and reliably parsing this into a set of standardised columns is very difficult
+- the model assumes input data is split across multiple columns (e.g. first name, surname, DoB etc.), but address data is often received as a single string, and reliably parsing this into a set of standardised columns is difficult
 
 
 In this post, I share some tricks and feature engineering techniques we can use to exploit the information in addresses as much as possible, to maximise geocoding accuracy.[^3]
@@ -64,7 +64,7 @@ In this post, I share some tricks and feature engineering techniques we can use 
 
 Concrete implementations of some these tricks can be found in two open source address matching libraries:
  -  [`uk_address_matcher`](https://github.com/RobinL/uk_address_matcher)<span style={{marginLeft: '0.25em', verticalAlign: '0.0em'}} aria-label="external link" title="External link"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.414l-9.293 9.293-1.414-1.414L17.586 5H14V3z" fill="#2563eb"/><path d="M5 5h5v2H7v10h10v-3h2v5H5V5z" fill="#2563eb"/></svg></span> a [Splink](https://github.com/moj-analytical-services/splink) based address matching library focussed on UK addresses
- -  [`whereabouts`](https://github.com/ajl2718/whereabouts)<span style={{marginLeft: '0.25em', verticalAlign: '0.0em'}} aria-label="external link" title="External link"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.414l-9.293 9.293-1.414-1.414L17.586 5H14V3z" fill="#2563eb"/><path d="M5 5h5v2H7v10h10v-3h2v5H5V5z" fill="#2563eb"/></svg></span>, a duckdb-powered address matching library, initially focussed on Australian addresses, but [now supporting any addresses?]
+ -  [`whereabouts`](https://github.com/ajl2718/whereabouts)<span style={{marginLeft: '0.25em', verticalAlign: '0.0em'}} aria-label="external link" title="External link"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.414l-9.293 9.293-1.414-1.414L17.586 5H14V3z" fill="#2563eb"/><path d="M5 5h5v2H7v10h10v-3h2v5H5V5z" fill="#2563eb"/></svg></span>, a DuckDB-powered address matching library, using signature based geocoding methods. Initially developed for Australian addresses, it also supports the creation of geocoding databases for other countries
 
 ## Structuring the problem
 
@@ -102,7 +102,7 @@ It also gives us greater flexibility in feature engineering, because we can find
 
 ## Blocking stage
 
-The purpose of blocking is to recover a list of candidate addresses.  The aim of the blocking stage is to have high recall (i.e. not to miss the true match).  Precision is less important, because we will be scoring the candidates to find the true match at the next stage.
+The purpose of blocking is to recover a list of plausible candidate addresses. Of primary importantance is that this list contains the true match (high recall).  We will be scoring the candidates to find the true match at the next stage, so precision is only important insofar as a shorter list of candidates will be quicker to score.
 
 For example, a simple blocking strategy could be to find all addresses in the postcode of the query address[^2].  This is a good start, but in practice suffers two flaws:
 - The list of candidates can be excessively long, resulting in slower scoring performance
