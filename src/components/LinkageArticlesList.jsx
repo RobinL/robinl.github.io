@@ -31,9 +31,10 @@ const ProbabilisticLinkageArticles = () => {
     }));
 
     const articlesGroupedByCategory = {};
-    const orderedCategories = ['tutorial', 'tools', 'benchmarking', 'archive']; // defined order
+    const orderedCategories = ['tutorial', 'other_articles', 'tools', 'benchmarking', 'archive']; // defined order
     const categoryTitles = {
         tutorial: 'Introductory Interactive Tutorial',
+        other_articles: 'Other articles',
         benchmarking: 'Splink Benchmarking and Performance',
         archive: 'Archived Material',
         tools: 'Useful tools',
