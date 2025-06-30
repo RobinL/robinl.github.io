@@ -53,7 +53,7 @@ The challenge is therefore to develop an algorithm that can somehow 'see' that t
 
 
 Unfortunately one of the most effective general approaches to record linkage – known as the <Link to="/intro_to_probabilistic_linkage/">Fellegi-Sunter model</Link> – is not well suited to address matching because:
-- there is strong correlation between different parts of an address, violating the model's statistical assumptions
+- there is a strong correlation between different parts of an address, violating the model's statistical assumptions
 - the model assumes input data is split across multiple columns (e.g. first name, surname, DoB etc.), but address data is often received as a single string, and reliably parsing this into a set of standardised columns is difficult
 
 
@@ -83,7 +83,7 @@ These steps are independent, so we can mix and match different blocking and scor
 However, prior to either of these steps, we need to decide how best to represent the address data.
 
 
-## How to represent the address data - a data driven approach
+## How to represent the address data - a data-driven approach
 A tempting first step is to attempt to parse the messy addresses semantically - e.g. splitting out flat number, house number, street name and so on.[^1]
 
 [^1]: A [Conditional Random Fields](https://www.ons.gov.uk/methodology/methodologicalpublications/generalmethodology/onsworkingpaperseries/onsworkingpaperseriesno17usingdatasciencefortheaddressmatchingservice) or [hidden Markov](https://pmc.ncbi.nlm.nih.gov/articles/PMC140019/) model could be used for this, or existing libraries such as [libpostal](https://github.com/openvenues/libpostal).
@@ -94,7 +94,7 @@ In practice, this approach suffers from a paradox: the hardest addresses to matc
 
 [^9]: The `Philpot Square` address at the top of this article is a good practical example:  how should we interpret the `165` in `165, Philpot Square, London`?  In difficult examples like this, solving this problem amounts to figuring out what the true address is - so the problem is circular.
 
-As a result, a data driven approach is more powerful. We can treat the address as a single string from which we can extract certain features such as 'the first number' or 'most unusual bigram' without attaching too much semantic meaning.  This enables us to draw on aggregate characteristics of the data itself to detect the most important features of the address.
+As a result, a data-driven approach is more powerful. We can treat the address as a single string from which we can extract certain features such as 'the first number' or 'most unusual bigram' without attaching too much semantic meaning.  This enables us to draw on aggregate characteristics of the data itself to detect the most important features of the address.
 
 It gives us greater flexibility in feature engineering, because we can find features that have no particular structural or semantic meaning but are nonetheless useful for matching.
 
@@ -156,7 +156,7 @@ These highlighted n-grams can be used for blocking and can be especially used fo
 
 Signature based candidate search, described in [this paper](https://arxiv.org/abs/1712.09691) and implemented in [`whereabouts`](https://github.com/ajl2718/whereabouts)<span style={{marginLeft: '0.25em', verticalAlign: '0.0em'}} aria-label="external link" title="External link"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.414l-9.293 9.293-1.414-1.414L17.586 5H14V3z" fill="#2563eb"/><path d="M5 5h5v2H7v10h10v-3h2v5H5V5z" fill="#2563eb"/></svg></span> is effectively a generalisation of these techniques.
 
-The idea is that there is significant redundancy in most addresses, we can devise 'signatures' which are subsets (often n-grams) of the full address which narrow down possible candidates to only a handful of candidates.  Developing signatures is not completely automated and requires domain specific knowledge.   In this view, the techniques above are examples of types of signatures that may be useful in the context of addresses..
+The idea is that there is significant redundancy in most addresses, we can devise 'signatures' which are subsets (often n-grams) of the full address which narrow down possible candidates to only a handful of candidates.  Developing signatures is not completely automated and requires domain-specific knowledge.   In this view, the techniques above are examples of types of signatures that may be useful in the context of addresses.
 
 ### 5. Deriving multiple variations of the canonical address
 
@@ -165,9 +165,9 @@ In many cases, the list of canonical addresses will be split robustly and semant
 
 If so, we can derive multiple representations of the canonical address by combining these columns in different ways.  This gives a greater chance for blocking to recover the true match, and also means scoring will be more reliable because it increases the similarity between the messy address and the closest representation of the canonical address.
 
-For example, the standard representation may not contain 'floor descriptors' like `top floor`, but if this is sometimes observed in the messy addresses, we could add this as a variation on to the canonical address.  Or we may want to ensure that we have both the address with business name and without.
+For example, the standard representation may not contain 'floor descriptors' like `top floor`, but if this is sometimes observed in the messy addresses, we could add this as a variation onto the canonical address.  Or we may want to ensure that we have both the address with business name and without.
 
-This adds accuracy without significantly increasing complexity:  we can treat the variations as additional candidates, score as normal, but then then the final score for each candidate becomes the highest score across all variations of the canonical address.
+This adds accuracy without significantly increasing complexity:  we can treat the variations as additional candidates, score as normal, but then the final score for each candidate becomes the highest score across all variations of the canonical address.
 
 This technique also increases the chance of finding an exact match, so the run time performance tradeoff is not unambiguously negative.
 
@@ -331,10 +331,10 @@ How do we treat tokens in areas M and C?
 
 This turns out to be trickier than it first appears because we can't treat all absent tokens as equal:
 1. There are a variety of optional tokens that tend to occur towards the end of an address whose absence is close to irrelevant.  Examples may include `London`,  the names of counties (e.g. `Somerset`).
-2. Some tokens such as `Flat` are often omitted from the sake of brevity
+2. Some tokens such as `Flat` are often omitted for the sake of brevity
 3. Business names are optional and appear at the beginning of an address
 
-Tokens in cateogry (1) are relatively easy to identify simply by deriving a list of 'common end tokens' from a large dataset of addresses. Issues (2) and (3) are harder to deal with and I am yet to find a robust methodology.
+Tokens in category (1) are relatively easy to identify simply by deriving a list of 'common end tokens' from a large dataset of addresses. Issues (2) and (3) are harder to deal with and I am yet to find a robust methodology.
 
 
 ### 4. Absence of tokens:  Matching tokens that exist within other candidates, but not the present candidate
@@ -463,7 +463,7 @@ Note how the simple rule 'require a match on the discriminating (highlighted) to
 
 ## Scoring stage: Interpreting the score
 
-Many record linkage approaches simply treat the score as a ordinal variable, the higher the better.  A score threshold is set, and any candidate above the threshold is considered a match.
+Many record linkage approaches simply treat the score as an ordinal variable, the higher the better.  A score threshold is set, and any candidate above the threshold is considered a match.
 
 In the context of address matching, this approach is not very useful because:
 - There should be a single match - we do not want to match a single messy address to multiple candidate addresses
