@@ -52,7 +52,7 @@ whereas the following example has far less variation, yet does not match:
 The challenge is therefore to develop an algorithm that can somehow 'see' that the first pair of addresses are more similar than the second pair.
 
 
-Unfortunately one of the most effective general approaches to record linkage – known as the <Link to="/intro_to_probabilistic_linkage/">Fellegi-Sunter model</Link> – is not well suited to address matching because:
+Unfortunately one of the most effective general approaches to record linkage – known as the <Link to="/intro_to_probabilistic_linkage/">Fellegi-Sunter model</Link> and implemented in [Splink](http://github.com/moj-analytical-services/splink) – is not well suited to address matching because:
 - there is a strong correlation between different parts of an address, violating the model's statistical assumptions
 - the model assumes input data is split across multiple columns (e.g. first name, surname, DoB etc.), but address data is often received as a single string, and reliably parsing this into a set of standardised columns is difficult
 
