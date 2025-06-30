@@ -22,6 +22,7 @@ export default function AddressComparison({ addressA, addressB, isMatch }) {
         lineHeight: 1.3,
     };
 
+
     return (
         <div
             style={{
