@@ -1,6 +1,6 @@
 ---
 type: "link"
-title: "AI Thoughts 1"
+title: "AI - Erosion of Trust"
 url: "https://jaysthoughts.com/aithoughts1"
 date: "2025-06-26"
 tags: []
