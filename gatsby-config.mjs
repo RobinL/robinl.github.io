@@ -174,7 +174,7 @@ const config = {
             }
             `,
             output: "/rss.xml",
-            title: "Probabilistic record linkage, Data Deduplication, Data Science, Engineering and the Environment",
+            title: "Robin Linacre's homepage: Probabilistic record linkage, Data Science and Data Engineering",
           },
         ],
       }
