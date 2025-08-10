@@ -174,7 +174,7 @@ const config = {
             }
             `,
             output: "/rss.xml",
-            title: "Your Site's RSS Feed",
+            title: "Robin Linacre's homepage: Probabilistic record linkage, Data Science and Data Engineering",
           },
         ],
       }
