@@ -174,7 +174,7 @@ const config = {
             }
             `,
             output: "/rss.xml",
-            title: "Your Site's RSS Feed",
+            title: "Probabilistic record linkage, Data Deduplication, Data Science, Engineering and the Environment",
           },
         ],
       }
