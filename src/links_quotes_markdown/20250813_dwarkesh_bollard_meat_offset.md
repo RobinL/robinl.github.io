@@ -3,7 +3,7 @@ type: "quote"
 author: "Dwarkesh Patel & Lewis Bollard"
 date: "2025-08-13"
 url: "https://www.dwarkesh.com/p/lewis-bollard"
-tags: ["Vegetarianism", "Factory Farming"]
+tags: []
 ---
 
 > Dwarkesh Patel 00:07:18
@@ -16,5 +16,5 @@ tags: ["Vegetarianism", "Factory Farming"]
 >
 > I think we made a mistake as a movement making this about personal diet. It's great when folks want to make a personal diet decision, whether that is eating less meat or meat from more humane sources, but the focus should not be on the individual. This is not how large-scale social change occurs. We need government reform. We need corporate reform. People can be a part of that regardless of what they eat, regardless of what their diet is. We need people to be advocates and funders and supporters of this cause.
 
-I like the idea here of comparing carbon offsetting to meat offsetting. Why does the former feel more acceptable than the later?
+I like the idea here of comparing carbon offsetting to meat offsetting. Why does the former feel more acceptable than the latter?
 
