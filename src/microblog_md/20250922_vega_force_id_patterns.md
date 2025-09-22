@@ -38,7 +38,9 @@ Here are four fully working examples in gists:
 * [Use unique ids, force transform in mark](https://gist.github.com/RobinL/3a08784cf81291825887db7c4f12643c#file-spec_no_lookup_force_in_mark_section-json)
 * [Bonus: How to use a lookup to derive hardcoded indices](https://gist.github.com/RobinL/3a08784cf81291825887db7c4f12643c#file-spec_with_lookup-json)
 
-My recommendation is to use the force transform in the data, since the force transform in the mark seems to break the 'open in vega editor' button due to a recursive loop in the computed json.
+My recommendation is:
+- If you want to be able to drag the nodes as in the [Les Mis example]((https://vega.github.io/vega/examples/force-directed-layout/), you need the force transform in mark.  Unfortunately this breaks the 'open in vega editor' button with a `Uncaught TypeError: Converting circular structure to JSON` error.
+- If you don't need to be able to drag the nodes, use the force transform in data, because this means the 'open in vega editor' button works
 
 The following summarises the differences
 
