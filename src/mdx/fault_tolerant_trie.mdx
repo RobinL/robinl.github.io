@@ -1,0 +1,85 @@
+---
+title: "Using a fault tolerant trie for address matching"
+description: "An interactive explanation of how a fault tolerant trie can be used for address matching"
+post_date: "2025-09-23"
+post_category: "probabilistic_linkage"
+code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/fault_tolerant_trie.mdx"
+prob_linkage_category: "other_articles"
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+import Subtitle from "../components/Subtitle.jsx"
+import { Link } from "gatsby"
+import AddressComparison from "./address_matching/AddressComparison.jsx"
+import AddressCandidatesComparison from "./address_matching/AddressCandidateComparison.jsx"
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+import {ObservableCell, WithObservableProvider}   from '../components/ObservableCells';
+
+import notebook from '@robinl/fault-tolerant-trie';
+
+# Address matching using a fault tolerant trie
+
+A data structure known as a `trie` offers a powerful tool for address matching.  It exploits the hierarchical nature of addresses, whereby tokens (words) in the address are typically represented in a specific to general order geographically.
+
+For example, consider the following addresses:
+
+```txt
+1 HIGH STREET WESTMINSTER
+2 HIGH STREET WESTMINSTER
+3 HIGH STREET WESTMINSTER
+FLAT A 3 HIGH STREET WESTMINSTER
+FLAT B 3 HIGH STREET WESTMINSTER
+4 HIGH STREET WESTMINSTER
+5 HIGH STREET WESTMINSTER
+ANNEX 5 HIGH STREET WESTMINSTER
+```
+
+These can be represented as a trie as follows, where the blue nodes represent terminal nodes (the end of an address):
+
+<WithObservableProvider notebook={notebook}>
+
+    <ObservableCell cellName="example_trie_for_blog" />
+
+Observe how the trie structure encodes a lot of useful information about the tokens in the addresses. For example:
+
+- Does the token represent a 'terminal node' i.e. the end of an address
+- How many addresses can be reached from the node (the `count` property)
+- Whether the token represents a leaf (does `count=1`).  Note that some terminal nodes are not leaves (the `ANNEX` example)
+
+
+## How to use a trie for address matching
+
+By walking the trie from root to branch we can attempt to match an input address to the addresses in the trie.
+
+On the face of it, this is little different from exact matching.  However, we can make this process much more powerful by introducing **fault tolerance** into the trie.
+
+Consider for example these two addresses:
+
+```txt
+Messy address:  CORNER SHOP 8 RAINBOW ROAD EXTRA ABBOTS LANGLEY HERTS UK
+Clean address:  1 RAINBOW ROAD EXTRA ABBOTS LANGLEY
+```
+
+We could define the following rules for fault tolerance:
+- You may ignore token(s) at the end of the messy address if by doing so, you can 'join' the trie of clean addresses at a node with a count above some threshold
+- You may skip a token in the middle of the messy address if this token does not exist in the trie at the current node, and by skipping it you can 'rejoin' the trie.
+- You may skip superfluous tokens at the start of the messy address if you've already hit a terminal node, and that terminal node does not have children.
+
+## Interactive playground
+
+Let's see how this works in practice. In the following I use a simple set of fault tolerant rules for illustrative purposes.
+
+Consider the following canonical addresses (note: this is ✨interactive✨ and you can edit the addresses):
+
+
+<ObservableCell cellName="viewof test_addresses" />
+
+
+We can look up a messy address in the trie as follows.  Again, this is ✨interactive✨.
+
+    <ObservableCell cellName="viewof messy_address_to_lookup" />
+    <ObservableCell cellName="trie_with_route" />
+
+
+</WithObservableProvider>
