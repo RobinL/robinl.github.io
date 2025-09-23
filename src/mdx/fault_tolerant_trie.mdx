@@ -1,6 +1,6 @@
 ---
-title: "Fault tolerant trie"
-description: "Fault tolerant trie for address matching"
+title: "Using a fault tolerant trie for address matching"
+description: "An interactive explanation of how a fault tolerant trie can be used for address matching"
 post_date: "2025-09-23"
 post_category: "probabilistic_linkage"
 code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/fault_tolerant_trie.mdx"
@@ -20,9 +20,9 @@ import notebook from '@robinl/fault-tolerant-trie';
 
 # Address matching using a fault tolerant trie
 
-A data structure known as a `trie` offers a powerful tool for address matching.  It exploits the hierarchical nature of addresses, whereby tokens (words) in the address are typically represented in a specific-to-general order geographically.
+A data structure known as a `trie` offers a powerful tool for address matching.  It exploits the hierarchical nature of addresses, whereby tokens (words) in the address are typically represented in a specific to general order geographically.
 
-Consider the following addresses:
+For example, consider the following addresses:
 
 ```txt
 1 HIGH STREET WESTMINSTER
@@ -35,7 +35,7 @@ FLAT B 3 HIGH STREET WESTMINSTER
 ANNEX 5 HIGH STREET WESTMINSTER
 ```
 
-These can be represented as a trie as follows:
+These can be represented as a trie as follows, where the blue nodes represent terminal nodes (the end of an address):
 
 <WithObservableProvider notebook={notebook}>
 
@@ -64,7 +64,7 @@ Clean address:  1 RAINBOW ROAD EXTRA ABBOTS LANGLEY
 We could define the following rules for fault tolerance:
 - You may ignore token(s) at the end of the messy address if by doing so, you can 'join' the trie of clean addresses at a node with a count above some threshold
 - You may skip a token in the middle of the messy address if this token does not exist in the trie at the current node, and by skipping it you can 'rejoin' the trie.
-- You may skip superfluous tokens at the start of messy address if you've already hit a terminal node, and that terminal node does not have children.
+- You may skip superfluous tokens at the start of the messy address if you've already hit a terminal node, and that terminal node does not have children.
 
 
 ## Interactive playground
@@ -77,7 +77,7 @@ Consider the following canonical addresses (note: this is ✨interactive✨ and 
 <ObservableCell cellName="viewof test_addresses" />
 
 
-We can lookup a messy address in the trie as follows.  Again, this is ✨interactive✨.
+We can look up a messy address in the trie as follows.  Again, this is ✨interactive✨.
 
     <ObservableCell cellName="viewof messy_address_to_lookup" />
     <ObservableCell cellName="trie_with_route" />
