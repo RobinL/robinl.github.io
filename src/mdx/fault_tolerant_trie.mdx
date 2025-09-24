@@ -73,7 +73,7 @@ Let's see how this works in practice. In the following I use a simple set of fau
 Consider the following canonical addresses (note: this is ✨interactive✨ and you can edit the addresses):
 
 
-<ObservableCell cellName="viewof test_addresses" />
+<ObservableCell cellName="viewof test_addresses"/>
 
 
 We can look up a messy address in the trie as follows.  Again, this is ✨interactive✨.
@@ -83,3 +83,78 @@ We can look up a messy address in the trie as follows.  Again, this is ✨intera
 
 
 </WithObservableProvider>
+
+## Implementing as a DuckDB Community extension
+
+I have written a DuckDB Community Extension called [splink_udfs](https://duckdb.org/community_extensions/extensions/splink_udfs.html) that implements this function.
+
+You can try it with in [shell.duckdb.org](https://shell.duckdb.org/) using the script you can unfold below:
+<details>
+<summary>Click to expand</summary>
+
+```sql
+-- Load the extension in shell.duckdb.org
+INSTALL splink_udfs FROM community;
+LOAD splink_udfs;
+
+-- Test data
+CREATE OR REPLACE TEMP TABLE os_addresses(
+  uprn BIGINT,
+  addr VARCHAR,
+  postcode_group INTEGER
+);
+
+INSERT INTO os_addresses VALUES
+ (1,'1 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (2,'2 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (3,'3 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (4,'4 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (5,'5 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (6,'6 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (7,'7 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (8,'ANNEX 7 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (9,'9 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (10,'10 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (11,'11 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (12,'12 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (13,'13 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (14,'14 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (15,'15 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (16,'16 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (17,'17 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (18,'18 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (19,'19 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (20,'20 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (21,'21 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (22,'22 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (23,'MY LONG BUSINESS NAME 45 RAINBOW ROAD ABBOTS LANGLEY',2),
+ (34,'SOME OTHER ADDRESS 1 HIGH STREET',1);
+
+-- Build tries per postcode_group
+CREATE OR REPLACE TEMP TABLE trie AS
+WITH toks AS (
+  SELECT
+    postcode_group,
+    uprn,
+    string_split(regexp_replace(addr, '\\s+', ' '), ' ') AS t
+  FROM os_addresses
+)
+SELECT
+  postcode_group,
+  build_suffix_trie(uprn, t) AS trie
+FROM toks
+GROUP BY postcode_group;
+
+-- Example lookup joined on postcode_group
+WITH messy_addresses AS (
+  SELECT
+    2 AS postcode_group,
+    string_split(regexp_replace('MY BUSINESS 22 RAINBOW ROAD ABBOTS LANGLEY', '\\s+', ' '), ' ') AS tokens
+)
+SELECT
+  find_address(string_split('MY BUSINESS 22 RAINBOW ROAD ABBOTS LANGLEY HERTS', ' '), r.trie) AS uprn,
+FROM messy_addresses m
+JOIN trie r USING (postcode_group);
+```
+
+</details>
