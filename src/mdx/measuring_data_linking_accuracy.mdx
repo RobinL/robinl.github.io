@@ -84,7 +84,7 @@ To understand why consider the following results of a record linkage:
 
 ![Barbell diagram](./measuring_data_linking_accuracy/barbell.png)
 
-The problem is that a single pairwise misclassification - in the diagram above the link between node 1 and 4 - causes a large number of implicit false positives: all the pairwise links between the two clusters (1,2,3,4) and (5,6,7,8) are now effectively false positives.
+The problem is that a single pairwise misclassification - in the diagram above the link between node 1 and 5 - causes a large number of implicit false positives: all the pairwise links between the two clusters (1,2,3,4) and (5,6,7,8) are now effectively false positives.
 
 This means that whenever there's a clustering step in the record linkage process, we should really be measuring accuracy at the cluster level, not the pairwise level.  In order to do this correctly, adjustments are needed to the labelling process.  Designing these metrics is not straightforward and makes it more difficult to use standard tools like precision and recall, ROC curves, f1 scores and so on.  Luckily there is an open source library called `er-evaluation` [here](https://github.com/OlivierBinette/er-evaluation?tab=readme-ov-file) that implements some of these metrics.
 
@@ -132,7 +132,7 @@ In this article I argue that labelling is a very valuable tool for measuring mod
 
 ## Annex: Implementing a Scenario-Based Labelling Strategy in Splink
 
-In the main text, I mentioned that I am no longer confident that a "label a random sample of records" approach is the best way to measure accuracy.
+In the main text, I mentioned that I do not think that a "label a random sample of records" approach is the best way to measure accuracy.
 
 Instead, I believe there is a more efficient way which yields deeper insights into the source of errors. This approach relies on grouping record pairs by their [comparison vector](https://www.robinlinacre.com/computing_fellegi_sunter/) - the specific pattern of matches and mismatches across columns.
 
