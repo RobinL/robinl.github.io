@@ -1,0 +1,24 @@
+.table-note {
+    visibility: hidden;
+    height: 0rem;
+}
+
+@media (max-width: 720px) {
+    .table-note {
+        visibility: visible;
+        color: #df2222;
+        margin-top: -0.5rem;
+        text-align: right;
+        height: 1rem;
+    }
+}
+
+th {
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+}
+
+td {
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+}
