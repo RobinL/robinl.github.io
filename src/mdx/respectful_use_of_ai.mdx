@@ -1,0 +1,83 @@
+---
+title: "Respectful use of AI in software development teams"
+post_date: "2026-01-09"
+post_category: "data"
+description: "How to use LLMs in team settings without damaging team health"
+code_url: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/llm_inflection.mdx"
+
+---
+
+export { MDXLayout as default } from '../components/MDXLayout';
+import { SEO } from "../components/SEO"
+import Subtitle from "../components/Subtitle.jsx"
+import { Link } from "gatsby"
+
+export const Head = ( props ) => <SEO frontmatter={props.pageContext.frontmatter} />;
+
+# Respectful use of AI in software development teams
+
+<Subtitle>LLMs are increasingly able to write production quality code.  But what cognitive work can be delegated to LLMs without damaging the health of the team?</Subtitle>
+
+Since Anthropic’s release of Opus 4.5 there seems to be a growing acceptance that LLM generated output can be good enough for serious production code. With this change in sentiment, AI tooling looks set to quickly become a normal part of software development.
+
+Yet there’s little consensus on how AI should be used, and many developers are suspicious of the use of AI, and for good reason:  Careless use of LLMs can make your colleagues’ lives more difficult.  A lazy, vibe coded PR shifts the hardest cognitive work away from the author and onto the reviewer.
+
+As a result, LLMs pose a significant risk to the health and effectiveness of teams.
+
+So how can AI be used to improve software quality and accelerate its development, whilst preserving the health of the team? I think it requires mutual agreement on how LLMs should and should not be used, whilst allowing individuals flexibility in how much they use AI.
+
+In what follows I propose some principles and patterns that may help.
+
+## Making your colleagues’ lives easier
+
+The most important principle is that use of AI should make colleagues' lives easier, not harder.
+
+This has a curious implication: It usually means you should use LLMs to understand more about your solution, not less.  But if we must understand the solution, why use LLMs at all?  What kind of cognitive work *can* we delegate to LLM?
+
+The answer lies in using LLMs as a thought partner rather than a solution generator.
+
+## Some patterns for respectful LLM use
+
+### Sketch multiple solutions
+
+There's usually multiple possible approaches to any given problem.  Prior to LLMs, it was usually too time consuming to sketch out a working solution to each one.
+
+AI makes it feasible to build several alternative solutions.  I find it much easier to compare the merits of different approaches if I have tangible working implementations. And reviewing different approaches often deepens my understanding of the problem, and can reveal hybrid options.
+
+### Write code that’s consistent with existing style
+
+Consistency in a codebase is often more valuable than the quality of individual lines.
+
+It’s now far easier to find examples of existing patterns and ensure they’re followed, and existing code that can be reused.
+
+### Do more comprehensive research
+
+It’s often a good idea to set a deep research agent to review whether the problem you’re working on corresponds to a textbook algorithm or known problem family with standard solutions. If you can pin down precisely the type of problem you’re working on you can more easily find clear terminology to describe your approach and its tradeoffs, and justify your decisions to reviewers.
+
+### Get the AI to review your code before a colleague looks at it
+
+Use the best model at your disposal to do a PR review and address issues before your colleague looks at it.  This often picks up minor nits which get in the way of substantive review.
+
+### Test more extensively
+
+It's important to be precise and succinct in testing, so I'm wary of using LLMs to auto-generate reams of tests.  I find them more useful for generating large numbers of throwaway, run-once tests that test different scenarios and may pick up edge cases before your reviewers do.
+
+### Size tickets better
+
+It's difficult to prioritise features when we don’t know their size. I've had great success in using agents to size tickets by simply writing a working solution.  This solution doesn’t represent the final merge-ready work, but by skimming the work it is often much easier to understand how easily the solution ‘falls out’.
+
+A working solution often reveals hidden layers to the problem and helps to better specify the ticket itself.
+
+## My workflow
+
+I think many of the concerns around vibe coding should be taken seriously because I find myself constantly tempted to overuse LLMs.  To try and combat this, I use a workflow that forces me to slow down.
+
+This workflow usually starts with using the above techniques to do research into the problem and write one or more pure vibe coded solutions[^1].
+
+But for the final pull request, I start on a fresh branch, and implement the logic in small, deliberate steps to make sure I understand it.  Ideally, each step is verifiable and most tests should still pass.
+
+This resembles my pre-AI workflow surprisingly closely, where I would tend to 'make it work, then make it good'.  For me, the 'make it work' part was a research step to help me understand the problem and a necessary precursor to 'make it good'.
+
+Given these suggestions, it’s reasonable to challenge whether AI is actually accelerating the development process. My recent experience with Opus 4.5 is that it makes things dramatically faster: features that previously would have been weeks of work can now take days, and that I can be much more focussed on the architecture and how a solution fits into the existing code rather than on the low-level implementation.
+
+[^1]:  Various examples of this can be found in my recent work on Splink 5 [here](https://github.com/moj-analytical-services/splink/issues/2756)
