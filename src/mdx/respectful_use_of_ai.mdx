@@ -32,7 +32,7 @@ In what follows I propose some principles and patterns that may help.
 
 The most important principle is that use of AI should make colleagues' lives easier, not harder.
 
-This has a curious implication: It usually means you should use LLMs to understand more about your solution, not less.  But if we must understand the solution, why use LLMs at all?  What kind of cognitive work *can* we delegate to LLM?
+This seems straightforward but the implication is slightly perverse: It usually means you should use LLMs to understand more about your solution, not less.  But if we must understand the solution, why use LLMs at all?  What kind of cognitive work *can* we delegate to LLM?
 
 The answer lies in using LLMs as a thought partner rather than a solution generator.
 
@@ -67,6 +67,10 @@ It's important to be precise and succinct in testing, so I'm wary of using LLMs 
 It's difficult to prioritise features when we don’t know their size. I've had great success in using agents to size tickets by simply writing a working solution.  This solution doesn’t represent the final merge-ready work, but by skimming the work it is often much easier to understand how easily the solution ‘falls out’.
 
 A working solution often reveals hidden layers to the problem and helps to better specify the ticket itself.
+
+### Be clear with your colleagues about your use of AI
+
+As LLMs improve, an increasing amount of mundane work such as a small refactor or a dependency upgrade can be delegated to AI without thorough human checks.  I don't think every line necessarily needs to be checked thoroughly by a human, but I do think it's important to be clear with your colleagues which parts of your code were AI generated.
 
 ## My workflow
 
