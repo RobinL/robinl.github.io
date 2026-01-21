@@ -86,7 +86,7 @@
     "eslint-plugin-react": "^7.33.1",
     "gatsby-cli": "^5.11.0",
     "gatsby-plugin-postcss": "^6.11.0",
-    "postcss": "^8.4.27",
+    "postcss": "^8.4.31",
     "tailwindcss": "^3.3.3"
   },
   "overrides": {
