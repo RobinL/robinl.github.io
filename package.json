@@ -3,6 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@10.24.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -51,6 +58,7 @@
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
+    "sharp": "^0.34.5",
     "vega": "^5.25.0",
     "vega-embed": "^6.22.2",
     "vega-lite": "^5.15.0"

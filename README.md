@@ -2,6 +2,10 @@
 
 This is the Astro version of the blog. Long-form posts live in `src/content/posts/`.
 
+## pnpm
+
+Install dependencies with `pnpm install`. Use `pnpm run dev` instead of `npm run dev`, and `pnpm run build` instead of `npm run build`.
+
 ## Authoring A Post With An Observable Notebook
 
 Observable notebooks are treated as vendored local packages. This keeps builds reproducible and avoids depending on a live Observable download during normal development or deployment.
@@ -54,10 +58,10 @@ Add a `file:` dependency to `package.json`:
 "@robinl/my-new-notebook": "file:./vendor/observable/my-new-notebook"
 ```
 
-Then install so `node_modules` and `package-lock.json` know about it:
+Then install so `node_modules` and `pnpm-lock.yaml` know about it:
 
 ```sh
-npm install
+pnpm install
 ```
 
 ## 3. Register The Notebook
@@ -222,14 +226,14 @@ Then import or reference them from MDX as usual.
 Run:
 
 ```sh
-npm run build
-npx tsc --noEmit
+pnpm run build
+pnpm exec tsc --noEmit
 ```
 
 For interactive notebooks, also run the dev server and click through the page:
 
 ```sh
-npm run dev
+pnpm run dev
 ```
 
 Check:
@@ -248,7 +252,7 @@ The notebook key is missing from `src/components/observable/notebooks.ts`, or th
 
 `Rollup failed to resolve import "@robinl/..."`
 
-The package is not installed. Check `package.json`, then run `npm install`.
+The package is not installed. Check `package.json`, then run `pnpm install`.
 
 The page builds but a cell is blank
 
