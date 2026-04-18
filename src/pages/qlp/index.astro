@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Quotes, Links, and Podcasts" description="Quotes, links, and podcasts" canonicalUrl="/quotes-links/">
+  <article class="prose">
+    <h1>Quotes, Links, and Podcasts</h1>
+    <p><a href="/quotes-links/">Go to Quotes, Links, and Podcasts</a>.</p>
+  </article>
+</BaseLayout>
+
+<script is:inline>
+  window.location.replace('/quotes-links/');
+</script>

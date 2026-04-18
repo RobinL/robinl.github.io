@@ -1,0 +1,173 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { categoryLabels, shortCategoryLabels, site } from '../lib/site';
+import { formatDateIso } from '../lib/dates';
+import { postSlug } from '../lib/content';
+
+const postEntries = await getCollection('posts', ({ data }) => data.category !== 'non_blog_post');
+const microblogEntries = await getCollection('microblog');
+const linksQuotesEntries = await getCollection('linksQuotes');
+
+const postItems = postEntries.map((post) => ({
+  title: post.data.title,
+  date: post.data.postDate,
+  category: post.data.category,
+  href: `/${postSlug(post.id)}/`,
+}));
+
+const microblogDate = microblogEntries
+  .map((entry) => entry.data.date)
+  .sort((a, b) => b.getTime() - a.getTime())[0];
+
+const linksQuotesDate = linksQuotesEntries
+  .map((entry) => entry.data.date)
+  .sort((a, b) => b.getTime() - a.getTime())[0];
+
+const allItems = [
+  ...postItems,
+  {
+    title: 'Microblog',
+    date: microblogDate,
+    category: 'quotes_links',
+    href: '/microblog/',
+  },
+  {
+    title: 'Quotes and Links',
+    date: linksQuotesDate,
+    category: 'quotes_links',
+    href: '/quotes-links/',
+  },
+].sort((a, b) => b.date.getTime() - a.date.getTime());
+
+const categoryOrder = ['quotes_links', 'data', 'probabilistic_linkage', 'energy', 'other'];
+const categories = categoryOrder.filter((category) => allItems.some((item) => item.category === category));
+const latest = allItems.filter((item) => item.category !== 'quotes_links').slice(0, 5);
+const sections = [
+  { key: 'latest', title: categoryLabels.latest, items: latest },
+  ...categories.map((category) => ({
+    key: category,
+    title: categoryLabels[category] ?? category,
+    items: allItems.filter((item) => item.category === category),
+  })),
+].filter((section) => section.items.length > 0);
+---
+
+<BaseLayout title={site.title} description={site.description}>
+
+
+  <section class="filter-row" aria-label="Post filters">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">All</button>
+    {categories.map((category) => (
+      <button class="filter-button" type="button" data-filter={category} aria-pressed="false">
+        {shortCategoryLabels[category] ?? category.replaceAll('_', ' ')}
+      </button>
+    ))}
+  </section>
+
+  <div id="post-sections">
+    {sections.map((section) => (
+      <section class="post-list-section" data-section={section.key}>
+        <h2>{section.title}</h2>
+        {section.key === 'probabilistic_linkage' && (
+          <p class="training-link">
+            <a href="/probabilistic_linkage/">Click here for probabilistic linkage training materials homepage.</a>
+          </p>
+        )}
+        {section.items.map((item) => (
+          <div class="post-list-row">
+            <div class="post-list-date">{formatDateIso(item.date)}</div>
+            <div><a href={item.href}>{item.title}</a></div>
+          </div>
+        ))}
+      </section>
+    ))}
+  </div>
+</BaseLayout>
+
+<script>
+  const buttons = Array.from(document.querySelectorAll('[data-filter]'));
+  const sections = Array.from(document.querySelectorAll('[data-section]'));
+
+  function setFilter(filter) {
+    buttons.forEach((button) => {
+      const isActive = button.dataset.filter === filter;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    });
+
+    sections.forEach((section) => {
+      const key = section.dataset.section;
+      section.hidden = filter === 'all' ? false : key !== filter;
+      if (filter !== 'all' && key === 'latest') section.hidden = true;
+    });
+  }
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => setFilter(button.dataset.filter || 'all'));
+  });
+</script>
+
+<style>
+  .intro-band {
+    display: grid;
+    gap: 0.75rem;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    margin: 0 0 1.25rem;
+    padding: 0 0 1rem;
+  }
+
+  .intro-band h1 {
+    color: var(--text-strong);
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    line-height: 1.25;
+    margin: 0 0 0.25rem;
+  }
+
+  .intro-band p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  .intro-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    align-items: center;
+  }
+
+  .intro-links span {
+    color: var(--text);
+    font-size: 0.88rem;
+    font-weight: 700;
+  }
+
+  .intro-links a {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--soft-line);
+    border-radius: var(--radius);
+    background: var(--panel);
+    color: var(--text);
+    font-size: 0.88rem;
+    line-height: 1.2;
+    padding: 0.35rem 0.55rem;
+  }
+
+  .intro-links a:hover,
+  .intro-links a:focus-visible {
+    border-color: var(--line);
+    color: var(--link-hover);
+    text-decoration: none;
+  }
+
+  .training-link {
+    margin: 0 0 0.5rem;
+    font-style: italic;
+  }
+</style>
