@@ -21,7 +21,7 @@ The currently vendored notebooks are listed in `manifest.json`.
    - `homepage` should point to the source notebook.
    - `main` should point to the generated notebook module.
 4. Update `vendor/observable/manifest.json` with the source URL, version, and entry file.
-5. Run `npm install --package-lock-only` so `package-lock.json` records the updated local package metadata.
-6. Run `npm run build` and test any page that hydrates the refreshed notebook.
+5. Run `pnpm install --lockfile-only` so `pnpm-lock.yaml` records the updated local package metadata.
+6. Run `pnpm run build` and test any page that hydrates the refreshed notebook.
 
 The site integration for these packages lives in `src/components/observable/`. Add any new notebook name to `src/components/observable/notebooks.ts` before using it from MDX.
