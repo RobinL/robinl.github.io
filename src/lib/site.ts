@@ -3,6 +3,7 @@ export const site = {
   description:
     'Probabilistic record linkage, Data Deduplication, Data Science, Engineering and the Environment',
   url: 'https://www.robinlinacre.com',
+  googleAnalyticsId: 'G-94373ZKHEE',
   twitterUsername: '@robinlinacre',
 };
 

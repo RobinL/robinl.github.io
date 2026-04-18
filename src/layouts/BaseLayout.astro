@@ -33,6 +33,7 @@ const pageTitle = title === site.title ? title : `${title} | ${site.title}`;
 const shellClass = `site-shell ${width === 'prose' ? '' : width}`.trim();
 const canonical = canonicalUrl ? new URL(canonicalUrl, site.url).href : new URL(Astro.url.pathname, site.url).href;
 const imageUrl = image ? new URL(image, site.url).href : undefined;
+const analyticsHosts = ['www.robinlinacre.com', 'robinlinacre.com'];
 ---
 
 <!doctype html>
@@ -54,6 +55,21 @@ const imageUrl = image ? new URL(image, site.url).href : undefined;
     {modifiedTime && <meta property="article:modified_time" content={modifiedTime.toISOString()} />}
     <meta name="twitter:card" content={imageUrl ? 'summary_large_image' : 'summary'} />
     {imageUrl && <meta name="twitter:image" content={imageUrl} />}
+    <script is:inline define:vars={{ googleAnalyticsId: site.googleAnalyticsId, analyticsHosts }}>
+      if (analyticsHosts.includes(window.location.hostname)) {
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function gtag() {
+          window.dataLayer.push(arguments);
+        };
+        window.gtag('js', new Date());
+        window.gtag('config', googleAnalyticsId, { anonymize_ip: true });
+
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(googleAnalyticsId);
+        document.head.appendChild(script);
+      }
+    </script>
   </head>
   <body>
     <div class={shellClass}>

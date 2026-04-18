@@ -18,6 +18,9 @@ const posts = defineCollection({
     codeUrl: z.string().url().optional(),
     image: z.string().optional(),
     latestUpdate: z.coerce.date().optional(),
+    originalPublication: z.object({
+      url: z.string().url(),
+    }).optional(),
     probLinkageCategory: z.string().optional(),
     stylesheet: z.string().optional(),
     tutorialNumber: z.number().optional(),
