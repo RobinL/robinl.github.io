@@ -1,0 +1,348 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "A radar chart example, showing multiple dimensions in a radial layout.",
+  "width": 200,
+  "height": 200,
+  "padding": {
+    "top": 60,
+    "left": 40,
+    "right": 100,
+    "bottom": 40
+  },
+  "autosize": "pad",
+  "signals": [
+    {
+      "name": "radius",
+      "update": "min(width, height) / 2"
+    }
+  ],
+  "data": [
+    {
+      "name": "table",
+      "values": [
+        {
+          "key": "skill 1",
+          "value": 8,
+          "category": "human"
+        },
+        {
+          "key": "skill 2",
+          "value": 5,
+          "category": "human"
+        },
+        {
+          "key": "skill 3",
+          "value": 6,
+          "category": "human"
+        },
+        {
+          "key": "skill 4",
+          "value": 6,
+          "category": "human"
+        },
+        {
+          "key": "skill 5",
+          "value": 9,
+          "category": "human"
+        },
+        {
+          "key": "skill 6",
+          "value": 7,
+          "category": "human"
+        },
+        {
+          "key": "skill 7",
+          "value": 6,
+          "category": "human"
+        },
+        {
+          "key": "skill 1",
+          "value": 2,
+          "category": "llm"
+        },
+        {
+          "key": "skill 2",
+          "value": 10,
+          "category": "llm"
+        },
+        {
+          "key": "skill 3",
+          "value": 2,
+          "category": "llm"
+        },
+        {
+          "key": "skill 4",
+          "value": 2,
+          "category": "llm"
+        },
+        {
+          "key": "skill 5",
+          "value": 8,
+          "category": "llm"
+        },
+        {
+          "key": "skill 6",
+          "value": 9,
+          "category": "llm"
+        },
+        {
+          "key": "skill 7",
+          "value": 10,
+          "category": "llm"
+        }
+      ]
+    },
+    {
+      "name": "keys",
+      "source": "table",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": [
+            "key"
+          ]
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "angular",
+      "type": "point",
+      "range": {
+        "signal": "[-PI, PI]"
+      },
+      "padding": 0.5,
+      "domain": {
+        "data": "table",
+        "field": "key"
+      }
+    },
+    {
+      "name": "radial",
+      "type": "linear",
+      "range": {
+        "signal": "[0, radius]"
+      },
+      "zero": true,
+      "nice": false,
+      "domain": {
+        "data": "table",
+        "field": "value"
+      },
+      "domainMin": 0
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": [
+        "human",
+        "llm"
+      ],
+      "range": {
+        "scheme": "category10"
+      }
+    }
+  ],
+  "legends": [
+    {
+      "fill": "color",
+      "title": "Category",
+      "orient": "right",
+      "offset": 100,
+      "encode": {
+        "symbols": {
+          "enter": {
+            "shape": {
+              "value": "circle"
+            },
+            "size": {
+              "value": 100
+            }
+          }
+        },
+        "labels": {
+          "update": {
+            "fontSize": {
+              "value": 18
+            }
+          }
+        },
+        "title": {
+          "update": {
+            "fontSize": {
+              "value": 18
+            }
+          }
+        }
+      }
+    }
+  ],
+  "marks": [
+    {
+      "type": "group",
+      "name": "categories",
+      "zindex": 1,
+      "from": {
+        "facet": {
+          "data": "table",
+          "name": "facet",
+          "groupby": [
+            "category"
+          ]
+        }
+      },
+      "encode": {
+        "enter": {
+          "x": {
+            "signal": "width / 2"
+          },
+          "y": {
+            "signal": "height / 2"
+          }
+        }
+      },
+      "marks": [
+        {
+          "type": "line",
+          "name": "category-line",
+          "from": {
+            "data": "facet"
+          },
+          "encode": {
+            "enter": {
+              "interpolate": {
+                "value": "linear-closed"
+              },
+              "x": {
+                "signal": "scale('radial', datum.value) * cos(scale('angular', datum.key))"
+              },
+              "y": {
+                "signal": "scale('radial', datum.value) * sin(scale('angular', datum.key))"
+              },
+              "stroke": {
+                "scale": "color",
+                "field": "category"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "fill": {
+                "scale": "color",
+                "field": "category"
+              },
+              "fillOpacity": {
+                "value": 0.1
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "rule",
+      "name": "radial-grid",
+      "from": {
+        "data": "keys"
+      },
+      "zindex": 0,
+      "encode": {
+        "enter": {
+          "x": {
+            "signal": "width / 2"
+          },
+          "y": {
+            "signal": "height / 2"
+          },
+          "x2": {
+            "signal": "width / 2 + radius * cos(scale('angular', datum.key))"
+          },
+          "y2": {
+            "signal": "height / 2 + radius * sin(scale('angular', datum.key))"
+          },
+          "stroke": {
+            "value": "lightgray"
+          },
+          "strokeWidth": {
+            "value": 1
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "name": "key-label",
+      "from": {
+        "data": "keys"
+      },
+      "zindex": 1,
+      "encode": {
+        "enter": {
+          "x": {
+            "signal": "width / 2 + (radius + 5) * cos(scale('angular', datum.key))"
+          },
+          "y": {
+            "signal": "height / 2 + (radius + 5) * sin(scale('angular', datum.key))"
+          },
+          "text": {
+            "field": "key"
+          },
+          "align": [
+            {
+              "test": "abs(scale('angular', datum.key)) > PI / 2",
+              "value": "right"
+            },
+            {
+              "value": "left"
+            }
+          ],
+          "baseline": [
+            {
+              "test": "scale('angular', datum.key) > 0",
+              "value": "top"
+            },
+            {
+              "test": "scale('angular', datum.key) == 0",
+              "value": "middle"
+            },
+            {
+              "value": "bottom"
+            }
+          ],
+          "fill": {
+            "value": "black"
+          },
+          "fontSize": {
+            "value": 18
+          }
+        }
+      }
+    },
+    {
+      "type": "line",
+      "name": "outer-line",
+      "from": {
+        "data": "radial-grid"
+      },
+      "encode": {
+        "enter": {
+          "interpolate": {
+            "value": "linear-closed"
+          },
+          "x": {
+            "field": "x2"
+          },
+          "y": {
+            "field": "y2"
+          },
+          "stroke": {
+            "value": "lightgray"
+          },
+          "strokeWidth": {
+            "value": 1
+          }
+        }
+      }
+    }
+  ]
+}

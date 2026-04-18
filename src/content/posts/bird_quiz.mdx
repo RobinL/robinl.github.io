@@ -1,0 +1,22 @@
+---
+title: "Birdsong quiz"
+description: "Test how good you are at identifying UK birdsong recordings"
+postDate: "2020-04-26"
+category: "other"
+codeUrl: "https://observablehq.com/@robinl/bird-song-quiz/"
+pageWidth: "prose"
+---
+
+import ObservableNotebook from '../../components/observable/ObservableNotebook.jsx';
+
+export const output_order = [
+  'title',
+  'tag',
+  'settings',
+  'viewof select_your_quiz',
+  'quiz',
+  'my_interface',
+  'other_link'
+];
+
+<ObservableNotebook client:visible notebook="bird-song-quiz" cells={output_order} />

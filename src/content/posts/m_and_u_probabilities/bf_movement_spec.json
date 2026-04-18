@@ -1,0 +1,440 @@
+{
+    "config": {
+        "view": {
+            "continuousWidth": 300,
+            "continuousHeight": 300
+        },
+        "title": {
+            "anchor": "middle"
+        }
+    },
+    "vconcat": [
+        {
+            "layer": [
+                {
+                    "mark": {
+                        "type": "bar"
+                    },
+                    "encoding": {
+                        "color": {
+                            "value": "#4FABF5"
+                        },
+                        "x": {
+                            "field": "prior_match_weight",
+                            "scale": {
+                                "domain": [
+                                    -10,
+                                    10
+                                ]
+                            },
+                            "type": "quantitative"
+                        },
+                        "x2": {
+                            "field": "posterior_match_weight"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "baseline": "middle",
+                        "fontSize": 16,
+                        "fontWeight": "bold"
+                    },
+                    "encoding": {
+                        "text": {
+                            "value": "prior"
+                        },
+                        "x": {
+                            "axis": {
+                                "labelExpr": "datum.value",
+                                "title": "Partial Match Weight"
+                            },
+                            "field": "prior_match_weight",
+                            "type": "quantitative"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "baseline": "middle",
+                        "fontSize": 16,
+                        "fontWeight": "bold"
+                    },
+                    "encoding": {
+                        "text": {
+                            "value": "posterior"
+                        },
+                        "x": {
+                            "axis": {
+                                "labelExpr": "datum.value",
+                                "title": "Partial Match Weight"
+                            },
+                            "field": "posterior_match_weight",
+                            "type": "quantitative"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "baseline": "middle",
+                        "color": "white",
+                        "dx": 0,
+                        "fontSize": 30,
+                        "fontWeight": "bold"
+                    },
+                    "encoding": {
+                        "text": {
+                            "condition": {
+                                "test": "datum.prior_match_weight < datum.posterior_match_weight",
+                                "value": "\u2192"
+                            },
+                            "value": "\u2190"
+                        },
+                        "x": {
+                            "field": "midpoint",
+                            "type": "quantitative"
+                        }
+                    },
+                    "transform": [
+                        {
+                            "calculate": "(datum.prior_match_weight + datum.posterior_match_weight) / 2",
+                            "as": "midpoint"
+                        }
+                    ]
+                }
+            ],
+            "height": 30,
+            "width": 450
+        },
+        {
+            "layer": [
+                {
+                    "mark": {
+                        "type": "bar"
+                    },
+                    "encoding": {
+                        "color": {
+                            "value": "#4FABF5"
+                        },
+                        "x": {
+                            "field": "prior_match_weight",
+                            "scale": {
+                                "domain": [
+                                    -10,
+                                    10
+                                ]
+                            },
+                            "type": "quantitative"
+                        },
+                        "x2": {
+                            "field": "posterior_match_weight"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "baseline": "middle",
+                        "fontSize": 16,
+                        "fontWeight": "bold"
+                    },
+                    "encoding": {
+                        "text": {
+                            "field": "prior_match_weight_fmt",
+                            "type": "quantitative"
+                        },
+                        "x": {
+                            "axis": {
+                                "labelExpr": "datum.value",
+                                "title": "Partial Match Weight"
+                            },
+                            "field": "prior_match_weight",
+                            "type": "quantitative"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "baseline": "middle",
+                        "fontSize": 16,
+                        "fontWeight": "bold"
+                    },
+                    "encoding": {
+                        "text": {
+                            "field": "posterior_match_weight_fmt",
+                            "type": "quantitative"
+                        },
+                        "x": {
+                            "axis": {
+                                "labelExpr": "datum.value",
+                                "title": "Partial Match Weight"
+                            },
+                            "field": "posterior_match_weight",
+                            "type": "quantitative"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "baseline": "middle",
+                        "color": "white",
+                        "dx": 0,
+                        "fontSize": 30,
+                        "fontWeight": "bold"
+                    },
+                    "encoding": {
+                        "text": {
+                            "condition": {
+                                "test": "datum.prior_match_weight < datum.posterior_match_weight",
+                                "value": "\u2192"
+                            },
+                            "value": "\u2190"
+                        },
+                        "x": {
+                            "field": "midpoint",
+                            "type": "quantitative"
+                        }
+                    },
+                    "transform": [
+                        {
+                            "calculate": "(datum.prior_match_weight + datum.posterior_match_weight) / 2",
+                            "as": "midpoint"
+                        }
+                    ]
+                }
+            ],
+            "height": 30,
+            "width": 450
+        },
+        {
+            "layer": [
+                {
+                    "mark": {
+                        "type": "bar"
+                    },
+                    "encoding": {
+                        "color": {
+                            "value": "#4FABF5"
+                        },
+                        "x": {
+                            "field": "prior_match_weight",
+                            "scale": {
+                                "domain": [
+                                    -10,
+                                    10
+                                ]
+                            },
+                            "type": "quantitative"
+                        },
+                        "x2": {
+                            "field": "posterior_match_weight"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "baseline": "middle",
+                        "fontSize": 16,
+                        "fontWeight": "bold"
+                    },
+                    "encoding": {
+                        "text": {
+                            "field": "prior_bayes_factor_fmt",
+                            "type": "quantitative"
+                        },
+                        "x": {
+                            "axis": {
+                                "labelExpr": "datum.value < 1 ? format(pow(2, datum.value),',.3f') : format(pow(2, datum.value),',.0f') ",
+                                "title": "Bayes Factor (odds)"
+                            },
+                            "field": "prior_match_weight",
+                            "type": "quantitative"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "baseline": "middle",
+                        "fontSize": 16,
+                        "fontWeight": "bold"
+                    },
+                    "encoding": {
+                        "text": {
+                            "field": "posterior_bayes_factor_fmt",
+                            "type": "quantitative"
+                        },
+                        "x": {
+                            "axis": {
+                                "labelExpr": "datum.value < 1 ? format(pow(2, datum.value),',.3f') : format(pow(2, datum.value),',.0f') ",
+                                "title": "Bayes Factor (odds)"
+                            },
+                            "field": "posterior_match_weight",
+                            "type": "quantitative"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "baseline": "middle",
+                        "color": "white",
+                        "dx": 0,
+                        "fontSize": 30,
+                        "fontWeight": "bold"
+                    },
+                    "encoding": {
+                        "text": {
+                            "condition": {
+                                "test": "datum.prior_match_weight < datum.posterior_match_weight",
+                                "value": "\u2192"
+                            },
+                            "value": "\u2190"
+                        },
+                        "x": {
+                            "field": "midpoint",
+                            "type": "quantitative"
+                        }
+                    },
+                    "transform": [
+                        {
+                            "calculate": "(datum.prior_match_weight + datum.posterior_match_weight) / 2",
+                            "as": "midpoint"
+                        }
+                    ]
+                }
+            ],
+            "height": 30,
+            "width": 450
+        },
+        {
+            "layer": [
+                {
+                    "mark": {
+                        "type": "bar"
+                    },
+                    "encoding": {
+                        "color": {
+                            "value": "#4FABF5"
+                        },
+                        "x": {
+                            "field": "prior_match_weight",
+                            "scale": {
+                                "domain": [
+                                    -10,
+                                    10
+                                ]
+                            },
+                            "type": "quantitative"
+                        },
+                        "x2": {
+                            "field": "posterior_match_weight"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "baseline": "middle",
+                        "fontSize": 16,
+                        "fontWeight": "bold"
+                    },
+                    "encoding": {
+                        "text": {
+                            "field": "prior_prob_fmt",
+                            "type": "quantitative"
+                        },
+                        "x": {
+                            "axis": {
+                                "labelExpr": "format(pow(2, datum.value)/(1+ pow(2, datum.value)), ',.3f')",
+                                "title": "Probability"
+                            },
+                            "field": "prior_match_weight",
+                            "type": "quantitative"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "baseline": "middle",
+                        "fontSize": 16,
+                        "fontWeight": "bold"
+                    },
+                    "encoding": {
+                        "text": {
+                            "field": "posterior_prob_fmt",
+                            "type": "quantitative"
+                        },
+                        "x": {
+                            "axis": {
+                                "labelExpr": "format(pow(2, datum.value)/(1+ pow(2, datum.value)), ',.3f')",
+                                "title": "Probability"
+                            },
+                            "field": "posterior_match_weight",
+                            "type": "quantitative"
+                        }
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "text",
+                        "baseline": "middle",
+                        "color": "white",
+                        "dx": 0,
+                        "fontSize": 30,
+                        "fontWeight": "bold"
+                    },
+                    "encoding": {
+                        "text": {
+                            "condition": {
+                                "test": "datum.prior_match_weight < datum.posterior_match_weight",
+                                "value": "\u2192"
+                            },
+                            "value": "\u2190"
+                        },
+                        "x": {
+                            "field": "midpoint",
+                            "type": "quantitative"
+                        }
+                    },
+                    "transform": [
+                        {
+                            "calculate": "(datum.prior_match_weight + datum.posterior_match_weight) / 2",
+                            "as": "midpoint"
+                        }
+                    ]
+                }
+            ],
+            "height": 30,
+            "width": 450
+        }
+    ],
+    "data": {
+        "name": "data-0dca1104bbb5bf68f01d38a90b11d9e1"
+    },
+    "title": "Updating a prior probability of x with a partial match weight of y",
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.14.1.json",
+    "datasets": {
+        "data-0dca1104bbb5bf68f01d38a90b11d9e1": [
+            {
+                "prior_match_weight": 2,
+                "posterior_match_weight": -5.5,
+                "prior_match_weight_fmt": "2",
+                "posterior_match_weight_fmt": "-5.5",
+                "prior_bayes_factor_fmt": "4",
+                "posterior_bayes_factor_fmt": "0.0221",
+                "prior_prob_fmt": "0.8",
+                "posterior_prob_fmt": "0.0216",
+                "prior_text": "prior",
+                "posterior_text": "posterior"
+            }
+        ]
+    }
+}
