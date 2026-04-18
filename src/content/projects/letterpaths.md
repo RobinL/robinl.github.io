@@ -4,4 +4,4 @@
 
 This allows it to expose functions for animating writing words, and to drag a path around the word.
 
-The library provides the underlyig data for this funcitonality, it's up to the the consumer of the library how to render the letters and paths.
+The library provides the underlying data for this functionality, it's up to the consumer of the library how to render the letters and paths.
