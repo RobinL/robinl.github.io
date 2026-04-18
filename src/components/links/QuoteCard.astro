@@ -1,0 +1,87 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../../lib/dates';
+
+interface Props {
+  entry: CollectionEntry<'linksQuotes'>;
+}
+
+const { entry } = Astro.props;
+const byline = entry.data.author ?? entry.data.source;
+
+function inlineEmphasisParts(value: string) {
+  return value.split(/(\*[^*]+\*)/g).filter(Boolean).map((part) => ({
+    text: part.startsWith('*') && part.endsWith('*') ? part.slice(1, -1) : part,
+    emphasised: part.startsWith('*') && part.endsWith('*'),
+  }));
+}
+
+const bylineParts = byline ? inlineEmphasisParts(byline) : [];
+---
+
+<article class="card quote-card">
+  <div class="prose quote-body">
+    <slot />
+  </div>
+  {byline && (
+    <p class="quote-byline">
+      <span>
+        &mdash;{' '}
+        {bylineParts.map((part) =>
+          part.emphasised ? <em>{part.text}</em> : <>{part.text}</>
+        )}
+      </span>
+      {entry.data.url && (
+        <a href={entry.data.url} target="_blank" rel="noopener noreferrer">source</a>
+      )}
+    </p>
+  )}
+  <footer class="entry-footer">
+    <span>{formatDate(entry.data.date)}</span>
+    {entry.data.tags.length > 0 && (
+      <span class="tag-list">
+        {entry.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+      </span>
+    )}
+  </footer>
+</article>
+
+<style>
+  .quote-body {
+    position: relative;
+    z-index: 1;
+  }
+
+  .quote-body :global(blockquote) {
+    margin-left: 0;
+    padding-left: 1rem;
+    background: transparent;
+    color: var(--text);
+    font-style: normal;
+  }
+
+  .quote-byline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    margin: 0.75rem 0 0;
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .quote-byline a {
+    font-weight: 400;
+    font-size: 0.9rem;
+  }
+
+  .entry-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+    color: var(--text-light);
+    font-size: 0.88rem;
+  }
+</style>

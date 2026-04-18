@@ -1,0 +1,52 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../../lib/dates';
+
+interface Props {
+  entry: CollectionEntry<'linksQuotes'>;
+}
+
+const { entry } = Astro.props;
+---
+
+<article class="card link-card">
+  <h3>
+    <a href={entry.data.url} target="_blank" rel="noopener noreferrer">{entry.data.title}</a>
+  </h3>
+  {entry.data.description && <p class="description">{entry.data.description}</p>}
+  <div class="prose">
+    <slot />
+  </div>
+  <footer class="entry-footer">
+    <span>{formatDate(entry.data.date)}</span>
+    {entry.data.tags.length > 0 && (
+      <span class="tag-list">
+        {entry.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+      </span>
+    )}
+  </footer>
+</article>
+
+<style>
+  .link-card h3 {
+    margin: 0 0 0.5rem;
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+  }
+
+  .description {
+    color: var(--text-light);
+    margin: 0 0 1rem;
+  }
+
+  .entry-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+    color: var(--text-light);
+    font-size: 0.88rem;
+  }
+</style>
+

@@ -1,0 +1,54 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../../lib/dates';
+
+interface Props {
+  entry: CollectionEntry<'microblog'>;
+  slug: string;
+}
+
+const { entry, slug } = Astro.props;
+---
+
+<article class="card microblog-card" id={slug}>
+  <h3>
+    <a href={`#${slug}`}>{entry.data.title}</a>
+  </h3>
+  <div class="prose microblog-body">
+    <slot />
+  </div>
+  <footer class="entry-footer">
+    <span>{formatDate(entry.data.date)}</span>
+    {entry.data.tags.length > 0 && (
+      <span class="tag-list">
+        {entry.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+      </span>
+    )}
+  </footer>
+</article>
+
+<style>
+  .microblog-card h3 {
+    margin: 0 0 0.5rem;
+    color: var(--heading);
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+
+  .microblog-body :global(p:last-child),
+  .microblog-body :global(blockquote:last-child) {
+    margin-bottom: 0;
+  }
+
+  .entry-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+    color: var(--text-light);
+    font-size: 0.88rem;
+  }
+</style>
+
