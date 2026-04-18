@@ -1,0 +1,189 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import QuoteCard from '../../components/links/QuoteCard.astro';
+import LinkCard from '../../components/links/LinkCard.astro';
+import { formatDateIso } from '../../lib/dates';
+
+const entries = (await getCollection('linksQuotes')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const allTags = Array.from(new Set(entries.flatMap((entry) => entry.data.tags))).sort();
+const renderedEntries = await Promise.all(
+  entries.map(async (entry) => {
+    const { Content } = await render(entry);
+    return { entry, Content, date: formatDateIso(entry.data.date) };
+  })
+);
+---
+
+<BaseLayout title="Quotes, Links, and Podcasts" description="Quotes, links, and podcasts">
+  <article class="prose">
+    <h1>Quotes, Links, and Podcasts</h1>
+  </article>
+
+  <section class="filter-row" aria-label="Quote and link filters">
+    <span class="filter-label">Type:</span>
+    {['Quote', 'Link', 'Podcast'].map((type) => (
+      <button class="filter-button is-active" type="button" data-type-filter={type} aria-pressed="true">{type}s</button>
+    ))}
+  </section>
+
+  {allTags.length > 0 && (
+    <section class="filter-row" aria-label="Quote and link tag filters">
+      <span class="filter-label">Tags:</span>
+      {allTags.map((tag) => (
+        <button class="filter-button" type="button" data-tag-filter={tag} aria-pressed="false">{tag}</button>
+      ))}
+    </section>
+  )}
+
+  <section class="filter-row date-filter" data-date-filter-row hidden>
+    <span class="filter-label" data-date-label></span>
+    <button class="filter-button" type="button" data-clear-date>Clear Date</button>
+  </section>
+
+  <div id="quotes-links-list">
+    {renderedEntries.map(({ entry, Content, date }) => (
+      <div
+        data-entry
+        data-type={entry.data.type.charAt(0).toUpperCase() + entry.data.type.slice(1)}
+        data-tags={entry.data.tags.join(',')}
+        data-date={date}
+      >
+        {entry.data.type === 'quote' ? (
+          <QuoteCard entry={entry}>
+            <Content />
+          </QuoteCard>
+        ) : (
+          <LinkCard entry={entry}>
+            <Content />
+          </LinkCard>
+        )}
+      </div>
+    ))}
+  </div>
+  <p class="empty-message" data-empty-message hidden>No items match the current filters.</p>
+</BaseLayout>
+
+<script>
+  const typeButtons = Array.from(document.querySelectorAll('[data-type-filter]'));
+  const tagButtons = Array.from(document.querySelectorAll('[data-tag-filter]'));
+  const entries = Array.from(document.querySelectorAll('[data-entry]'));
+  const dateRow = document.querySelector('[data-date-filter-row]');
+  const dateLabel = document.querySelector('[data-date-label]');
+  const clearDate = document.querySelector('[data-clear-date]');
+  const emptyMessage = document.querySelector('[data-empty-message]');
+
+  const selectedTypes = new Set(['Quote', 'Link', 'Podcast']);
+  const selectedTags = new Set();
+  let selectedDate = null;
+
+  function readUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const types = params.get('types');
+    const tags = params.get('tags');
+    const date = params.get('date');
+
+    if (types) {
+      selectedTypes.clear();
+      types.split(',').filter(Boolean).forEach((type) => selectedTypes.add(type));
+    }
+
+    if (tags) {
+      tags.split(',').filter(Boolean).forEach((tag) => selectedTags.add(tag));
+    }
+
+    if (date && /^\d{4}-\d{2}-\d{2}$/.test(date)) selectedDate = date;
+  }
+
+  function writeUrl() {
+    const params = new URLSearchParams();
+    if (!(selectedTypes.has('Quote') && selectedTypes.has('Link') && selectedTypes.has('Podcast'))) {
+      params.set('types', Array.from(selectedTypes).join(','));
+    }
+    if (selectedTags.size > 0) params.set('tags', Array.from(selectedTags).join(','));
+    if (selectedDate) params.set('date', selectedDate);
+    const query = params.toString();
+    history.replaceState(null, '', `${window.location.pathname}${query ? `?${query}` : ''}`);
+  }
+
+  function renderFilters({ updateUrl = true } = {}) {
+    typeButtons.forEach((button) => {
+      const isActive = selectedTypes.has(button.dataset.typeFilter);
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    });
+    tagButtons.forEach((button) => {
+      const isActive = selectedTags.has(button.dataset.tagFilter);
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    });
+
+    if (dateRow && dateLabel) {
+      dateRow.hidden = !selectedDate;
+      dateLabel.textContent = selectedDate ? `Filtering by date: ${selectedDate}` : '';
+    }
+
+    let visibleCount = 0;
+    entries.forEach((entry) => {
+      const typeMatches = selectedTypes.has(entry.dataset.type);
+      const tags = (entry.dataset.tags || '').split(',').filter(Boolean);
+      const tagMatches = selectedTags.size === 0 || tags.some((tag) => selectedTags.has(tag));
+      const dateMatches = !selectedDate || entry.dataset.date === selectedDate;
+      const visible = typeMatches && tagMatches && dateMatches;
+      entry.hidden = !visible;
+      if (visible) visibleCount += 1;
+    });
+
+    if (emptyMessage) emptyMessage.hidden = visibleCount > 0;
+    if (updateUrl) writeUrl();
+  }
+
+  readUrl();
+  renderFilters({ updateUrl: false });
+
+  typeButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const type = button.dataset.typeFilter;
+      if (!type) return;
+      if (selectedTypes.has(type) && selectedTypes.size > 1) selectedTypes.delete(type);
+      else selectedTypes.add(type);
+      renderFilters();
+    });
+  });
+
+  tagButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const tag = button.dataset.tagFilter;
+      if (!tag) return;
+      if (selectedTags.has(tag)) selectedTags.delete(tag);
+      else selectedTags.add(tag);
+      renderFilters();
+    });
+  });
+
+  clearDate?.addEventListener('click', () => {
+    selectedDate = null;
+    renderFilters();
+  });
+</script>
+
+<style>
+  .date-filter {
+    border: 1px solid #fde68a;
+    border-radius: var(--radius);
+    background: #fef3c7;
+    padding: 0.5rem;
+  }
+
+  .date-filter .filter-label {
+    color: #92400e;
+  }
+
+  .empty-message {
+    color: var(--text-light);
+    text-align: center;
+  }
+</style>

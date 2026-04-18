@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/86fc30325e4106c4",
+  "main": "86fc30325e4106c4@851.js",
+  "version": "851.0.0",
+  "homepage": "https://observablehq.com/@robinl/86fc30325e4106c4",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

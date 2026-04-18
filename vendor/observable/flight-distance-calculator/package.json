@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/flight-distance-calculator",
+  "main": "cf52e2d16b5b9cbe@1090.js",
+  "version": "1090.0.0",
+  "homepage": "https://observablehq.com/@robinl/flight-distance-calculator",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

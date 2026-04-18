@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/interactive-blogging-with-observable-notebooks-and-gatsb",
+  "main": "30c5bf135cab7285@518.js",
+  "version": "518.0.0",
+  "homepage": "https://observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

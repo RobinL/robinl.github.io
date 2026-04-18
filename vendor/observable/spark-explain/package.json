@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/spark-explain",
+  "main": "8578dcec2a3fe626@647.js",
+  "version": "647.0.0",
+  "homepage": "https://observablehq.com/@robinl/spark-explain",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

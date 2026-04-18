@@ -1,0 +1,58 @@
+---
+title: "The relationship between probabilities, match weights and Bayes factors"
+description: "Visualising the correspondence between match weights, probabilities, Bayes factors and their intuitive explanations"
+postDate: "2023-07-07"
+category: "probabilistic_linkage"
+codeUrl: "https://observablehq.com/@robinl/interactive-bayes-factor-probability-and-match-weight"
+probLinkageCategory: "tools"
+latestUpdate: "2023-09-12"
+pageWidth: "wide"
+---
+
+import ObservableCellProvider from '../../components/observable/ObservableCellProvider.jsx';
+import ObservableCell from '../../components/observable/ObservableCell.jsx';
+import InteractiveCallout from '../../components/probabilistic/InteractiveCallout.jsx';
+import ProbHomeNav from '../../components/probabilistic/ProbHomeNav.jsx';
+
+<ProbHomeNav />
+# The relationship between Partial Match Weights, Bayes Factors, and Probabilities
+
+This chart shows how the partial match weights in a Splink `linker.match_weights_chart` (see [here](https://moj-analytical-services.github.io/splink/charts/match_weights_chart.html)) are related to Bayes Factors and probabilities.
+
+
+<InteractiveCallout> Hover over the chart below to select a match weight. </InteractiveCallout>
+
+
+<ObservableCellProvider client:visible notebook="interactive-bayes-factor-probability-and-match-weight">
+
+  <ObservableCell cellName="viewof max_match_weight" />
+  <ObservableCell cellName="viewof chart" />
+
+    <br/>
+    Caveat: the 'probability' is really only defined if a prior exists.  For the above chart, the prior is assumed to be 50%.
+    <br/>
+    ## Conversion of partial match weight to probability
+    <br/>
+    <ObservableCell cellName="mw_1" />
+    <br/>
+    <ObservableCell cellName="bf_1" />
+    <br/>
+    <ObservableCell cellName="p_1" />
+    <br/>
+    ## Conversion of probability to partial match weight
+    <br/>
+    <ObservableCell cellName="p_2" />
+    <br/>
+    <ObservableCell cellName="bf_2" />
+    <br/>
+    <ObservableCell cellName="mw_2" />
+    <br/>
+
+</ObservableCellProvider>
+
+## Additional resources
+
+Also check the <a href="/match_weight_calculator/">match weight calculator</a> to more precisely calculate match weights, probabilities, and Bayes factors.
+
+
+<ProbHomeNav />

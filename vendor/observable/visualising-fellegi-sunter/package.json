@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/visualising-fellegi-sunter",
+  "main": "060a32b021a09f92@1011.js",
+  "version": "1011.0.0",
+  "homepage": "https://observablehq.com/@robinl/visualising-fellegi-sunter",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

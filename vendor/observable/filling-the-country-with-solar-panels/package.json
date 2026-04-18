@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/filling-the-country-with-solar-panels",
+  "main": "d6e693c63bc9484f@66.js",
+  "version": "66.0.0",
+  "homepage": "https://observablehq.com/@robinl/filling-the-country-with-solar-panels",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

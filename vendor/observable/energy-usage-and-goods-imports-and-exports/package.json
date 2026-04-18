@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/energy-usage-and-goods-imports-and-exports",
+  "main": "a6af3da98f28ce26@1351.js",
+  "version": "1351.0.0",
+  "homepage": "https://observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

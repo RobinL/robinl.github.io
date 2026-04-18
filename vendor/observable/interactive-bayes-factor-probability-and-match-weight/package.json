@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/interactive-bayes-factor-probability-and-match-weight",
+  "main": "189e36237ee45054@434.js",
+  "version": "434.0.0",
+  "homepage": "https://observablehq.com/@robinl/interactive-bayes-factor-probability-and-match-weight",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

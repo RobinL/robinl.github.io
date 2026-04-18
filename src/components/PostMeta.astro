@@ -1,0 +1,20 @@
+---
+import { formatDateIso } from '../lib/dates';
+
+interface Props {
+  date?: Date;
+  latestUpdate?: Date;
+  codeUrl?: string;
+}
+
+const { date, latestUpdate, codeUrl } = Astro.props;
+const sourceText = codeUrl?.includes('observablehq.com')
+  ? 'Live edit this notebook'
+  : 'View source code for this page';
+---
+
+<p class="post-meta">
+  {date && <>Originally posted: {formatDateIso(date)}. </>}
+  {latestUpdate && <>Last updated: {formatDateIso(latestUpdate)}. </>}
+  {codeUrl && <>{sourceText}{' '}<a href={codeUrl} target="_blank" rel="noopener noreferrer">here.</a></>}
+</p>

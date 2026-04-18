@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/m-and-u-probability-generator-with-starting-values",
+  "main": "1d09c6cf5d576e0a@119.js",
+  "version": "119.0.0",
+  "homepage": "https://observablehq.com/@robinl/m-and-u-probability-generator-with-starting-values",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

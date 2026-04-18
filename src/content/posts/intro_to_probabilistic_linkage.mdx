@@ -1,0 +1,78 @@
+---
+title: "An Interactive Introduction to Record Linkage (Data Deduplication) in the Fellegi-Sunter framework"
+description: "The first in a series of interactive, explorable explanations of the Fellegi-Sunter model, providing an introduction to probabilistic record linkage (data deduplication)."
+postDate: "2021-05-20"
+category: "probabilistic_linkage"
+codeUrl: "https://observablehq.com/@robinl/intro-prob-linkage"
+probLinkageCategory: "tutorial"
+latestUpdate: "2023-09-12"
+tutorialNumber: 1
+pageWidth: "prose"
+---
+
+import ObservableCellProvider from '../../components/observable/ObservableCellProvider.jsx';
+import ObservableCell from '../../components/observable/ObservableCell.jsx';
+import DefinitionToolTip from '../../components/probabilistic/DefinitionToolTip.jsx';
+import InteractiveCallout from '../../components/probabilistic/InteractiveCallout.jsx';
+
+# An Interactive Introduction to the Fellegi-Sunter Model for Data Linkage/Deduplication
+
+## Aims
+
+This is part one of a series of interactive articles that aim to provide an introduction to the theory of probabilistic record linkage and deduplication.
+
+In this article I provide a high-level introduction to the <DefinitionToolTip term="fellegi-sunter" text="Fellegi-Sunter"/> framework and an interactive example of a linkage model.
+
+Subsequent articles explore the theory in more depth.
+
+These materials align closely to the probabilistic model used by [Splink](http://github.com/moj-analytical-services/splink), a free software package for record linkage at scale.
+
+These articles cover the theory only.  For practical model building using Splink, see [the tutorial in the Splink docs](https://moj-analytical-services.github.io/splink/demos/tutorials/00_Tutorial_Introduction.html).
+
+## What is probabilistic record linkage?
+
+Probablistic record linkage is a technique used to link together records that lack unique identifiers.
+
+In the absence of a unique identifier such as a National Insurance number, we can use a combination of individually non-unique variables such as name, gender and date of birth to identify individuals.
+
+Record linkage can be done within datasets (deduplication), between datasets (linkage), or both[^1].
+
+[^1]: Record linkage and deduplication are equivalent problems.  The only difference is that linkage involves finding matching entities across datasets and deduplication involves finding matches within datasets.
+
+Linkage is 'probabilistic' in the sense that it subject to uncertainty and relies on the balance of evidence. For instance, in a large dataset, observing that two records match on the full name `John Smith` provides some evidence that these two records may refer to the same person, but this evidence is inconclusive because it's possible there are two different `John Smith`s.
+
+More broadly,  it is often impossible to classify pairs of records as matches or non-matches beyond any doubt. Instead, the aim of probabilisitic record linkage is to quantify the probability that a pair of records refer to the same entity by considering evidence in favour and against a match and weighting it appropriately.
+
+The most common type of probabilistic record linkage model is called the Fellegi-Sunter model.
+
+We start with a <DefinitionToolTip term="prior" />, which represents the probability that two records drawn at random are a match. We then compare the two records, increasing the match probability where information in the record matches, and decreasing it when information differs.
+
+The amount we increase and decrease the match probability is determined by the '<DefinitionToolTip term="partial_match_weight" />s' of the model.
+
+For example, a match on postcode gives us more evidence in favour of a match on gender, since the latter is much more likely to occur by chance.
+
+The final prediction is a simple calculation:  we sum up <DefinitionToolTip term="partial_match_weight" />s to compute a final match weight, which is then converted into a probability.
+
+## Example
+
+Let's take a look at an example of a simple Fellegi-Sunter model to calculate match probability interactively. This model will compare the two records in the table, and assess whether they refer to the same person, or different people.
+
+
+<InteractiveCallout>You may edit the values in the table to see how the match probability changes.</InteractiveCallout>
+
+<ObservableCellProvider client:visible notebook="intro-prob-linkage">
+    <ObservableCell cellName="input_table" />
+
+    <ObservableCell cellName="estimated_probability" />
+
+    We can decompose this calculation into the sum of the <DefinitionToolTip term="partial_match_weight" />s using a waterfall chart, which is read from left to right. We start with the prior, and take each column into account in turn.  The size of the bar corresponds to the {<DefinitionToolTip term="partial_match_weight" />}.
+
+    You can hover over the bars to see how the probability changes as each subsequent field is taken into account.
+
+    The final estimated match probability is shown in the rightmost bar.  Note that the y axis on the right converts match weight into probability.
+
+    <ObservableCell cellName="waterfall_chart" />
+
+    In the next article, we will look at partial match weights in great depth.
+
+</ObservableCellProvider>

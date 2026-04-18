@@ -1,0 +1,34 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import PostMeta from '../components/PostMeta.astro';
+import CompactTutorialNav from '../components/probabilistic/CompactTutorialNav.jsx';
+import TutorialNav from '../components/probabilistic/TutorialNav.jsx';
+import { postSlug } from '../lib/content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const slug = postSlug(post.id);
+const isTutorial = post.data.category === 'probabilistic_linkage' && post.data.probLinkageCategory === 'tutorial';
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  width={post.data.pageWidth}
+  image={post.data.image}
+  stylesheet={post.data.stylesheet}
+  type="article"
+  publishedTime={post.data.postDate}
+  modifiedTime={post.data.latestUpdate}
+>
+  <article class="prose">
+    <PostMeta date={post.data.postDate} latestUpdate={post.data.latestUpdate} codeUrl={post.data.codeUrl} />
+    {isTutorial && <CompactTutorialNav currentSlug={slug} />}
+    <slot />
+    {isTutorial && <TutorialNav currentSlug={slug} />}
+  </article>
+</BaseLayout>

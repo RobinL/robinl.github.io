@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/fault-tolerant-trie",
+  "main": "965ed303c3f15178@322.js",
+  "version": "322.0.0",
+  "homepage": "https://observablehq.com/@robinl/fault-tolerant-trie",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/understanding-the-spark-ui-by-example-sorting-data",
+  "main": "e3bc1166ecb701f4@269.js",
+  "version": "269.0.0",
+  "homepage": "https://observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

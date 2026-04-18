@@ -1,0 +1,92 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MicroblogCard from '../../components/microblog/MicroblogCard.astro';
+import { slugify } from '../../lib/slug';
+
+const entries = (await getCollection('microblog')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const allTags = Array.from(new Set(entries.flatMap((entry) => entry.data.tags))).sort();
+const renderedEntries = await Promise.all(
+  entries.map(async (entry) => {
+    const { Content } = await render(entry);
+    const slug = slugify(entry.data.title || entry.id);
+    return { entry, Content, slug };
+  })
+);
+---
+
+<BaseLayout title="Microblog" description="My microblog">
+  <article class="prose">
+    <h1>Microblog</h1>
+  </article>
+
+  {allTags.length > 0 && (
+    <section class="filter-row" aria-label="Microblog tag filters">
+      <span class="filter-label">Tags:</span>
+      {allTags.map((tag) => (
+        <button class="filter-button" type="button" data-tag={tag} aria-pressed="false">{tag}</button>
+      ))}
+    </section>
+  )}
+
+  <div id="microblog-list">
+    {renderedEntries.map(({ entry, Content, slug }) => (
+      <div data-entry data-tags={entry.data.tags.join(',')}>
+        <MicroblogCard entry={entry} slug={slug}>
+          <Content />
+        </MicroblogCard>
+      </div>
+    ))}
+  </div>
+</BaseLayout>
+
+<script>
+  const buttons = Array.from(document.querySelectorAll('[data-tag]'));
+  const entries = Array.from(document.querySelectorAll('[data-entry]'));
+  const selected = new Set();
+
+  function readUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const tags = params.get('tags');
+    if (!tags) return;
+    tags.split(',').filter(Boolean).forEach((tag) => selected.add(tag));
+  }
+
+  function writeUrl() {
+    const params = new URLSearchParams();
+    if (selected.size > 0) params.set('tags', Array.from(selected).join(','));
+    const query = params.toString();
+    history.replaceState(null, '', `${window.location.pathname}${query ? `?${query}` : ''}`);
+  }
+
+  function renderFilters({ updateUrl = true } = {}) {
+    buttons.forEach((button) => {
+      const isActive = selected.has(button.dataset.tag);
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    });
+
+    entries.forEach((entry) => {
+      const tags = (entry.dataset.tags || '').split(',').filter(Boolean);
+      entry.hidden = selected.size > 0 && !tags.some((tag) => selected.has(tag));
+    });
+
+    if (updateUrl) writeUrl();
+  }
+
+  readUrl();
+  renderFilters({ updateUrl: false });
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const tag = button.dataset.tag;
+      if (!tag) return;
+      if (selected.has(tag)) selected.delete(tag);
+      else selected.add(tag);
+      renderFilters();
+    });
+  });
+</script>

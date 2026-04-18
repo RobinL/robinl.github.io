@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/intro-prob-linkage",
+  "main": "3ec7a740cff5f9ad@84.js",
+  "version": "84.0.0",
+  "homepage": "https://observablehq.com/@robinl/intro-prob-linkage",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

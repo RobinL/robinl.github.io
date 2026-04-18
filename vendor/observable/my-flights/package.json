@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/my-flights",
+  "main": "fe522555ef506fc9@514.js",
+  "version": "514.0.0",
+  "homepage": "https://observablehq.com/@robinl/my-flights",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}
