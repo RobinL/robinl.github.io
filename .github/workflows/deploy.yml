@@ -1,17 +1,36 @@
-name: Gatsby Publish
+name: Astro Publish
 
 on:
     push:
         branches:
             - dev
 
+permissions:
+    contents: write
+
 jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
-            - uses: enriikke/gatsby-gh-pages-action@v2
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
               with:
-                  access-token: ${{ secrets.ACCESS_TOKEN }}
-                  deploy-branch: master
-                  gatsby-args: --prefix-paths
+                  node-version: 22
+                  cache: npm
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Build Astro site
+              run: npm run build
+
+            - name: Publish to GitHub Pages branch
+              uses: peaceiris/actions-gh-pages@v4
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_branch: master
+                  publish_dir: ./dist
+                  cname: www.robinlinacre.com
