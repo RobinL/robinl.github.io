@@ -13,6 +13,7 @@ interface Props {
 const { post } = Astro.props;
 const slug = postSlug(post.id);
 const isTutorial = post.data.category === 'probabilistic_linkage' && post.data.probLinkageCategory === 'tutorial';
+const originalPublicationUrl = post.data.originalPublication?.url;
 ---
 
 <BaseLayout
@@ -26,6 +27,12 @@ const isTutorial = post.data.category === 'probabilistic_linkage' && post.data.p
   modifiedTime={post.data.latestUpdate}
 >
   <article class="prose">
+    {originalPublicationUrl && (
+      <p class="original-publication">
+        This post was originally published at{' '}
+        <a href={originalPublicationUrl} target="_blank" rel="noopener noreferrer">{originalPublicationUrl}</a>.
+      </p>
+    )}
     <PostMeta date={post.data.postDate} latestUpdate={post.data.latestUpdate} codeUrl={post.data.codeUrl} />
     {isTutorial && <CompactTutorialNav currentSlug={slug} />}
     <slot />

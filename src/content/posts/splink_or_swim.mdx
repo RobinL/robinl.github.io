@@ -1,0 +1,89 @@
+---
+title: "Splink or Swim: The Benefits of Being Small Enough To Fail"
+description: "A behind the scenes look at winning the Civil Service innovation award"
+postDate: "2026-02-24"
+category: "data"
+originalPublication:
+  url: "https://mojdigital.blog.gov.uk/2026/02/24/splink-or-swim-the-benefits-of-being-small-enough-to-fail/"
+pageWidth: "prose"
+---
+
+import Subtitle from '../../components/probabilistic/Subtitle.jsx';
+
+# Splink or Swim: The Benefits of Being Small Enough To Fail
+
+<Subtitle>
+  A behind the scenes look at winning the <a href="https://www.civilserviceawards.com/winners-2025/">Civil Service innovation award</a>
+</Subtitle>
+
+Suppose the Civil Service embarked on an ambitious project to create software that would be used widely in government and beyond.  The design would involve cross-departmental and international collaboration, and the software would be downloaded over 15 million times.
+
+How might we imagine the project would be governed and delivered?
+
+This isn’t hypothetical: the project is called [Splink](http://github.com/moj-analytical-services/splink). It had a distinctive approach to delivery which illuminates how to achieve real-world innovation.
+
+I will tell this story through a series of observations from my career. They suggest that the engine that drives innovation is perseverance rather than brilliance.
+
+### 1\. Head of Innovation
+
+Many years ago, my job title was Head of Innovation. I ran a series of workshops to generate ideas.  Results were prioritised and fed back to leaders in the hope that the best ideas would be taken forwards. But a year later, we had little meaningful to show.
+
+I learned there was no shortage of ideas, and no shortage of clever, enthusiastic people who want to do things better.
+
+My mistake was thinking innovation is something novel that could come from a flash of inspiration.  More often it comes from tinkering with the same problem over years, trying different things and refining ideas.
+
+But this means drawing from a deep wellspring of motivation year after year.
+
+### 2\. My first week at MoJ
+
+In my first week working for the Ministry of Justice, I was given a MacBook with 'developer permissions'.  I was amazed; in previous organisations I had been given heavily locked down one-size-fits-all laptops that prevented me trying anything new, whilst being expected to deliver innovative data science work.
+
+This may seem trivial, but it was a strong signal that the organisation recognised and valued skills and was proactive about removing obstacles to doing my job. This experience has [continued](https://ai.justice.gov.uk/ai-in-action/ai-assistants) and has been a strong source of motivation ever since.  The message was clear: 'we value your work, and trust that you know what you’re doing.'
+
+### 3\. Failed attempts in other countries at building something like Splink
+
+Splink was not even a novel idea.
+
+In fact, the US Census Bureau [notes that](https://www.census.gov/content/dam/Census/library/working-papers/2018/adrm/rrs2018-05.pdf) “National Statistics Institutes … had failed in possibly thirty attempts of the initial development of \[such\] systems”.  These tended to be large-scale attempts “often consisting of five-fifteen individuals”, working for “two-four years to get preliminary results”.
+
+In contrast, the Splink team has averaged two people, and released the first version of Splink within 6 months.
+
+This is reminiscent of the well-worn phrase "ideas are cheap; execution is everything". I don't know what caused those thirty failures, but I do know what we got right with the delivery of Splink.
+
+### 4\. The governance structure of Splink
+
+I started writing Splink in 2019\.  The initial ask was small in scope: we would spend a few months writing software that could deduplicate one specific dataset.
+
+Almost by accident, this resulted in an approach to delivery that was foundational for Splink's success:
+
+- Splink has always been small enough to fail. No eyebrows would have been raised if a project like this was cancelled after a year.  The sunk cost fallacy bites less hard if there's not much sunk cost.
+- Splink had a clear mechanism to fail. Adoption of Splink outside the team has always been voluntary, and so the team’s performance is [measurable](https://clickpy.clickhouse.com/dashboard/splink) and honest.  If no one had used Splink, we would have moved on.
+- This enabled light-touch governance. The team was given full autonomy, so long as the linked datasets were delivered according to set milestones.  Five years on, this governance has not changed \- key decisions are still in the hands of the developers.
+- Splink is used heavily by its own creators to do their 'day jobs' of linking real datasets.  Most features are developed to make our own lives easier.  On a larger team with greater division of labour, this would be much less feasible.
+
+If innovation is more about execution than ideas, then a supportive governance structure must combine autonomy with rapid, honest, and potentially existential feedback.
+
+### 5\. Working in the open
+
+Splink has been developed as open source software from day one.  I consider this to be the single most important factor in Splink's success because of how it's contributed to the quality of the software, the clarity of how well things are going, and ultimately to the motivation of the team.
+
+By working in the open, we have exposed Splink to continuous external feedback, which is mostly anonymous and therefore honest.  But this has created a virtuous cycle that has led to collaborating with many world leading experts on record linkage, and incorporating their ideas.  I've written in more detail about this dynamic [here](https://www.government-transformation.com/data/splink-transforming-data-linking-through-open-source-collaboration).
+
+This iterative process of feedback underpins adoption.  There's no obvious single idea behind Splink that could be written on a Post-it note. Instead, Splink is an accumulation of a large number of small ideas from many different people who are incentivised to make it a success.  This has required several rewrites \- and it's not much fun to rip up your own work.
+
+But it's always felt worth it, because working in the open magnifies the societal benefits of Splink.  Any improvements are immediately enjoyed by many users across government and beyond.  This makes every day feel worthwhile, even after five years, and indeed several team members have stayed on the team for much longer than the typical Civil Service stint.
+
+## What I’ve learned
+
+Most people have a desire to make things better.  But what is the 'user experience' of innovation? Often unintentionally, large organisations put up obstacles, leading to frustration which gnaws away at motivation.
+
+I like to think of innovation as a force. The strength of the force is the aggregate result of these individual experiences of trying to make things better. If we want more of it, we need this experience to be as good as possible.
+
+The experience of Splink suggests some tangible steps to help:
+
+- Work on problems that have large potential benefits, but keep the initial aims small enough to be delivered quickly.  This sustains motivation.
+- Keep things as small as possible, so governance can stay light, and hence people can be given more autonomy
+- Find mechanisms to make feedback honest and quantifiable.  Openness and external feedback may help.
+- Set the conditions for innovation, but don’t designate the role of innovating to any individual team
+
+I love my job and I can't think of anything I'd rather do. On reflection, that is the real reason for Splink's success.

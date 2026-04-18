@@ -202,6 +202,21 @@ button {
   font-size: inherit;
 }
 
+.prose .original-publication {
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--soft-line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--text-light);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0 0 1.25rem;
+}
+
+.prose .original-publication a {
+  font-size: inherit;
+}
+
 .prose h1,
 .prose h2,
 .prose h3,
@@ -556,11 +571,23 @@ button {
   margin-bottom: 0;
 }
 
-.post-subtitle {
+.prose .post-subtitle {
   color: var(--text-light);
-  font-size: 1.25rem;
-  line-height: 1.35;
-  margin-top: -0.5rem;
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1.45;
+  margin: -0.25rem 0 1.5rem;
+}
+
+.prose .post-subtitle p {
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0;
+}
+
+.prose .post-subtitle a {
+  font-size: inherit;
 }
 
 .interactive-callout {

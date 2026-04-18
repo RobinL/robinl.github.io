@@ -1,0 +1,113 @@
+---
+title: "Splink: Transforming data linking through open source collaboration"
+description: "How a small team of MoJ analysts built data linking software that’s used by governments across the world"
+postDate: "2024-10-02"
+category: "data"
+originalPublication:
+  url: "https://www.government-transformation.com/data/splink-transforming-data-linking-through-open-source-collaboration"
+pageWidth: "prose"
+---
+
+import Subtitle from '../../components/probabilistic/Subtitle.jsx';
+
+# Splink: Transforming data linking through open source collaboration
+
+<Subtitle>
+  How a small team of MoJ analysts built data linking software that’s used by governments across the world
+</Subtitle>
+
+## Intro
+
+Throughout my career, I've been interested in how the work of analysts and data people can be improved by new ways of working. I've [long believed](https://www.robinlinacre.com/transforming_analytical_functions/) a fundamental transformation is possible through open source collaboration \- an approach that can bring together the collective minds of staff across government to tackle some of our most challenging problems.
+
+'Transformation' and 'ways of working' are easy phrases to throw around, but what does this look like in practice? In this article, I use the concrete example of data linking to show how these new approaches have delivered a step change in government capability. This has been driven through the development of [Splink](https://github.com/moj-analytical-services/splink), a Python package that’s probably the world’s best free data linking software.
+
+When we started in 2019, I’d never have believed that five years later our software would have been downloaded [9 million times](https://clickpy.clickhouse.com/dashboard/splink), have sixty contributors, thousands of users, and have been used to improve [some of government's most valuable datasets](https://www.government-transformation.com/data/interview-modernizing-public-sector-insight-through-automated-linkage).
+
+## The Challenge of Data Linking
+
+Almost every big organisation has a data linking or deduplication problem. This typically occurs when records about the same entity \- often a person \- are collected multiple times without a unique identifier to tie the records together. For example, in the justice system, data may be entered separately into courts, prison, and probation computer systems.
+
+The problem is that variations inevitably occur across records. Maybe the individual moves house, or their surname changes because they get married. Or maybe diminutives or nicknames have been entered, or there are spelling errors and typos. These variations mean there's no simple set of rules that allow records to be matched accurately
+
+The problem of data linking is notoriously challenging on large datasets because it’s very computationally intensive. Historically this has led to software that takes many hours or days to run.
+
+The effort is worthwhile, however, because data linking has the power to automatically improve data quality in ways which are expensive and time consuming to achieve manually:
+
+- Most obviously, it can be used to eliminate duplicate records.
+
+- By combining datasets, they become richer. For instance, a dataset that links courts, prisons, and probation data is able to provide much richer insights into journeys through the justice system than using those datasets in isolation.
+
+- Information can be cross-filled across datasets to reduce missingness
+
+- Data quality issues such as typos can be identified by looking across different records associated with the same entity, or the most recent value of a field can be found.
+
+The benefits are so large that most big departments (and indeed most big organisations) have analysts or whole teams working on this problem.
+
+## Historical approaches
+
+I first worked on data linkage in government over 10 years ago. I think my experiences are illustrative of the inefficiencies of working on problems like this in silos, in contrast to the collaborative approach taken with Splink.
+
+I worked on linking a single dataset of around 100,000 records, and it took around a year. I delivered a functional solution, but in retrospect, it was slow and the accuracy could have been better. Why did this take a long time and deliver mediocre results?
+
+I think the key is that working in closed, siloed environments destroys the biggest benefits of collaboration, even where many people are working on similar problems.
+
+My solution was coded in proprietary analytics software. Even if others could see my code, they couldn't execute it without paying for expensive software licences. Likewise, I had limited access to other analysts' solutions, which at the time were rarely shared in the open.
+
+Under these circumstances, it's impossible to truly work together across organisational boundaries on a shared solution. Instead, collaboration takes the form of meetings where challenges and solutions are discussed. This is helpful but usually it’s merely knowledge that is shared, not working software.
+
+## The birth of Splink
+
+In 2016, I was asked to lead work on a new [analytical platform](https://mojdigital.blog.gov.uk/2018/04/05/pushing-the-boundaries-of-data-science-with-the-moj-analytical-platform/) at the Ministry of Justice. I saw the opportunity for a new approach where analysts could use free, open-source tools by default, helping to break down the silos I'd previously experienced.
+
+Three years later, after moving posts, I was asked to work on data linkage again. I was excited to demonstrate the potential of the new platform by building a new data linkage tool that was capable of linking some of the Ministry of Justice's largest datasets.
+
+## Splink
+
+The result is Splink \- a free Python package for data linking and duplication at scale. Its key features are:
+
+- **Speed:** Capable of linking a million records on a laptop in approximately one minute.
+
+- **Accuracy:** Full support for term frequency adjustments and user-defined fuzzy matching logic.
+
+- **Scalability:** Able to link 100+ million records.
+
+- **Works across different government IT systems:** Supports Windows, Mac, Linux, and all major cloud providers, with support for multiple database backends.  Also works in environments with no internet connection.
+
+- **Unsupervised Learning:** No training data is required, as models can be trained using an unsupervised approach.
+
+- **Interactive Outputs:** Provides a wide range of interactive outputs to help users understand their model and diagnose linkage problems.
+
+It's been used by MoJ to link over 100 million records from courts, prisons, probation, and the civil and family courts as part of the [Data First project](https://www.gov.uk/guidance/ministry-of-justice-data-first), and is used in production as part of our weekly automated data engineering pipelines.
+
+In addition, it's been [used widely](https://moj-analytical-services.github.io/splink/#use-cases) by other government departments at home and abroad, in the private sector, in academia, and by charities. Overall, it's been downloaded over [9 million times](https://clickpy.clickhouse.com/dashboard/splink) over the course of more than 100 versions.
+
+In practice, this means record linkage can be implemented much faster, with higher accuracy for less money. To [quote Marie Curie](https://podcasts.apple.com/gb/podcast/unlocking-data-at-marie-curie/id1724979056?i=1000649964922), who adopted Splink without any assistance from our team and went on to [win an award](https://event.computing.co.uk/dtla2024/en/page/2024-winners) for their work:
+
+There existed in Marie Curie already some prior art. We had a single customer view running over some of our fundraising data. It had been written classically in SQL \[...\] and the team that built it have been working on it for a year. Using Databricks and Splink, we've been able to achieve functional parity in two months. \[...\] It's because the tooling is just so much better \[...\] it's just mind-boggling actually.
+
+## Final Thoughts:  How We Can See More Things Like Splink
+
+For me, the single biggest factor explaining Splink's success is that it has been developed in the open from day one using free, widely used tools.
+
+Why is this so transformative to the effectiveness of collaboration?
+
+- **Advice from experts**: Engagement with record linkage experts across the world has been supercharged by mutual benefit \- any improvements to Splink are immediately available for use by all so people are keen and proactive to help.
+
+- **Continuous improvement driven by user feedback**: We've had over 1,000 comments and questions from 300 distinct individuals posting on the Splink Github repo and discussion forums. This continuous feedback \- often from expert practitioners \- has driven continuous improvement. As such, Splink represents an international collaboration of some of the world's leading experts in record linkage.
+
+- **Fixing bugs and adding features**: With many users, bugs are found and fixed faster. We've had contributions from over [60 people](https://github.com/moj-analytical-services/splink/graphs/contributors), including academics, government, private sector consultancies, and big tech companies.
+
+- **Motivation and passion**: Knowing that the software is being used widely for the public good is a powerful motivator to the core team in continuing to improve it, and to outside contributors
+
+- **People can try Splink at almost zero effort**: New users can try Splink out [for free in their web browser](https://moj-analytical-services.github.io/splink/demos/examples/examples_index.html) in a matter of a few minutes.  There’s nothing more powerful to attract users than enabling them to try it and see for themselves.
+
+I don’t think any of these points are unique to data linking. They illustrate the potential for a virtuous cycle of continuous improvement that is powerful enough to break down barriers to collaboration and reduce siloed working.
+
+But this does require a shift in mindset, and longer-term thinking. It takes time and commitment to get this cycle going.  I hope this post helps to make the case for more of this kind of work.
+
+## Acknowledgements
+
+I'm very grateful to [ADR UK](https://www.adruk.org/) (Administrative Data Research UK) for providing the initial funding for work on Splink as part of the [Data First](https://www.adruk.org/our-work/browse-all-projects/data-first-harnessing-the-potential-of-linked-administrative-data-for-the-justice-system-169/) project, and to everyone who’s given us a chance and tried Splink for themselves.
+
+
