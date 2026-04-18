@@ -4,4 +4,6 @@ This gameplay mechanic works well because:
 - The user can ignore questions they find too hard
 - Questions of greater difficulty result in more powerful upgrades, so there is an incentive to answering harder questions
 
+For some children, one downside is that the user is under time pressure to answer questions.  To mitigate this, the user can pause the game.
+
 This game is built on top of my [`maths-game-problem-generator`](https://github.com/RobinL/maths-game-problem-generator) library
