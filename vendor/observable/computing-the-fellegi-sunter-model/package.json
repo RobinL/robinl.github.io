@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/computing-the-fellegi-sunter-model",
+  "main": "0068042ce3b10dd1@284.js",
+  "version": "284.0.0",
+  "homepage": "https://observablehq.com/@robinl/computing-the-fellegi-sunter-model",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

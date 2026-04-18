@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/birdsong-recordings",
+  "main": "98208622758b559c@442.js",
+  "version": "442.0.0",
+  "homepage": "https://observablehq.com/@robinl/birdsong-recordings",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

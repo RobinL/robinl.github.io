@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/understanding-match-weights",
+  "main": "94c3728fad39c9e8@644.js",
+  "version": "644.0.0",
+  "homepage": "https://observablehq.com/@robinl/understanding-match-weights",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

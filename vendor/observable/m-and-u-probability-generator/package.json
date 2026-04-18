@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/m-and-u-probability-generator",
+  "main": "c6839403e2c35642@79.js",
+  "version": "79.0.0",
+  "homepage": "https://observablehq.com/@robinl/m-and-u-probability-generator",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

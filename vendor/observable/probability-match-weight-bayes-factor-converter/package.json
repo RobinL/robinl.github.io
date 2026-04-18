@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/probability-match-weight-bayes-factor-converter",
+  "main": "30c921e322a4360a@151.js",
+  "version": "151.0.0",
+  "homepage": "https://observablehq.com/@robinl/probability-match-weight-bayes-factor-converter",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/understanding-the-spark-ui-by-example-the-left-join",
+  "main": "461b47aa9e777d4d@221.js",
+  "version": "221.0.0",
+  "homepage": "https://observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

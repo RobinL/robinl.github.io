@@ -1,0 +1,170 @@
+{
+  "86fc30325e4106c4": {
+    "package": "@robinl/86fc30325e4106c4",
+    "version": "851.0.0",
+    "source": "https://observablehq.com/@robinl/86fc30325e4106c4",
+    "entry": "86fc30325e4106c4@851.js"
+  },
+  "bf-prior-calc": {
+    "package": "@robinl/bf-prior-calc",
+    "version": "287.0.0",
+    "source": "https://observablehq.com/@robinl/bf-prior-calc",
+    "entry": "695eee6aed606401@287.js"
+  },
+  "bird-song-quiz": {
+    "package": "@robinl/bird-song-quiz",
+    "version": "731.0.0",
+    "source": "https://observablehq.com/@robinl/bird-song-quiz",
+    "entry": "fd53a58c4291210e@731.js"
+  },
+  "birdsong-recordings": {
+    "package": "@robinl/birdsong-recordings",
+    "version": "442.0.0",
+    "source": "https://observablehq.com/@robinl/birdsong-recordings",
+    "entry": "98208622758b559c@442.js"
+  },
+  "computing-the-fellegi-sunter-model": {
+    "package": "@robinl/computing-the-fellegi-sunter-model",
+    "version": "284.0.0",
+    "source": "https://observablehq.com/@robinl/computing-the-fellegi-sunter-model",
+    "entry": "0068042ce3b10dd1@284.js"
+  },
+  "dependencies-between-match-weights": {
+    "package": "@robinl/dependencies-between-match-weights",
+    "version": "158.0.0",
+    "source": "https://observablehq.com/@robinl/dependencies-between-match-weights",
+    "entry": "9547bc35da079fbb@158.js"
+  },
+  "energy-usage-and-goods-imports-and-exports": {
+    "package": "@robinl/energy-usage-and-goods-imports-and-exports",
+    "version": "1351.0.0",
+    "source": "https://observablehq.com/@robinl/energy-usage-and-goods-imports-and-exports",
+    "entry": "a6af3da98f28ce26@1351.js"
+  },
+  "energy-usage-calculator-for-everyday-activities": {
+    "package": "@robinl/energy-usage-calculator-for-everyday-activities",
+    "version": "567.0.0",
+    "source": "https://observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities",
+    "entry": "2206327fcbf2a485@567.js"
+  },
+  "fault-tolerant-trie": {
+    "package": "@robinl/fault-tolerant-trie",
+    "version": "322.0.0",
+    "source": "https://observablehq.com/@robinl/fault-tolerant-trie",
+    "entry": "965ed303c3f15178@322.js"
+  },
+  "filling-the-country-with-solar-panels": {
+    "package": "@robinl/filling-the-country-with-solar-panels",
+    "version": "66.0.0",
+    "source": "https://observablehq.com/@robinl/filling-the-country-with-solar-panels",
+    "entry": "d6e693c63bc9484f@66.js"
+  },
+  "flight-distance-calculator": {
+    "package": "@robinl/flight-distance-calculator",
+    "version": "1090.0.0",
+    "source": "https://observablehq.com/@robinl/flight-distance-calculator",
+    "entry": "cf52e2d16b5b9cbe@1090.js"
+  },
+  "how-much-should-carbon-offsetting-cost": {
+    "package": "@robinl/how-much-should-carbon-offsetting-cost",
+    "version": "478.0.0",
+    "source": "https://observablehq.com/@robinl/how-much-should-carbon-offsetting-cost",
+    "entry": "9c1004c2b84b8b80@478.js"
+  },
+  "interactive-bayes-factor-probability-and-match-weight": {
+    "package": "@robinl/interactive-bayes-factor-probability-and-match-weight",
+    "version": "434.0.0",
+    "source": "https://observablehq.com/@robinl/interactive-bayes-factor-probability-and-match-weight",
+    "entry": "189e36237ee45054@434.js"
+  },
+  "interactive-blogging-with-observable-notebooks-and-gatsb": {
+    "package": "@robinl/interactive-blogging-with-observable-notebooks-and-gatsb",
+    "version": "518.0.0",
+    "source": "https://observablehq.com/@robinl/interactive-blogging-with-observable-notebooks-and-gatsb",
+    "entry": "30c5bf135cab7285@518.js"
+  },
+  "intro-prob-linkage": {
+    "package": "@robinl/intro-prob-linkage",
+    "version": "84.0.0",
+    "source": "https://observablehq.com/@robinl/intro-prob-linkage",
+    "entry": "3ec7a740cff5f9ad@84.js"
+  },
+  "m-and-u-probability-generator": {
+    "package": "@robinl/m-and-u-probability-generator",
+    "version": "79.0.0",
+    "source": "https://observablehq.com/@robinl/m-and-u-probability-generator",
+    "entry": "c6839403e2c35642@79.js"
+  },
+  "m-and-u-probability-generator-with-starting-values": {
+    "package": "@robinl/m-and-u-probability-generator-with-starting-values",
+    "version": "119.0.0",
+    "source": "https://observablehq.com/@robinl/m-and-u-probability-generator-with-starting-values",
+    "entry": "1d09c6cf5d576e0a@119.js"
+  },
+  "my-flights": {
+    "package": "@robinl/my-flights",
+    "version": "514.0.0",
+    "source": "https://observablehq.com/@robinl/my-flights",
+    "entry": "fe522555ef506fc9@514.js"
+  },
+  "partial-match-weights": {
+    "package": "@robinl/partial-match-weights",
+    "version": "509.0.0",
+    "source": "https://observablehq.com/@robinl/partial-match-weights",
+    "entry": "8fa206ca7e295acc@509.js"
+  },
+  "probability-match-weight-bayes-factor-converter": {
+    "package": "@robinl/probability-match-weight-bayes-factor-converter",
+    "version": "151.0.0",
+    "source": "https://observablehq.com/@robinl/probability-match-weight-bayes-factor-converter",
+    "entry": "30c921e322a4360a@151.js"
+  },
+  "spark-explain": {
+    "package": "@robinl/spark-explain",
+    "version": "647.0.0",
+    "source": "https://observablehq.com/@robinl/spark-explain",
+    "entry": "8578dcec2a3fe626@647.js"
+  },
+  "the-carbon-impact-of-switiching-to-an-electric-car": {
+    "package": "@robinl/the-carbon-impact-of-switiching-to-an-electric-car",
+    "version": "1053.0.0",
+    "source": "https://observablehq.com/@robinl/the-carbon-impact-of-switiching-to-an-electric-car",
+    "entry": "a74844ec61541eb4@1053.js"
+  },
+  "understanding-match-weights": {
+    "package": "@robinl/understanding-match-weights",
+    "version": "644.0.0",
+    "source": "https://observablehq.com/@robinl/understanding-match-weights",
+    "entry": "94c3728fad39c9e8@644.js"
+  },
+  "understanding-the-spark-ui-by-example-sorting-data": {
+    "package": "@robinl/understanding-the-spark-ui-by-example-sorting-data",
+    "version": "269.0.0",
+    "source": "https://observablehq.com/@robinl/understanding-the-spark-ui-by-example-sorting-data",
+    "entry": "e3bc1166ecb701f4@269.js"
+  },
+  "understanding-the-spark-ui-by-example-the-left-join": {
+    "package": "@robinl/understanding-the-spark-ui-by-example-the-left-join",
+    "version": "221.0.0",
+    "source": "https://observablehq.com/@robinl/understanding-the-spark-ui-by-example-the-left-join",
+    "entry": "461b47aa9e777d4d@221.js"
+  },
+  "unsupervised-probabalistic-data-matching-using-the-expec": {
+    "package": "@robinl/unsupervised-probabalistic-data-matching-using-the-expec",
+    "version": "1041.0.0",
+    "source": "https://observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec",
+    "entry": "20c8b34dc8ac7754@1041.js"
+  },
+  "updating-a-prior-simplified": {
+    "package": "@robinl/updating-a-prior-simplified",
+    "version": "672.0.0",
+    "source": "https://observablehq.com/@robinl/updating-a-prior-simplified",
+    "entry": "701498347b3efc32@672.js"
+  },
+  "visualising-fellegi-sunter": {
+    "package": "@robinl/visualising-fellegi-sunter",
+    "version": "1011.0.0",
+    "source": "https://observablehq.com/@robinl/visualising-fellegi-sunter",
+    "entry": "060a32b021a09f92@1011.js"
+  }
+}

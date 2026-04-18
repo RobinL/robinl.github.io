@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/bird-song-quiz",
+  "main": "fd53a58c4291210e@731.js",
+  "version": "731.0.0",
+  "homepage": "https://observablehq.com/@robinl/bird-song-quiz",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

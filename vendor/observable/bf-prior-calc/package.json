@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/bf-prior-calc",
+  "main": "695eee6aed606401@287.js",
+  "version": "287.0.0",
+  "homepage": "https://observablehq.com/@robinl/bf-prior-calc",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

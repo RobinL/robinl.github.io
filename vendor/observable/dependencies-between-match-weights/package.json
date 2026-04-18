@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/dependencies-between-match-weights",
+  "main": "9547bc35da079fbb@158.js",
+  "version": "158.0.0",
+  "homepage": "https://observablehq.com/@robinl/dependencies-between-match-weights",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

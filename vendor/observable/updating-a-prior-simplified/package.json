@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/updating-a-prior-simplified",
+  "main": "701498347b3efc32@672.js",
+  "version": "672.0.0",
+  "homepage": "https://observablehq.com/@robinl/updating-a-prior-simplified",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

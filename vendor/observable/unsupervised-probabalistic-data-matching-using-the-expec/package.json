@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/unsupervised-probabalistic-data-matching-using-the-expec",
+  "main": "20c8b34dc8ac7754@1041.js",
+  "version": "1041.0.0",
+  "homepage": "https://observablehq.com/@robinl/unsupervised-probabalistic-data-matching-using-the-expec",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

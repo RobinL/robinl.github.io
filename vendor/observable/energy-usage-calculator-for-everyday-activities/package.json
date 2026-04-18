@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/energy-usage-calculator-for-everyday-activities",
+  "main": "2206327fcbf2a485@567.js",
+  "version": "567.0.0",
+  "homepage": "https://observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}

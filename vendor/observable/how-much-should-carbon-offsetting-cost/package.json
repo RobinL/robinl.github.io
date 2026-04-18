@@ -1,0 +1,14 @@
+{
+  "name": "@robinl/how-much-should-carbon-offsetting-cost",
+  "main": "9c1004c2b84b8b80@478.js",
+  "version": "478.0.0",
+  "homepage": "https://observablehq.com/@robinl/how-much-should-carbon-offsetting-cost",
+  "author": {
+    "name": "Robin Linacre",
+    "url": "https://observablehq.com/@robinl"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}
