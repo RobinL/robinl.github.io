@@ -1,0 +1,153 @@
+---
+title: "Letterpaths - a free library for teaching cursive writing"
+description: "Letterpaths is a free and open source library for powering educational apps"
+postDate: "2026-04-19"
+category: "data"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/content/posts/letterpaths_blog.mdx"
+pageWidth: "prose"
+---
+
+<div style={{ display: "flex", justifyContent: "center", marginBottom: "0.0rem" }}>
+  <video
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="none"
+    poster="/letterpaths/hero/letterpaths-hero-poster.webp"
+    src="/letterpaths/hero/letterpaths-hero.mp4"
+    style={{ width: "100%", borderRadius: "12px", background: "#f5f2eb" }}
+    aria-label="Animated Letterpaths demo"
+  />
+</div>
+
+# Letterpaths - free software for teaching cursive writing
+
+I have developed a free and [open source](https://github.com/robinl/letterpaths) library called [`letterpaths`](https://github.com/robinl/letterpaths), to help my kids with their handwriting.
+
+I noticed a lack of free, high quality tools that follow the UK curriculum and I wanted something flexible that could be used both in [games](https://www.robinlinacre.com/letterpaths/snake/) and for [worksheet generation](https://www.robinlinacre.com/letterpaths/writing_app/cursive_worksheet_generator/).
+
+## What does `letterpaths` do?
+
+`letterpaths` understands step-by-step letter formation and how to join letters, covering print, pre-cursive and cursive.
+
+This enables several key features:
+
+- **Tracing**:  Apps where the user pulls a guide along the path, to get a feel for the order of strokes
+- **Animated letter formation**.  Apps that show step by step how letters and word are formed.
+- **Worksheet generation**: Letters and words can be annotated into their consitituent strokes, with arrows and numbered points.
+- **Tracing by hand**:  Apps where the user draws (using a stylus or their finger) along the path.  See the [letter constellations](https://www.robinlinacre.com/letter_constellations) game.
+
+This is easier to show than to describe.  I have chosen the word `excite` because it's quite tricky: it contains deferred pen-up events (on the `x` and `t`) and deferred marks (dotted `i`, crossed `t`).
+
+Here are a few examples using the word `excite`:
+
+## Worksheet generation
+
+The [worksheet generator](https://www.robinlinacre.com/letterpaths/writing_app/cursive_worksheet_generator/) allows you to customise annotations to your taste:
+
+<div>
+  <figure style={{ margin: 0 }}>
+    <img
+      src="/letterpaths/excite/excite-markup-1.webp"
+      alt="Annotated excite word showing stroke order, arrows, and numbered points"
+      loading="lazy"
+      style={{ width: "100%", borderRadius: "12px", background: "#f5f2eb" }}
+    />
+    <figcaption style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>[Worksheet generator - annotations outside letters](https://www.robinlinacre.com/letterpaths/writing_app/cursive_worksheet_generator/?text=excite&topTurnRadius=48&topUTurnLength=52&topArrowLength=149&topArrowStrokeWidth=5.5&topNumberSize=64&topNumberPathOffset=-77&topAlwaysOffsetArrowLanes=1&topArrowColor=%23ff0000&practiceArrowStrokeWidth=5.5)</figcaption>
+  </figure>
+
+  <figure style={{ margin: 0 }}>
+    <img
+      src="/letterpaths/excite/excite-markup-2.webp"
+      alt="Annotated excite word showing directional arrows along the full path"
+      loading="lazy"
+      style={{ width: "100%", borderRadius: "12px", background: "#f5f2eb" }}
+    />
+    <figcaption style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>[Worksheet generator - bidirection annotations within letters]((https://www.robinlinacre.com/letterpaths/writing_app/cursive_worksheet_generator/cursive_worksheet_generator/?text=excite&topDirectionalDashSpacing=152&topTurnRadius=48&topUTurnLength=52&topArrowLength=149&topArrowStrokeWidth=5.5&topNumberSize=64&topNumberPathOffset=-77&topOffsetArrowLanes=0&topDirectionalDash=1&topTurningPoint=0&topStartArrow=0&topDrawOrderNumber=0&topMidpointArrow=0&practiceArrowStrokeWidth=5.5))</figcaption>
+  </figure>
+</div>
+
+## Games and tracing
+
+I have developed two demo games and a basic pedagogical tracing app:
+- [Snake game](https://www.robinlinacre.com/letterpaths/writing_app/snake/?word=excite&offsetArrowLanes=0) (click [here](https://www.robinlinacre.com/letterpaths/writing_app/snake/?word=excite&skin=theme-park&offsetArrowLanes=0) for rollercoaster mode)
+- [Letter Constellations](https://www.robinlinacre.com/letter_constellations/)
+- [Plain tracing app](https://www.robinlinacre.com/letterpaths/writing_app/?word=excite&arrowStrokeWidth=5.5)
+
+<div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "1fr",
+    gap: "1.25rem",
+    margin: "1.5rem 0 2rem",
+  }}
+>
+  <figure style={{ margin: 0 }}>
+    <video
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="none"
+      poster="/letterpaths/excite/excite-plain-poster.webp"
+      src="/letterpaths/excite/excite-plain.mp4"
+      style={{ width: "100%", borderRadius: "12px", background: "#f5f2eb" }}
+      aria-label="Animated plain letter formation for the word excite"
+    />
+    <figcaption style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>[Plain formation](https://www.robinlinacre.com/letterpaths/writing_app/?word=excite&arrowStrokeWidth=5.5)</figcaption>
+  </figure>
+
+  <figure style={{ margin: 0 }}>
+    <video
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="none"
+      poster="/letterpaths/excite/excite-snake-poster.webp"
+      src="/letterpaths/excite/excite-snake.mp4"
+      style={{ width: "100%", borderRadius: "12px", background: "#f5f2eb" }}
+      aria-label="Snake game following the word excite"
+    />
+    <figcaption style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>[Snake game](https://www.robinlinacre.com/letterpaths/writing_app/snake/?word=excite&offsetArrowLanes=0)</figcaption>
+  </figure>
+
+
+
+
+  <figure style={{ margin: 0 }}>
+    <video
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="none"
+      poster="/letterpaths/excite/excite-rollercoaster-drag-poster.webp"
+      src="/letterpaths/excite/excite-rollercoaster-drag.mp4"
+      style={{ width: "100%", borderRadius: "12px", background: "#f5f2eb" }}
+      aria-label="Rollercoaster demo dragged by hand for the word excite"
+    />
+    <figcaption style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>[Rollercoaster game (dragged by hand)](https://www.robinlinacre.com/letterpaths/writing_app/snake/?word=excite&skin=theme-park&offsetArrowLanes=0)</figcaption>
+  </figure>
+  </div>
+
+
+### Use letterpaths to create your own apps
+
+The above apps are all powered by the underlying `letterpaths` library, [available on npm](https://www.npmjs.com/package/letterpaths).
+
+As a result, you can build your own apps on top of `letterpaths` too.  Nowadays, with agentic AI coding tools like Claude Code and OpenAI Codex, this is much easier than it used to be.
+
+Since I have released the source code under a [permissive open source license](https://github.com/robinl/letterpaths?tab=MIT-1-ov-file), these apps are guaranteed to be free forever.
+
+### Give me feedback
+
+I am not a teacher, and I would [welcome feedback](/about/) on how to improve these apps, particularly from those with experience teaching handwriting.
+
+Some forthcoming features I already have in mind:
+- Improving support for print letters, and a print and pre-cursive worksheet generator
+- Allowing the user to choose letter vairants (e.g. there are different ways to form the letter `x` and `f`)
+- Improve the geometry of each letter to make hte handwriting neater
+
+
