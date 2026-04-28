@@ -57,7 +57,7 @@ export const projects: Project[] = [
   {
     name: 'Letterpaths',
     description: letterpathsDescription,
-    liveUrl: 'https://www.robinlinacre.com/letterpaths/writing_app/snake/?words=hello',
+    liveUrl: 'https://www.robinlinacre.com/letterpaths',
     githubUrl: 'https://github.com/RobinL/letterpaths',
     image: letterpathsImage,
   },
