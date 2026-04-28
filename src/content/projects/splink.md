@@ -1,0 +1,1 @@
+I am the creator of Splink, [multi-award winning](https://moj-analytical-services.github.io/splink/#awards) probabilistic data matching (entity resolution) software that's been downloaded over [17 million times](https://clickpy.clickhouse.com/dashboard/splink), and is [used widely](https://moj-analytical-services.github.io/splink/#use-cases)
