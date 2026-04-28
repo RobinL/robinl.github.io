@@ -46,12 +46,14 @@ import { projects } from '../../lib/projects';
                   </svg>
                 </a>
               )}
-              <a class="project-action" href={project.githubUrl} rel="noopener noreferrer" target="_blank">
-                <span>GitHub</span>
-                <svg viewBox="0 0 20 20" aria-hidden="true">
-                  <path d="M11.5 3a.75.75 0 0 0 0 1.5h2.19l-6.22 6.22a.75.75 0 0 0 1.06 1.06l6.22-6.22v2.19a.75.75 0 0 0 1.5 0v-4A.75.75 0 0 0 15.5 3h-4Zm-6 2.5A2.5 2.5 0 0 0 3 8v6.5A2.5 2.5 0 0 0 5.5 17H12a2.5 2.5 0 0 0 2.5-2.5V11a.75.75 0 0 0-1.5 0v3.5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1H9a.75.75 0 0 0 0-1.5H5.5Z" />
-                </svg>
-              </a>
+              {project.githubUrl && (
+                <a class="project-action" href={project.githubUrl} rel="noopener noreferrer" target="_blank">
+                  <span>GitHub</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M11.5 3a.75.75 0 0 0 0 1.5h2.19l-6.22 6.22a.75.75 0 0 0 1.06 1.06l6.22-6.22v2.19a.75.75 0 0 0 1.5 0v-4A.75.75 0 0 0 15.5 3h-4Zm-6 2.5A2.5 2.5 0 0 0 3 8v6.5A2.5 2.5 0 0 0 5.5 17H12a2.5 2.5 0 0 0 2.5-2.5V11a.75.75 0 0 0-1.5 0v3.5a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1H9a.75.75 0 0 0 0-1.5H5.5Z" />
+                  </svg>
+                </a>
+              )}
             </div>
           </div>
         </article>
