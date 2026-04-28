@@ -6,24 +6,40 @@ import letterConstellationsImage from '../assets/projects/letter_constellations.
 import letterpathsImage from '../assets/projects/letterpaths.png';
 import mathsGameProblemGeneratorImage from '../assets/projects/maths-game-problem-generator.png';
 import mathsVsMonstersImage from '../assets/projects/maths_vs_monsters.jpeg';
+import splinkImage from '../assets/projects/splink.webp';
+import ukAddressMatcherImage from '../assets/projects/uk_address_matcher.webp';
 import beeLettersDescription from '../content/projects/bee-letters.md';
 import breakoutMathsDescription from '../content/projects/breakout-maths.md';
 import letterConstellationsDescription from '../content/projects/letter-constellations.md';
 import letterpathsDescription from '../content/projects/letterpaths.md';
 import mathsGameProblemGeneratorDescription from '../content/projects/maths-game-problem-generator.md';
 import mathsVsMonstersDescription from '../content/projects/maths-vs-monsters.md';
+import splinkDescription from '../content/projects/splink.md';
+import ukAddressMatcherDescription from '../content/projects/uk-address-matcher.md';
 
 type ProjectDescription = typeof beeLettersDescription;
 
 export interface Project {
   name: string;
   description: ProjectDescription;
-  liveUrl: string;
+  liveUrl?: string;
   githubUrl: string;
   image: ImageMetadata;
 }
 
 export const projects: Project[] = [
+  {
+    name: 'Splink',
+    description: splinkDescription,
+    githubUrl: 'https://github.com/moj-analytical-services/splink',
+    image: splinkImage,
+  },
+  {
+    name: 'UK Address Matcher',
+    description: ukAddressMatcherDescription,
+    githubUrl: 'https://github.com/RobinL/uk_address_matcher',
+    image: ukAddressMatcherImage,
+  },
   {
     name: 'Bee Letters',
     description: beeLettersDescription,
