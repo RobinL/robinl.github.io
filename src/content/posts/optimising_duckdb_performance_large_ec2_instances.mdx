@@ -38,11 +38,13 @@ For S3 writes, I benchmarked the a 801 million-row table on an r8id.32xlarge wit
 
 The output size was about 8.3 GiB across 64 Parquet files. With default settings, direct DuckDB-to-S3 was faster: 8.53s versus 15.79s for local-then-sync.
 
-DuckDB's local write took only 1.70s, meaning the `aws s3 sync` was actually slower than using DuckDB-to-S3 directly.
+DuckDB's local write took only 1.70s, meaning that using vanilla settings `aws s3 sync` was actually slower than using DuckDB-to-S3 directly.
 
 Further research showed `aws s3 sync` [is expected to be slow](https://docs.aws.amazon.com/cli/latest/topic/s3-config.html#max-concurrent-requests) with its default classic transfer client settings, and a [recommended solution is to use the CRT transfer client instead](https://aws.amazon.com/blogs/storage/improving-amazon-s3-throughput-for-the-aws-cli-and-boto3-with-the-aws-common-runtime/).
 
-After forcing `aws s3 sync` to use the CRT transfer client with a `50Gb/s` target bandwidth, the result reversed. Local-then-sync fell to 5.04s overall, while the local DuckDB write stayed effectively flat at 1.73s and the observed sync throughput increased from about 649 MiB/s to 3891 MiB/s. By contrast, the DuckDB direct-to-S3 path did not improve in this benchmark: it moved from 8.53s to 9.54s. On this machine, the practical takeaway was clear: if you have fast local SSD, write Parquet locally first and then upload with the CRT-based `aws s3 sync` path rather than writing directly from DuckDB to S3.
+After forcing `aws s3 sync` to use the CRT transfer client, the result reversed. Local-then-sync fell to 5.04s overall, while the local DuckDB write stayed effectively flat at 1.73s and the observed sync throughput increased from about 649 MiB/s to 3891 MiB/s. By contrast, the DuckDB direct-to-S3 path did not improve in this benchmark: it moved from 8.53s to 9.54s. On this machine, the practical takeaway was clear: if you have fast local SSD, write Parquet locally first and then upload with the CRT-based `aws s3 sync` path rather than writing directly from DuckDB to S3.
+
+I experimented with x settings for the DuckDB-to-S3, but they didn not make a difference.
 
 ## Memory
 
