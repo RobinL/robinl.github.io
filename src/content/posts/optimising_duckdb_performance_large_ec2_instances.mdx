@@ -1,0 +1,75 @@
+---
+title: "Optimising DuckDB performance on large EC2 instances"
+description: "Practical notes on getting DuckDB to run efficiently on large EC2 instances"
+postDate: "2026-05-13"
+category: "data"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/content/posts/optimising_duckdb_performance_large_ec2_instances.mdx"
+pageWidth: "prose"
+---
+
+# Optimising DuckDB performance on large EC2 instances
+
+As DuckDB has matured, we now [recommend it](https://moj-analytical-services.github.io/splink/topic_guides/splink_fundamentals/backends/backends.html?h=recommend#duckdb) over Spark for most linkages using Splink.
+
+But how can we get optimal performance out of DuckDB on EC2 instances?  This post sets out some empirical observations from a variety of benchmarking experiments.
+
+## Key findings
+
+- Do not assume more threads always gives better performance.  On some workloads performance doubled or more when using fewer threads.
+- Throughput of writing to disk can be an important bottleneck.  Use instance storage (SSDs), or if unavailable, set EBS thoughput to maximum.
+- DuckDB or `aws s3 sync` are slow when writing to S3 under default settings.  Write from DuckDB to local SSD and then use the CRT transfer client to speed up S3 writes.
+
+## Evidence
+
+## Threads and performance
+
+Note that 100% CPU utilisation does not guarantee better performance.  In some cases, I saw full utilisation of 128 vCPUs, and yet the query took longer with `threads=128` than with `threads=64`.
+
+## Disk I/O
+
+Use SSDs in RAID 0.
+
+## S3 IO
+
+For S3 writes, I benchmarked the a 801 million-row table on an r8id.32xlarge with DuckDB `threads=64` in two ways:
+
+1.  A direct DuckDB `COPY` to S3,
+2. DuckDB writing Parquet to local NVMe SSD before uploading with `aws s3 sync`.
+
+The output size was about 8.3 GiB across 64 Parquet files. With default settings, direct DuckDB-to-S3 was faster: 8.53s versus 15.79s for local-then-sync.
+
+DuckDB's local write took only 1.70s, meaning the `aws s3 sync` was actually slower than using DuckDB-to-S3 directly.
+
+Further research showed `aws s3 sync` [is expected to be slow](https://docs.aws.amazon.com/cli/latest/topic/s3-config.html#max-concurrent-requests) with its default classic transfer client settings, and a [recommended solution is to use the CRT transfer client instead](https://aws.amazon.com/blogs/storage/improving-amazon-s3-throughput-for-the-aws-cli-and-boto3-with-the-aws-common-runtime/).
+
+After forcing `aws s3 sync` to use the CRT transfer client with a `50Gb/s` target bandwidth, the result reversed. Local-then-sync fell to 5.04s overall, while the local DuckDB write stayed effectively flat at 1.73s and the observed sync throughput increased from about 649 MiB/s to 3891 MiB/s. By contrast, the DuckDB direct-to-S3 path did not improve in this benchmark: it moved from 8.53s to 9.54s. On this machine, the practical takeaway was clear: if you have fast local SSD, write Parquet locally first and then upload with the CRT-based `aws s3 sync` path rather than writing directly from DuckDB to S3.
+
+## Memory
+
+
+
+Experiment with different settings.  I've seen workloads where `threads = 64` performs better than `threads = 128`, and sometimes `threads = 32` was best.
+
+
+But what are the optimal settings for running DuckDB on large EC2 instances?
+
+DuckDB performance
+
+This blog post sets out To get optimal performance,
+
+
+## Other findings
+
+- Cloudwatch agent is annoying because you can poll at maximum of 1 per second.
+
+
+## Annex:  Detailed evidence
+
+### s3 writes
+
+--
+
+Writing to S3 can be a lot faster:
+Please implement this to make the s3 write faster:
+
+2. Force the CRT transfer client
