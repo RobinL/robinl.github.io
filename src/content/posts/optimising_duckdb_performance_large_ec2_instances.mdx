@@ -7,9 +7,12 @@ codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/content/posts/
 pageWidth: "prose"
 ---
 
+import { VegaLite } from '../../components/probabilistic/Vega.jsx';
+import s3_io_chart from './optimising_duckdb_performance_large_ec2_instances/s3_io_chart.vl.json';
+
 # Optimising DuckDB performance on large EC2 instances
 
-As DuckDB has matured, we now [recommend it](https://moj-analytical-services.github.io/splink/topic_guides/splink_fundamentals/backends/backends.html?h=recommend#duckdb) over Spark for most linkages using Splink.
+As DuckDB has matured, we now [recommend it](https://moj-analytical-services.github.io/splink/topic_guides/splink_fundamentals/backends/backends.html?h=recommend#duckdb) over Spark for most record linkage workloads using Splink.
 
 But how can we get optimal performance out of DuckDB on EC2 instances?  This post sets out some empirical observations from a variety of benchmarking experiments.
 
@@ -42,9 +45,13 @@ DuckDB's local write took only 1.70s, meaning that using vanilla settings `aws s
 
 Further research showed `aws s3 sync` [is expected to be slow](https://docs.aws.amazon.com/cli/latest/topic/s3-config.html#max-concurrent-requests) with its default classic transfer client settings, and a [recommended solution is to use the CRT transfer client instead](https://aws.amazon.com/blogs/storage/improving-amazon-s3-throughput-for-the-aws-cli-and-boto3-with-the-aws-common-runtime/).
 
-After forcing `aws s3 sync` to use the CRT transfer client, the result reversed. Local-then-sync fell to 5.04s overall, while the local DuckDB write stayed effectively flat at 1.73s and the observed sync throughput increased from about 649 MiB/s to 3891 MiB/s. By contrast, the DuckDB direct-to-S3 path did not improve in this benchmark: it moved from 8.53s to 9.54s. On this machine, the practical takeaway was clear: if you have fast local SSD, write Parquet locally first and then upload with the CRT-based `aws s3 sync` path rather than writing directly from DuckDB to S3.
+After forcing `aws s3 sync` to use the CRT transfer client, the result reversed. Local-then-sync fell to 5.04s overall, while the local DuckDB write stayed effectively flat at 1.73s. The sync stage itself increased from about 604 MiB/s to 2,572 MiB/s, and end-to-end throughput rose from about 539 MiB/s to 1,689 MiB/s. On this machine, the practical takeaway was clear: if you have fast local SSD, write Parquet locally first and then upload with the CRT-based `aws s3 sync` path rather than writing directly from DuckDB to S3.
 
-I experimented with x settings for the DuckDB-to-S3, but they didn not make a difference.
+The breakdown is clearer in the chart below. Hover over a segment to see the stage throughput and the overall throughput for that option.
+
+<VegaLite client:visible spec={s3_io_chart} />
+
+I experimented with x settings for the DuckDB-to-S3, but they did not make a difference.
 
 ## Memory
 

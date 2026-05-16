@@ -1,0 +1,239 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 540,
+  "height": 140,
+  "padding": {
+    "left": 8,
+    "right": 16,
+    "top": 4,
+    "bottom": 4
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "orient": "bottom",
+      "direction": "horizontal",
+      "columns": 2,
+      "titleFontSize": 12,
+      "labelFontSize": 12,
+      "title": "Stage"
+    }
+  },
+  "datasets": {
+    "segments": [
+      {
+        "option_order": 1,
+        "option_label": "DuckDB -> S3",
+        "segment_order": 1,
+        "segment_label": "DuckDB -> S3",
+        "seconds": 8.529,
+        "throughput_mib_per_second": 998.1,
+        "total_seconds": 8.529,
+        "total_throughput_mib_per_second": 998.1
+      },
+      {
+        "option_order": 2,
+        "option_label": "Local write -> aws s3 sync (vanilla)",
+        "segment_order": 2,
+        "segment_label": "DuckDB -> local SSD",
+        "seconds": 1.7,
+        "throughput_mib_per_second": 5007.7,
+        "total_seconds": 15.786,
+        "total_throughput_mib_per_second": 539.3
+      },
+      {
+        "option_order": 2,
+        "option_label": "Local write -> aws s3 sync (vanilla)",
+        "segment_order": 3,
+        "segment_label": "aws s3 sync",
+        "seconds": 14.086,
+        "throughput_mib_per_second": 604.4,
+        "total_seconds": 15.786,
+        "total_throughput_mib_per_second": 539.3
+      },
+      {
+        "option_order": 3,
+        "option_label": "Local write -> aws s3 sync (CRT)",
+        "segment_order": 2,
+        "segment_label": "DuckDB -> local SSD",
+        "seconds": 1.73,
+        "throughput_mib_per_second": 4921.0,
+        "total_seconds": 5.04,
+        "total_throughput_mib_per_second": 1689.1
+      },
+      {
+        "option_order": 3,
+        "option_label": "Local write -> aws s3 sync (CRT)",
+        "segment_order": 4,
+        "segment_label": "aws s3 sync (CRT)",
+        "seconds": 3.31,
+        "throughput_mib_per_second": 2572.0,
+        "total_seconds": 5.04,
+        "total_throughput_mib_per_second": 1689.1
+      }
+    ],
+    "totals": [
+      {
+        "option_order": 1,
+        "option_label": "DuckDB -> S3",
+        "label_position_seconds": 8.95,
+        "total_seconds": 8.529,
+        "total_seconds_label": "8.53s"
+      },
+      {
+        "option_order": 2,
+        "option_label": "Local write -> aws s3 sync (vanilla)",
+        "label_position_seconds": 16.15,
+        "total_seconds": 15.786,
+        "total_seconds_label": "15.79s"
+      },
+      {
+        "option_order": 3,
+        "option_label": "Local write -> aws s3 sync (CRT)",
+        "label_position_seconds": 5.4,
+        "total_seconds": 5.04,
+        "total_seconds_label": "5.04s"
+      }
+    ]
+  },
+  "encoding": {
+    "y": {
+      "field": "option_label",
+      "type": "nominal",
+      "sort": {
+        "field": "option_order",
+        "op": "min",
+        "order": "ascending"
+      },
+      "axis": {
+        "title": null,
+        "labelLimit": 360
+      }
+    },
+    "x": {
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          0,
+          18
+        ]
+      },
+      "axis": {
+        "title": "Time (seconds)",
+        "format": ",.0f"
+      }
+    }
+  },
+  "layer": [
+    {
+      "data": {
+        "name": "segments"
+      },
+      "mark": {
+        "type": "bar",
+        "size": 22
+      },
+      "encoding": {
+        "x": {
+          "field": "seconds",
+          "stack": "zero"
+        },
+        "color": {
+          "field": "segment_label",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "DuckDB -> S3",
+              "DuckDB -> local SSD",
+              "aws s3 sync",
+              "aws s3 sync (CRT)"
+            ],
+            "range": [
+              "#2563eb",
+              "#0f766e",
+              "#d97706",
+              "#16a34a"
+            ]
+          }
+        },
+        "order": {
+          "field": "segment_order",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {
+            "field": "option_label",
+            "title": "Option",
+            "type": "nominal"
+          },
+          {
+            "field": "segment_label",
+            "title": "Stage",
+            "type": "nominal"
+          },
+          {
+            "field": "seconds",
+            "title": "Time (s)",
+            "type": "quantitative",
+            "format": ",.2f"
+          },
+          {
+            "field": "throughput_mib_per_second",
+            "title": "Throughput (MiB/s)",
+            "type": "quantitative",
+            "format": ",.1f"
+          },
+          {
+            "field": "total_seconds",
+            "title": "Total time (s)",
+            "type": "quantitative",
+            "format": ",.2f"
+          },
+          {
+            "field": "total_throughput_mib_per_second",
+            "title": "Overall throughput (MiB/s)",
+            "type": "quantitative",
+            "format": ",.1f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "name": "totals"
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "fontSize": 12,
+        "fontWeight": 700,
+        "color": "#111827"
+      },
+      "encoding": {
+        "x": {
+          "field": "label_position_seconds"
+        },
+        "y": {
+          "field": "option_label",
+          "type": "nominal",
+          "sort": {
+            "field": "option_order",
+            "op": "min",
+            "order": "ascending"
+          },
+          "axis": null
+        },
+        "text": {
+          "field": "total_seconds_label"
+        }
+      }
+    }
+  ]
+}
