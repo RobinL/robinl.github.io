@@ -10,6 +10,7 @@ pageWidth: "prose"
 import { VegaLite } from '../../components/probabilistic/Vega.jsx';
 import s3_io_chart from './optimising_duckdb_performance_large_ec2_instances/s3_io_chart.vl.json';
 import threads_performance_chart from './optimising_duckdb_performance_large_ec2_instances/threads_performance_chart.vl.json';
+import threads_cpu_usage_chart from './optimising_duckdb_performance_large_ec2_instances/threads_cpu_usage_chart.vl.json';
 
 # Optimising DuckDB performance on large EC2 instances
 
@@ -45,7 +46,11 @@ The performance varied depending on the DuckDB `THREADS` pragma setting:
 
 Using all 128 cores made performance unambiguously worse, particularly when reading from parquet.
 
-Note that 100% CPU utilisation does not guarantee better performance. In the Parquet-side run, `threads=128` briefly saturated all 128 logical CPUs, yet still took much longer than both `threads=64` and `threads=32`.
+The chart below shows CPU usage over time for the DuckDB-table runs. The 128-thread run does hit the ceiling briefly, but not in a way that translates into lower runtime.
+
+<VegaLite client:visible spec={threads_cpu_usage_chart} />
+
+A unanswered question for me is why DuckDB is unable to fully pin the CPU at 100% of its allocated threads for the query.
 
 ### Disk I/O
 
