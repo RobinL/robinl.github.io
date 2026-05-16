@@ -25,7 +25,7 @@ But how can we get optimal performance out of DuckDB on EC2 instances?  This pos
 
 ## Evidence
 
-## Threads and performance
+### Threads and performance
 
 For the `GROUP BY` query against the Parquet dataset on an `r8id.32xlarge`, more threads did not help. In the latest benchmark run, the query took 8.81s with `threads=32`, 9.20s with `threads=64`, and 16.20s with `threads=128`.
 
@@ -35,7 +35,7 @@ That means `threads=128` was about 1.84x slower than the fastest setting, even t
 
 Note that 100% CPU utilisation does not guarantee better performance. In this latest run, `threads=128` briefly saturated all 128 logical CPUs, yet still took much longer than both `threads=64` and `threads=32`.
 
-## Disk I/O
+### Disk I/O
 
 My experiments show that DuckDB is capable of writing to disk at at least 5 GiB/s, but the default throughput of EBS [is just 125 MiB/s](https://docs.aws.amazon.com/ebs/latest/userguide/general-purpose.html#gp3-performance), so if you write large amounts of data to EBS under default settings, the runtime will be dominated by disk I/O bottleneck.
 
@@ -46,9 +46,9 @@ EBS throughput can be increased to a [maximum of 2,000 MiB/s](https://docs.aws.a
 
 
 
-## S3 IO
+### S3 IO
 
-### Writes
+#### Writes
 For S3 writes, I benchmarked the a 800 million-row table on an `r8id.32xlarge` with DuckDB `threads=64` in two ways:
 
 1. A direct DuckDB `COPY` to S3,
@@ -67,7 +67,7 @@ The DuckDB -> S3 direct route doesn't come close to saturating S3 bandwidth, at 
 
 I experimented with DuckDB's [s3 settings](https://duckdb.org/docs/current/configuration/overview#:~:text=S3%20Uploader%20global%20thread%20limit) for the DuckDB-to-S3, but they did not make a significant difference.
 
-### Reads
+#### Reads
 
 I used the same `aws s3 sync` approach to download the benchmark dataset from S3 to local SSD. With default settings, downloading the 3.9 GiB dataset took about 8 seconds, which is about 460.0 MiB/s.
 
@@ -77,32 +77,10 @@ As with writes, this still does not quite saturate the quoted EC2 network bandwi
 
 
 
-## Memory
 
-
-
-Experiment with different settings.  I've seen workloads where `threads = 64` performs better than `threads = 128`, and sometimes `threads = 32` was best.
-
-
-But what are the optimal settings for running DuckDB on large EC2 instances?
-
-DuckDB performance
-
-This blog post sets out To get optimal performance,
 
 
 ## Other findings
 
 - Cloudwatch agent is annoying because you can poll at maximum of 1 per second.
 
-
-## Annex:  Detailed evidence
-
-### s3 writes
-
---
-
-Writing to S3 can be a lot faster:
-Please implement this to make the s3 write faster:
-
-2. Force the CRT transfer client
