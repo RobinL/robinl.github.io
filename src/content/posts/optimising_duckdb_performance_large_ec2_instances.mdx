@@ -41,9 +41,9 @@ The performance varied depedning on the DuckDB `THREADS` pragma setting:
 
 <VegaLite client:visible spec={threads_performance_chart} />
 
-This compares the same query in two layouts on the same local SSD: reading raw Parquet files directly and querying a materialised DuckDB table. DuckDB was a bit faster at every thread count: 8.69s vs 8.81s at `threads=32`, 8.33s vs 9.20s at `threads=64`, and 11.94s vs 16.20s at `threads=128`.
+'DuckDB table' refers to running the query from the table in a `db.duckdb` database on the SSD, whereas 'Parquet files' refers to running the query direct from the raw Parquet files on the SSD.
 
-The big picture was consistent across both layouts: `threads=128` was clearly worse than the lower settings. The only difference in detail was that raw Parquet favoured `threads=32`, while the DuckDB table favoured `threads=64`.
+Using all 128 cores made performance unambiguously worse, particularly when reading from parquet.
 
 Note that 100% CPU utilisation does not guarantee better performance. In the Parquet-side run, `threads=128` briefly saturated all 128 logical CPUs, yet still took much longer than both `threads=64` and `threads=32`.
 
