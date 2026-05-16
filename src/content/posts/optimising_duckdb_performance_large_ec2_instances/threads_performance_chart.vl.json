@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Group/order query runtime by DuckDB thread count on r8id.32xlarge.",
+  "description": "Grouped runtime comparison for the group/order query on raw Parquet files versus a DuckDB table on r8id.32xlarge.",
   "width": 450,
   "height": 220,
   "padding": {
@@ -16,36 +16,58 @@
     "axis": {
       "labelFontSize": 12,
       "titleFontSize": 12
+    },
+    "legend": {
+      "orient": "bottom",
+      "direction": "horizontal",
+      "titleFontSize": 12,
+      "labelFontSize": 12,
+      "title": "Storage layout"
     }
   },
   "data": {
     "values": [
       {
+        "storage_layout": "Parquet",
         "thread_count": 32,
         "query_seconds": 8.814,
         "runtime_label": "8.81s",
-        "relative_to_fastest": 1.0,
-        "max_cpu_total_percent": 3399.8,
-        "max_cpu_average_percent": 26.6,
-        "avg_cpu_average_percent": 15.0
+        "relative_to_fastest_layout": 1.0
       },
       {
+        "storage_layout": "Parquet",
         "thread_count": 64,
         "query_seconds": 9.195,
         "runtime_label": "9.20s",
-        "relative_to_fastest": 1.04,
-        "max_cpu_total_percent": 6601.3,
-        "max_cpu_average_percent": 51.6,
-        "avg_cpu_average_percent": 21.2
+        "relative_to_fastest_layout": 1.04
       },
       {
+        "storage_layout": "Parquet",
         "thread_count": 128,
         "query_seconds": 16.199,
         "runtime_label": "16.20s",
-        "relative_to_fastest": 1.84,
-        "max_cpu_total_percent": 12800.0,
-        "max_cpu_average_percent": 100.0,
-        "avg_cpu_average_percent": 36.3
+        "relative_to_fastest_layout": 1.84
+      },
+      {
+        "storage_layout": "DuckDB table",
+        "thread_count": 32,
+        "query_seconds": 8.688,
+        "runtime_label": "8.69s",
+        "relative_to_fastest_layout": 1.04
+      },
+      {
+        "storage_layout": "DuckDB table",
+        "thread_count": 64,
+        "query_seconds": 8.325,
+        "runtime_label": "8.33s",
+        "relative_to_fastest_layout": 1.0
+      },
+      {
+        "storage_layout": "DuckDB table",
+        "thread_count": 128,
+        "query_seconds": 11.937,
+        "runtime_label": "11.94s",
+        "relative_to_fastest_layout": 1.43
       }
     ]
   },
@@ -81,10 +103,22 @@
         "type": "bar",
         "cornerRadiusTopLeft": 4,
         "cornerRadiusTopRight": 4,
-        "size": 82
+        "size": 34
       },
       "encoding": {
+        "xOffset": {
+          "field": "storage_layout"
+        },
+        "color": {
+          "field": "storage_layout",
+          "type": "nominal"
+        },
         "tooltip": [
+          {
+            "field": "storage_layout",
+            "type": "nominal",
+            "title": "Storage"
+          },
           {
             "field": "thread_count",
             "type": "ordinal",
@@ -97,28 +131,10 @@
             "format": ".3f"
           },
           {
-            "field": "relative_to_fastest",
+            "field": "relative_to_fastest_layout",
             "type": "quantitative",
-            "title": "Relative to fastest",
+            "title": "Relative to fastest for this storage",
             "format": ".2f"
-          },
-          {
-            "field": "max_cpu_total_percent",
-            "type": "quantitative",
-            "title": "Max total CPU %",
-            "format": ".1f"
-          },
-          {
-            "field": "max_cpu_average_percent",
-            "type": "quantitative",
-            "title": "Max avg CPU per logical core %",
-            "format": ".1f"
-          },
-          {
-            "field": "avg_cpu_average_percent",
-            "type": "quantitative",
-            "title": "Mean avg CPU per logical core %",
-            "format": ".1f"
           }
         ]
       }
@@ -134,6 +150,9 @@
         "color": "#ffffff"
       },
       "encoding": {
+        "xOffset": {
+          "field": "storage_layout"
+        },
         "text": {
           "field": "runtime_label"
         }
