@@ -14,21 +14,27 @@ import s3_io_chart from './optimising_duckdb_performance_large_ec2_instances/s3_
 
 As DuckDB has matured, we now [recommend it](https://moj-analytical-services.github.io/splink/topic_guides/splink_fundamentals/backends/backends.html?h=recommend#duckdb) over Spark for most record linkage workloads using Splink.
 
-But how can we get optimal performance out of DuckDB on EC2 instances?  This post sets out some empirical observations from a variety of benchmarking experiments.
+But how can we get optimal performance out of DuckDB on EC2 instances?  This post sets out results from a variety of benchmarking experiments.
 
 ## Key findings
 
-- Do not assume more threads always gives better performance.  On some workloads performance doubled or more when using fewer threads.
+- [Do not assume](https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads#too-many-threads) more threads always gives better performance.  On some workloads performance doubled or more when using fewer threads.
 - Throughput of writing to disk can be an important bottleneck.  Use instance storage (SSDs), or if unavailable, set EBS thoughput to maximum.
-- DuckDB or `aws s3 sync` are slow when writing to S3 under default settings.  Write from DuckDB to local SSD and then use the CRT transfer client to speed up S3 writes.
+- DuckDB is relatively slow when writing to S3, and so is `aws s3 sync` under default settings.  For optimsal write speed, write from DuckDB to local SSD and then to S3 using the CRT transfer client.
 
 ## Evidence
 
 ## Threads and performance
 
+--Add chart for the group by query here--
+
 Note that 100% CPU utilisation does not guarantee better performance.  In some cases, I saw full utilisation of 128 vCPUs, and yet the query took longer with `threads=128` than with `threads=64`.
 
 ## Disk I/O
+
+My experiments show that DuckDB is capable of writing to disk at at least 5 GiB/s, but the default throughput of EBS [is just 125 MiB/s](https://docs.aws.amazon.com/ebs/latest/userguide/general-purpose.html#gp3-performance), so if you write to EBS under default settings, the runtime will be dominated by this disk I/O bottleneck.
+
+
 
 Use SSDs in RAID 0.
 
