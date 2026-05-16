@@ -34,24 +34,24 @@ Use SSDs in RAID 0.
 
 ## S3 IO
 
-For S3 writes, I benchmarked the a 801 million-row table on an r8id.32xlarge with DuckDB `threads=64` in two ways:
+For S3 writes, I benchmarked the a 800 million-row table on an `r8id.32xlarge` with DuckDB `threads=64` in two ways:
 
-1.  A direct DuckDB `COPY` to S3,
+1. A direct DuckDB `COPY` to S3,
 2. DuckDB writing Parquet to local NVMe SSD before uploading with `aws s3 sync`.
-
-The output size was about 8.3 GiB across 64 Parquet files. With default settings, direct DuckDB-to-S3 was faster: 8.53s versus 15.79s for local-then-sync.
-
-DuckDB's local write took only 1.70s, meaning that using vanilla settings `aws s3 sync` was actually slower than using DuckDB-to-S3 directly.
 
 Further research showed `aws s3 sync` [is expected to be slow](https://docs.aws.amazon.com/cli/latest/topic/s3-config.html#max-concurrent-requests) with its default classic transfer client settings, and a [recommended solution is to use the CRT transfer client instead](https://aws.amazon.com/blogs/storage/improving-amazon-s3-throughput-for-the-aws-cli-and-boto3-with-the-aws-common-runtime/).
 
-After forcing `aws s3 sync` to use the CRT transfer client, the result reversed. Local-then-sync fell to 5.04s overall, while the local DuckDB write stayed effectively flat at 1.73s. The sync stage itself increased from about 604 MiB/s to 2,572 MiB/s, and end-to-end throughput rose from about 539 MiB/s to 1,689 MiB/s. On this machine, the practical takeaway was clear: if you have fast local SSD, write Parquet locally first and then upload with the CRT-based `aws s3 sync` path rather than writing directly from DuckDB to S3.
+The output was 8.3 GiB across 64 Parquet files.
 
-The breakdown is clearer in the chart below. Hover over a segment to see the stage throughput and the overall throughput for that option.
+Results are shown below. Hover over a segment to see the stage throughput and the overall throughput for that option.
 
 <VegaLite client:visible spec={s3_io_chart} />
 
-I experimented with x settings for the DuckDB-to-S3, but they did not make a difference.
+The DuckDB -> S3 direct route doesn't come close to saturating S3 bandwidth, at 998MiB/s.  `s3 sync` with CRT is much faster at 2,572 MiB/s, but still falls short of the quoted EC2 network bandwidth for this instance type of [50 Gbit/s, or about 5,960 MiB/s](https://docs.aws.amazon.com/ec2/latest/instancetypes/mo.html#mo_network).
+
+
+I experimented with DuckDB's [s3 settings](https://duckdb.org/docs/current/configuration/overview#:~:text=S3%20Uploader%20global%20thread%20limit) for the DuckDB-to-S3, but they did not make a significant difference.
+
 
 ## Memory
 
