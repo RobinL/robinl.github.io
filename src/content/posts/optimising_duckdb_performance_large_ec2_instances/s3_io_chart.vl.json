@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 540,
-  "height": 140,
+  "height": 180,
   "padding": {
     "left": 8,
     "right": 16,
@@ -15,14 +15,6 @@
     "axis": {
       "labelFontSize": 12,
       "titleFontSize": 12
-    },
-    "legend": {
-      "orient": "bottom",
-      "direction": "horizontal",
-      "columns": 2,
-      "titleFontSize": 12,
-      "labelFontSize": 12,
-      "title": "Stage"
     }
   },
   "datasets": {
@@ -118,7 +110,8 @@
       },
       "axis": {
         "title": null,
-        "labelLimit": 420
+        "labelLimit": 420,
+        "labelLineHeight": 14
       }
     },
     "x": {
@@ -152,7 +145,7 @@
         "color": {
           "field": "segment_color_label",
           "type": "nominal",
-          "title": "Phase",
+          "legend": null,
           "scale": {
             "domain": [
               "DuckDB -> S3 direct",
