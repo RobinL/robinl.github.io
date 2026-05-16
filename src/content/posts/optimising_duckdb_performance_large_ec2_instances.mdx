@@ -32,14 +32,18 @@ Note that 100% CPU utilisation does not guarantee better performance.  In some c
 
 ## Disk I/O
 
-My experiments show that DuckDB is capable of writing to disk at at least 5 GiB/s, but the default throughput of EBS [is just 125 MiB/s](https://docs.aws.amazon.com/ebs/latest/userguide/general-purpose.html#gp3-performance), so if you write to EBS under default settings, the runtime will be dominated by this disk I/O bottleneck.
+My experiments show that DuckDB is capable of writing to disk at at least 5 GiB/s, but the default throughput of EBS [is just 125 MiB/s](https://docs.aws.amazon.com/ebs/latest/userguide/general-purpose.html#gp3-performance), so if you write large amounts of data to EBS under default settings, the runtime will be dominated by disk I/O bottleneck.
+
+EBS throughput can be increased to a [maximum of 2,000 MiB/s](https://docs.aws.amazon.com/ebs/latest/userguide/general-purpose.html#gp3-performance), but a better option is to ue instance storage (SSDs), which can achieve throughput of perhaps 5 GiB/s or more if configured in RAID0.
 
 
+--Best charts showing write speeds here--
 
-Use SSDs in RAID 0.
+
 
 ## S3 IO
 
+### Writes
 For S3 writes, I benchmarked the a 800 million-row table on an `r8id.32xlarge` with DuckDB `threads=64` in two ways:
 
 1. A direct DuckDB `COPY` to S3,
@@ -57,6 +61,15 @@ The DuckDB -> S3 direct route doesn't come close to saturating S3 bandwidth, at 
 
 
 I experimented with DuckDB's [s3 settings](https://duckdb.org/docs/current/configuration/overview#:~:text=S3%20Uploader%20global%20thread%20limit) for the DuckDB-to-S3, but they did not make a significant difference.
+
+### Reads
+
+I used the same `aws s3 sync` approach to download the benchmark dataset from S3 to local SSD. With default settings, downloading the 3.9 GiB dataset took about 8 seconds, which is about 460.0 MiB/s.
+
+After enabling the CRT transfer client for the worker-side dataset sync, the same download completed in about 1 second, implying a throughput of about 3,680.0 MiB/s. That is roughly an 8x improvement.
+
+As with writes, this still does not quite saturate the quoted EC2 network bandwidth for this instance type of [about 5,960 MiB/s](https://docs.aws.amazon.com/ec2/latest/instancetypes/mo.html#mo_network), but it is much closer than the default transfer path.
+
 
 
 ## Memory
