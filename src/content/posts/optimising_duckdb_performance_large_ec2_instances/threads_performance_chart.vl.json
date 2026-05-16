@@ -1,0 +1,143 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Group/order query runtime by DuckDB thread count on r8id.32xlarge.",
+  "width": 450,
+  "height": 220,
+  "padding": {
+    "left": 8,
+    "right": 16,
+    "top": 4,
+    "bottom": 4
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    }
+  },
+  "data": {
+    "values": [
+      {
+        "thread_count": 32,
+        "query_seconds": 8.814,
+        "runtime_label": "8.81s",
+        "relative_to_fastest": 1.0,
+        "max_cpu_total_percent": 3399.8,
+        "max_cpu_average_percent": 26.6,
+        "avg_cpu_average_percent": 15.0
+      },
+      {
+        "thread_count": 64,
+        "query_seconds": 9.195,
+        "runtime_label": "9.20s",
+        "relative_to_fastest": 1.04,
+        "max_cpu_total_percent": 6601.3,
+        "max_cpu_average_percent": 51.6,
+        "avg_cpu_average_percent": 21.2
+      },
+      {
+        "thread_count": 128,
+        "query_seconds": 16.199,
+        "runtime_label": "16.20s",
+        "relative_to_fastest": 1.84,
+        "max_cpu_total_percent": 12800.0,
+        "max_cpu_average_percent": 100.0,
+        "avg_cpu_average_percent": 36.3
+      }
+    ]
+  },
+  "encoding": {
+    "x": {
+      "field": "thread_count",
+      "type": "ordinal",
+      "title": "DuckDB threads",
+      "sort": [
+        32,
+        64,
+        128
+      ],
+      "axis": {
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "query_seconds",
+      "type": "quantitative",
+      "title": "Runtime (seconds)",
+      "scale": {
+        "domain": [
+          0,
+          18
+        ]
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusTopLeft": 4,
+        "cornerRadiusTopRight": 4,
+        "size": 82
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "thread_count",
+            "type": "ordinal",
+            "title": "Threads"
+          },
+          {
+            "field": "query_seconds",
+            "type": "quantitative",
+            "title": "Runtime (s)",
+            "format": ".3f"
+          },
+          {
+            "field": "relative_to_fastest",
+            "type": "quantitative",
+            "title": "Relative to fastest",
+            "format": ".2f"
+          },
+          {
+            "field": "max_cpu_total_percent",
+            "type": "quantitative",
+            "title": "Max total CPU %",
+            "format": ".1f"
+          },
+          {
+            "field": "max_cpu_average_percent",
+            "type": "quantitative",
+            "title": "Max avg CPU per logical core %",
+            "format": ".1f"
+          },
+          {
+            "field": "avg_cpu_average_percent",
+            "type": "quantitative",
+            "title": "Mean avg CPU per logical core %",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "top",
+        "dy": 6,
+        "fontSize": 12,
+        "fontWeight": 700,
+        "color": "#ffffff"
+      },
+      "encoding": {
+        "text": {
+          "field": "runtime_label"
+        }
+      }
+    }
+  ]
+}
