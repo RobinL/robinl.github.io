@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 540,
+  "width": 450,
   "height": 180,
   "padding": {
     "left": 8,
@@ -207,25 +207,16 @@
       },
       "mark": {
         "type": "text",
-        "align": "left",
+        "align": "right",
         "baseline": "middle",
+        "dx": -6,
         "fontSize": 12,
         "fontWeight": 700,
-        "color": "#111827"
+        "color": "#ffffff"
       },
       "encoding": {
         "x": {
-          "field": "label_position_seconds"
-        },
-        "y": {
-          "field": "option_label",
-          "type": "nominal",
-          "sort": {
-            "field": "option_order",
-            "op": "min",
-            "order": "ascending"
-          },
-          "axis": null
+          "field": "total_seconds"
         },
         "text": {
           "field": "total_seconds_label"
