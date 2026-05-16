@@ -103,11 +103,15 @@
         "type": "bar",
         "cornerRadiusTopLeft": 4,
         "cornerRadiusTopRight": 4,
-        "size": 34
+        "size": 50
       },
       "encoding": {
         "xOffset": {
-          "field": "storage_layout"
+          "field": "storage_layout",
+          "scale": {
+            "paddingInner": 0,
+            "paddingOuter": 0
+          }
         },
         "color": {
           "field": "storage_layout",
@@ -151,7 +155,11 @@
       },
       "encoding": {
         "xOffset": {
-          "field": "storage_layout"
+          "field": "storage_layout",
+          "scale": {
+            "paddingInner": 0,
+            "paddingOuter": 0
+          }
         },
         "text": {
           "field": "runtime_label"
