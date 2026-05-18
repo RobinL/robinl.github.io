@@ -21,9 +21,9 @@ I have been [recommending for some time](/recommend_duckdb/) that DuckDB is ofte
 
 For big data workloads, this suggests processing data on a single very [large EC2 instance](https://instances.vantage.sh/aws/ec2/r8id.96xlarge?currency=USD) with hundreds of vCPUs.
 
-**However, there are some performance footguns with this approach**: the default configuration can result in surprisingly poor performance.
+**However, there are some performance footguns with this approach**: the default configuration can result in surprisingly poor performance, and a few simple changes can make workloads run multiple times faster.
 
-So how can we get optimal performance out of DuckDB on EC2 instances?  This post sets out results from a variety of benchmarking experiments (code [here](https://github.com/RobinL/duckdb_large_ec2_benchmarking)).
+So how can we get optimise performance?  This post sets out results from a variety of benchmarking experiments (code [here](https://github.com/RobinL/duckdb_large_ec2_benchmarking)).
 
 ## Key findings
 
