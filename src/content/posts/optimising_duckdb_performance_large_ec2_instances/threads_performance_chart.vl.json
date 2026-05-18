@@ -1,0 +1,170 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Grouped runtime comparison for the group/order query on raw Parquet files versus a DuckDB table on r8id.32xlarge.",
+  "width": 450,
+  "height": 220,
+  "padding": {
+    "left": 8,
+    "right": 16,
+    "top": 4,
+    "bottom": 4
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "orient": "bottom",
+      "direction": "horizontal",
+      "titleFontSize": 12,
+      "labelFontSize": 12,
+      "title": "Storage layout"
+    }
+  },
+  "data": {
+    "values": [
+      {
+        "storage_layout": "Parquet",
+        "thread_count": 32,
+        "query_seconds": 8.814,
+        "runtime_label": "8.81s",
+        "relative_to_fastest_layout": 1.0
+      },
+      {
+        "storage_layout": "Parquet",
+        "thread_count": 64,
+        "query_seconds": 9.195,
+        "runtime_label": "9.20s",
+        "relative_to_fastest_layout": 1.04
+      },
+      {
+        "storage_layout": "Parquet",
+        "thread_count": 128,
+        "query_seconds": 16.199,
+        "runtime_label": "16.20s",
+        "relative_to_fastest_layout": 1.84
+      },
+      {
+        "storage_layout": "DuckDB table",
+        "thread_count": 32,
+        "query_seconds": 8.688,
+        "runtime_label": "8.69s",
+        "relative_to_fastest_layout": 1.04
+      },
+      {
+        "storage_layout": "DuckDB table",
+        "thread_count": 64,
+        "query_seconds": 8.325,
+        "runtime_label": "8.33s",
+        "relative_to_fastest_layout": 1.0
+      },
+      {
+        "storage_layout": "DuckDB table",
+        "thread_count": 128,
+        "query_seconds": 11.937,
+        "runtime_label": "11.94s",
+        "relative_to_fastest_layout": 1.43
+      }
+    ]
+  },
+  "encoding": {
+    "x": {
+      "field": "thread_count",
+      "type": "ordinal",
+      "title": "DuckDB threads",
+      "sort": [
+        32,
+        64,
+        128
+      ],
+      "axis": {
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "query_seconds",
+      "type": "quantitative",
+      "title": "Runtime (seconds)",
+      "scale": {
+        "domain": [
+          0,
+          18
+        ]
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusTopLeft": 4,
+        "cornerRadiusTopRight": 4,
+        "size": 50
+      },
+      "encoding": {
+        "xOffset": {
+          "field": "storage_layout",
+          "scale": {
+            "paddingInner": 0,
+            "paddingOuter": 0
+          }
+        },
+        "color": {
+          "field": "storage_layout",
+          "type": "nominal"
+        },
+        "tooltip": [
+          {
+            "field": "storage_layout",
+            "type": "nominal",
+            "title": "Storage"
+          },
+          {
+            "field": "thread_count",
+            "type": "ordinal",
+            "title": "Threads"
+          },
+          {
+            "field": "query_seconds",
+            "type": "quantitative",
+            "title": "Runtime (s)",
+            "format": ".3f"
+          },
+          {
+            "field": "relative_to_fastest_layout",
+            "type": "quantitative",
+            "title": "Relative to fastest for this storage",
+            "format": ".2f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "top",
+        "dy": 6,
+        "fontSize": 12,
+        "fontWeight": 700,
+        "color": "#ffffff"
+      },
+      "encoding": {
+        "xOffset": {
+          "field": "storage_layout",
+          "scale": {
+            "paddingInner": 0,
+            "paddingOuter": 0
+          }
+        },
+        "text": {
+          "field": "runtime_label"
+        }
+      }
+    }
+  ]
+}

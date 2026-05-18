@@ -381,15 +381,53 @@ button {
   font-weight: 700;
 }
 
-.prose .footnotes > h2.sr-only {
-  position: static;
-  width: auto;
-  height: auto;
-  padding: 0;
-  margin: 1.75rem 0 0.5rem;
-  overflow: visible;
-  clip: auto;
-  white-space: normal;
+.prose sup {
+  font-size: 0.75em;
+  line-height: 0;
+}
+
+.prose sup a[data-footnote-ref] {
+  text-decoration: none;
+}
+
+.prose sup a[data-footnote-ref]:hover {
+  text-decoration: underline;
+}
+
+.prose .footnotes {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--soft-line);
+  color: var(--text-light);
+  font-size: 0.875rem;
+}
+
+.prose .footnotes ol {
+  margin: 0.75rem 0 0 1rem;
+  padding-left: 1rem;
+}
+
+.prose .footnotes li,
+.prose .footnotes p {
+  color: inherit;
+  font-size: inherit;
+}
+
+.prose .footnotes p {
+  margin-bottom: 0.5rem;
+}
+
+.prose .footnotes li:last-child p {
+  margin-bottom: 0;
+}
+
+.prose .footnotes a[data-footnote-backref] {
+  margin-left: 0.25rem;
+  text-decoration: none;
+}
+
+.prose .footnotes a[data-footnote-backref]:hover {
+  text-decoration: underline;
 }
 
 .card {

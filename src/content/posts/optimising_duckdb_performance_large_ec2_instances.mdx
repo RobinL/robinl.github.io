@@ -1,0 +1,119 @@
+---
+title: "Optimising DuckDB performance on large EC2 instances"
+description: "Practical notes on getting DuckDB to run efficiently on large EC2 instances"
+postDate: "2026-05-18"
+category: "data"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/content/posts/optimising_duckdb_performance_large_ec2_instances.mdx"
+pageWidth: "prose"
+---
+
+import { VegaLite } from '../../components/probabilistic/Vega.jsx';
+import disk_io_chart from './optimising_duckdb_performance_large_ec2_instances/disk_io_chart.vl.json';
+import s3_io_chart from './optimising_duckdb_performance_large_ec2_instances/s3_io_chart.vl.json';
+import threads_performance_chart from './optimising_duckdb_performance_large_ec2_instances/threads_performance_chart.vl.json';
+import threads_cpu_usage_chart from './optimising_duckdb_performance_large_ec2_instances/threads_cpu_usage_chart.vl.json';
+
+# Optimising DuckDB performance on large EC2 instances
+
+I have been [recommending for some time](/recommend_duckdb/) that DuckDB is often a faster and simpler choice than Spark for [most data engineering workloads](https://www.fivetran.com/blog/how-do-people-use-snowflake-and-redshift).[^1]
+
+[^1]: Hat tip to [this](https://youtu.be/DxwDaoUijTc?si=Pkmw0GwxfPOn10ea&t=934) presentation where I first saw this chart.
+
+For big data workloads, this suggests processing data on a single very [large EC2 instance](https://instances.vantage.sh/aws/ec2/r8id.96xlarge?currency=USD) with hundreds of vCPUs.
+
+**However, there are some performance footguns with this approach**: the default configuration can result in surprisingly poor performance.
+
+So how can we get optimal performance out of DuckDB on EC2 instances?  This post sets out results from a variety of benchmarking experiments (code [here](https://github.com/RobinL/duckdb_large_ec2_benchmarking)).
+
+## Key findings
+
+- [Do not assume](https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads#too-many-threads) more threads always gives better performance.  On some workloads performance doubled or more when using fewer threads.
+-  Do not assume that 100% usage of all cores means they're being used efficiently: the workload may still run faster on fewer threads.
+- Throughput of writing to disk can be an important bottleneck.  Use [instance store](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ssd-instance-store.html) (SSDs), or if unavailable, set [EBS throughput](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html) to maximum.
+- With the [CRT transfer client](https://aws.amazon.com/blogs/developer/introducing-crt-based-s3-client-and-the-s3-transfer-manager-in-the-aws-sdk-for-java-2-x/) enabled, `aws s3 sync` can be substantially faster than DuckDB's built-in S3 write capabilities.  Therefore DuckDB -> local SSD -> S3 via `aws s3 sync` can be faster than writing to S3 directly from DuckDB.
+
+
+## Evidence
+
+What follows contains more detailed evidence to substantiate the above findings.
+
+All results used `duckdb==1.5.2` and were run on instances in the [`r8id` family](https://instances.vantage.sh/aws/ec2/r8id.32xlarge), mostly `r8id.32xlarge` (128 vCPU, 1 TiB RAM, 2x3.8TB NVMe SSD in RAID 0).
+
+### Threads and performance
+
+I ran the following simple query against 800m rows of data on an `r8id.32xlarge`
+
+```sql
+ SELECT col_1, col_2, COUNT(*) AS cnt
+ FROM benchmark_input
+ GROUP BY col_1, col_2
+ ORDER BY cnt DESC
+ LIMIT 10
+```
+
+The performance varied depending on the DuckDB [`THREADS` pragma setting](https://duckdb.org/docs/current/configuration/pragmas.html#threads):
+
+<VegaLite client:visible spec={threads_performance_chart} />
+
+'DuckDB table' refers to running the query against a table in a `db.duckdb` database on the SSD, whereas 'Parquet files' refers to running the query direct from the data stored in 100 raw Parquet files on the SSD.
+
+Using 128 threads made performance unambiguously worse, particularly when reading from parquet.
+
+The chart below shows CPU usage over time for the DuckDB-table runs. The 128-thread run does hit the ceiling briefly, but not in a way that translates into lower runtime.
+
+<VegaLite client:visible spec={threads_cpu_usage_chart} />
+
+An unanswered question for me is why DuckDB is unable to fully pin the CPU at 100% of its allocated threads for the query.
+
+### Disk I/O
+
+DuckDB can be significantly bottlenecked by disk throughput when writing large files.
+
+My benchmarks showed it was capable of writing at about 8GiB/s to the two SSDs (connected in RAID0) on the `r8id.32xlarge`, similar to their expected maximum performance.
+
+The benchmarks also showed that slower disk will cause correspondingly slower runtimes as you wait for data to be written to disk.  EBS throughput is configurable, but gp3 can default to just 125 MiB/s, so the slowdown can be dramatic.
+
+Since DuckDB will often [spill to disk](https://duckdb.org/2024/07/09/memory-management#intermediate-spilling) this finding is relevant even for operations that do not explicitly write out large datasets to disk.
+
+Write performance is tested by converting `.parquet` files into a 4.9GiB `mydb.duckdb` database file on disk using a `CREATE TABLE AS SELECT *` statement.
+
+<VegaLite client:visible spec={disk_io_chart} />
+
+On EBS, we can see the long 'tail' of low CPU activity whilst the machine is waiting on disk writes to complete. We can be more precise about this by running the benchmark with `RECOVERY_MODE=no_wal_writes` (see [here](https://duckdb.org/docs/current/sql/statements/attach#:~:text=writes%20disabled%20for%20improved%20performance)), which splits the workload into a `CTAS` phase and a `CHECKPOINT` phase, in which the data is written. This is shown in the lower charts.
+
+For this run, EBS throughput was set to 1000 MiB/s. We can see the `CHECKPOINT` phase takes around 4.1 seconds, consistent with the final 4.9 GiB database. Further experiments with different throughput showed the length of the `CHECKPOINT` phase scales proportionately with EBS throughput.
+
+EBS throughput can be increased to a [maximum of 2,000 MiB/s](https://docs.aws.amazon.com/ebs/latest/userguide/general-purpose.html#gp3-performance), but a better option is to use instance storage (SSDs), which can achieve much higher effective DuckDB write rates.
+
+### S3 I/O
+
+#### Writes
+For S3 writes, I benchmarked an 800 million-row table on an `r8id.32xlarge` with DuckDB `threads=64` in two ways:
+
+1. A direct DuckDB `COPY` to S3,
+2. DuckDB writing Parquet to local NVMe SSD before uploading with `aws s3 sync`.
+
+Further research showed `aws s3 sync` [is expected to be slow](https://docs.aws.amazon.com/cli/latest/topic/s3-config.html#max-concurrent-requests) with its default classic transfer client settings, and a [recommended solution is to use the CRT transfer client instead](https://aws.amazon.com/blogs/storage/improving-amazon-s3-throughput-for-the-aws-cli-and-boto3-with-the-aws-common-runtime/).
+
+The output was 8.3 GiB across 64 Parquet files.
+
+Results are shown below. Hover over a segment to see the stage throughput and the overall throughput for that option.
+
+<VegaLite client:visible spec={s3_io_chart} />
+
+The DuckDB -> S3 direct route doesn't come close to saturating S3 bandwidth, at 998MiB/s.  `s3 sync` with CRT is much faster at 2,572 MiB/s, closer to the quoted EC2 network performance of [50 Gbit/s, or about 5,960 MiB/s](https://docs.aws.amazon.com/ec2/latest/instancetypes/mo.html#mo_network).
+
+I experimented with DuckDB's [s3 settings](https://duckdb.org/docs/current/configuration/overview#:~:text=S3%20Uploader%20global%20thread%20limit) for the DuckDB-to-S3 write, but they did not make a significant difference.
+
+#### Reads
+
+I used the same `aws s3 sync` approach to download the benchmark dataset from S3 to local SSD. With default settings, downloading the 3.9 GiB dataset took about 8 seconds, which is about 460.0 MiB/s.
+
+After enabling the CRT transfer client for the worker-side dataset sync, the same download completed in about 1 second, implying a throughput of about 3,680.0 MiB/s. That is roughly an 8x improvement.
+
+As with writes, this still does not quite saturate the quoted EC2 network bandwidth for this instance type of [about 5,960 MiB/s](https://docs.aws.amazon.com/ec2/latest/instancetypes/mo.html#mo_network), but it is much closer than the default transfer path.
+
+
+
+
+

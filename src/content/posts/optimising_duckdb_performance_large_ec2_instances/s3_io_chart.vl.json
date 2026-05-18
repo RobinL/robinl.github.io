@@ -1,0 +1,227 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 450,
+  "height": 180,
+  "padding": {
+    "left": 8,
+    "right": 16,
+    "top": 4,
+    "bottom": 4
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    }
+  },
+  "datasets": {
+    "segments": [
+      {
+        "option_order": 1,
+        "option_label": "DuckDB -> S3 direct",
+        "segment_order": 1,
+        "segment_label": "DuckDB -> S3 direct",
+        "segment_color_label": "DuckDB -> S3 direct",
+        "seconds": 8.529,
+        "throughput_mib_per_second": 998.1,
+        "total_seconds": 8.529,
+        "total_throughput_mib_per_second": 998.1
+      },
+      {
+        "option_order": 2,
+        "option_label": "DuckDB -> local -> aws s3 sync (vanilla)",
+        "segment_order": 2,
+        "segment_label": "DuckDB -> local SSD",
+        "segment_color_label": "DuckDB -> local phase",
+        "seconds": 1.7,
+        "throughput_mib_per_second": 5007.7,
+        "total_seconds": 15.786,
+        "total_throughput_mib_per_second": 539.3
+      },
+      {
+        "option_order": 2,
+        "option_label": "DuckDB -> local -> aws s3 sync (vanilla)",
+        "segment_order": 3,
+        "segment_label": "aws s3 sync",
+        "segment_color_label": "Local -> aws s3 sync phase",
+        "seconds": 14.086,
+        "throughput_mib_per_second": 604.4,
+        "total_seconds": 15.786,
+        "total_throughput_mib_per_second": 539.3
+      },
+      {
+        "option_order": 3,
+        "option_label": "DuckDB -> local -> aws s3 sync (CRT)",
+        "segment_order": 2,
+        "segment_label": "DuckDB -> local SSD",
+        "segment_color_label": "DuckDB -> local phase",
+        "seconds": 1.73,
+        "throughput_mib_per_second": 4921.0,
+        "total_seconds": 5.04,
+        "total_throughput_mib_per_second": 1689.1
+      },
+      {
+        "option_order": 3,
+        "option_label": "DuckDB -> local -> aws s3 sync (CRT)",
+        "segment_order": 4,
+        "segment_label": "aws s3 sync (CRT)",
+        "segment_color_label": "Local -> aws s3 sync phase",
+        "seconds": 3.31,
+        "throughput_mib_per_second": 2572.0,
+        "total_seconds": 5.04,
+        "total_throughput_mib_per_second": 1689.1
+      }
+    ],
+    "totals": [
+      {
+        "option_order": 1,
+        "option_label": "DuckDB -> S3 direct",
+        "label_position_seconds": 8.95,
+        "total_seconds": 8.529,
+        "total_seconds_label": "8.53s"
+      },
+      {
+        "option_order": 2,
+        "option_label": "DuckDB -> local -> aws s3 sync (vanilla)",
+        "label_position_seconds": 16.15,
+        "total_seconds": 15.786,
+        "total_seconds_label": "15.79s"
+      },
+      {
+        "option_order": 3,
+        "option_label": "DuckDB -> local -> aws s3 sync (CRT)",
+        "label_position_seconds": 5.4,
+        "total_seconds": 5.04,
+        "total_seconds_label": "5.04s"
+      }
+    ]
+  },
+  "encoding": {
+    "y": {
+      "field": "option_label",
+      "type": "nominal",
+      "sort": {
+        "field": "option_order",
+        "op": "min",
+        "order": "ascending"
+      },
+      "axis": {
+        "title": null,
+        "labelLimit": 420,
+        "labelLineHeight": 14
+      }
+    },
+    "x": {
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          0,
+          18
+        ]
+      },
+      "axis": {
+        "title": "Time (seconds)",
+        "format": ",.0f"
+      }
+    }
+  },
+  "layer": [
+    {
+      "data": {
+        "name": "segments"
+      },
+      "mark": {
+        "type": "bar",
+        "size": 22
+      },
+      "encoding": {
+        "x": {
+          "field": "seconds",
+          "stack": "zero"
+        },
+        "color": {
+          "field": "segment_color_label",
+          "type": "nominal",
+          "legend": null,
+          "scale": {
+            "domain": [
+              "DuckDB -> S3 direct",
+              "DuckDB -> local phase",
+              "Local -> aws s3 sync phase"
+            ],
+            "range": [
+              "#2563eb",
+              "#0f766e",
+              "#d97706"
+            ]
+          }
+        },
+        "order": {
+          "field": "segment_order",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {
+            "field": "option_label",
+            "title": "Option",
+            "type": "nominal"
+          },
+          {
+            "field": "segment_label",
+            "title": "Stage",
+            "type": "nominal"
+          },
+          {
+            "field": "seconds",
+            "title": "Time (s)",
+            "type": "quantitative",
+            "format": ",.2f"
+          },
+          {
+            "field": "throughput_mib_per_second",
+            "title": "Throughput (MiB/s)",
+            "type": "quantitative",
+            "format": ",.1f"
+          },
+          {
+            "field": "total_seconds",
+            "title": "Total time (s)",
+            "type": "quantitative",
+            "format": ",.2f"
+          },
+          {
+            "field": "total_throughput_mib_per_second",
+            "title": "Overall throughput (MiB/s)",
+            "type": "quantitative",
+            "format": ",.1f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "name": "totals"
+      },
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "middle",
+        "dx": -6,
+        "fontSize": 12,
+        "fontWeight": 700,
+        "color": "#ffffff"
+      },
+      "encoding": {
+        "x": {
+          "field": "total_seconds"
+        },
+        "text": {
+          "field": "total_seconds_label"
+        }
+      }
+    }
+  ]
+}
