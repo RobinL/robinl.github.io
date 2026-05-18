@@ -83,11 +83,7 @@ On EBS, we can see the long 'tail' of low CPU activity whilst the machine is wai
 
 For this run, EBS throughput was set to 1000 MiB/s. We can see the `CHECKPOINT` phase takes around 4.1 seconds, consistent with the final 4.9 GiB database. Further experiments with different throughput showed the length of the `CHECKPOINT` phase scales proportionately with EBS throughput.
 
-
-
 EBS throughput can be increased to a [maximum of 2,000 MiB/s](https://docs.aws.amazon.com/ebs/latest/userguide/general-purpose.html#gp3-performance), but a better option is to use instance storage (SSDs), which can achieve much higher effective DuckDB write rates.
-
-
 
 ### S3 I/O
 
