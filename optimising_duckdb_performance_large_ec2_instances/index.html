@@ -18,7 +18,7 @@ const analyticsHosts = ["www.robinlinacre.com","robinlinacre.com"];
 <p>I have been <a href="/recommend_duckdb/">recommending for some time</a> that DuckDB is often a faster and simpler choice than Spark for <a href="https://www.fivetran.com/blog/how-do-people-use-snowflake-and-redshift">most data engineering workloads</a>.<sup><a href="#user-content-fn-1" id="user-content-fnref-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup></p>
 <p>For big data workloads, this suggests processing data on a single very <a href="https://instances.vantage.sh/aws/ec2/r8id.96xlarge?currency=USD">large EC2 instance</a> with hundreds of vCPUs.</p>
 <p><strong>However, there are some performance footguns with this approach</strong>: the default configuration can result in surprisingly poor performance, and a few simple changes can make workloads run multiple times faster.</p>
-<p>So how can we get optimise performance?  This post sets out results from a variety of benchmarking experiments (code <a href="https://github.com/RobinL/duckdb_large_ec2_benchmarking">here</a>).</p>
+<p>So how can we optimise performance?  This post sets out results from a variety of benchmarking experiments (code <a href="https://github.com/RobinL/duckdb_large_ec2_benchmarking">here</a>).</p>
 <h2 id="key-findings"><a class="heading-anchor" href="#key-findings">Key findings</a></h2>
 <ul>
 <li><a href="https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads#too-many-threads">Do not assume</a> more threads always gives better performance.  On some workloads performance doubled or more when using fewer threads.</li>
