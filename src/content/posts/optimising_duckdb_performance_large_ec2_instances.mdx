@@ -54,12 +54,12 @@ A unanswered question for me is why DuckDB is unable to fully pin the CPU at 100
 
 ### Disk I/O
 
-My experiments show that DuckDB is capable of writing to disk at at least 5 GiB/s, but the default throughput of EBS [is just 125 MiB/s](https://docs.aws.amazon.com/ebs/latest/userguide/general-purpose.html#gp3-performance), so if you write large amounts of data to EBS under default settings, the runtime will be dominated by disk I/O bottleneck.
+My experiments show that DuckDB is capable of writing to disk at at least {x - to be completed} GiB/s, but the default throughput of EBS [is just 125 MiB/s](https://docs.aws.amazon.com/ebs/latest/userguide/general-purpose.html#gp3-performance), so if you write large amounts of data to EBS under default settings, the runtime will be dominated by disk I/O bottleneck.
 
 EBS throughput can be increased to a [maximum of 2,000 MiB/s](https://docs.aws.amazon.com/ebs/latest/userguide/general-purpose.html#gp3-performance), but a better option is to ue instance storage (SSDs), which can achieve throughput of perhaps 5 GiB/s or more if configured in RAID0.
 
 
---Best charts showing write speeds here--
+
 
 
 
