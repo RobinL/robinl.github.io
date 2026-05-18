@@ -21,8 +21,8 @@ But how can we get optimal performance out of DuckDB on EC2 instances?  This pos
 ## Key findings
 
 - [Do not assume](https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads#too-many-threads) more threads always gives better performance.  On some workloads performance doubled or more when using fewer threads.
-- Throughput of writing to disk can be an important bottleneck.  Use instance storage (SSDs), or if unavailable, set EBS thoughput to maximum.
-- DuckDB is relatively slow when writing to S3, and so is `aws s3 sync` under default settings.  For optimsal write speed, write from DuckDB to local SSD and then to S3 using the CRT transfer client.
+- Throughput of writing to disk can be an important bottleneck.  Use [instance store](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ssd-instance-store.html) (SSDs), or if unavailable, set EBS thoughput to maximum.
+- DuckDB is relatively slow when writing to S3, and so is `aws s3 sync` under default settings.  For optimsal write speed, write from DuckDB to local SSD and then to S3 using the [CRT transfer client](https://aws.amazon.com/blogs/developer/introducing-crt-based-s3-client-and-the-s3-transfer-manager-in-the-aws-sdk-for-java-2-x/).
 
 ## Evidence
 
