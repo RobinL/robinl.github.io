@@ -38,7 +38,6 @@ So how can we optimise performance? This post sets out results from a variety of
 #### High thread counts and performance
 
 - [Do not assume](https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads#too-many-threads) more threads always gives better performance.  On some workloads performance doubled or more when using _fewer_ threads, but is dependent on workload and machine type, so experiment with different settings.
-- [Do not assume](https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads#too-many-threads) more threads always give better performance. On some workloads, performance doubled or more when using _fewer_ threads, but that depends on the workload and machine type, so experiment with different settings.
 - Do not assume that 100% usage of all cores means they're being used efficiently: the workload may still run faster on fewer threads.
 - On queries where fewer threads result in better performance, running multiple thread-constrained queries in parallel does not save time compared with running them serially.
 - With all that said, DuckDB is capable of fully using all cores on some types of queries, such as the Jaro-Winkler similarity benchmark below.
