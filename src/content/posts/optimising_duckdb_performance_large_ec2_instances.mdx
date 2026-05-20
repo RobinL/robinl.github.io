@@ -16,6 +16,8 @@ import threads_cpu_usage_chart from './optimising_duckdb_performance_large_ec2_i
 import threads_cpu_usage_metal_chart from './optimising_duckdb_performance_large_ec2_instances/threads_cpu_usage_metal_chart.vl.json';
 import parallel_query_runtime_chart from './optimising_duckdb_performance_large_ec2_instances/parallel_query_runtime_chart.vl.json';
 import memory_bandwidth_chart from './optimising_duckdb_performance_large_ec2_instances/memory_bandwidth_chart.vl.json';
+import memory_bandwidth_group_order_32_threads_chart from './optimising_duckdb_performance_large_ec2_instances/memory_bandwidth_group_order_32_threads_chart.vl.json';
+import memory_bandwidth_group_order_192_threads_chart from './optimising_duckdb_performance_large_ec2_instances/memory_bandwidth_group_order_192_threads_chart.vl.json';
 
 # Optimising DuckDB performance on large EC2 instances
 
@@ -32,7 +34,7 @@ So how can we optimise performance?  This post sets out results from a variety o
 ## Key findings
 
 #### High thread counts and performance
-- [Do not assume](https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads#too-many-threads) more threads always gives better performance.  On some workloads performance doubled or more when using fewer threads, but is dependent on workload and machine type, so experiment with different settings.
+- [Do not assume](https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads#too-many-threads) more threads always gives better performance.  On some workloads performance doubled or more when using _fewer_ threads, but is dependent on workload and machine type, so experiment with different settings.
 - Do not assume that 100% usage of all cores means they're being used efficiently: the workload may still run faster on fewer threads.
 - Running multiple thread-constrained queries in parallel does not save time vs. running them serially, since the queries run slower when run in parallel.
 
@@ -102,24 +104,25 @@ Further experiments suggested it's also possible for it to make things worse by 
 Overall this evidence suggests suggesting the machine is bottlenecked when running at lower thread counts, just not by CPU, and I would not recommend trying to run queries in parallel.
 
 
-### Memory bandwith
+### Memory bandwidth
 
-I conducted various experiments to see whether these bottlenecks could be explained by memory bandwidth.  I couldn't find any conclusive evidence to suggest memory bandwidth was the bottleneck.
+I conducted various experiments to see whether these bottlenecks could be explained by memory bandwidth. I could not find evidence that memory bandwidth was the bottleneck.
 
 
 <details>
 <summary>Click to expand memory bandwidth analysis</summary>
-One possible explanation would be that the machine is simply running out of memory bandwidth.
 
-
+First, I measured synthetic memory bandwidth on the `r8id.32xlarge` using a STREAM-style triad benchmark:
 
 <VegaLite client:visible spec={memory_bandwidth_chart} />
 
-This makes a simple memory-bandwidth explanation look unlikely. The synthetic triad benchmark gets about 153 GiB/s at 32 threads and about 309 GiB/s at 64 or 128 threads. If the DuckDB query were saturating main memory bandwidth at 32 threads, I would expect the 64-thread single-query run, or the two-query 64-thread run, to improve materially. They do not.
+For the `r8id.metal-48xl` run, I also measured DRAM read and write bandwidth during the group/order query using Linux `perf` uncore IMC CAS-count events, sampled during each workload phase. The following charts show seconds from query start for the 32-thread and 192-thread runs.
 
-The phase-level machine metrics point the same way. During the two-query and four-query runs, average host CPU usage was only around 14-23%, and the monitor recorded almost no disk I/O during the query phases, probably because the Parquet data was already hot in the OS page cache.
+<VegaLite client:visible spec={memory_bandwidth_group_order_32_threads_chart} />
 
-My best hypothesis is therefore that the bottleneck is not raw hardware bandwidth, but some combination of DuckDB execution overhead, synchronisation, cache locality, and stages of the scan/group/order pipeline that do not scale smoothly when more queries are competing at once. The practical conclusion is that parallel sessions are not a reliable way to use the spare cores on this workload: benchmark it, and prefer a smaller number of concurrent queries unless measured throughput actually improves.
+<VegaLite client:visible spec={memory_bandwidth_group_order_192_threads_chart} />
+
+These charts do not suggest that memory bandwidth is saturated at either 32 or 192 threads: the query usually sits well below the roughly 480 GB/s synthetic triad level measured on this machine, with only brief late-query spikes. The parallel-query result points the same way. If memory bandwidth were the main limit, running two or four 32-thread queries in parallel should have made better use of the machine; instead it caused a large performance hit.
 
 </details>
 

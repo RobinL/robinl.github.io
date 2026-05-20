@@ -1,6 +1,15 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "STREAM-style triad memory bandwidth benchmark on r8id.32xlarge by thread count.",
+  "title": {
+    "text": "Synthetic memory bandwidth by thread count",
+    "subtitle": "STREAM-style triad benchmark on r8id.32xlarge",
+    "anchor": "start",
+    "fontSize": 14,
+    "subtitleFontSize": 12,
+    "subtitleColor": "#4b5563",
+    "offset": 10
+  },
   "width": 450,
   "height": 220,
   "padding": {
