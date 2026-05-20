@@ -31,28 +31,29 @@ For big data workloads, this suggests processing data on a single very [large EC
 
 **However, there are some performance footguns with this approach**: the default configuration can result in surprisingly poor performance, and a few simple changes can make workloads run multiple times faster.
 
-So how can we optimise performance?  This post sets out results from a variety of benchmarking experiments (code [here](https://github.com/RobinL/duckdb_large_ec2_benchmarking)).
+So how can we optimise performance? This post sets out results from a variety of benchmarking experiments (code [here](https://github.com/RobinL/duckdb_large_ec2_benchmarking)).
 
 ## Key findings
 
 #### High thread counts and performance
 
 - [Do not assume](https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads#too-many-threads) more threads always gives better performance.  On some workloads performance doubled or more when using _fewer_ threads, but is dependent on workload and machine type, so experiment with different settings.
+- [Do not assume](https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads#too-many-threads) more threads always give better performance. On some workloads, performance doubled or more when using _fewer_ threads, but that depends on the workload and machine type, so experiment with different settings.
 - Do not assume that 100% usage of all cores means they're being used efficiently: the workload may still run faster on fewer threads.
-- On queries where fewer threads results in better performance, running multiple thread-constrained queries in parallel does not save time vs. running them serially
+- On queries where fewer threads result in better performance, running multiple thread-constrained queries in parallel does not save time compared with running them serially.
 - With all that said, DuckDB is capable of fully using all cores on some types of queries, such as the Jaro-Winkler similarity benchmark below.
 
 Overall, you should experiment with different `THREADS` settings depending on your workload.
 
-#### Memory Bandwidth:
-- Memory bandwith on large EC2 instances was mesured at about 330GB/s (`r8id.32xlarge`) to 480GB/s (`r8id.metal-48xl`). Memory bandwith on an Macbook Pro M4 Max is 410-546GB/s, so for memory bandwidth constrained workloads, we may not expect the larger CPU counts on EC2 to give much of a performance boost over a high-end laptop.
+#### Memory bandwidth
+- Memory bandwidth on large EC2 instances was measured at about 330GB/s (`r8id.32xlarge`) to 480GB/s (`r8id.metal-48xl`). Memory bandwidth on a MacBook Pro M4 Max is 410-546GB/s, so for memory-bandwidth-constrained workloads, we may not expect the larger CPU counts on EC2 to give much of a performance boost over a high-end laptop.
 - However, for the workloads tested, I was not able to find evidence they were bottlenecked by memory bandwidth.
 
-#### Disk IO:
+#### Disk I/O
 - Throughput of writing to disk can be an important bottleneck.  Use [instance store](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ssd-instance-store.html) (SSDs), or if unavailable, set [EBS throughput](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html) to maximum.
 
 
-#### S3 Transfer
+#### S3 transfer
 - With the [CRT transfer client](https://aws.amazon.com/blogs/developer/introducing-crt-based-s3-client-and-the-s3-transfer-manager-in-the-aws-sdk-for-java-2-x/) enabled, `aws s3 sync` can be substantially faster than DuckDB's built-in S3 write capabilities.  Therefore DuckDB -> local SSD -> S3 via `aws s3 sync` can be faster than writing to S3 directly from DuckDB.
 
 
@@ -80,7 +81,7 @@ The performance varied depending on the DuckDB [`THREADS` pragma setting](https:
 
 <VegaLite client:visible spec={threads_performance_metal_chart} />
 
-'DuckDB table' refers to running the query against a table in a `db.duckdb` database on the SSD, whereas 'Parquet files' refers to running the query direct from the data stored in 100 raw Parquet files on the SSD.
+'DuckDB table' refers to running the query against a table in a `db.duckdb` database on the SSD, whereas 'Parquet files' refers to running the query directly from the data stored in 100 raw Parquet files on the SSD.
 
 On the `r8id.32xlarge`, using 128 threads made performance unambiguously worse, particularly when reading from parquet, whereas on the `r8id.metal-48xl`, more threads are unambiguously better, but with diminishing returns.
 
@@ -99,7 +100,7 @@ The charts below show CPU usage over time for the DuckDB-table runs on `r8id.32x
 
 ## High thread counts and performance on a CPU intensive query
 
-The group/order query is not representative of every workload. I also ran simple query over 800m rows that computed `sum(jaro_winkler_similarity(col1, col2))` `r8id.metal-48xl`, varying the DuckDB `THREADS` setting.
+The group/order query is not representative of every workload. I also ran a simple query over 800m rows on `r8id.metal-48xl` that computed `sum(jaro_winkler_similarity(col1, col2))`, varying the DuckDB `THREADS` setting.
 
 This query is intentionally bottlenecked by CPU.  Results are in line with expectations:
 
@@ -114,17 +115,17 @@ We achieve 100% CPU usage irrespective of the `THREADS` setting.
 
 </details>
 
-####  Does running multiple queries in parallel help?
+#### Does running multiple queries in parallel help?
 
-If fewer threads can improve performance, a natural follow up is to test whether that means we can run multiple queries in parallel, each with fewer threads.
+If fewer threads can improve performance, a natural follow-up is to test whether that means we can run multiple queries in parallel, each with fewer threads.
 
 To test this, I ran the group/order query against raw Parquet files on the `r8id.32xlarge`, but launched multiple independent queries in parallel.
 
 <VegaLite client:visible spec={parallel_query_runtime_chart} />
 
-Further experiments suggested it's also possible for it to make things worse by running in parallel, e.g. that running four 32 thread queries serially was faster than running them in parallel.
+Further experiments suggested that running in parallel can also make things worse, e.g. running four 32-thread queries serially was faster than running them in parallel.
 
-Overall this evidence suggests suggesting the machine is bottlenecked when running at lower thread counts, just not by CPU, and I would not recommend trying to run queries in parallel.
+Overall, this evidence suggests the machine is bottlenecked when running at lower thread counts, just not by CPU, and I would not recommend trying to run queries in parallel.
 
 
 ### Memory bandwidth
@@ -155,7 +156,7 @@ DuckDB can be significantly bottlenecked by disk throughput when writing large f
 
 My benchmarks showed it was capable of writing at about 8GiB/s to the two SSDs (connected in RAID0) on the `r8id.32xlarge`, similar to their expected maximum performance.
 
-The benchmarks also showed that slower disk will cause correspondingly slower runtimes as you wait for data to be written to disk.  EBS throughput is configurable, but gp3 can default to just 125 MiB/s, so the slowdown can be dramatic.
+The benchmarks also showed that slower disks will cause correspondingly slower runtimes as you wait for data to be written to disk. EBS throughput is configurable, but gp3 can default to just 125 MiB/s, so the slowdown can be dramatic.
 
 Since DuckDB will often [spill to disk](https://duckdb.org/2024/07/09/memory-management#intermediate-spilling) this finding is relevant even for operations that do not explicitly write out large datasets to disk.
 
@@ -185,7 +186,7 @@ Results are shown below. Hover over a segment to see the stage throughput and th
 
 <VegaLite client:visible spec={s3_io_chart} />
 
-The DuckDB -> S3 direct route doesn't come close to saturating S3 bandwidth, at 998MiB/s.  `s3 sync` with CRT is much faster at 2,572 MiB/s, closer to the quoted EC2 network performance of [50 Gbit/s, or about 5,960 MiB/s](https://docs.aws.amazon.com/ec2/latest/instancetypes/mo.html#mo_network).
+The direct DuckDB -> S3 route doesn't come close to saturating S3 bandwidth, at 998 MiB/s. `s3 sync` with CRT is much faster at 2,572 MiB/s, closer to the quoted EC2 network performance of [50 Gbit/s, or about 5,960 MiB/s](https://docs.aws.amazon.com/ec2/latest/instancetypes/mo.html#mo_network).
 
 I experimented with DuckDB's [s3 settings](https://duckdb.org/docs/current/configuration/overview#:~:text=S3%20Uploader%20global%20thread%20limit) for the DuckDB-to-S3 write, but they did not make a significant difference.
 
@@ -203,10 +204,10 @@ As with writes, this still does not quite saturate the quoted EC2 network bandwi
 This blog post leaves a few unanswered questions:
 - Why does the same query give different performance patterns with different thread counts on the `r8id.32xlarge` vs the `r8id.metal-48xl`?
 - What is the bottleneck on the `group by` query?
-- For large files, Is it better to DuckDB's native S3 reader, or use `aws s3 sync` with CRT enabled to download the files to the local SSD first?
-- In what situations does DuckDB use all cores on EC2.
+- For large files, is it better to use DuckDB's native S3 reader, or to use `aws s3 sync` with CRT enabled to download the files to the local SSD first?
+- In what situations does DuckDB use all cores on EC2?
 
-## Annex:
+## Annex
 
 For my reference, the main findings are based on these benchmark runs:
 | Topic | Benchmark run(s) |
