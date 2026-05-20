@@ -11,7 +11,11 @@ import { VegaLite } from '../../components/probabilistic/Vega.jsx';
 import disk_io_chart from './optimising_duckdb_performance_large_ec2_instances/disk_io_chart.vl.json';
 import s3_io_chart from './optimising_duckdb_performance_large_ec2_instances/s3_io_chart.vl.json';
 import threads_performance_chart from './optimising_duckdb_performance_large_ec2_instances/threads_performance_chart.vl.json';
+import threads_performance_metal_chart from './optimising_duckdb_performance_large_ec2_instances/threads_performance_metal_chart.vl.json';
 import threads_cpu_usage_chart from './optimising_duckdb_performance_large_ec2_instances/threads_cpu_usage_chart.vl.json';
+import threads_cpu_usage_metal_chart from './optimising_duckdb_performance_large_ec2_instances/threads_cpu_usage_metal_chart.vl.json';
+import parallel_query_runtime_chart from './optimising_duckdb_performance_large_ec2_instances/parallel_query_runtime_chart.vl.json';
+import memory_bandwidth_chart from './optimising_duckdb_performance_large_ec2_instances/memory_bandwidth_chart.vl.json';
 
 # Optimising DuckDB performance on large EC2 instances
 
@@ -27,9 +31,17 @@ So how can we optimise performance?  This post sets out results from a variety o
 
 ## Key findings
 
-- [Do not assume](https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads#too-many-threads) more threads always gives better performance.  On some workloads performance doubled or more when using fewer threads.
--  Do not assume that 100% usage of all cores means they're being used efficiently: the workload may still run faster on fewer threads.
+#### High thread counts and performance
+- [Do not assume](https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads#too-many-threads) more threads always gives better performance.  On some workloads performance doubled or more when using fewer threads, but is dependent on workload and machine type, so experiment with different settings.
+- Do not assume that 100% usage of all cores means they're being used efficiently: the workload may still run faster on fewer threads.
+- Running multiple thread-constrained queries in parallel does not save time vs. running them serially, since the queries run slower when run in parallel.
+
+
+#### Disk IO:
 - Throughput of writing to disk can be an important bottleneck.  Use [instance store](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ssd-instance-store.html) (SSDs), or if unavailable, set [EBS throughput](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html) to maximum.
+
+
+#### S3 Transfer
 - With the [CRT transfer client](https://aws.amazon.com/blogs/developer/introducing-crt-based-s3-client-and-the-s3-transfer-manager-in-the-aws-sdk-for-java-2-x/) enabled, `aws s3 sync` can be substantially faster than DuckDB's built-in S3 write capabilities.  Therefore DuckDB -> local SSD -> S3 via `aws s3 sync` can be faster than writing to S3 directly from DuckDB.
 
 
@@ -39,9 +51,9 @@ What follows contains more detailed evidence to substantiate the above findings.
 
 All results used `duckdb==1.5.2` and were run on instances in the [`r8id` family](https://instances.vantage.sh/aws/ec2/r8id.32xlarge), mostly `r8id.32xlarge` (128 vCPU, 1 TiB RAM, 2x3.8TB NVMe SSD in RAID 0).
 
-### Threads and performance
+### High thread counts and performance
 
-I ran the following simple query against 800m rows of data on an `r8id.32xlarge`
+I ran the following simple query against 800m rows of data, first on an `r8id.32xlarge` and then, for the raw Parquet path, on an `r8id.metal-48xl`.
 
 ```sql
  SELECT col_1, col_2, COUNT(*) AS cnt
@@ -55,15 +67,41 @@ The performance varied depending on the DuckDB [`THREADS` pragma setting](https:
 
 <VegaLite client:visible spec={threads_performance_chart} />
 
+<VegaLite client:visible spec={threads_performance_metal_chart} />
+
 'DuckDB table' refers to running the query against a table in a `db.duckdb` database on the SSD, whereas 'Parquet files' refers to running the query direct from the data stored in 100 raw Parquet files on the SSD.
 
-Using 128 threads made performance unambiguously worse, particularly when reading from parquet.
+The `r8id.metal-48xl` run shown above is for raw Parquet files only. On the `r8id.32xlarge`, using 128 threads made performance unambiguously worse, particularly when reading from parquet. On the `r8id.metal-48xl`, 192 threads was fastest for this query, although the improvement over 32 threads was more modest.
 
-The chart below shows CPU usage over time for the DuckDB-table runs. The 128-thread run does hit the ceiling briefly, but not in a way that translates into lower runtime.
+The charts below show CPU usage over time for the DuckDB-table runs on `r8id.32xlarge`, and for the raw-Parquet runs on `r8id.metal-48xl`. The 128-thread `r8id.32xlarge` run does hit the ceiling briefly, but not in a way that translates into lower runtime. On the `r8id.metal-48xl`, CPU usage likewise rises and falls in phases rather than smoothly pinning the whole machine.
 
 <VegaLite client:visible spec={threads_cpu_usage_chart} />
 
+<VegaLite client:visible spec={threads_cpu_usage_metal_chart} />
+
 An unanswered question for me is why DuckDB is unable to fully pin the CPU at 100% of its allocated threads for the query.
+
+### Does running multiple queries in parallel help
+
+A natural follow-up is whether a large instance can be kept busy by running several DuckDB queries at once. To test this, I repeated the same group/order pattern against raw Parquet files, but launched multiple independent queries in parallel. Each query had its own DuckDB `THREADS` setting, so `4 x 32` means four simultaneous queries, each allowed to use 32 threads.
+
+The chart below shows the runtime of the slowest query in each parallel batch. The black tick marks show how long it would take to run the same number of 32-thread baseline queries sequentially, using the measured 8.97s single-query runtime.
+
+<VegaLite client:visible spec={parallel_query_runtime_chart} />
+
+For this workload, running queries in parallel did not help much. Two 32-thread queries in parallel completed in 16.75s for the slowest query, compared with 17.94s for two baseline queries back-to-back. Four 32-thread queries completed in 35.97s, almost exactly the same as running four baseline queries sequentially.
+
+Measured end-to-end phase throughput rose only from about 0.090 queries/s for the single 32-thread query to about 0.106-0.107 queries/s for the two-query and four-query runs. That is a small throughput gain, bought at the cost of roughly doubling or quadrupling the latency experienced by each query.
+
+One possible explanation would be that the machine is simply running out of memory bandwidth. To test this, I ran a STREAM-style triad benchmark on the same `r8id.32xlarge` instance:
+
+<VegaLite client:visible spec={memory_bandwidth_chart} />
+
+This makes a simple memory-bandwidth explanation look unlikely. The synthetic triad benchmark gets about 153 GiB/s at 32 threads and about 309 GiB/s at 64 or 128 threads. If the DuckDB query were saturating main memory bandwidth at 32 threads, I would expect the 64-thread single-query run, or the two-query 64-thread run, to improve materially. They do not.
+
+The phase-level machine metrics point the same way. During the two-query and four-query runs, average host CPU usage was only around 14-23%, and the monitor recorded almost no disk I/O during the query phases, probably because the Parquet data was already hot in the OS page cache.
+
+My best hypothesis is therefore that the bottleneck is not raw hardware bandwidth, but some combination of DuckDB execution overhead, synchronisation, cache locality, and stages of the scan/group/order pipeline that do not scale smoothly when more queries are competing at once. The practical conclusion is that parallel sessions are not a reliable way to use the spare cores on this workload: benchmark it, and prefer a smaller number of concurrent queries unless measured throughput actually improves.
 
 ### Disk I/O
 
@@ -115,5 +153,12 @@ As with writes, this still does not quite saturate the quoted EC2 network bandwi
 
 
 
+### Annex:
 
+For my reference, the main findings are based on these benchmark runs:
 
+EBS vs SSD: `i-056f3061f47031643/2026-05-13T133349Z-r8id-32xlarge-report.html`
+
+S3 IO: `2026-05-15T190335Z-r8id-32xlarge-i-0a37266c6a531dedd-report.html`
+
+Threads and performance: `2026-05-16T080410Z-r8id-32xlarge-i-0c9713718622fb751-report.html` and `2026-05-19T160719Z-r8id-metal-48xl-i-00c24d85a1f7998d5-report.html`
