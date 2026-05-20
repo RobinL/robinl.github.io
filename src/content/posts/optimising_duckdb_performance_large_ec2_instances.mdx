@@ -136,7 +136,7 @@ The benchmarks also showed that slower disk will cause correspondingly slower ru
 
 Since DuckDB will often [spill to disk](https://duckdb.org/2024/07/09/memory-management#intermediate-spilling) this finding is relevant even for operations that do not explicitly write out large datasets to disk.
 
-Write performance is tested by converting `.parquet` files into a 4.9GiB `mydb.duckdb` database file on disk using a `CREATE TABLE AS SELECT *` statement.
+Write performance was tested by converting `.parquet` files into a 4.9GiB `mydb.duckdb` database file on disk using a `CREATE TABLE AS SELECT *` statement on a `r8id.32xlarge` with `threads=64`.
 
 <VegaLite client:visible spec={disk_io_chart} />
 
@@ -175,17 +175,21 @@ After enabling the CRT transfer client for the worker-side dataset sync, the sam
 As with writes, this still does not quite saturate the quoted EC2 network bandwidth for this instance type of [about 5,960 MiB/s](https://docs.aws.amazon.com/ec2/latest/instancetypes/mo.html#mo_network), but it is much closer than the default transfer path.
 
 
+## Future work
 
-### Annex:
+This blog post leaves a few unanswered questions:
+- Why does the same query give different performance patterns with different thread counts on the `r8id.32xlarge` vs the `r8id.metal-48xl`?
+- What is the bottleneck on the `group by` query?
+- For large files, Is it better to DuckDB's native S3 reader, or use `aws s3 sync` with CRT enabled to download the files to the local SSD first?
+- In what situations does DuckDB use all cores on EC2.
+
+## Annex:
 
 For my reference, the main findings are based on these benchmark runs:
-
-EBS vs SSD: `i-056f3061f47031643/2026-05-13T133349Z-r8id-32xlarge-report.html`
-
-S3 IO: `2026-05-15T190335Z-r8id-32xlarge-i-0a37266c6a531dedd-report.html`
-
-Threads and performance: `2026-05-16T080410Z-r8id-32xlarge-i-0c9713718622fb751-report.html` and `2026-05-19T160719Z-r8id-metal-48xl-i-00c24d85a1f7998d5-report.html`
-
-Running queries in parallel: `2026-05-19T091501Z-r8id-32xlarge-i-0b0cd166828897ad0-report.html`
-
-Memory bandwidth `2026-05-19T160719Z-r8id-metal-48xl-i-00c24d85a1f7998d5-report.html` and `2026-05-19T100058Z-r8id-32xlarge-i-0cbab4d579ba49c52-report.html`
+| Topic | Benchmark run(s) |
+|---|---|
+| EBS vs SSD | `i-056f3061f47031643/2026-05-13T133349Z-r8id-32xlarge-report.html` |
+| S3 IO | `2026-05-15T190335Z-r8id-32xlarge-i-0a37266c6a531dedd-report.html` |
+| Threads and performance | `2026-05-16T080410Z-r8id-32xlarge-i-0c9713718622fb751-report.html`<br />`2026-05-19T160719Z-r8id-metal-48xl-i-00c24d85a1f7998d5-report.html` |
+| Running queries in parallel | `2026-05-19T091501Z-r8id-32xlarge-i-0b0cd166828897ad0-report.html` |
+| Memory bandwidth | `2026-05-19T160719Z-r8id-metal-48xl-i-00c24d85a1f7998d5-report.html`<br />`2026-05-19T100058Z-r8id-32xlarge-i-0cbab4d579ba49c52-report.html` |
