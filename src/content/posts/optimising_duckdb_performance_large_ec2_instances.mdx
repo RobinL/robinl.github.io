@@ -90,17 +90,16 @@ The charts below show CPU usage over time for the DuckDB-table runs on `r8id.32x
 
 ### Does running multiple queries in parallel help?
 
-If fewer threads can improve performance, a natural follow up is to test whether it is beneficial to run multiple queries in parallel, each with fewer threads.
+If fewer threads can improve performance, a natural follow up is to test whether that means we can run multiple queries in parallel, each with fewer threads.
 
-To test this, I ran the group/order query against raw Parquet files, but launched multiple independent queries in parallel.
-
-The chart below shows there's nothing to be gained by running multiple queries in parallel, suggesting the machine is bottlenecked when running at lower thread counts, just not by CPU.
+To test this, I ran the group/order query against raw Parquet files on the `r8id.32xlarge`, but launched multiple independent queries in parallel.
 
 <VegaLite client:visible spec={parallel_query_runtime_chart} />
 
-For this workload, running queries in parallel did not help much. Two 32-thread queries in parallel completed in 16.75s for the slowest query, compared with 17.94s for two baseline queries back-to-back. Four 32-thread queries completed in 35.97s, almost exactly the same as running four baseline queries sequentially.
+Further experiments suggested it's also possible for it to make things worse by running in parallel, e.g. that running four 32 thread queries serially was faster than running them in parallel.
 
-Measured end-to-end phase throughput rose only from about 0.090 queries/s for the single 32-thread query to about 0.106-0.107 queries/s for the two-query and four-query runs. That is a small throughput gain, bought at the cost of roughly doubling or quadrupling the latency experienced by each query.
+Overall this evidence suggests suggesting the machine is bottlenecked when running at lower thread counts, just not by CPU, and I would not recommend trying to run queries in parallel.
+
 
 One possible explanation would be that the machine is simply running out of memory bandwidth. To test this, I ran a STREAM-style triad benchmark on the same `r8id.32xlarge` instance:
 

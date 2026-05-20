@@ -1,12 +1,12 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Runtime comparison for running multiple independent group/order DuckDB queries in parallel on r8id.32xlarge.",
+  "description": "End-to-end workload duration for parallel group/order parquet query configurations on r8id.32xlarge, using duration_seconds from temp_benchmark_outputs/best/2026-05-19T091501Z-parallel-running/r8id.32xlarge/i-0b0cd166828897ad0/workloads/*.json.",
   "width": 450,
   "height": 240,
   "padding": {
     "left": 8,
     "right": 16,
-    "top": 4,
+    "top": 12,
     "bottom": 4
   },
   "config": {
@@ -16,13 +16,6 @@
     "axis": {
       "labelFontSize": 12,
       "titleFontSize": 12
-    },
-    "legend": {
-      "orient": "bottom",
-      "direction": "horizontal",
-      "titleFontSize": 12,
-      "labelFontSize": 12,
-      "title": "Parallel queries"
     }
   },
   "data": {
@@ -30,110 +23,50 @@
       {
         "sort_order": 1,
         "config_label": "1 x 32",
-        "query_count_label": "1 query",
         "query_count": 1,
         "threads_per_query": 32,
-        "total_threads": 32,
-        "max_query_seconds": 8.972,
-        "avg_query_seconds": 8.972,
-        "wall_seconds": 11.073,
-        "sequential_query_seconds": 8.972,
-        "runtime_vs_sequential": 1.0,
-        "runtime_vs_sequential_label": "1.00x",
-        "throughput_queries_per_second": 0.0903,
-        "avg_cpu_percent": 12.4,
-        "max_query_label": "8.97s",
-        "sequential_label": "8.97s"
+        "duration_seconds": 11.073,
+        "duration_label": "11.07s"
       },
       {
         "sort_order": 2,
         "config_label": "1 x 64",
-        "query_count_label": "1 query",
         "query_count": 1,
         "threads_per_query": 64,
-        "total_threads": 64,
-        "max_query_seconds": 9.701,
-        "avg_query_seconds": 9.701,
-        "wall_seconds": 11.317,
-        "sequential_query_seconds": 8.972,
-        "runtime_vs_sequential": 1.08,
-        "runtime_vs_sequential_label": "1.08x",
-        "throughput_queries_per_second": 0.0884,
-        "avg_cpu_percent": 18.7,
-        "max_query_label": "9.70s",
-        "sequential_label": "8.97s"
+        "duration_seconds": 11.317,
+        "duration_label": "11.32s"
       },
       {
         "sort_order": 3,
         "config_label": "2 x 32",
-        "query_count_label": "2 queries",
         "query_count": 2,
         "threads_per_query": 32,
-        "total_threads": 64,
-        "max_query_seconds": 16.749,
-        "avg_query_seconds": 16.607,
-        "wall_seconds": 18.89,
-        "sequential_query_seconds": 17.944,
-        "runtime_vs_sequential": 0.93,
-        "runtime_vs_sequential_label": "0.93x",
-        "throughput_queries_per_second": 0.1059,
-        "avg_cpu_percent": 15.1,
-        "max_query_label": "16.75s",
-        "sequential_label": "17.94s"
+        "duration_seconds": 18.89,
+        "duration_label": "18.89s"
       },
       {
         "sort_order": 4,
         "config_label": "1 x 128",
-        "query_count_label": "1 query",
         "query_count": 1,
         "threads_per_query": 128,
-        "total_threads": 128,
-        "max_query_seconds": 14.799,
-        "avg_query_seconds": 14.799,
-        "wall_seconds": 16.459,
-        "sequential_query_seconds": 8.972,
-        "runtime_vs_sequential": 1.65,
-        "runtime_vs_sequential_label": "1.65x",
-        "throughput_queries_per_second": 0.0608,
-        "avg_cpu_percent": 31.6,
-        "max_query_label": "14.80s",
-        "sequential_label": "8.97s"
+        "duration_seconds": 16.459,
+        "duration_label": "16.46s"
       },
       {
         "sort_order": 5,
         "config_label": "2 x 64",
-        "query_count_label": "2 queries",
         "query_count": 2,
         "threads_per_query": 64,
-        "total_threads": 128,
-        "max_query_seconds": 16.394,
-        "avg_query_seconds": 16.263,
-        "wall_seconds": 18.62,
-        "sequential_query_seconds": 17.944,
-        "runtime_vs_sequential": 0.91,
-        "runtime_vs_sequential_label": "0.91x",
-        "throughput_queries_per_second": 0.1074,
-        "avg_cpu_percent": 22.6,
-        "max_query_label": "16.39s",
-        "sequential_label": "17.94s"
+        "duration_seconds": 18.62,
+        "duration_label": "18.62s"
       },
       {
         "sort_order": 6,
         "config_label": "4 x 32",
-        "query_count_label": "4 queries",
         "query_count": 4,
         "threads_per_query": 32,
-        "total_threads": 128,
-        "max_query_seconds": 35.971,
-        "avg_query_seconds": 35.272,
-        "wall_seconds": 37.55,
-        "sequential_query_seconds": 35.888,
-        "runtime_vs_sequential": 1.0,
-        "runtime_vs_sequential_label": "1.00x",
-        "throughput_queries_per_second": 0.1065,
-        "avg_cpu_percent": 14.1,
-        "max_query_label": "35.97s",
-        "sequential_label": "35.89s"
+        "duration_seconds": 37.55,
+        "duration_label": "37.55s"
       }
     ]
   },
@@ -154,9 +87,9 @@
       }
     },
     "y": {
-      "field": "max_query_seconds",
+      "field": "duration_seconds",
       "type": "quantitative",
-      "title": "Slowest query runtime (seconds)",
+      "title": "Workload duration (seconds)",
       "scale": {
         "domain": [
           0,
@@ -171,25 +104,10 @@
         "type": "bar",
         "cornerRadiusTopLeft": 4,
         "cornerRadiusTopRight": 4,
-        "size": 42
+        "size": 42,
+        "color": "#2563eb"
       },
       "encoding": {
-        "color": {
-          "field": "query_count_label",
-          "type": "nominal",
-          "scale": {
-            "domain": [
-              "1 query",
-              "2 queries",
-              "4 queries"
-            ],
-            "range": [
-              "#2563eb",
-              "#0f766e",
-              "#d97706"
-            ]
-          }
-        },
         "tooltip": [
           {
             "field": "config_label",
@@ -207,76 +125,9 @@
             "title": "Threads per query"
           },
           {
-            "field": "total_threads",
+            "field": "duration_seconds",
             "type": "quantitative",
-            "title": "Total possible threads"
-          },
-          {
-            "field": "max_query_seconds",
-            "type": "quantitative",
-            "title": "Slowest query runtime (s)",
-            "format": ".3f"
-          },
-          {
-            "field": "avg_query_seconds",
-            "type": "quantitative",
-            "title": "Average query runtime (s)",
-            "format": ".3f"
-          },
-          {
-            "field": "sequential_query_seconds",
-            "type": "quantitative",
-            "title": "Sequential 32-thread runtime (s)",
-            "format": ".3f"
-          },
-          {
-            "field": "runtime_vs_sequential_label",
-            "type": "nominal",
-            "title": "Relative to sequential baseline"
-          },
-          {
-            "field": "wall_seconds",
-            "type": "quantitative",
-            "title": "End-to-end phase time (s)",
-            "format": ".3f"
-          },
-          {
-            "field": "throughput_queries_per_second",
-            "type": "quantitative",
-            "title": "End-to-end throughput (queries/s)",
-            "format": ".4f"
-          },
-          {
-            "field": "avg_cpu_percent",
-            "type": "quantitative",
-            "title": "Average host CPU (%)",
-            "format": ".1f"
-          }
-        ]
-      }
-    },
-    {
-      "mark": {
-        "type": "tick",
-        "thickness": 3,
-        "size": 24,
-        "color": "#111827"
-      },
-      "encoding": {
-        "y": {
-          "field": "sequential_query_seconds",
-          "type": "quantitative"
-        },
-        "tooltip": [
-          {
-            "field": "config_label",
-            "type": "nominal",
-            "title": "Configuration"
-          },
-          {
-            "field": "sequential_query_seconds",
-            "type": "quantitative",
-            "title": "Sequential 32-thread runtime (s)",
+            "title": "Workload duration (s)",
             "format": ".3f"
           }
         ]
@@ -286,15 +137,15 @@
       "mark": {
         "type": "text",
         "align": "center",
-        "baseline": "top",
-        "dy": 6,
+        "baseline": "bottom",
+        "dy": -6,
         "fontSize": 12,
         "fontWeight": 700,
-        "color": "#ffffff"
+        "color": "#111827"
       },
       "encoding": {
         "text": {
-          "field": "max_query_label"
+          "field": "duration_label"
         }
       }
     }
