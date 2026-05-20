@@ -56,7 +56,7 @@ What follows contains more detailed evidence to substantiate the above findings.
 
 All results used `duckdb==1.5.2` and were run on instances in the [`r8id` family](https://instances.vantage.sh/aws/ec2/r8id.32xlarge), mostly `r8id.32xlarge` (128 vCPU, 1 TiB RAM, 2x3.8TB NVMe SSD in RAID 0).
 
-### High thread counts and performance
+## High thread counts and performance on a Group By operation
 
 I ran the following simple query against 800m rows of data, first on an `r8id.32xlarge` and then, for the raw Parquet path, on an `r8id.metal-48xl`.
 
@@ -91,7 +91,7 @@ The charts below show CPU usage over time for the DuckDB-table runs on `r8id.32x
 <VegaLite client:visible spec={threads_cpu_usage_metal_chart} />
 </details>
 
-### Does running multiple queries in parallel help?
+####  Does running multiple queries in parallel help?
 
 If fewer threads can improve performance, a natural follow up is to test whether that means we can run multiple queries in parallel, each with fewer threads.
 
@@ -126,7 +126,7 @@ These charts do not suggest that memory bandwidth is saturated at either 32 or 1
 
 </details>
 
-### Disk I/O
+## Disk I/O
 
 DuckDB can be significantly bottlenecked by disk throughput when writing large files.
 
@@ -146,9 +146,9 @@ For this run, EBS throughput was set to 1000 MiB/s. We can see the `CHECKPOINT` 
 
 EBS throughput can be increased to a [maximum of 2,000 MiB/s](https://docs.aws.amazon.com/ebs/latest/userguide/general-purpose.html#gp3-performance), but a better option is to use instance storage (SSDs), which can achieve much higher effective DuckDB write rates.
 
-### S3 I/O
+## S3 I/O
 
-#### Writes
+### Writes
 For S3 writes, I benchmarked an 800 million-row table on an `r8id.32xlarge` with DuckDB `threads=64` in two ways:
 
 1. A direct DuckDB `COPY` to S3,
@@ -166,7 +166,7 @@ The DuckDB -> S3 direct route doesn't come close to saturating S3 bandwidth, at 
 
 I experimented with DuckDB's [s3 settings](https://duckdb.org/docs/current/configuration/overview#:~:text=S3%20Uploader%20global%20thread%20limit) for the DuckDB-to-S3 write, but they did not make a significant difference.
 
-#### Reads
+### Reads
 
 I used the same `aws s3 sync` approach to download the benchmark dataset from S3 to local SSD. With default settings, downloading the 3.9 GiB dataset took about 8 seconds, which is about 460.0 MiB/s.
 
