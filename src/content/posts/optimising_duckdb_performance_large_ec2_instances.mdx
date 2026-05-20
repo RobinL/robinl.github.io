@@ -14,6 +14,8 @@ import threads_performance_chart from './optimising_duckdb_performance_large_ec2
 import threads_performance_metal_chart from './optimising_duckdb_performance_large_ec2_instances/threads_performance_metal_chart.vl.json';
 import threads_cpu_usage_chart from './optimising_duckdb_performance_large_ec2_instances/threads_cpu_usage_chart.vl.json';
 import threads_cpu_usage_metal_chart from './optimising_duckdb_performance_large_ec2_instances/threads_cpu_usage_metal_chart.vl.json';
+import jaro_winkler_runtime_metal_chart from './optimising_duckdb_performance_large_ec2_instances/jaro_winkler_runtime_metal_chart.vl.json';
+import jaro_winkler_cpu_usage_metal_chart from './optimising_duckdb_performance_large_ec2_instances/jaro_winkler_cpu_usage_metal_chart.vl.json';
 import parallel_query_runtime_chart from './optimising_duckdb_performance_large_ec2_instances/parallel_query_runtime_chart.vl.json';
 import memory_bandwidth_chart from './optimising_duckdb_performance_large_ec2_instances/memory_bandwidth_chart.vl.json';
 import memory_bandwidth_group_order_32_threads_chart from './optimising_duckdb_performance_large_ec2_instances/memory_bandwidth_group_order_32_threads_chart.vl.json';
@@ -34,9 +36,13 @@ So how can we optimise performance?  This post sets out results from a variety o
 ## Key findings
 
 #### High thread counts and performance
+
 - [Do not assume](https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads#too-many-threads) more threads always gives better performance.  On some workloads performance doubled or more when using _fewer_ threads, but is dependent on workload and machine type, so experiment with different settings.
 - Do not assume that 100% usage of all cores means they're being used efficiently: the workload may still run faster on fewer threads.
-- Running multiple thread-constrained queries in parallel does not save time vs. running them serially, since the queries run slower when run in parallel.
+- On queries where fewer threads results in better performance, running multiple thread-constrained queries in parallel does not save time vs. running them serially
+- With all that said, DuckDB is capable of fully using all cores on some types of queries, such as the Jaro-Winkler similarity benchmark below.
+
+Overall, you should experiment with different `THREADS` settings depending on your workload.
 
 #### Memory Bandwidth:
 - Memory bandwith on large EC2 instances was mesured at about 330GB/s (`r8id.32xlarge`) to 480GB/s (`r8id.metal-48xl`). Memory bandwith on an Macbook Pro M4 Max is 410-546GB/s, so for memory bandwidth constrained workloads, we may not expect the larger CPU counts on EC2 to give much of a performance boost over a high-end laptop.
@@ -89,6 +95,23 @@ The charts below show CPU usage over time for the DuckDB-table runs on `r8id.32x
 <VegaLite client:visible spec={threads_cpu_usage_chart} />
 
 <VegaLite client:visible spec={threads_cpu_usage_metal_chart} />
+</details>
+
+## High thread counts and performance on a CPU intensive query
+
+The group/order query is not representative of every workload. I also ran simple query over 800m rows that computed `sum(jaro_winkler_similarity(col1, col2))` `r8id.metal-48xl`, varying the DuckDB `THREADS` setting.
+
+This query is intentionally bottlenecked by CPU.  Results are in line with expectations:
+
+<VegaLite client:visible spec={jaro_winkler_runtime_metal_chart} />
+
+We achieve 100% CPU usage irrespective of the `THREADS` setting.
+
+<details>
+<summary>Click to expand CPU usage time series chart</summary>
+
+<VegaLite client:visible spec={jaro_winkler_cpu_usage_metal_chart} />
+
 </details>
 
 ####  Does running multiple queries in parallel help?

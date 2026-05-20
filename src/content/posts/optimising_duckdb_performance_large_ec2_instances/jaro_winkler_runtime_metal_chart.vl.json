@@ -1,0 +1,155 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Runtime comparison for the Jaro-Winkler similarity query on raw Parquet files on r8id.metal-48xl.",
+  "width": 450,
+  "height": 220,
+  "padding": {
+    "left": 8,
+    "right": 16,
+    "top": 4,
+    "bottom": 4
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "orient": "bottom",
+      "direction": "horizontal",
+      "titleFontSize": 12,
+      "labelFontSize": 12
+    }
+  },
+  "data": {
+    "values": [
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "query_seconds": 12.074,
+        "runtime_label": "12.07s",
+        "relative_to_fastest": 3.89,
+        "average_cpu_usage_percent": 16.32,
+        "max_cpu_usage_percent": 18.02
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "query_seconds": 6.102,
+        "runtime_label": "6.10s",
+        "relative_to_fastest": 1.97,
+        "average_cpu_usage_percent": 32.13,
+        "max_cpu_usage_percent": 35.35
+      },
+      {
+        "thread_count": 128,
+        "series_label": "128 threads",
+        "query_seconds": 3.555,
+        "runtime_label": "3.56s",
+        "relative_to_fastest": 1.15,
+        "average_cpu_usage_percent": 62.05,
+        "max_cpu_usage_percent": 68.53
+      },
+      {
+        "thread_count": 192,
+        "series_label": "192 threads",
+        "query_seconds": 3.101,
+        "runtime_label": "3.10s",
+        "relative_to_fastest": 1,
+        "average_cpu_usage_percent": 82.53,
+        "max_cpu_usage_percent": 99.53
+      }
+    ]
+  },
+  "encoding": {
+    "x": {
+      "field": "thread_count",
+      "type": "ordinal",
+      "title": "DuckDB threads",
+      "sort": [
+        32,
+        64,
+        128,
+        192
+      ],
+      "axis": {
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "query_seconds",
+      "type": "quantitative",
+      "title": "Runtime (seconds)",
+      "scale": {
+        "domain": [
+          0,
+          13
+        ]
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusTopLeft": 4,
+        "cornerRadiusTopRight": 4,
+        "size": 50,
+        "color": "#3B6FB6"
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "thread_count",
+            "type": "ordinal",
+            "title": "Threads"
+          },
+          {
+            "field": "query_seconds",
+            "type": "quantitative",
+            "title": "Runtime (s)",
+            "format": ".3f"
+          },
+          {
+            "field": "relative_to_fastest",
+            "type": "quantitative",
+            "title": "Relative to fastest",
+            "format": ".2f"
+          },
+          {
+            "field": "average_cpu_usage_percent",
+            "type": "quantitative",
+            "title": "Average CPU usage %",
+            "format": ".2f"
+          },
+          {
+            "field": "max_cpu_usage_percent",
+            "type": "quantitative",
+            "title": "Peak CPU usage %",
+            "format": ".2f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "bottom",
+        "dy": -6,
+        "fontSize": 12,
+        "fontWeight": 700,
+        "color": "#111827"
+      },
+      "encoding": {
+        "text": {
+          "field": "runtime_label"
+        }
+      }
+    }
+  ],
+  "title": "Jaro-Winkler similarity on r8id.metal-48xl"
+}

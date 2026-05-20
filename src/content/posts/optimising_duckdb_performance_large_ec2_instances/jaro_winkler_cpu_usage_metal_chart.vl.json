@@ -1,0 +1,956 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "CPU usage over time for the Jaro-Winkler similarity query against raw Parquet files on r8id.metal-48xl.",
+  "width": 450,
+  "height": 220,
+  "padding": {
+    "left": 8,
+    "right": 16,
+    "top": 4,
+    "bottom": 4
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "orient": "bottom",
+      "direction": "horizontal",
+      "titleFontSize": 12,
+      "labelFontSize": 12,
+      "title": "DuckDB threads"
+    }
+  },
+  "data": {
+    "values": [
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 0,
+        "cpu_usage_percent": 10.35,
+        "cpu_total_percent": 1987.2,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 0.303,
+        "cpu_usage_percent": 16.55,
+        "cpu_total_percent": 3177.6,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 0.505,
+        "cpu_usage_percent": 16.58,
+        "cpu_total_percent": 3183.4,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 0.807,
+        "cpu_usage_percent": 16.55,
+        "cpu_total_percent": 3177.6,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 1.009,
+        "cpu_usage_percent": 16.57,
+        "cpu_total_percent": 3181.4,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 1.312,
+        "cpu_usage_percent": 16.55,
+        "cpu_total_percent": 3177.6,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 1.514,
+        "cpu_usage_percent": 16.53,
+        "cpu_total_percent": 3173.8,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 1.817,
+        "cpu_usage_percent": 16.58,
+        "cpu_total_percent": 3183.4,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 2.019,
+        "cpu_usage_percent": 16.54,
+        "cpu_total_percent": 3175.7,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 2.322,
+        "cpu_usage_percent": 16.54,
+        "cpu_total_percent": 3175.7,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 2.524,
+        "cpu_usage_percent": 16.55,
+        "cpu_total_percent": 3177.6,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 2.826,
+        "cpu_usage_percent": 16.54,
+        "cpu_total_percent": 3175.7,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 3.028,
+        "cpu_usage_percent": 16.62,
+        "cpu_total_percent": 3191,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 3.331,
+        "cpu_usage_percent": 16.53,
+        "cpu_total_percent": 3173.8,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 3.533,
+        "cpu_usage_percent": 16.55,
+        "cpu_total_percent": 3177.6,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 3.836,
+        "cpu_usage_percent": 16.53,
+        "cpu_total_percent": 3173.8,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 4.038,
+        "cpu_usage_percent": 16.55,
+        "cpu_total_percent": 3177.6,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 4.341,
+        "cpu_usage_percent": 17.88,
+        "cpu_total_percent": 3433,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 4.543,
+        "cpu_usage_percent": 16.58,
+        "cpu_total_percent": 3183.4,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 4.845,
+        "cpu_usage_percent": 16.58,
+        "cpu_total_percent": 3183.4,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 5.047,
+        "cpu_usage_percent": 16.59,
+        "cpu_total_percent": 3185.3,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 5.35,
+        "cpu_usage_percent": 18.02,
+        "cpu_total_percent": 3459.8,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 5.552,
+        "cpu_usage_percent": 16.59,
+        "cpu_total_percent": 3185.3,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 5.754,
+        "cpu_usage_percent": 16.62,
+        "cpu_total_percent": 3191,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 6.057,
+        "cpu_usage_percent": 16.54,
+        "cpu_total_percent": 3175.7,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 6.259,
+        "cpu_usage_percent": 16.58,
+        "cpu_total_percent": 3183.4,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 6.561,
+        "cpu_usage_percent": 16.58,
+        "cpu_total_percent": 3183.4,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 6.763,
+        "cpu_usage_percent": 16.54,
+        "cpu_total_percent": 3175.7,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 7.066,
+        "cpu_usage_percent": 16.58,
+        "cpu_total_percent": 3183.4,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 7.268,
+        "cpu_usage_percent": 16.55,
+        "cpu_total_percent": 3177.6,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 7.571,
+        "cpu_usage_percent": 16.56,
+        "cpu_total_percent": 3179.5,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 7.773,
+        "cpu_usage_percent": 16.59,
+        "cpu_total_percent": 3185.3,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 8.076,
+        "cpu_usage_percent": 16.57,
+        "cpu_total_percent": 3181.4,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 8.278,
+        "cpu_usage_percent": 16.59,
+        "cpu_total_percent": 3185.3,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 8.58,
+        "cpu_usage_percent": 17.98,
+        "cpu_total_percent": 3452.2,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 8.782,
+        "cpu_usage_percent": 16.59,
+        "cpu_total_percent": 3185.3,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 9.085,
+        "cpu_usage_percent": 16.59,
+        "cpu_total_percent": 3185.3,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 9.287,
+        "cpu_usage_percent": 16.55,
+        "cpu_total_percent": 3177.6,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 9.59,
+        "cpu_usage_percent": 17.97,
+        "cpu_total_percent": 3450.2,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 9.792,
+        "cpu_usage_percent": 16.55,
+        "cpu_total_percent": 3177.6,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 10.095,
+        "cpu_usage_percent": 16.54,
+        "cpu_total_percent": 3175.7,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 10.296,
+        "cpu_usage_percent": 16.54,
+        "cpu_total_percent": 3175.7,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 10.599,
+        "cpu_usage_percent": 16.55,
+        "cpu_total_percent": 3177.6,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 10.801,
+        "cpu_usage_percent": 16.54,
+        "cpu_total_percent": 3175.7,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 11.003,
+        "cpu_usage_percent": 16.55,
+        "cpu_total_percent": 3177.6,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 11.306,
+        "cpu_usage_percent": 16.53,
+        "cpu_total_percent": 3173.8,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 11.508,
+        "cpu_usage_percent": 16.54,
+        "cpu_total_percent": 3175.7,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 11.811,
+        "cpu_usage_percent": 2.16,
+        "cpu_total_percent": 414.7,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 32,
+        "series_label": "32 threads",
+        "seconds_from_start": 11.912,
+        "cpu_usage_percent": 1.14,
+        "cpu_total_percent": 218.9,
+        "query_seconds": 12.074
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 0,
+        "cpu_usage_percent": 20.08,
+        "cpu_total_percent": 3855.4,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 0.303,
+        "cpu_usage_percent": 33.18,
+        "cpu_total_percent": 6370.6,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 0.505,
+        "cpu_usage_percent": 33.11,
+        "cpu_total_percent": 6357.1,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 0.707,
+        "cpu_usage_percent": 35.35,
+        "cpu_total_percent": 6787.2,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 0.808,
+        "cpu_usage_percent": 33.16,
+        "cpu_total_percent": 6366.7,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 1.01,
+        "cpu_usage_percent": 33.13,
+        "cpu_total_percent": 6361,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 1.313,
+        "cpu_usage_percent": 33.13,
+        "cpu_total_percent": 6361,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 1.515,
+        "cpu_usage_percent": 33.07,
+        "cpu_total_percent": 6349.4,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 1.818,
+        "cpu_usage_percent": 33.18,
+        "cpu_total_percent": 6370.6,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 2.02,
+        "cpu_usage_percent": 33.09,
+        "cpu_total_percent": 6353.3,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 2.323,
+        "cpu_usage_percent": 33.11,
+        "cpu_total_percent": 6357.1,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 2.525,
+        "cpu_usage_percent": 33.13,
+        "cpu_total_percent": 6361,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 2.828,
+        "cpu_usage_percent": 33.11,
+        "cpu_total_percent": 6357.1,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 3.03,
+        "cpu_usage_percent": 33.13,
+        "cpu_total_percent": 6361,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 3.333,
+        "cpu_usage_percent": 33.07,
+        "cpu_total_percent": 6349.4,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 3.535,
+        "cpu_usage_percent": 33.14,
+        "cpu_total_percent": 6362.9,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 3.838,
+        "cpu_usage_percent": 33.13,
+        "cpu_total_percent": 6361,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 4.04,
+        "cpu_usage_percent": 33.16,
+        "cpu_total_percent": 6366.7,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 4.343,
+        "cpu_usage_percent": 33.13,
+        "cpu_total_percent": 6361,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 4.545,
+        "cpu_usage_percent": 33.16,
+        "cpu_total_percent": 6366.7,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 4.848,
+        "cpu_usage_percent": 33.11,
+        "cpu_total_percent": 6357.1,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 5.05,
+        "cpu_usage_percent": 33.16,
+        "cpu_total_percent": 6366.7,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 5.252,
+        "cpu_usage_percent": 33.13,
+        "cpu_total_percent": 6361,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 5.555,
+        "cpu_usage_percent": 33.21,
+        "cpu_total_percent": 6376.3,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 5.757,
+        "cpu_usage_percent": 18.81,
+        "cpu_total_percent": 3611.5,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 5.858,
+        "cpu_usage_percent": 17.11,
+        "cpu_total_percent": 3285.1,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 64,
+        "series_label": "64 threads",
+        "seconds_from_start": 5.959,
+        "cpu_usage_percent": 17.14,
+        "cpu_total_percent": 3290.9,
+        "query_seconds": 6.102
+      },
+      {
+        "thread_count": 128,
+        "series_label": "128 threads",
+        "seconds_from_start": 0,
+        "cpu_usage_percent": 37.11,
+        "cpu_total_percent": 7125.1,
+        "query_seconds": 3.555
+      },
+      {
+        "thread_count": 128,
+        "series_label": "128 threads",
+        "seconds_from_start": 0.304,
+        "cpu_usage_percent": 66.42,
+        "cpu_total_percent": 12752.6,
+        "query_seconds": 3.555
+      },
+      {
+        "thread_count": 128,
+        "series_label": "128 threads",
+        "seconds_from_start": 0.506,
+        "cpu_usage_percent": 68.53,
+        "cpu_total_percent": 13157.8,
+        "query_seconds": 3.555
+      },
+      {
+        "thread_count": 128,
+        "series_label": "128 threads",
+        "seconds_from_start": 0.809,
+        "cpu_usage_percent": 66.46,
+        "cpu_total_percent": 12760.3,
+        "query_seconds": 3.555
+      },
+      {
+        "thread_count": 128,
+        "series_label": "128 threads",
+        "seconds_from_start": 1.011,
+        "cpu_usage_percent": 66.42,
+        "cpu_total_percent": 12752.6,
+        "query_seconds": 3.555
+      },
+      {
+        "thread_count": 128,
+        "series_label": "128 threads",
+        "seconds_from_start": 1.314,
+        "cpu_usage_percent": 66.42,
+        "cpu_total_percent": 12752.6,
+        "query_seconds": 3.555
+      },
+      {
+        "thread_count": 128,
+        "series_label": "128 threads",
+        "seconds_from_start": 1.517,
+        "cpu_usage_percent": 68.53,
+        "cpu_total_percent": 13157.8,
+        "query_seconds": 3.555
+      },
+      {
+        "thread_count": 128,
+        "series_label": "128 threads",
+        "seconds_from_start": 1.82,
+        "cpu_usage_percent": 66.36,
+        "cpu_total_percent": 12741.1,
+        "query_seconds": 3.555
+      },
+      {
+        "thread_count": 128,
+        "series_label": "128 threads",
+        "seconds_from_start": 2.024,
+        "cpu_usage_percent": 66.29,
+        "cpu_total_percent": 12727.7,
+        "query_seconds": 3.555
+      },
+      {
+        "thread_count": 128,
+        "series_label": "128 threads",
+        "seconds_from_start": 2.329,
+        "cpu_usage_percent": 66.32,
+        "cpu_total_percent": 12733.4,
+        "query_seconds": 3.555
+      },
+      {
+        "thread_count": 128,
+        "series_label": "128 threads",
+        "seconds_from_start": 2.533,
+        "cpu_usage_percent": 66.22,
+        "cpu_total_percent": 12714.2,
+        "query_seconds": 3.555
+      },
+      {
+        "thread_count": 128,
+        "series_label": "128 threads",
+        "seconds_from_start": 2.838,
+        "cpu_usage_percent": 66.36,
+        "cpu_total_percent": 12741.1,
+        "query_seconds": 3.555
+      },
+      {
+        "thread_count": 128,
+        "series_label": "128 threads",
+        "seconds_from_start": 3.04,
+        "cpu_usage_percent": 52.44,
+        "cpu_total_percent": 10068.5,
+        "query_seconds": 3.555
+      },
+      {
+        "thread_count": 128,
+        "series_label": "128 threads",
+        "seconds_from_start": 3.343,
+        "cpu_usage_percent": 38.13,
+        "cpu_total_percent": 7321,
+        "query_seconds": 3.555
+      },
+      {
+        "thread_count": 128,
+        "series_label": "128 threads",
+        "seconds_from_start": 3.444,
+        "cpu_usage_percent": 14.48,
+        "cpu_total_percent": 2780.2,
+        "query_seconds": 3.555
+      },
+      {
+        "thread_count": 192,
+        "series_label": "192 threads",
+        "seconds_from_start": 0,
+        "cpu_usage_percent": 12.87,
+        "cpu_total_percent": 2471,
+        "query_seconds": 3.101
+      },
+      {
+        "thread_count": 192,
+        "series_label": "192 threads",
+        "seconds_from_start": 0.102,
+        "cpu_usage_percent": 99.53,
+        "cpu_total_percent": 19109.8,
+        "query_seconds": 3.101
+      },
+      {
+        "thread_count": 192,
+        "series_label": "192 threads",
+        "seconds_from_start": 0.304,
+        "cpu_usage_percent": 99.48,
+        "cpu_total_percent": 19100.2,
+        "query_seconds": 3.101
+      },
+      {
+        "thread_count": 192,
+        "series_label": "192 threads",
+        "seconds_from_start": 0.507,
+        "cpu_usage_percent": 99.48,
+        "cpu_total_percent": 19100.2,
+        "query_seconds": 3.101
+      },
+      {
+        "thread_count": 192,
+        "series_label": "192 threads",
+        "seconds_from_start": 0.811,
+        "cpu_usage_percent": 99.53,
+        "cpu_total_percent": 19109.8,
+        "query_seconds": 3.101
+      },
+      {
+        "thread_count": 192,
+        "series_label": "192 threads",
+        "seconds_from_start": 1.014,
+        "cpu_usage_percent": 99.48,
+        "cpu_total_percent": 19100.2,
+        "query_seconds": 3.101
+      },
+      {
+        "thread_count": 192,
+        "series_label": "192 threads",
+        "seconds_from_start": 1.319,
+        "cpu_usage_percent": 99.48,
+        "cpu_total_percent": 19100.2,
+        "query_seconds": 3.101
+      },
+      {
+        "thread_count": 192,
+        "series_label": "192 threads",
+        "seconds_from_start": 1.523,
+        "cpu_usage_percent": 99.48,
+        "cpu_total_percent": 19100.2,
+        "query_seconds": 3.101
+      },
+      {
+        "thread_count": 192,
+        "series_label": "192 threads",
+        "seconds_from_start": 1.829,
+        "cpu_usage_percent": 99.48,
+        "cpu_total_percent": 19100.2,
+        "query_seconds": 3.101
+      },
+      {
+        "thread_count": 192,
+        "series_label": "192 threads",
+        "seconds_from_start": 2.032,
+        "cpu_usage_percent": 99.53,
+        "cpu_total_percent": 19109.8,
+        "query_seconds": 3.101
+      },
+      {
+        "thread_count": 192,
+        "series_label": "192 threads",
+        "seconds_from_start": 2.338,
+        "cpu_usage_percent": 99.48,
+        "cpu_total_percent": 19100.2,
+        "query_seconds": 3.101
+      },
+      {
+        "thread_count": 192,
+        "series_label": "192 threads",
+        "seconds_from_start": 2.542,
+        "cpu_usage_percent": 70.71,
+        "cpu_total_percent": 13576.3,
+        "query_seconds": 3.101
+      },
+      {
+        "thread_count": 192,
+        "series_label": "192 threads",
+        "seconds_from_start": 2.844,
+        "cpu_usage_percent": 18.67,
+        "cpu_total_percent": 3584.6,
+        "query_seconds": 3.101
+      },
+      {
+        "thread_count": 192,
+        "series_label": "192 threads",
+        "seconds_from_start": 3.046,
+        "cpu_usage_percent": 8.29,
+        "cpu_total_percent": 1591.7,
+        "query_seconds": 3.101
+      }
+    ]
+  },
+  "encoding": {
+    "x": {
+      "field": "seconds_from_start",
+      "type": "quantitative",
+      "title": "Seconds from query start"
+    },
+    "y": {
+      "field": "cpu_usage_percent",
+      "type": "quantitative",
+      "title": "CPU usage (% of full 192-core machine)",
+      "scale": {
+        "domain": [
+          0,
+          100
+        ]
+      }
+    },
+    "color": {
+      "field": "series_label",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "32 threads",
+          "64 threads",
+          "128 threads",
+          "192 threads"
+        ],
+        "range": [
+          "#2E8B57",
+          "#E3A018",
+          "#C0392B",
+          "#3B6FB6"
+        ]
+      }
+    },
+    "tooltip": [
+      {
+        "field": "series_label",
+        "type": "nominal",
+        "title": "Threads"
+      },
+      {
+        "field": "seconds_from_start",
+        "type": "quantitative",
+        "title": "Seconds from start",
+        "format": ".3f"
+      },
+      {
+        "field": "cpu_usage_percent",
+        "type": "quantitative",
+        "title": "CPU usage %",
+        "format": ".2f"
+      },
+      {
+        "field": "cpu_total_percent",
+        "type": "quantitative",
+        "title": "Aggregate CPU %",
+        "format": ".1f"
+      },
+      {
+        "field": "query_seconds",
+        "type": "quantitative",
+        "title": "Total query runtime (s)",
+        "format": ".3f"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "interpolate": "monotone"
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 18
+      }
+    }
+  ],
+  "title": "Jaro-Winkler CPU usage on r8id.metal-48xl"
+}
