@@ -88,11 +88,13 @@ The charts below show CPU usage over time for the DuckDB-table runs on `r8id.32x
 
 
 
-### Does running multiple queries in parallel help
+### Does running multiple queries in parallel help?
 
-A natural follow-up is whether a large instance can be kept busy by running several DuckDB queries at once. To test this, I repeated the same group/order pattern against raw Parquet files, but launched multiple independent queries in parallel. Each query had its own DuckDB `THREADS` setting, so `4 x 32` means four simultaneous queries, each allowed to use 32 threads.
+If fewer threads can improve performance, a natural follow up is to test whether it is beneficial to run multiple queries in parallel, each with fewer threads.
 
-The chart below shows the runtime of the slowest query in each parallel batch. The black tick marks show how long it would take to run the same number of 32-thread baseline queries sequentially, using the measured 8.97s single-query runtime.
+To test this, I ran the group/order query against raw Parquet files, but launched multiple independent queries in parallel.
+
+The chart below shows there's nothing to be gained by running multiple queries in parallel, suggesting the machine is bottlenecked when running at lower thread counts, just not by CPU.
 
 <VegaLite client:visible spec={parallel_query_runtime_chart} />
 
@@ -169,3 +171,5 @@ EBS vs SSD: `i-056f3061f47031643/2026-05-13T133349Z-r8id-32xlarge-report.html`
 S3 IO: `2026-05-15T190335Z-r8id-32xlarge-i-0a37266c6a531dedd-report.html`
 
 Threads and performance: `2026-05-16T080410Z-r8id-32xlarge-i-0c9713718622fb751-report.html` and `2026-05-19T160719Z-r8id-metal-48xl-i-00c24d85a1f7998d5-report.html`
+
+Running queries in parallel: `2026-05-19T091501Z-r8id-32xlarge-i-0b0cd166828897ad0-report.html`
