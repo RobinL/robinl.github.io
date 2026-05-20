@@ -1,0 +1,245 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "STREAM-style triad memory bandwidth benchmark on r8id.32xlarge by thread count.",
+  "width": 450,
+  "height": 220,
+  "padding": {
+    "left": 8,
+    "right": 16,
+    "top": 4,
+    "bottom": 4
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    }
+  },
+  "data": {
+    "values": [
+      {
+        "thread_count": 1,
+        "bandwidth_gib_per_second": 16.1,
+        "bandwidth_label": "16 GiB/s",
+        "relative_to_64_threads": 0.05,
+        "duration_seconds": 28.313,
+        "min_time_seconds": 1.1136,
+        "avg_time_seconds": 1.1261,
+        "max_time_seconds": 1.1362,
+        "show_label": false
+      },
+      {
+        "thread_count": 2,
+        "bandwidth_gib_per_second": 31.2,
+        "bandwidth_label": "31 GiB/s",
+        "relative_to_64_threads": 0.1,
+        "duration_seconds": 15.581,
+        "min_time_seconds": 0.5739,
+        "avg_time_seconds": 0.5983,
+        "max_time_seconds": 0.6163,
+        "show_label": false
+      },
+      {
+        "thread_count": 4,
+        "bandwidth_gib_per_second": 57.8,
+        "bandwidth_label": "58 GiB/s",
+        "relative_to_64_threads": 0.19,
+        "duration_seconds": 8.789,
+        "min_time_seconds": 0.3091,
+        "avg_time_seconds": 0.323,
+        "max_time_seconds": 0.3486,
+        "show_label": false
+      },
+      {
+        "thread_count": 8,
+        "bandwidth_gib_per_second": 94.4,
+        "bandwidth_label": "94 GiB/s",
+        "relative_to_64_threads": 0.31,
+        "duration_seconds": 5.626,
+        "min_time_seconds": 0.1893,
+        "avg_time_seconds": 0.1976,
+        "max_time_seconds": 0.2281,
+        "show_label": false
+      },
+      {
+        "thread_count": 16,
+        "bandwidth_gib_per_second": 133.6,
+        "bandwidth_label": "134 GiB/s",
+        "relative_to_64_threads": 0.43,
+        "duration_seconds": 4.338,
+        "min_time_seconds": 0.1338,
+        "avg_time_seconds": 0.1389,
+        "max_time_seconds": 0.1695,
+        "show_label": false
+      },
+      {
+        "thread_count": 32,
+        "bandwidth_gib_per_second": 153.3,
+        "bandwidth_label": "153 GiB/s",
+        "relative_to_64_threads": 0.5,
+        "duration_seconds": 3.974,
+        "min_time_seconds": 0.1166,
+        "avg_time_seconds": 0.1195,
+        "max_time_seconds": 0.1382,
+        "show_label": true
+      },
+      {
+        "thread_count": 48,
+        "bandwidth_gib_per_second": 223.3,
+        "bandwidth_label": "223 GiB/s",
+        "relative_to_64_threads": 0.72,
+        "duration_seconds": 3.196,
+        "min_time_seconds": 0.0801,
+        "avg_time_seconds": 0.0807,
+        "max_time_seconds": 0.0874,
+        "show_label": false
+      },
+      {
+        "thread_count": 64,
+        "bandwidth_gib_per_second": 309.0,
+        "bandwidth_label": "309 GiB/s",
+        "relative_to_64_threads": 1.0,
+        "duration_seconds": 2.772,
+        "min_time_seconds": 0.0579,
+        "avg_time_seconds": 0.0581,
+        "max_time_seconds": 0.0587,
+        "show_label": true
+      },
+      {
+        "thread_count": 96,
+        "bandwidth_gib_per_second": 225.7,
+        "bandwidth_label": "226 GiB/s",
+        "relative_to_64_threads": 0.73,
+        "duration_seconds": 3.254,
+        "min_time_seconds": 0.0792,
+        "avg_time_seconds": 0.0796,
+        "max_time_seconds": 0.0799,
+        "show_label": false
+      },
+      {
+        "thread_count": 128,
+        "bandwidth_gib_per_second": 309.1,
+        "bandwidth_label": "309 GiB/s",
+        "relative_to_64_threads": 1.0,
+        "duration_seconds": 3.305,
+        "min_time_seconds": 0.0578,
+        "avg_time_seconds": 0.0582,
+        "max_time_seconds": 0.0586,
+        "show_label": true
+      }
+    ]
+  },
+  "encoding": {
+    "x": {
+      "field": "thread_count",
+      "type": "ordinal",
+      "title": "Threads",
+      "sort": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        48,
+        64,
+        96,
+        128
+      ],
+      "axis": {
+        "labelAngle": 0
+      }
+    },
+    "y": {
+      "field": "bandwidth_gib_per_second",
+      "type": "quantitative",
+      "title": "Best triad bandwidth (GiB/s)",
+      "scale": {
+        "domain": [
+          0,
+          340
+        ]
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "strokeWidth": 3,
+        "color": "#2563eb"
+      }
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 70,
+        "color": "#2563eb"
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "thread_count",
+            "type": "ordinal",
+            "title": "Threads"
+          },
+          {
+            "field": "bandwidth_gib_per_second",
+            "type": "quantitative",
+            "title": "Bandwidth (GiB/s)",
+            "format": ".1f"
+          },
+          {
+            "field": "relative_to_64_threads",
+            "type": "quantitative",
+            "title": "Relative to 64 threads",
+            "format": ".2f"
+          },
+          {
+            "field": "avg_time_seconds",
+            "type": "quantitative",
+            "title": "Average triad time (s)",
+            "format": ".4f"
+          },
+          {
+            "field": "min_time_seconds",
+            "type": "quantitative",
+            "title": "Minimum triad time (s)",
+            "format": ".4f"
+          },
+          {
+            "field": "max_time_seconds",
+            "type": "quantitative",
+            "title": "Maximum triad time (s)",
+            "format": ".4f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.show_label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "bottom",
+        "dy": -8,
+        "fontSize": 12,
+        "fontWeight": 700,
+        "color": "#111827"
+      },
+      "encoding": {
+        "text": {
+          "field": "bandwidth_label"
+        }
+      }
+    }
+  ]
+}
