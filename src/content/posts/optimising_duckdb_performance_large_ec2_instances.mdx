@@ -36,6 +36,9 @@ So how can we optimise performance?  This post sets out results from a variety o
 - Do not assume that 100% usage of all cores means they're being used efficiently: the workload may still run faster on fewer threads.
 - Running multiple thread-constrained queries in parallel does not save time vs. running them serially, since the queries run slower when run in parallel.
 
+#### Memory Bandwidth:
+- Memory bandwith on large EC2 instances was mesured at about 330GB/s (`r8id.32xlarge`) to 480GB/s (`r8id.metal-48xl`). Memory bandwith on an Macbook Pro M4 Max is 410-546GB/s, so for memory bandwidth constrained workloads, we may not expect the larger CPU counts on EC2 to give much of a performance boost over a high-end laptop.
+- However, for the workloads tested, I was not able to find evidence they were bottlenecked by memory bandwidth.
 
 #### Disk IO:
 - Throughput of writing to disk can be an important bottleneck.  Use [instance store](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ssd-instance-store.html) (SSDs), or if unavailable, set [EBS throughput](https://docs.aws.amazon.com/ebs/latest/userguide/ebs-volume-types.html) to maximum.
@@ -86,8 +89,6 @@ The charts below show CPU usage over time for the DuckDB-table runs on `r8id.32x
 <VegaLite client:visible spec={threads_cpu_usage_metal_chart} />
 </details>
 
-
-
 ### Does running multiple queries in parallel help?
 
 If fewer threads can improve performance, a natural follow up is to test whether that means we can run multiple queries in parallel, each with fewer threads.
@@ -101,7 +102,16 @@ Further experiments suggested it's also possible for it to make things worse by 
 Overall this evidence suggests suggesting the machine is bottlenecked when running at lower thread counts, just not by CPU, and I would not recommend trying to run queries in parallel.
 
 
-One possible explanation would be that the machine is simply running out of memory bandwidth. To test this, I ran a STREAM-style triad benchmark on the same `r8id.32xlarge` instance:
+### Memory bandwith
+
+I conducted various experiments to see whether these bottlenecks could be explained by memory bandwidth.  I couldn't find any conclusive evidence to suggest memory bandwidth was the bottleneck.
+
+
+<details>
+<summary>Click to expand memory bandwidth analysis</summary>
+One possible explanation would be that the machine is simply running out of memory bandwidth.
+
+
 
 <VegaLite client:visible spec={memory_bandwidth_chart} />
 
@@ -110,6 +120,8 @@ This makes a simple memory-bandwidth explanation look unlikely. The synthetic tr
 The phase-level machine metrics point the same way. During the two-query and four-query runs, average host CPU usage was only around 14-23%, and the monitor recorded almost no disk I/O during the query phases, probably because the Parquet data was already hot in the OS page cache.
 
 My best hypothesis is therefore that the bottleneck is not raw hardware bandwidth, but some combination of DuckDB execution overhead, synchronisation, cache locality, and stages of the scan/group/order pipeline that do not scale smoothly when more queries are competing at once. The practical conclusion is that parallel sessions are not a reliable way to use the spare cores on this workload: benchmark it, and prefer a smaller number of concurrent queries unless measured throughput actually improves.
+
+</details>
 
 ### Disk I/O
 
@@ -172,3 +184,5 @@ S3 IO: `2026-05-15T190335Z-r8id-32xlarge-i-0a37266c6a531dedd-report.html`
 Threads and performance: `2026-05-16T080410Z-r8id-32xlarge-i-0c9713718622fb751-report.html` and `2026-05-19T160719Z-r8id-metal-48xl-i-00c24d85a1f7998d5-report.html`
 
 Running queries in parallel: `2026-05-19T091501Z-r8id-32xlarge-i-0b0cd166828897ad0-report.html`
+
+Memory bandwidth `2026-05-19T160719Z-r8id-metal-48xl-i-00c24d85a1f7998d5-report.html` and `2026-05-19T100058Z-r8id-32xlarge-i-0cbab4d579ba49c52-report.html`
