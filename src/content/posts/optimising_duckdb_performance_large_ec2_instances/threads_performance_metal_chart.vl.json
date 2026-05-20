@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Grouped runtime comparison for the group/order query on raw Parquet files versus a DuckDB table on r8id.32xlarge.",
+  "description": "Runtime comparison for the group/order query on raw Parquet files on r8id.metal-48xl.",
   "width": 450,
   "height": 220,
   "padding": {
@@ -30,44 +30,30 @@
       {
         "storage_layout": "Parquet",
         "thread_count": 32,
-        "query_seconds": 8.814,
-        "runtime_label": "8.81s",
-        "relative_to_fastest_layout": 1.0
+        "query_seconds": 8.337,
+        "runtime_label": "8.34s",
+        "relative_to_fastest_layout": 1.31
       },
       {
         "storage_layout": "Parquet",
         "thread_count": 64,
-        "query_seconds": 9.195,
-        "runtime_label": "9.20s",
-        "relative_to_fastest_layout": 1.04
+        "query_seconds": 8.554,
+        "runtime_label": "8.55s",
+        "relative_to_fastest_layout": 1.35
       },
       {
         "storage_layout": "Parquet",
         "thread_count": 128,
-        "query_seconds": 16.199,
-        "runtime_label": "16.20s",
-        "relative_to_fastest_layout": 1.84
+        "query_seconds": 7.361,
+        "runtime_label": "7.36s",
+        "relative_to_fastest_layout": 1.16
       },
       {
-        "storage_layout": "DuckDB table",
-        "thread_count": 32,
-        "query_seconds": 8.688,
-        "runtime_label": "8.69s",
-        "relative_to_fastest_layout": 1.04
-      },
-      {
-        "storage_layout": "DuckDB table",
-        "thread_count": 64,
-        "query_seconds": 8.325,
-        "runtime_label": "8.33s",
-        "relative_to_fastest_layout": 1.0
-      },
-      {
-        "storage_layout": "DuckDB table",
-        "thread_count": 128,
-        "query_seconds": 11.937,
-        "runtime_label": "11.94s",
-        "relative_to_fastest_layout": 1.43
+        "storage_layout": "Parquet",
+        "thread_count": 192,
+        "query_seconds": 6.348,
+        "runtime_label": "6.35s",
+        "relative_to_fastest_layout": 1
       }
     ]
   },
@@ -79,7 +65,8 @@
       "sort": [
         32,
         64,
-        128
+        128,
+        192
       ],
       "axis": {
         "labelAngle": 0
@@ -115,7 +102,15 @@
         },
         "color": {
           "field": "storage_layout",
-          "type": "nominal"
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Parquet"
+            ],
+            "range": [
+              "#f58518"
+            ]
+          }
         },
         "tooltip": [
           {
@@ -167,5 +162,5 @@
       }
     }
   ],
-  "title": "Results from r8id.32xlarge"
+  "title": "Results from r8id.metal-48xl"
 }

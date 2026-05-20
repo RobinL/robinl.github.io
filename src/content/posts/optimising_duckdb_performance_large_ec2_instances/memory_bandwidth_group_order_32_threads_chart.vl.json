@@ -1,0 +1,527 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "DRAM read/write/total bandwidth during the group/order query with DuckDB THREADS=32 on r8id.metal-48xl.",
+  "title": {
+    "text": "DRAM bandwidth during group/order query",
+    "subtitle": "32 DuckDB threads on r8id.metal-48xl",
+    "anchor": "start",
+    "fontSize": 14,
+    "subtitleFontSize": 12,
+    "subtitleColor": "#4b5563",
+    "offset": 10
+  },
+  "width": 450,
+  "height": 220,
+  "padding": {
+    "left": 8,
+    "right": 16,
+    "top": 4,
+    "bottom": 4
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "orient": "bottom",
+      "direction": "horizontal",
+      "titleFontSize": 12,
+      "labelFontSize": 12,
+      "title": "Metric"
+    }
+  },
+  "data": {
+    "values": [
+      {
+        "seconds_from_start": 0.048,
+        "read_gb_per_second": 49.57,
+        "write_gb_per_second": 38.996,
+        "total_gb_per_second": 88.566
+      },
+      {
+        "seconds_from_start": 0.157,
+        "read_gb_per_second": 31.972,
+        "write_gb_per_second": 25.271,
+        "total_gb_per_second": 57.242
+      },
+      {
+        "seconds_from_start": 0.267,
+        "read_gb_per_second": 43.071,
+        "write_gb_per_second": 33.568,
+        "total_gb_per_second": 76.639
+      },
+      {
+        "seconds_from_start": 0.377,
+        "read_gb_per_second": 38.919,
+        "write_gb_per_second": 30.873,
+        "total_gb_per_second": 69.792
+      },
+      {
+        "seconds_from_start": 0.478,
+        "read_gb_per_second": 46.159,
+        "write_gb_per_second": 35.866,
+        "total_gb_per_second": 82.025
+      },
+      {
+        "seconds_from_start": 0.587,
+        "read_gb_per_second": 21.285,
+        "write_gb_per_second": 16.995,
+        "total_gb_per_second": 38.28
+      },
+      {
+        "seconds_from_start": 0.688,
+        "read_gb_per_second": 10.473,
+        "write_gb_per_second": 7.832,
+        "total_gb_per_second": 18.305
+      },
+      {
+        "seconds_from_start": 0.788,
+        "read_gb_per_second": 9.691,
+        "write_gb_per_second": 7.313,
+        "total_gb_per_second": 17.004
+      },
+      {
+        "seconds_from_start": 0.889,
+        "read_gb_per_second": 11.739,
+        "write_gb_per_second": 8.865,
+        "total_gb_per_second": 20.604
+      },
+      {
+        "seconds_from_start": 0.995,
+        "read_gb_per_second": 12.305,
+        "write_gb_per_second": 9.536,
+        "total_gb_per_second": 21.842
+      },
+      {
+        "seconds_from_start": 1.095,
+        "read_gb_per_second": 12.324,
+        "write_gb_per_second": 9.246,
+        "total_gb_per_second": 21.57
+      },
+      {
+        "seconds_from_start": 1.196,
+        "read_gb_per_second": 10.851,
+        "write_gb_per_second": 8.431,
+        "total_gb_per_second": 19.282
+      },
+      {
+        "seconds_from_start": 1.297,
+        "read_gb_per_second": 10.729,
+        "write_gb_per_second": 7.852,
+        "total_gb_per_second": 18.581
+      },
+      {
+        "seconds_from_start": 1.403,
+        "read_gb_per_second": 9.99,
+        "write_gb_per_second": 7.579,
+        "total_gb_per_second": 17.569
+      },
+      {
+        "seconds_from_start": 1.504,
+        "read_gb_per_second": 9.531,
+        "write_gb_per_second": 7.1,
+        "total_gb_per_second": 16.631
+      },
+      {
+        "seconds_from_start": 1.604,
+        "read_gb_per_second": 11.406,
+        "write_gb_per_second": 8.685,
+        "total_gb_per_second": 20.09
+      },
+      {
+        "seconds_from_start": 1.705,
+        "read_gb_per_second": 10.19,
+        "write_gb_per_second": 7.53,
+        "total_gb_per_second": 17.721
+      },
+      {
+        "seconds_from_start": 1.805,
+        "read_gb_per_second": 11.325,
+        "write_gb_per_second": 8.693,
+        "total_gb_per_second": 20.017
+      },
+      {
+        "seconds_from_start": 1.906,
+        "read_gb_per_second": 9.505,
+        "write_gb_per_second": 7.045,
+        "total_gb_per_second": 16.549
+      },
+      {
+        "seconds_from_start": 2.006,
+        "read_gb_per_second": 10.185,
+        "write_gb_per_second": 7.7,
+        "total_gb_per_second": 17.885
+      },
+      {
+        "seconds_from_start": 2.106,
+        "read_gb_per_second": 10.786,
+        "write_gb_per_second": 8.315,
+        "total_gb_per_second": 19.101
+      },
+      {
+        "seconds_from_start": 2.207,
+        "read_gb_per_second": 9.883,
+        "write_gb_per_second": 7.292,
+        "total_gb_per_second": 17.175
+      },
+      {
+        "seconds_from_start": 2.307,
+        "read_gb_per_second": 11.458,
+        "write_gb_per_second": 8.916,
+        "total_gb_per_second": 20.374
+      },
+      {
+        "seconds_from_start": 2.409,
+        "read_gb_per_second": 9.521,
+        "write_gb_per_second": 7.153,
+        "total_gb_per_second": 16.674
+      },
+      {
+        "seconds_from_start": 2.51,
+        "read_gb_per_second": 10.481,
+        "write_gb_per_second": 8.086,
+        "total_gb_per_second": 18.567
+      },
+      {
+        "seconds_from_start": 2.61,
+        "read_gb_per_second": 9.071,
+        "write_gb_per_second": 6.582,
+        "total_gb_per_second": 15.653
+      },
+      {
+        "seconds_from_start": 2.711,
+        "read_gb_per_second": 11.291,
+        "write_gb_per_second": 8.505,
+        "total_gb_per_second": 19.796
+      },
+      {
+        "seconds_from_start": 2.811,
+        "read_gb_per_second": 9.707,
+        "write_gb_per_second": 7.221,
+        "total_gb_per_second": 16.928
+      },
+      {
+        "seconds_from_start": 2.912,
+        "read_gb_per_second": 10.477,
+        "write_gb_per_second": 7.668,
+        "total_gb_per_second": 18.145
+      },
+      {
+        "seconds_from_start": 3.013,
+        "read_gb_per_second": 10.371,
+        "write_gb_per_second": 7.984,
+        "total_gb_per_second": 18.354
+      },
+      {
+        "seconds_from_start": 3.113,
+        "read_gb_per_second": 10.696,
+        "write_gb_per_second": 7.905,
+        "total_gb_per_second": 18.601
+      },
+      {
+        "seconds_from_start": 3.214,
+        "read_gb_per_second": 11.23,
+        "write_gb_per_second": 8.612,
+        "total_gb_per_second": 19.842
+      },
+      {
+        "seconds_from_start": 3.315,
+        "read_gb_per_second": 8.695,
+        "write_gb_per_second": 6.456,
+        "total_gb_per_second": 15.15
+      },
+      {
+        "seconds_from_start": 3.415,
+        "read_gb_per_second": 11.169,
+        "write_gb_per_second": 8.399,
+        "total_gb_per_second": 19.568
+      },
+      {
+        "seconds_from_start": 3.517,
+        "read_gb_per_second": 9.079,
+        "write_gb_per_second": 6.677,
+        "total_gb_per_second": 15.756
+      },
+      {
+        "seconds_from_start": 3.618,
+        "read_gb_per_second": 9.993,
+        "write_gb_per_second": 7.45,
+        "total_gb_per_second": 17.443
+      },
+      {
+        "seconds_from_start": 3.719,
+        "read_gb_per_second": 10.669,
+        "write_gb_per_second": 8.181,
+        "total_gb_per_second": 18.851
+      },
+      {
+        "seconds_from_start": 3.819,
+        "read_gb_per_second": 9.55,
+        "write_gb_per_second": 7.106,
+        "total_gb_per_second": 16.656
+      },
+      {
+        "seconds_from_start": 3.919,
+        "read_gb_per_second": 8.955,
+        "write_gb_per_second": 6.472,
+        "total_gb_per_second": 15.427
+      },
+      {
+        "seconds_from_start": 4.022,
+        "read_gb_per_second": 11.076,
+        "write_gb_per_second": 8.53,
+        "total_gb_per_second": 19.606
+      },
+      {
+        "seconds_from_start": 4.122,
+        "read_gb_per_second": 9.246,
+        "write_gb_per_second": 6.923,
+        "total_gb_per_second": 16.17
+      },
+      {
+        "seconds_from_start": 4.223,
+        "read_gb_per_second": 9.564,
+        "write_gb_per_second": 7.287,
+        "total_gb_per_second": 16.851
+      },
+      {
+        "seconds_from_start": 4.323,
+        "read_gb_per_second": 10.776,
+        "write_gb_per_second": 8.072,
+        "total_gb_per_second": 18.849
+      },
+      {
+        "seconds_from_start": 4.424,
+        "read_gb_per_second": 8.592,
+        "write_gb_per_second": 6.38,
+        "total_gb_per_second": 14.972
+      },
+      {
+        "seconds_from_start": 4.524,
+        "read_gb_per_second": 10.44,
+        "write_gb_per_second": 7.851,
+        "total_gb_per_second": 18.292
+      },
+      {
+        "seconds_from_start": 4.624,
+        "read_gb_per_second": 10.74,
+        "write_gb_per_second": 8.03,
+        "total_gb_per_second": 18.77
+      },
+      {
+        "seconds_from_start": 4.725,
+        "read_gb_per_second": 14.829,
+        "write_gb_per_second": 11.654,
+        "total_gb_per_second": 26.483
+      },
+      {
+        "seconds_from_start": 4.825,
+        "read_gb_per_second": 16.964,
+        "write_gb_per_second": 23.225,
+        "total_gb_per_second": 40.189
+      },
+      {
+        "seconds_from_start": 4.926,
+        "read_gb_per_second": 53.938,
+        "write_gb_per_second": 36.445,
+        "total_gb_per_second": 90.384
+      },
+      {
+        "seconds_from_start": 5.027,
+        "read_gb_per_second": 90.004,
+        "write_gb_per_second": 30.707,
+        "total_gb_per_second": 120.711
+      },
+      {
+        "seconds_from_start": 5.127,
+        "read_gb_per_second": 103.816,
+        "write_gb_per_second": 31.469,
+        "total_gb_per_second": 135.284
+      },
+      {
+        "seconds_from_start": 5.238,
+        "read_gb_per_second": 89.145,
+        "write_gb_per_second": 44.245,
+        "total_gb_per_second": 133.39
+      },
+      {
+        "seconds_from_start": 5.347,
+        "read_gb_per_second": 88.409,
+        "write_gb_per_second": 42.982,
+        "total_gb_per_second": 131.392
+      },
+      {
+        "seconds_from_start": 5.457,
+        "read_gb_per_second": 93.541,
+        "write_gb_per_second": 30.318,
+        "total_gb_per_second": 123.859
+      },
+      {
+        "seconds_from_start": 5.563,
+        "read_gb_per_second": 92.716,
+        "write_gb_per_second": 30.999,
+        "total_gb_per_second": 123.715
+      },
+      {
+        "seconds_from_start": 5.663,
+        "read_gb_per_second": 81.601,
+        "write_gb_per_second": 56.921,
+        "total_gb_per_second": 138.522
+      },
+      {
+        "seconds_from_start": 5.764,
+        "read_gb_per_second": 97.958,
+        "write_gb_per_second": 30.799,
+        "total_gb_per_second": 128.757
+      },
+      {
+        "seconds_from_start": 5.864,
+        "read_gb_per_second": 94.38,
+        "write_gb_per_second": 31.336,
+        "total_gb_per_second": 125.716
+      },
+      {
+        "seconds_from_start": 5.965,
+        "read_gb_per_second": 86.181,
+        "write_gb_per_second": 51.29,
+        "total_gb_per_second": 137.471
+      },
+      {
+        "seconds_from_start": 6.065,
+        "read_gb_per_second": 90.966,
+        "write_gb_per_second": 39.347,
+        "total_gb_per_second": 130.314
+      },
+      {
+        "seconds_from_start": 6.166,
+        "read_gb_per_second": 95.792,
+        "write_gb_per_second": 31.731,
+        "total_gb_per_second": 127.523
+      },
+      {
+        "seconds_from_start": 6.266,
+        "read_gb_per_second": 100.346,
+        "write_gb_per_second": 27.735,
+        "total_gb_per_second": 128.081
+      },
+      {
+        "seconds_from_start": 6.367,
+        "read_gb_per_second": 37.068,
+        "write_gb_per_second": 5.211,
+        "total_gb_per_second": 42.28
+      },
+      {
+        "seconds_from_start": 6.467,
+        "read_gb_per_second": 5.062,
+        "write_gb_per_second": 1.573,
+        "total_gb_per_second": 6.635
+      },
+      {
+        "seconds_from_start": 6.567,
+        "read_gb_per_second": 1.693,
+        "write_gb_per_second": 0.82,
+        "total_gb_per_second": 2.513
+      },
+      {
+        "seconds_from_start": 6.668,
+        "read_gb_per_second": 2.366,
+        "write_gb_per_second": 1.093,
+        "total_gb_per_second": 3.459
+      },
+      {
+        "seconds_from_start": 6.768,
+        "read_gb_per_second": 1.379,
+        "write_gb_per_second": 0.884,
+        "total_gb_per_second": 2.263
+      },
+      {
+        "seconds_from_start": 6.811,
+        "read_gb_per_second": 1.373,
+        "write_gb_per_second": 0.901,
+        "total_gb_per_second": 2.274
+      }
+    ]
+  },
+  "transform": [
+    {
+      "fold": [
+        "read_gb_per_second",
+        "write_gb_per_second",
+        "total_gb_per_second"
+      ],
+      "as": [
+        "metric",
+        "gb_per_second"
+      ]
+    },
+    {
+      "calculate": "datum.metric === 'read_gb_per_second' ? 'Read DRAM' : datum.metric === 'write_gb_per_second' ? 'Write DRAM' : 'Total DRAM'",
+      "as": "metric_label"
+    }
+  ],
+  "mark": {
+    "type": "line",
+    "strokeWidth": 2.5
+  },
+  "encoding": {
+    "x": {
+      "field": "seconds_from_start",
+      "type": "quantitative",
+      "title": "Seconds from start",
+      "axis": {
+        "grid": true
+      }
+    },
+    "y": {
+      "field": "gb_per_second",
+      "type": "quantitative",
+      "title": "DRAM bandwidth (GB/s)",
+      "scale": {
+        "domain": [
+          0,
+          500
+        ]
+      }
+    },
+    "color": {
+      "field": "metric_label",
+      "type": "nominal",
+      "title": null,
+      "scale": {
+        "domain": [
+          "Total DRAM",
+          "Read DRAM",
+          "Write DRAM"
+        ],
+        "range": [
+          "#2563eb",
+          "#16a34a",
+          "#f97316"
+        ]
+      }
+    },
+    "tooltip": [
+      {
+        "field": "seconds_from_start",
+        "type": "quantitative",
+        "title": "Seconds from start",
+        "format": ".3f"
+      },
+      {
+        "field": "metric_label",
+        "type": "nominal",
+        "title": "Metric"
+      },
+      {
+        "field": "gb_per_second",
+        "type": "quantitative",
+        "title": "Bandwidth (GB/s)",
+        "format": ".1f"
+      }
+    ]
+  }
+}

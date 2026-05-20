@@ -1,0 +1,154 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "End-to-end workload duration for parallel group/order parquet query configurations on r8id.32xlarge, using duration_seconds from temp_benchmark_outputs/best/2026-05-19T091501Z-parallel-running/r8id.32xlarge/i-0b0cd166828897ad0/workloads/*.json.",
+  "width": 450,
+  "height": 240,
+  "padding": {
+    "left": 8,
+    "right": 16,
+    "top": 12,
+    "bottom": 4
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    }
+  },
+  "data": {
+    "values": [
+      {
+        "sort_order": 1,
+        "config_label": "1 x 32",
+        "query_count": 1,
+        "threads_per_query": 32,
+        "duration_seconds": 11.073,
+        "duration_label": "11.07s"
+      },
+      {
+        "sort_order": 2,
+        "config_label": "1 x 64",
+        "query_count": 1,
+        "threads_per_query": 64,
+        "duration_seconds": 11.317,
+        "duration_label": "11.32s"
+      },
+      {
+        "sort_order": 3,
+        "config_label": "2 x 32",
+        "query_count": 2,
+        "threads_per_query": 32,
+        "duration_seconds": 18.89,
+        "duration_label": "18.89s"
+      },
+      {
+        "sort_order": 4,
+        "config_label": "1 x 128",
+        "query_count": 1,
+        "threads_per_query": 128,
+        "duration_seconds": 16.459,
+        "duration_label": "16.46s"
+      },
+      {
+        "sort_order": 5,
+        "config_label": "2 x 64",
+        "query_count": 2,
+        "threads_per_query": 64,
+        "duration_seconds": 18.62,
+        "duration_label": "18.62s"
+      },
+      {
+        "sort_order": 6,
+        "config_label": "4 x 32",
+        "query_count": 4,
+        "threads_per_query": 32,
+        "duration_seconds": 37.55,
+        "duration_label": "37.55s"
+      }
+    ]
+  },
+  "encoding": {
+    "x": {
+      "field": "config_label",
+      "type": "nominal",
+      "title": "Queries x DuckDB threads each",
+      "sort": {
+        "field": "sort_order",
+        "op": "min",
+        "order": "ascending"
+      },
+      "axis": {
+        "labelAngle": 0,
+        "labelLimit": 80,
+        "labelLineHeight": 14
+      }
+    },
+    "y": {
+      "field": "duration_seconds",
+      "type": "quantitative",
+      "title": "Workload duration (seconds)",
+      "scale": {
+        "domain": [
+          0,
+          40
+        ]
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusTopLeft": 4,
+        "cornerRadiusTopRight": 4,
+        "size": 42,
+        "color": "#2563eb"
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "config_label",
+            "type": "nominal",
+            "title": "Configuration"
+          },
+          {
+            "field": "query_count",
+            "type": "quantitative",
+            "title": "Parallel queries"
+          },
+          {
+            "field": "threads_per_query",
+            "type": "quantitative",
+            "title": "Threads per query"
+          },
+          {
+            "field": "duration_seconds",
+            "type": "quantitative",
+            "title": "Workload duration (s)",
+            "format": ".3f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "bottom",
+        "dy": -6,
+        "fontSize": 12,
+        "fontWeight": 700,
+        "color": "#111827"
+      },
+      "encoding": {
+        "text": {
+          "field": "duration_label"
+        }
+      }
+    }
+  ],
+  "title": "Results from r8id.32xlarge"
+}
