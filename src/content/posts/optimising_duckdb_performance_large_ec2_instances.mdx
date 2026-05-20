@@ -71,15 +71,22 @@ The performance varied depending on the DuckDB [`THREADS` pragma setting](https:
 
 'DuckDB table' refers to running the query against a table in a `db.duckdb` database on the SSD, whereas 'Parquet files' refers to running the query direct from the data stored in 100 raw Parquet files on the SSD.
 
-The `r8id.metal-48xl` run shown above is for raw Parquet files only. On the `r8id.32xlarge`, using 128 threads made performance unambiguously worse, particularly when reading from parquet. On the `r8id.metal-48xl`, 192 threads was fastest for this query, although the improvement over 32 threads was more modest.
+On the `r8id.32xlarge`, using 128 threads made performance unambiguously worse, particularly when reading from parquet, whereas on the `r8id.metal-48xl`, more threads are unambiguously better, but with diminishing returns.
+
+I'm currently unable to explain this finding.
+
+
+<details>
+<summary>Click to expand CPU usage time series charts</summary>
 
 The charts below show CPU usage over time for the DuckDB-table runs on `r8id.32xlarge`, and for the raw-Parquet runs on `r8id.metal-48xl`. The 128-thread `r8id.32xlarge` run does hit the ceiling briefly, but not in a way that translates into lower runtime. On the `r8id.metal-48xl`, CPU usage likewise rises and falls in phases rather than smoothly pinning the whole machine.
 
 <VegaLite client:visible spec={threads_cpu_usage_chart} />
 
 <VegaLite client:visible spec={threads_cpu_usage_metal_chart} />
+</details>
 
-An unanswered question for me is why DuckDB is unable to fully pin the CPU at 100% of its allocated threads for the query.
+
 
 ### Does running multiple queries in parallel help
 
