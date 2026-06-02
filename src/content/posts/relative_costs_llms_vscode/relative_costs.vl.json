@@ -74,12 +74,23 @@
         ],
         "name": "Cost metric: "
       }
+    },
+    {
+      "name": "showRecentModelsOnly",
+      "value": true,
+      "bind": {
+        "input": "checkbox",
+        "name": "Show recent models only: "
+      }
     }
   ],
   "transform": [
     {
       "calculate": "datum.name + ' | ' + datum.reasoning_level",
       "as": "model_effort"
+    },
+    {
+      "filter": "!showRecentModelsOnly || indexof(['Claude Haiku 4.5', 'Claude Opus 4.6', 'Claude Opus 4.7', 'Claude Opus 4.8', 'Claude Sonnet 4.5', 'Claude Sonnet 4.6', 'Gemini 3 Flash (Preview)', 'Gemini 3.1 Pro (Preview)', 'GPT-5.3-Codex', 'GPT-5.4', 'GPT-5.5'], datum.name) >= 0"
     },
     {
       "calculate": "datum[costMetric] * 1",
