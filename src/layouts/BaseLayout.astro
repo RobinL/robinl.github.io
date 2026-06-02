@@ -15,6 +15,7 @@ interface Props {
   type?: 'website' | 'article';
   publishedTime?: Date;
   modifiedTime?: Date;
+  noindex?: boolean;
 }
 
 const {
@@ -27,6 +28,7 @@ const {
   type = 'website',
   publishedTime,
   modifiedTime,
+  noindex = false,
 } = Astro.props;
 
 const pageTitle = title === site.title ? title : `${title} | ${site.title}`;
@@ -43,6 +45,7 @@ const analyticsHosts = ['www.robinlinacre.com', 'robinlinacre.com'];
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.png" type="image/png" />
     {stylesheet && <link rel="stylesheet" href={`/styles/${stylesheet}`} />}

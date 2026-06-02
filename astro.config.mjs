@@ -28,7 +28,9 @@ export default defineConfig({
         ],
       ],
     }),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.endsWith('/relative_costs_llms_vscode/'),
+    }),
   ],
   markdown: {
     syntaxHighlight: 'shiki',

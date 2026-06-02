@@ -5,7 +5,10 @@ import { categoryLabels, shortCategoryLabels, site } from '../lib/site';
 import { formatDateIso } from '../lib/dates';
 import { postSlug } from '../lib/content';
 
-const postEntries = await getCollection('posts', ({ data }) => data.category !== 'non_blog_post');
+const postEntries = await getCollection(
+  'posts',
+  ({ data }) => data.category !== 'non_blog_post' && data.category !== 'unlisted'
+);
 const microblogEntries = await getCollection('microblog');
 const linksQuotesEntries = await getCollection('linksQuotes');
 

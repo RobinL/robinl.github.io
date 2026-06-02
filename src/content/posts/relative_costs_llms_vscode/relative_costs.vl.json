@@ -1,0 +1,772 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Grouped bar chart of GitHub Copilot model pricing rows, with interactive baseline selection and relative cost multiples.",
+  "width": 1200,
+  "height": 520,
+  "params": [
+    {
+      "name": "baselineModelEffort",
+      "value": "GPT-5.5 | medium",
+      "bind": {
+        "input": "select",
+        "options": [
+          "Claude Haiku 4.5 | not_supported",
+          "Claude Opus 4.5 | not_supported",
+          "Claude Opus 4.6 | low",
+          "Claude Opus 4.6 | medium",
+          "Claude Opus 4.6 | high",
+          "Claude Opus 4.6 | x-high",
+          "Claude Opus 4.7 | low",
+          "Claude Opus 4.7 | medium",
+          "Claude Opus 4.7 | high",
+          "Claude Opus 4.7 | x-high",
+          "Claude Opus 4.8 | low",
+          "Claude Opus 4.8 | medium",
+          "Claude Opus 4.8 | high",
+          "Claude Opus 4.8 | x-high",
+          "Claude Sonnet 4.5 | not_supported",
+          "Claude Sonnet 4.6 | low",
+          "Claude Sonnet 4.6 | medium",
+          "Claude Sonnet 4.6 | high",
+          "Claude Sonnet 4.6 | x-high",
+          "Gemini 2.5 Pro | not_supported",
+          "Gemini 3 Flash (Preview) | not_supported",
+          "Gemini 3.1 Pro (Preview) | not_supported",
+          "GPT-5 mini | not_supported",
+          "GPT-5.2 | not_supported",
+          "GPT-5.2-Codex | not_supported",
+          "GPT-5.3-Codex | low",
+          "GPT-5.3-Codex | medium",
+          "GPT-5.3-Codex | high",
+          "GPT-5.3-Codex | x-high",
+          "GPT-5.4 | low",
+          "GPT-5.4 | medium",
+          "GPT-5.4 | high",
+          "GPT-5.4 | x-high",
+          "GPT-5.5 | low",
+          "GPT-5.5 | medium",
+          "GPT-5.5 | high",
+          "GPT-5.5 | x-high"
+        ],
+        "name": "Baseline model / effort: "
+      }
+    },
+    {
+      "name": "costMetric",
+      "value": "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output",
+      "bind": {
+        "input": "select",
+        "options": [
+          "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output",
+          "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output",
+          "estimated_output_credits_for_medium_baseline_1m_output_tokens",
+          "output_credits_per_1m_tokens",
+          "input_credits_per_1m_tokens",
+          "cached_input_credits_per_1m_tokens"
+        ],
+        "labels": [
+          "Total credits: 1M input + effort-adjusted output (uncached)",
+          "Total credits: 1M cached input + effort-adjusted output",
+          "Effort-adjusted output credits only",
+          "Unit output credits only (no effort multiplier)",
+          "Unit input credits only",
+          "Unit cached-input credits only"
+        ],
+        "name": "Cost metric: "
+      }
+    }
+  ],
+  "transform": [
+    {
+      "calculate": "datum.name + ' | ' + datum.reasoning_level",
+      "as": "model_effort"
+    },
+    {
+      "calculate": "datum[costMetric] * 1",
+      "as": "selected_cost_credits"
+    },
+    {
+      "calculate": "datum.model_effort === baselineModelEffort ? datum.selected_cost_credits : null",
+      "as": "baseline_cost_candidate"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "max",
+          "field": "baseline_cost_candidate",
+          "as": "baseline_cost_credits"
+        }
+      ]
+    },
+    {
+      "calculate": "datum.selected_cost_credits / datum.baseline_cost_credits",
+      "as": "relative_multiple"
+    },
+    {
+      "calculate": "datum.model_effort === baselineModelEffort ? 'selected baseline' : ''",
+      "as": "baseline_flag"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "bar"
+      },
+      "encoding": {
+        "x": {
+          "field": "name",
+          "type": "nominal",
+          "title": "Model",
+          "sort": null,
+          "axis": {
+            "labelAngle": -35,
+            "labelLimit": 180
+          }
+        },
+        "xOffset": {
+          "field": "reasoning_level",
+          "type": "nominal",
+          "sort": [
+            "not_supported",
+            "low",
+            "medium",
+            "high",
+            "x-high"
+          ]
+        },
+        "y": {
+          "field": "relative_multiple",
+          "type": "quantitative",
+          "title": "Multiple of selected baseline",
+          "axis": {
+            "format": ".1f"
+          }
+        },
+        "color": {
+          "field": "reasoning_level",
+          "type": "nominal",
+          "title": "Reasoning level",
+          "sort": [
+            "not_supported",
+            "low",
+            "medium",
+            "high",
+            "x-high"
+          ]
+        },
+        "opacity": {
+          "condition": {
+            "test": "datum.model_effort === baselineModelEffort",
+            "value": 1
+          },
+          "value": 0.8
+        },
+        "tooltip": [
+          {
+            "field": "name",
+            "type": "nominal",
+            "title": "Model"
+          },
+          {
+            "field": "provider",
+            "type": "nominal",
+            "title": "Provider"
+          },
+          {
+            "field": "context_size",
+            "type": "nominal",
+            "title": "Context size"
+          },
+          {
+            "field": "reasoning_level",
+            "type": "nominal",
+            "title": "Reasoning level"
+          },
+          {
+            "field": "reasoning_token_multiplier_vs_medium",
+            "type": "quantitative",
+            "title": "Effort multiplier vs medium",
+            "format": ".2f"
+          },
+          {
+            "field": "selected_cost_credits",
+            "type": "quantitative",
+            "title": "Selected metric cost, credits",
+            "format": ",.2f"
+          },
+          {
+            "field": "baseline_cost_credits",
+            "type": "quantitative",
+            "title": "Baseline cost, credits",
+            "format": ",.2f"
+          },
+          {
+            "field": "relative_multiple",
+            "type": "quantitative",
+            "title": "Multiple of baseline",
+            "format": ".2f"
+          },
+          {
+            "field": "baseline_flag",
+            "type": "nominal",
+            "title": "Baseline"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "strokeDash": [
+          4,
+          4
+        ]
+      },
+      "encoding": {
+        "y": {
+          "datum": 1,
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {
+            "value": "Baseline = 1.0x"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "axis": {
+      "labelFontSize": 11,
+      "titleFontSize": 12
+    },
+    "legend": {
+      "orient": "top"
+    },
+    "view": {
+      "stroke": "transparent"
+    }
+  },
+  "data": {
+    "values": [
+      {
+        "name": "Claude Haiku 4.5",
+        "provider": "Anthropic",
+        "context_size": "200K",
+        "configurable_reasoning": false,
+        "reasoning_level": "not_supported",
+        "reasoning_token_multiplier_vs_medium": 1,
+        "input_credits_per_1m_tokens": 100,
+        "cached_input_credits_per_1m_tokens": 10,
+        "output_credits_per_1m_tokens": 500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 500,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 600,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 510
+      },
+      {
+        "name": "Claude Opus 4.5",
+        "provider": "Anthropic",
+        "context_size": "200K",
+        "configurable_reasoning": false,
+        "reasoning_level": "not_supported",
+        "reasoning_token_multiplier_vs_medium": 1,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 2500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 2500,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 3000,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 2550
+      },
+      {
+        "name": "Claude Opus 4.6",
+        "provider": "Anthropic",
+        "context_size": "200K",
+        "configurable_reasoning": true,
+        "reasoning_level": "low",
+        "reasoning_token_multiplier_vs_medium": 0.35,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 2500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 875,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 1375,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 925
+      },
+      {
+        "name": "Claude Opus 4.6",
+        "provider": "Anthropic",
+        "context_size": "200K",
+        "configurable_reasoning": true,
+        "reasoning_level": "medium",
+        "reasoning_token_multiplier_vs_medium": 1,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 2500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 2500,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 3000,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 2550
+      },
+      {
+        "name": "Claude Opus 4.6",
+        "provider": "Anthropic",
+        "context_size": "200K",
+        "configurable_reasoning": true,
+        "reasoning_level": "high",
+        "reasoning_token_multiplier_vs_medium": 2,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 2500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 5000,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 5500,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 5050
+      },
+      {
+        "name": "Claude Opus 4.6",
+        "provider": "Anthropic",
+        "context_size": "200K",
+        "configurable_reasoning": true,
+        "reasoning_level": "x-high",
+        "reasoning_token_multiplier_vs_medium": 5,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 2500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 12500,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 13000,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 12550
+      },
+      {
+        "name": "Claude Opus 4.7",
+        "provider": "Anthropic",
+        "context_size": "200K",
+        "configurable_reasoning": true,
+        "reasoning_level": "low",
+        "reasoning_token_multiplier_vs_medium": 0.35,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 2500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 875,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 1375,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 925
+      },
+      {
+        "name": "Claude Opus 4.7",
+        "provider": "Anthropic",
+        "context_size": "200K",
+        "configurable_reasoning": true,
+        "reasoning_level": "medium",
+        "reasoning_token_multiplier_vs_medium": 1,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 2500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 2500,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 3000,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 2550
+      },
+      {
+        "name": "Claude Opus 4.7",
+        "provider": "Anthropic",
+        "context_size": "200K",
+        "configurable_reasoning": true,
+        "reasoning_level": "high",
+        "reasoning_token_multiplier_vs_medium": 2,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 2500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 5000,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 5500,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 5050
+      },
+      {
+        "name": "Claude Opus 4.7",
+        "provider": "Anthropic",
+        "context_size": "200K",
+        "configurable_reasoning": true,
+        "reasoning_level": "x-high",
+        "reasoning_token_multiplier_vs_medium": 5,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 2500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 12500,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 13000,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 12550
+      },
+      {
+        "name": "Claude Opus 4.8",
+        "provider": "Anthropic",
+        "context_size": "232K",
+        "configurable_reasoning": true,
+        "reasoning_level": "low",
+        "reasoning_token_multiplier_vs_medium": 0.35,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 2500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 875,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 1375,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 925
+      },
+      {
+        "name": "Claude Opus 4.8",
+        "provider": "Anthropic",
+        "context_size": "232K",
+        "configurable_reasoning": true,
+        "reasoning_level": "medium",
+        "reasoning_token_multiplier_vs_medium": 1,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 2500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 2500,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 3000,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 2550
+      },
+      {
+        "name": "Claude Opus 4.8",
+        "provider": "Anthropic",
+        "context_size": "232K",
+        "configurable_reasoning": true,
+        "reasoning_level": "high",
+        "reasoning_token_multiplier_vs_medium": 2,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 2500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 5000,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 5500,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 5050
+      },
+      {
+        "name": "Claude Opus 4.8",
+        "provider": "Anthropic",
+        "context_size": "232K",
+        "configurable_reasoning": true,
+        "reasoning_level": "x-high",
+        "reasoning_token_multiplier_vs_medium": 5,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 2500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 12500,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 13000,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 12550
+      },
+      {
+        "name": "Claude Sonnet 4.5",
+        "provider": "Anthropic",
+        "context_size": "200K",
+        "configurable_reasoning": false,
+        "reasoning_level": "not_supported",
+        "reasoning_token_multiplier_vs_medium": 1,
+        "input_credits_per_1m_tokens": 300,
+        "cached_input_credits_per_1m_tokens": 30,
+        "output_credits_per_1m_tokens": 1500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 1500,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 1800,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 1530
+      },
+      {
+        "name": "Claude Sonnet 4.6",
+        "provider": "Anthropic",
+        "context_size": "200K",
+        "configurable_reasoning": true,
+        "reasoning_level": "low",
+        "reasoning_token_multiplier_vs_medium": 0.35,
+        "input_credits_per_1m_tokens": 300,
+        "cached_input_credits_per_1m_tokens": 30,
+        "output_credits_per_1m_tokens": 1500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 525,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 825,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 555
+      },
+      {
+        "name": "Claude Sonnet 4.6",
+        "provider": "Anthropic",
+        "context_size": "200K",
+        "configurable_reasoning": true,
+        "reasoning_level": "medium",
+        "reasoning_token_multiplier_vs_medium": 1,
+        "input_credits_per_1m_tokens": 300,
+        "cached_input_credits_per_1m_tokens": 30,
+        "output_credits_per_1m_tokens": 1500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 1500,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 1800,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 1530
+      },
+      {
+        "name": "Claude Sonnet 4.6",
+        "provider": "Anthropic",
+        "context_size": "200K",
+        "configurable_reasoning": true,
+        "reasoning_level": "high",
+        "reasoning_token_multiplier_vs_medium": 2,
+        "input_credits_per_1m_tokens": 300,
+        "cached_input_credits_per_1m_tokens": 30,
+        "output_credits_per_1m_tokens": 1500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 3000,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 3300,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 3030
+      },
+      {
+        "name": "Claude Sonnet 4.6",
+        "provider": "Anthropic",
+        "context_size": "200K",
+        "configurable_reasoning": true,
+        "reasoning_level": "x-high",
+        "reasoning_token_multiplier_vs_medium": 5,
+        "input_credits_per_1m_tokens": 300,
+        "cached_input_credits_per_1m_tokens": 30,
+        "output_credits_per_1m_tokens": 1500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 7500,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 7800,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 7530
+      },
+      {
+        "name": "Gemini 2.5 Pro",
+        "provider": "Google",
+        "context_size": "173K",
+        "configurable_reasoning": false,
+        "reasoning_level": "not_supported",
+        "reasoning_token_multiplier_vs_medium": 1,
+        "input_credits_per_1m_tokens": 125,
+        "cached_input_credits_per_1m_tokens": 12.5,
+        "output_credits_per_1m_tokens": 1000,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 1000,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 1125,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 1012.5
+      },
+      {
+        "name": "Gemini 3 Flash (Preview)",
+        "provider": "Google",
+        "context_size": "173K",
+        "configurable_reasoning": false,
+        "reasoning_level": "not_supported",
+        "reasoning_token_multiplier_vs_medium": 1,
+        "input_credits_per_1m_tokens": 50,
+        "cached_input_credits_per_1m_tokens": 5,
+        "output_credits_per_1m_tokens": 300,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 300,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 350,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 305
+      },
+      {
+        "name": "Gemini 3.1 Pro (Preview)",
+        "provider": "Google",
+        "context_size": "200K",
+        "configurable_reasoning": false,
+        "reasoning_level": "not_supported",
+        "reasoning_token_multiplier_vs_medium": 1,
+        "input_credits_per_1m_tokens": 200,
+        "cached_input_credits_per_1m_tokens": 20,
+        "output_credits_per_1m_tokens": 1200,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 1200,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 1400,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 1220
+      },
+      {
+        "name": "GPT-5 mini",
+        "provider": "OpenAI",
+        "context_size": "192K",
+        "configurable_reasoning": false,
+        "reasoning_level": "not_supported",
+        "reasoning_token_multiplier_vs_medium": 1,
+        "input_credits_per_1m_tokens": 25,
+        "cached_input_credits_per_1m_tokens": 2.5,
+        "output_credits_per_1m_tokens": 200,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 200,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 225,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 202.5
+      },
+      {
+        "name": "GPT-5.2",
+        "provider": "OpenAI",
+        "context_size": "400K",
+        "configurable_reasoning": false,
+        "reasoning_level": "not_supported",
+        "reasoning_token_multiplier_vs_medium": 1,
+        "input_credits_per_1m_tokens": 175,
+        "cached_input_credits_per_1m_tokens": 17.5,
+        "output_credits_per_1m_tokens": 1400,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 1400,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 1575,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 1417.5
+      },
+      {
+        "name": "GPT-5.2-Codex",
+        "provider": "OpenAI",
+        "context_size": "400K",
+        "configurable_reasoning": false,
+        "reasoning_level": "not_supported",
+        "reasoning_token_multiplier_vs_medium": 1,
+        "input_credits_per_1m_tokens": 175,
+        "cached_input_credits_per_1m_tokens": 17.5,
+        "output_credits_per_1m_tokens": 1400,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 1400,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 1575,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 1417.5
+      },
+      {
+        "name": "GPT-5.3-Codex",
+        "provider": "OpenAI",
+        "context_size": "400K",
+        "configurable_reasoning": true,
+        "reasoning_level": "low",
+        "reasoning_token_multiplier_vs_medium": 0.35,
+        "input_credits_per_1m_tokens": 175,
+        "cached_input_credits_per_1m_tokens": 17.5,
+        "output_credits_per_1m_tokens": 1400,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 490,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 665,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 507.5
+      },
+      {
+        "name": "GPT-5.3-Codex",
+        "provider": "OpenAI",
+        "context_size": "400K",
+        "configurable_reasoning": true,
+        "reasoning_level": "medium",
+        "reasoning_token_multiplier_vs_medium": 1,
+        "input_credits_per_1m_tokens": 175,
+        "cached_input_credits_per_1m_tokens": 17.5,
+        "output_credits_per_1m_tokens": 1400,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 1400,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 1575,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 1417.5
+      },
+      {
+        "name": "GPT-5.3-Codex",
+        "provider": "OpenAI",
+        "context_size": "400K",
+        "configurable_reasoning": true,
+        "reasoning_level": "high",
+        "reasoning_token_multiplier_vs_medium": 2,
+        "input_credits_per_1m_tokens": 175,
+        "cached_input_credits_per_1m_tokens": 17.5,
+        "output_credits_per_1m_tokens": 1400,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 2800,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 2975,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 2817.5
+      },
+      {
+        "name": "GPT-5.3-Codex",
+        "provider": "OpenAI",
+        "context_size": "400K",
+        "configurable_reasoning": true,
+        "reasoning_level": "x-high",
+        "reasoning_token_multiplier_vs_medium": 5,
+        "input_credits_per_1m_tokens": 175,
+        "cached_input_credits_per_1m_tokens": 17.5,
+        "output_credits_per_1m_tokens": 1400,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 7000,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 7175,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 7017.5
+      },
+      {
+        "name": "GPT-5.4",
+        "provider": "OpenAI",
+        "context_size": "400K",
+        "configurable_reasoning": true,
+        "reasoning_level": "low",
+        "reasoning_token_multiplier_vs_medium": 0.35,
+        "input_credits_per_1m_tokens": 250,
+        "cached_input_credits_per_1m_tokens": 25,
+        "output_credits_per_1m_tokens": 1500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 525,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 775,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 550
+      },
+      {
+        "name": "GPT-5.4",
+        "provider": "OpenAI",
+        "context_size": "400K",
+        "configurable_reasoning": true,
+        "reasoning_level": "medium",
+        "reasoning_token_multiplier_vs_medium": 1,
+        "input_credits_per_1m_tokens": 250,
+        "cached_input_credits_per_1m_tokens": 25,
+        "output_credits_per_1m_tokens": 1500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 1500,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 1750,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 1525
+      },
+      {
+        "name": "GPT-5.4",
+        "provider": "OpenAI",
+        "context_size": "400K",
+        "configurable_reasoning": true,
+        "reasoning_level": "high",
+        "reasoning_token_multiplier_vs_medium": 2,
+        "input_credits_per_1m_tokens": 250,
+        "cached_input_credits_per_1m_tokens": 25,
+        "output_credits_per_1m_tokens": 1500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 3000,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 3250,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 3025
+      },
+      {
+        "name": "GPT-5.4",
+        "provider": "OpenAI",
+        "context_size": "400K",
+        "configurable_reasoning": true,
+        "reasoning_level": "x-high",
+        "reasoning_token_multiplier_vs_medium": 5,
+        "input_credits_per_1m_tokens": 250,
+        "cached_input_credits_per_1m_tokens": 25,
+        "output_credits_per_1m_tokens": 1500,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 7500,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 7750,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 7525
+      },
+      {
+        "name": "GPT-5.5",
+        "provider": "OpenAI",
+        "context_size": "400K",
+        "configurable_reasoning": true,
+        "reasoning_level": "low",
+        "reasoning_token_multiplier_vs_medium": 0.35,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 3000,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 1050,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 1550,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 1100
+      },
+      {
+        "name": "GPT-5.5",
+        "provider": "OpenAI",
+        "context_size": "400K",
+        "configurable_reasoning": true,
+        "reasoning_level": "medium",
+        "reasoning_token_multiplier_vs_medium": 1,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 3000,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 3000,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 3500,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 3050
+      },
+      {
+        "name": "GPT-5.5",
+        "provider": "OpenAI",
+        "context_size": "400K",
+        "configurable_reasoning": true,
+        "reasoning_level": "high",
+        "reasoning_token_multiplier_vs_medium": 2,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 3000,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 6000,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 6500,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 6050
+      },
+      {
+        "name": "GPT-5.5",
+        "provider": "OpenAI",
+        "context_size": "400K",
+        "configurable_reasoning": true,
+        "reasoning_level": "x-high",
+        "reasoning_token_multiplier_vs_medium": 5,
+        "input_credits_per_1m_tokens": 500,
+        "cached_input_credits_per_1m_tokens": 50,
+        "output_credits_per_1m_tokens": 3000,
+        "estimated_output_credits_for_medium_baseline_1m_output_tokens": 15000,
+        "estimated_uncached_total_credits_for_1m_input_plus_medium_baseline_1m_output": 15500,
+        "estimated_cached_total_credits_for_1m_cached_input_plus_medium_baseline_1m_output": 15050
+      }
+    ]
+  }
+}
