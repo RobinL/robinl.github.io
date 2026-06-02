@@ -13,6 +13,7 @@ interface Props {
 const { post } = Astro.props;
 const slug = postSlug(post.id);
 const isTutorial = post.data.category === 'probabilistic_linkage' && post.data.probLinkageCategory === 'tutorial';
+const isUnlisted = post.data.category === 'unlisted';
 const originalPublicationUrl = post.data.originalPublication?.url;
 ---
 
@@ -25,6 +26,7 @@ const originalPublicationUrl = post.data.originalPublication?.url;
   type="article"
   publishedTime={post.data.postDate}
   modifiedTime={post.data.latestUpdate}
+  noindex={isUnlisted}
 >
   <article class="prose">
     {originalPublicationUrl && (

@@ -14,6 +14,7 @@ const posts = defineCollection({
       'other',
       'quotes_links',
       'non_blog_post',
+      'unlisted',
     ]),
     codeUrl: z.string().url().optional(),
     image: z.string().optional(),
