@@ -5,7 +5,30 @@ postDate: "2026-04-19"
 category: "data"
 codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/content/posts/letterpaths_blog.mdx"
 pageWidth: "prose"
+latestUpdate: "2026-06-06"
 ---
+
+<style>{`
+  @font-face {
+    font-family: "Letterpaths";
+    src: url("/letterpaths_blog/font/Letterpaths.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  .letterpaths-font-section {
+    font-family: "Letterpaths", cursive;
+    font-size: 1.45rem;
+    line-height: 1.7;
+  }
+
+  .letterpaths-font-section h2 {
+    font-family: "Letterpaths", cursive;
+    font-size: 2.25rem;
+    line-height: 1.2;
+  }
+`}</style>
 
 <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.0rem" }}>
   <video
@@ -49,15 +72,7 @@ The [worksheet generator](https://www.robinlinacre.com/letterpaths/cursive_works
 There is also a [print and pre-cursive worksheet generator](https://www.robinlinacre.com/letterpaths/single_letter_worksheet_generator/) for creating printable letter formation worksheets with arrows, guides and numbered points.
 
 <div>
-  <figure style={{ margin: 0 }}>
-    <img
-      src="/letterpaths_blog/worksheets/print-worksheet.png"
-      alt="Print and pre-cursive worksheet showing letter formation arrows, guides, and numbered points"
-      loading="lazy"
-      style={{ width: "100%", borderRadius: "12px", background: "#f5f2eb" }}
-    />
-    <figcaption style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>[Print and pre-cursive worksheet generator](https://www.robinlinacre.com/letterpaths/single_letter_worksheet_generator/) - create printable letter formation worksheets with arrows, guides and numbered points.</figcaption>
-  </figure>
+
 
   <figure style={{ margin: 0 }}>
     <img
@@ -78,15 +93,26 @@ There is also a [print and pre-cursive worksheet generator](https://www.robinlin
     />
     <figcaption style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>[Worksheet generator - bidirection annotations within letters](https://www.robinlinacre.com/letterpaths/cursive_worksheet_generator/?text=excite&topDirectionalDashSpacing=152&topTurnRadius=48&topUTurnLength=52&topArrowLength=149&topArrowStrokeWidth=5.5&topNumberSize=64&topNumberPathOffset=-77&topOffsetArrowLanes=0&topDirectionalDash=1&topTurningPoint=0&topStartArrow=0&topDrawOrderNumber=0&topMidpointArrow=0&practiceArrowStrokeWidth=5.5)</figcaption>
   </figure>
+
+   <figure style={{ margin: 0 }}>
+    <img
+      src="/letterpaths_blog/worksheets/print-worksheet.png"
+      alt="Print and pre-cursive worksheet showing letter formation arrows, guides, and numbered points"
+      loading="lazy"
+      style={{ width: "100%", borderRadius: "12px", background: "#f5f2eb" }}
+    />
+    <figcaption style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>[Print and pre-cursive worksheet generator](https://www.robinlinacre.com/letterpaths/single_letter_worksheet_generator/) - create printable letter formation worksheets with arrows, guides and numbered points.</figcaption>
+  </figure>
 </div>
+
 
 ## Games and tracing
 
 I have developed two demo games and a basic pedagogical tracing app:
-- [Guided tracing - snake skin](https://www.robinlinacre.com/letterpaths/guided_tracing/?word=excite&skin=classic&offsetArrowLanes=0) (click [here](https://www.robinlinacre.com/letterpaths/guided_tracing/?word=excite&skin=rollercoaster&offsetArrowLanes=0) for rollercoaster mode)
+- [Freehand tracing](https://www.robinlinacre.com/letterpaths/freehand_tracing/) - works on iPad/tablet with stylus.
+- [Guided tracing - snake skin](https://www.robinlinacre.com/letterpaths/guided_tracing/?word=excite&skin=classic&offsetArrowLanes=0) (click [here](https://www.robinlinacre.com/letterpaths/guided_tracing/?word=excite&skin=rollercoaster&offsetArrowLanes=0) for rollercoaster mode, [plain skin](https://www.robinlinacre.com/letterpaths/guided_tracing/?word=excite&skin=plain))
 - [Letter Constellations](https://www.robinlinacre.com/letter_constellations/)
-- [Guided tracing - plain skin](https://www.robinlinacre.com/letterpaths/guided_tracing/?word=excite&skin=plain)
-- [Freehand tracing](https://www.robinlinacre.com/letterpaths/freehand_tracing/)
+
 
 <div
   style={{
@@ -96,6 +122,22 @@ I have developed two demo games and a basic pedagogical tracing app:
     margin: "1.5rem 0 2rem",
   }}
 >
+
+ <figure style={{ margin: 0 }}>
+    <video
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="none"
+      poster="/letterpaths_blog/freehand/freehand-tracing-poster.png"
+      src="/letterpaths_blog/freehand/freehand-tracing.mp4"
+      style={{ width: "100%", borderRadius: "12px", background: "#f5f2eb" }}
+      aria-label="Freehand tracing app for practising letter formation"
+    />
+    <figcaption style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>[Freehand tracing](https://www.robinlinacre.com/letterpaths/freehand_tracing/)</figcaption>
+  </figure>
+
   <figure style={{ margin: 0 }}>
     <video
       autoPlay
@@ -111,20 +153,7 @@ I have developed two demo games and a basic pedagogical tracing app:
     <figcaption style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>[Guided tracing - plain skin](https://www.robinlinacre.com/letterpaths/guided_tracing/?word=excite&skin=plain)</figcaption>
   </figure>
 
-  <figure style={{ margin: 0 }}>
-    <video
-      autoPlay
-      loop
-      muted
-      playsInline
-      preload="none"
-      poster="/letterpaths_blog/freehand/freehand-tracing-poster.png"
-      src="/letterpaths_blog/freehand/freehand-tracing.mp4"
-      style={{ width: "100%", borderRadius: "12px", background: "#f5f2eb" }}
-      aria-label="Freehand tracing app for practising letter formation"
-    />
-    <figcaption style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>[Freehand tracing](https://www.robinlinacre.com/letterpaths/freehand_tracing/)</figcaption>
-  </figure>
+
 
   <figure style={{ margin: 0 }}>
     <video
@@ -161,6 +190,15 @@ I have developed two demo games and a basic pedagogical tracing app:
   </div>
 
 
+<section className="letterpaths-font-section">
+  <h2>Font</h2>
+
+  <div>Letterpaths has an associated cursive font which can be used on the web, or in desktop apps such as Microsoft Word or Apple Keynote.</div>
+</section>
+  <div><a href="https://github.com/RobinL/letterpaths/tree/main/packages/letterpaths-font/fonts">Download the font files here</a></div>
+
+
+
 ### Use letterpaths to create your own apps
 
 The above apps are all powered by the underlying `letterpaths` library, [available on npm](https://www.npmjs.com/package/letterpaths).
@@ -174,6 +212,6 @@ Since I have released the source code under a [permissive open source license](h
 I am not a teacher, and I would [welcome feedback](/about/) on how to improve these apps, particularly from those with experience teaching handwriting.
 
 Some forthcoming features I already have in mind:
-- Improving support for print letters and the [print and pre-cursive worksheet generator](https://www.robinlinacre.com/letterpaths/single_letter_worksheet_generator/)
 - Allowing the user to choose letter vairants (e.g. there are different ways to form the letter `x` and `f`)
+- Improving the kerning of capital letters
 - Improve the geometry of each letter to make hte handwriting neater
