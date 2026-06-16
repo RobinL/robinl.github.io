@@ -46,6 +46,8 @@ This post reviews some of the tricks I used to get the library working, what wor
 
 I started by defining a [json schema ](https://github.com/RobinL/letterpaths/blob/5a9645ac23c3778eaf8860f41cfaa75aa937d37d/packages/letterpaths/src/data/schemas/letter-formation-bezier.schema.json#L1) to represent the geometry of each letter.  With this in hand, I asked the LLM to build me the [letter editor](). I also created a simple [letter gallery](https://www.robinlinacre.com/letterpaths/gallery.html) so I could easily see progress.
 
+One useful trick here was that the browser app could save the JSON files straight back to disk using the browser's File System Access API to ask me for a writable file or folder.
+
 <div style={{ display: "flex", justifyContent: "center", margin: "1.25rem 0 1.5rem" }}>
   <figure style={{ margin: 0, width: "100%", maxWidth: "500px" }}>
     <img
@@ -108,6 +110,11 @@ Many could be saved using their default algorithmic settings, but this allowed m
   </div>
 
 ## Building a  font (.woff2 .otf)
+
+Letterpaths contains scripts to output the letter and join geometry as a font.  This was particularly difficult to get right, but again, whta helped was getting the LLM to create a visual interface to compare different approaches.
+
+
+
 <div style={{ display: "flex", justifyContent: "center", margin: "1.25rem 0 1.5rem" }}>
   <figure style={{ margin: 0, width: "100%", maxWidth: "500px" }}>
     <img
@@ -118,7 +125,6 @@ Many could be saved using their default algorithmic settings, but this allowed m
     />
   </figure>
 </div>
-
 
 
 
