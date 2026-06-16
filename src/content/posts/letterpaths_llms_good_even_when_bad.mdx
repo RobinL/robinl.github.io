@@ -1,0 +1,125 @@
+---
+title: "letterpaths: or how LLMs can be good even when they're bad"
+description: "A short note on using LLMs as a practical tool while still keeping the underlying software careful and deterministic"
+postDate: "2026-06-15"
+category: "data"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/content/posts/letterpaths_llms_good_even_when_bad.mdx"
+pageWidth: "prose"
+---
+
+import Subtitle from '../../components/probabilistic/Subtitle.jsx';
+
+# letterpaths: or how LLMs can be good even when they're bad
+
+<Subtitle>LLMs are poor at precise visual reasoning. So how can we use them to vibe code a library whose output is entirely visual?</Subtitle>
+
+<div style={{ display: "flex", justifyContent: "center", margin: "0 0 1rem" }}>
+  <video
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="metadata"
+    poster="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo-poster.webp"
+    style={{ width: "300px", maxWidth: "100%", display: "block", borderRadius: "8px", background: "#f5f2eb" }}
+    aria-label="Screen recording showing the letterpaths interface"
+  >
+    <source src="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo.webm" type="video/webm" />
+    <source src="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo.mp4" type="video/mp4" />
+  </video>
+</div>
+
+Letterpaths is a library for generating cursive handwriting to help schoolchildren in the UK.  Its value rests on the quality of the letters and the joins between them.
+
+Development was LLM driven. But frontier models[^1] were incapable of even basic visual tasks such turning a clear image of a letter its geometric representation in code. Letters and joins therefore had to be built by hand.
+
+And yet, with the help of LLMs I was able to build the whole library in perhaps 20 hours of work.
+
+The models were thus able to dramatically accellerate human work, despite being incapable of doing the work themselves.
+
+This post reviews some of the tricks I used to get the library working, what worked, and what didn't.
+
+[^1]: GPT 5.4 and Opus 4.6 at the time the library was written.
+
+
+## Building a letter editor
+
+I started by defining a [json schema ](https://github.com/RobinL/letterpaths/blob/5a9645ac23c3778eaf8860f41cfaa75aa937d37d/packages/letterpaths/src/data/schemas/letter-formation-bezier.schema.json#L1) to represent the geometry of each letter.  With this in hand, I asked the LLM to build me the [letter editor](). I also created a simple [letter gallery](https://www.robinlinacre.com/letterpaths/gallery.html) so I could easily see progress.
+
+<div style={{ display: "flex", justifyContent: "center", margin: "1.25rem 0 1.5rem" }}>
+  <figure style={{ margin: 0, width: "100%", maxWidth: "500px" }}>
+    <img
+      src="/letterpaths_llms_good_even_when_bad/letter-editor-screenshot.jpg"
+      alt="Screenshot of the letter editor interface"
+      loading="lazy"
+      style={{ width: "100%", display: "block", borderRadius: "12px", background: "#f5f2eb" }}
+    />
+  </figure>
+</div>
+
+
+## Building a join algorithm
+
+The join algorithm is the most important feature of the library.  The joins need to look natural and closely approximate how joins are taught.
+
+This turned out to be extremely difficult to describe in words, and models proved incapable of improving the algorithm by looking at screenshots of the results and iterating.
+
+Instead, I asked the model to generate various different parametised join algorithms and an interactive visualisation of the results that allowed me to tweak the parameters.
+
+
+
+
+<div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", margin: "1.25rem 0 1.5rem" }}>
+  <figure style={{ margin: 0, width: "100%", maxWidth: "500px" }}>
+    <img
+      src="/letterpaths_llms_good_even_when_bad/join-algorithm-editor-screenshot.png"
+      alt="Screenshot of the join algorithm debugging interface showing spacing controls and segment calculations"
+      loading="lazy"
+      style={{ width: "100%", display: "block", borderRadius: "12px", background: "#f5f2eb" }}
+    />
+  </figure>
+  <figure style={{ margin: 0, width: "100%", maxWidth: "360px" }}>
+    <img
+      src="/letterpaths_llms_good_even_when_bad/join-algorithm-detail-screenshot.png"
+      alt="Zoomed screenshot of the join algorithm visualisation showing join geometry and measured gap guides"
+      loading="lazy"
+      style={{ width: "100%", display: "block", borderRadius: "12px", background: "#f5f2eb" }}
+    />
+  </figure>
+</div>
+
+After many iterations, the final algorithm accounted for horizontal and vertical distance maximum curvature and total curvature, and also chose kerning (spacing) on their basis.
+
+But it was still not quite right: there were too many edge cases; specific letter combinations that looked wrong.
+
+In the end I chose to build a [kerning and join editor](https://www.robinlinacre.com/letterpaths/kerning_editor/) that allowed me to review and edit and save all pairwise combinations, sorted in order of how common they were in the English language.
+
+Many could be saved using their default algorithmic settings, but this allowed me to target any pairs that looked wrong very rapidly.
+
+<div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", margin: "1.25rem 0 1.5rem" }}>
+  <figure style={{ margin: 0, width: "100%", maxWidth: "500px" }}>
+    <img
+      src="/letterpaths_llms_good_even_when_bad/kerning-editor-screenshot.png"
+      alt="Screenshot of the cursive kerning editor showing pair filters, controls, and editable letter combinations"
+      loading="lazy"
+      style={{ width: "100%", display: "block", borderRadius: "12px", background: "#f5f2eb" }}
+    />
+  </figure>
+  </div>
+
+## Building a  font (.woff2 .otf)
+<div style={{ display: "flex", justifyContent: "center", margin: "1.25rem 0 1.5rem" }}>
+  <figure style={{ margin: 0, width: "100%", maxWidth: "500px" }}>
+    <img
+      src="/letterpaths_llms_good_even_when_bad/font-join-comparison-screenshot.png"
+      alt="Screenshot comparing three font join construction strategies from the same letterpaths geometry"
+      loading="lazy"
+      style={{ width: "100%", display: "block", borderRadius: "12px", background: "#f5f2eb" }}
+    />
+  </figure>
+</div>
+
+
+
+
+
