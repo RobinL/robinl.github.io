@@ -9,6 +9,22 @@ pageWidth: "prose"
 
 import Subtitle from '../../components/probabilistic/Subtitle.jsx';
 
+<style>{`
+  @font-face {
+    font-family: "Letterpaths";
+    src: url("/letterpaths_blog/font/Letterpaths.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  .letterpaths-font-section {
+    font-family: "Letterpaths", cursive;
+    font-size: 1.45rem;
+    line-height: 1.7;
+  }
+`}</style>
+
 # letterpaths: or how LLMs can be good even when they're bad
 
 <Subtitle>LLMs are poor at precise visual reasoning. So how can we use them to vibe code a library whose output is entirely visual?</Subtitle>
@@ -31,11 +47,9 @@ import Subtitle from '../../components/probabilistic/Subtitle.jsx';
 
 Letterpaths is a library for generating cursive handwriting to help schoolchildren in the UK.  Its value rests on the quality of the letters and the joins between them.
 
-Development was LLM driven. But frontier models[^1] were incapable of even basic visual tasks such turning a clear image of a letter its geometric representation in code. Letters and joins therefore had to be built by hand.
+Development was LLM driven. But frontier models[^1] were incapable of even basic visual tasks such turning a clear image of a letter its geometric representation in bezier curves, let alone generating natural joins. Letters and joins therefore had to be built by hand.
 
-And yet, with the help of LLMs I was able to build the whole library in perhaps 20 hours of work.
-
-The models were thus able to dramatically accellerate human work, despite being incapable of doing the work themselves.
+And yet, with the help of LLMs I was able to build the whole library in perhaps 20 hours of work.  So despite being ill suited to the main task, models were thus able to dramatically accellerate human work.
 
 This post reviews some of the tricks I used to get the library working, what worked, and what didn't.
 
@@ -111,7 +125,11 @@ Many could be saved using their default algorithmic settings, but this allowed m
 
 ## Building a  font (.woff2 .otf)
 
-Letterpaths contains scripts to output the letter and join geometry as a font.  This was particularly difficult to get right, but again, whta helped was getting the LLM to create a visual interface to compare different approaches.
+<div className="letterpaths-font-section">
+  Letterpaths contains scripts to output the letter and join geometry as a font.
+</div>
+
+This was particularly difficult to get (close to) right, but again, what helped was getting the LLM to create a visual interface to compare different approaches.
 
 
 
@@ -125,7 +143,6 @@ Letterpaths contains scripts to output the letter and join geometry as a font.  
     />
   </figure>
 </div>
-
 
 
 
