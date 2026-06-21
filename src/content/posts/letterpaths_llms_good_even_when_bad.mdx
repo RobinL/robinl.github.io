@@ -27,40 +27,51 @@ import Subtitle from '../../components/probabilistic/Subtitle.jsx';
 
 # letterpaths: or how LLMs can be good even when they're bad
 
-<Subtitle>LLMs are poor at precise visual reasoning. So how can we use them to vibe code a library whose output is entirely visual?</Subtitle>
+<Subtitle>LLMs are poor at precise drawing. So how can we use them to build a library whose output is entirely visual?</Subtitle>
 
 <div style={{ display: "flex", justifyContent: "center", margin: "0 0 1rem" }}>
-  <video
-    autoPlay
-    loop
-    muted
-    playsInline
-    preload="metadata"
-    poster="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo-poster.webp"
-    style={{ width: "300px", maxWidth: "100%", display: "block", borderRadius: "8px", background: "#f5f2eb" }}
-    aria-label="Screen recording showing the letterpaths interface"
+  <a
+    href="https://www.robinlinacre.com/letterpaths/guided_tracing/?word=cursive&offsetArrowLanes=0"
+    aria-label="Open the guided tracing demo"
   >
-    <source src="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo.webm" type="video/webm" />
-    <source src="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo.mp4" type="video/mp4" />
-  </video>
+    <video
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="metadata"
+      poster="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo-poster.webp"
+      style={{ width: "300px", maxWidth: "100%", display: "block", borderRadius: "8px", background: "#f5f2eb", cursor: "pointer" }}
+      aria-label="Screen recording showing the letterpaths interface"
+    >
+      <source src="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo.webm" type="video/webm" />
+      <source src="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo.mp4" type="video/mp4" />
+    </video>
+  </a>
 </div>
 
-Letterpaths is a library for generating cursive handwriting to help schoolchildren in the UK.  Its value rests on the quality of the letters and the joins between them.
+[Letterpaths](https://www.robinlinacre.com/letterpaths/) is a library for generating cursive handwriting to help schoolchildren in the UK.  Its value rests on the quality of the letters and the joins between them.
 
-Development was LLM driven. But frontier models[^1] were incapable of even basic visual tasks such turning a clear image of a letter its geometric representation in bezier curves, let alone generating natural joins. Letters and joins therefore had to be built by hand.
+Development was LLM driven. But frontier models[^1] were incapable of even basic visual tasks such as generating accurate letter shapes, let alone generating natural joins. Letters and joins therefore had to be built by hand.
 
-And yet, with the help of LLMs I was able to build the whole library in perhaps 20 hours of work.  So despite being ill suited to the main task, models were thus able to dramatically accellerate human work.
+And yet, with the help of LLMs I was able to build the whole library in perhaps 20 hours of work.
+
+Where agentic loops fail, we can often put a human in the loop by getting the LLM to build an GUI. Thus, despite being ill suited to the main task, models were thus able to dramatically accellerate human work.
 
 This post reviews some of the tricks I used to get the library working, what worked, and what didn't.
+
+
 
 [^1]: GPT 5.4 and Opus 4.6 at the time the library was written.
 
 
 ## Building a letter editor
 
-I started by defining a [json schema ](https://github.com/RobinL/letterpaths/blob/5a9645ac23c3778eaf8860f41cfaa75aa937d37d/packages/letterpaths/src/data/schemas/letter-formation-bezier.schema.json#L1) to represent the geometry of each letter.  With this in hand, I asked the LLM to build me the [letter editor](). I also created a simple [letter gallery](https://www.robinlinacre.com/letterpaths/gallery.html) so I could easily see progress.
+I started by defining a [json schema ](https://github.com/RobinL/letterpaths/blob/5a9645ac23c3778eaf8860f41cfaa75aa937d37d/packages/letterpaths/src/data/schemas/letter-formation-bezier.schema.json#L1) to represent the geometry of each letter.  With this in hand, I asked the LLM to build me the [letter editor](https://www.robinlinacre.com/letterpaths/editor.html). I also created a simple [letter gallery](https://www.robinlinacre.com/letterpaths/gallery.html) so I could easily see progress.
 
-One useful trick here was that the browser app could save the JSON files straight back to disk using the browser's File System Access API to ask me for a writable file or folder.
+
+
+One useful trick here was to allow the browser app to save the JSON files straight back to disk for me using the browser's File System Access API.
 
 <div style={{ display: "flex", justifyContent: "center", margin: "1.25rem 0 1.5rem" }}>
   <figure style={{ margin: 0, width: "100%", maxWidth: "500px" }}>
@@ -129,7 +140,7 @@ Many could be saved using their default algorithmic settings, but this allowed m
   Letterpaths contains scripts to output the letter and join geometry as a font.
 </div>
 
-This was particularly difficult to get (close to) right, but again, what helped was getting the LLM to create a visual interface to compare different approaches.
+This was particularly difficult to get (approximately) right, but again, what helped was getting the LLM to create a visual interface to compare different approaches:
 
 
 
@@ -144,5 +155,8 @@ This was particularly difficult to get (close to) right, but again, what helped 
   </figure>
 </div>
 
+The [font builder](https://github.com/RobinL/letterpaths/tree/main/packages/letterpaths-font) was the the part I did last, at which point GPT-5.5 and Opus 4.8 were available.  Only Opus 4.8 was able to do a passable job of generating the font, and even then, only with guidance about how the algorithm should work.
 
 
+
+##
