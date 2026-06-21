@@ -23,31 +23,88 @@ import Subtitle from '../../components/probabilistic/Subtitle.jsx';
     font-size: 1.45rem;
     line-height: 1.7;
   }
+
+  .letterpaths-demo-comparison {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 0 1rem;
+  }
+
+  .letterpaths-demo-comparison figure {
+    margin: 0;
+    width: 300px;
+    max-width: 100%;
+  }
+
+  .letterpaths-demo-comparison figcaption {
+    margin: 0.5rem 0 0;
+    color: #1f1f1f;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  .letterpaths-demo-comparison img,
+  .letterpaths-demo-comparison video {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+    border-radius: 8px;
+    background: #f5f2eb;
+  }
+
+  @media (min-width: 720px) {
+    .letterpaths-demo-comparison {
+      flex-direction: row;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .letterpaths-demo-comparison figure {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+  }
 `}</style>
 
 # letterpaths: or how LLMs can be good even when they're bad
 
-<Subtitle>LLMs are poor at precise drawing. So how can we use them to build a library whose output is entirely visual?</Subtitle>
+<Subtitle>LLMs are poor at [precise drawing](https://simonwillison.net/tags/pelican-riding-a-bicycle/). So how can we use them to build a library whose output is entirely visual?</Subtitle>
 
-<div style={{ display: "flex", justifyContent: "center", margin: "0 0 1rem" }}>
-  <a
-    href="https://www.robinlinacre.com/letterpaths/guided_tracing/?word=cursive&offsetArrowLanes=0"
-    aria-label="Open the guided tracing demo"
-  >
-    <video
-      autoPlay
-      loop
-      muted
-      playsInline
-      preload="metadata"
-      poster="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo-poster.webp"
-      style={{ width: "300px", maxWidth: "100%", display: "block", borderRadius: "8px", background: "#f5f2eb", cursor: "pointer" }}
-      aria-label="Screen recording showing the letterpaths interface"
+<div className="letterpaths-demo-comparison">
+  <figure>
+    <a
+      href="https://www.robinlinacre.com/letterpaths/guided_tracing/?word=cursive&offsetArrowLanes=0"
+      aria-label="Open the guided tracing demo"
     >
-      <source src="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo.webm" type="video/webm" />
-      <source src="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo.mp4" type="video/mp4" />
-    </video>
-  </a>
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        poster="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo-poster.webp"
+        style={{ cursor: "pointer" }}
+        aria-label="Screen recording showing the letterpaths interface"
+      >
+        <source src="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo.webm" type="video/webm" />
+        <source src="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo.mp4" type="video/mp4" />
+      </video>
+    </a>
+    <figcaption>Good: Human in the loop</figcaption>
+  </figure>
+  <figure>
+    <img
+      src="/letterpaths_llms_good_even_when_bad/cursive_joined_handwriting.svg"
+      alt="The word cursive rendered as joined handwriting"
+      loading="lazy"
+    />
+    <figcaption>Bad: LLM only</figcaption>
+  </figure>
 </div>
 
 [Letterpaths](https://www.robinlinacre.com/letterpaths/) is a library for generating cursive handwriting to help schoolchildren in the UK.  Its value rests on the quality of the letters and the joins between them.
@@ -56,7 +113,7 @@ Development was LLM driven. But frontier models[^1] were incapable of even basic
 
 And yet, with the help of LLMs I was able to build the whole library in perhaps 20 hours of work.
 
-Where agentic loops fail, we can often put a human in the loop by getting the LLM to build an GUI. Thus, despite being ill suited to the main task, models were thus able to dramatically accellerate human work.
+Where agentic loops fail, we can often put a human in the loop by getting the LLM to build an GUI. Thus, despite being ill suited to the main task, models are able to dramatically accellerate human work.
 
 This post reviews some of the tricks I used to get the library working, what worked, and what didn't.
 
