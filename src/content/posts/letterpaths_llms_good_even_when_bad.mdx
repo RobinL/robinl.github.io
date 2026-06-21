@@ -115,7 +115,7 @@ And yet, with the help of LLMs I was able to build the whole library in perhaps 
 
 Where agentic loops fail, we can often put a human in the loop by getting the LLM to build an GUI. Thus, despite being ill suited to the main task, models are able to dramatically accellerate human work.
 
-This post reviews some of the tricks I used to get the library working, what worked, and what didn't.
+This post reviews some of the tricks I used to get the library working.
 
 
 
@@ -124,7 +124,11 @@ This post reviews some of the tricks I used to get the library working, what wor
 
 ## Building a letter editor
 
-I started by defining a [json schema ](https://github.com/RobinL/letterpaths/blob/5a9645ac23c3778eaf8860f41cfaa75aa937d37d/packages/letterpaths/src/data/schemas/letter-formation-bezier.schema.json#L1) to represent the geometry of each letter.  With this in hand, I asked the LLM to build me the [letter editor](https://www.robinlinacre.com/letterpaths/editor.html). I also created a simple [letter gallery](https://www.robinlinacre.com/letterpaths/gallery.html) so I could easily see progress.
+
+
+I started by defining a [json schema ](https://github.com/RobinL/letterpaths/blob/5a9645ac23c3778eaf8860f41cfaa75aa937d37d/packages/letterpaths/src/data/schemas/letter-formation-bezier.schema.json#L1) to represent the geometry of each letter.
+
+Frontier LLMs proved unable to convert an image of a letter into this format.  So I asked the LLM to build me the [letter editor](https://www.robinlinacre.com/letterpaths/editor.html). I also created a simple [letter gallery](https://www.robinlinacre.com/letterpaths/gallery.html) so I could easily see progress.
 
 
 
