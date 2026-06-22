@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>letterpaths: or how LLMs can be good even when they&#39;re bad | Robin Linacre&#39;s blog</title><meta name="description" content="Using visualisations and disposable GUIs to give faster feedback to LLMs"><link rel="canonical" href="https://www.robinlinacre.com/letterpaths_llms_good_even_when_bad/"><link rel="icon" href="/favicon.png" type="image/png"><meta property="og:title" content="letterpaths: or how LLMs can be good even when they're bad | Robin Linacre's blog"><meta property="og:description" content="Using visualisations and disposable GUIs to give faster feedback to LLMs"><meta property="og:type" content="article"><meta property="og:url" content="https://www.robinlinacre.com/letterpaths_llms_good_even_when_bad/"><meta property="article:published_time" content="2026-06-15T00:00:00.000Z"><meta name="twitter:card" content="summary"><script>(function(){const googleAnalyticsId = "G-94373ZKHEE";
+const analyticsHosts = ["www.robinlinacre.com","robinlinacre.com"];
+
+      if (analyticsHosts.includes(window.location.hostname)) {
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function gtag() {
+          window.dataLayer.push(arguments);
+        };
+        window.gtag('js', new Date());
+        window.gtag('config', googleAnalyticsId, { anonymize_ip: true });
+
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(googleAnalyticsId);
+        document.head.appendChild(script);
+      }
+    })();</script><link rel="stylesheet" href="/_astro/BaseLayout.DeocB96S.css"></head> <body> <div class="site-shell"> <header class="site-header"> <div class="site-header-row"> <a href="/" class="wordmark shimmer-text">&gt;robinlinacre</a> <nav class="header-nav" aria-label="Main navigation"> <a class="responsive-nav-link" href="/about" aria-label="About"> <span class="nav-text">About</span> <span class="nav-icon" aria-hidden="true"> <svg viewBox="0 0 512 512"> <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"></path> </svg> </span> </a> <a class="responsive-nav-link nav-projects" href="/projects/" aria-label="Projects"> <span class="nav-text">Projects</span> <span class="nav-icon" aria-hidden="true"> <svg viewBox="0 0 448 512"> <path d="M160 80c0 32.8-19.7 61-48 73.3v205.4c28.3 12.3 48 40.5 48 73.3c0 44.2-35.8 80-80 80S0 476.2 0 432c0-32.8 19.7-61 48-73.3V153.3C19.7 141 0 112.8 0 80C0 35.8 35.8 0 80 0s80 35.8 80 80zm288 0c0 32.8-19.7 61-48 73.3V208c0 44.2-35.8 80-80 80H160v-64h160c8.8 0 16-7.2 16-16v-54.7C307.7 141 288 112.8 288 80c0-44.2 35.8-80 80-80s80 35.8 80 80zM80 104a24 24 0 1 0 0-48a24 24 0 1 0 0 48zm288 0a24 24 0 1 0 0-48a24 24 0 1 0 0 48zM80 456a24 24 0 1 0 0-48a24 24 0 1 0 0 48z"></path> </svg> </span> </a> <a class="responsive-nav-link" href="/probabilistic_linkage/" aria-label="Probabilistic record linkage"> <span class="nav-text">Record linkage</span> <span class="nav-icon" aria-hidden="true"> <img src="/images/splink_icon.png" alt="" class="linkage-icon" width="200" height="200" loading="eager"> </span> </a> <a class="icon-link" href="https://twitter.com/robinlinacre" rel="noopener noreferrer" target="_blank" aria-label="Twitter"> <svg viewBox="0 0 512 512" aria-hidden="true"> <path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path> </svg> <span class="sr-only">Twitter</span> </a> <a class="icon-link nav-github" href="https://github.com/robinl" rel="noopener noreferrer" target="_blank" aria-label="GitHub"> <svg viewBox="0 0 496 512" aria-hidden="true"> <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path> </svg> <span class="sr-only">GitHub</span> </a> <a class="icon-link" href="https://www.linkedin.com/in/robinlinacre" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn"> <svg viewBox="0 0 448 512" aria-hidden="true"> <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"></path> </svg> <span class="sr-only">LinkedIn</span> </a> <a class="icon-link nav-bluesky" href="https://bsky.app/profile/robinlinacre.bsky.social" rel="noopener noreferrer" target="_blank" aria-label="Bluesky"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M12 11.3884C11.0942 9.62673 8.62833 6.34423 6.335 4.7259C4.13833 3.17506 3.30083 3.4434 2.75167 3.69256C2.11583 3.9784 2 4.95506 2 5.52839C2 6.10339 2.315 10.2367 2.52 10.9276C3.19917 13.2076 5.61417 13.9776 7.83917 13.7309C4.57917 14.2142 1.68333 15.4017 5.48083 19.6292C9.65833 23.9542 11.2058 18.7017 12 16.0392C12.7942 18.7017 13.7083 23.7651 18.4442 19.6292C22 16.0392 19.4208 14.2142 16.1608 13.7309C18.3858 13.9784 20.8008 13.2076 21.48 10.9276C21.685 10.2376 22 6.10256 22 5.52923C22 4.95423 21.8842 3.97839 21.2483 3.6909C20.6992 3.44256 19.8617 3.17423 17.665 4.72423C15.3717 6.34506 12.9058 9.62756 12 11.3884Z"></path> </svg> <span class="sr-only">Bluesky</span> </a> </nav> </div> <hr class="site-rule"> </header> <main>  <article class="prose">  <p class="post-meta"> Originally posted: 2026-06-15.   View source code for this page <a href="https://github.com/RobinL/robinl.github.io/blob/dev/src/content/posts/letterpaths_llms_good_even_when_bad.mdx" target="_blank" rel="noopener noreferrer">here.</a> </p>   <style>
+@font-face {
+  font-family: "Letterpaths";
+  src: url("/letterpaths_blog/font/Letterpaths.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.letterpaths-font-section {
+  font-family: "Letterpaths", cursive;
+  font-size: 1.45rem;
+  line-height: 1.7;
+}
+
+.letterpaths-demo-comparison {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 1rem;
+}
+
+.letterpaths-demo-comparison figure {
+  margin: 0;
+  width: 300px;
+  max-width: 100%;
+}
+
+.letterpaths-demo-comparison figcaption {
+  margin: 0.5rem 0 0;
+  color: #1f1f1f;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.letterpaths-demo-comparison img,
+.letterpaths-demo-comparison video {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  border-radius: 8px;
+  background: #f5f2eb;
+}
+
+@media (min-width: 720px) {
+  .letterpaths-demo-comparison {
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  .letterpaths-demo-comparison figure {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+}
+</style>
+<h1 id="letterpaths-or-how-llms-can-be-good-even-when-theyre-bad"><a class="heading-anchor" href="#letterpaths-or-how-llms-can-be-good-even-when-theyre-bad">letterpaths: or how LLMs can be good even when they’re bad</a></h1>
+<div class="post-subtitle">LLMs are poor at <a href="https://simonwillison.net/tags/pelican-riding-a-bicycle/">precise drawing</a>. So how can we use them to build a library whose output is entirely visual?</div>
+<div class="letterpaths-demo-comparison"><figure><img src="/letterpaths_llms_good_even_when_bad/cursive_joined_handwriting.svg" alt="The word cursive rendered as joined handwriting" loading="lazy"/><figcaption>Bad: LLM only (GPT-5.5)</figcaption></figure><figure><a href="https://www.robinlinacre.com/letterpaths/guided_tracing/?word=cursive&#38;offsetArrowLanes=0" aria-label="Open the guided tracing demo"><video autoPlay loop muted playsInline preload="metadata" poster="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo-poster.webp" style="cursor:pointer" aria-label="Screen recording showing the letterpaths interface"><source src="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo.webm" type="video/webm"/><source src="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo.mp4" type="video/mp4"/></video></a><figcaption>Good: Human in the loop</figcaption></figure></div>
+<p><a href="https://www.robinlinacre.com/letterpaths/">Letterpaths</a> is a library for generating cursive handwriting to help schoolchildren in the UK.  Its value rests on the quality of the letters and the joins between them.</p>
+<p>Development was LLM-driven. But frontier models<sup><a href="#user-content-fn-1" id="user-content-fnref-1" data-footnote-ref aria-describedby="footnote-label">1</a></sup> were incapable of even basic visual tasks such as generating accurate letter shapes, let alone generating natural joins. Letters and joins therefore had to be built by hand.</p>
+<p>And yet, with the help of LLMs I was able to build the whole library in perhaps 20 hours of work.</p>
+<p>In situations like this where the agentic loop fails, the goal is to put a human in the loop in the lowest-friction way possible - often by getting the model to build a GUI. Thus, despite being ill suited to the main task, AI was able to dramatically accelerate human work.</p>
+<p>This post reviews some of the tricks I used to get the library working.</p>
+<h2 id="building-a-letter-editor"><a class="heading-anchor" href="#building-a-letter-editor">Building a letter editor</a></h2>
+<p>I started by defining a <a href="https://github.com/RobinL/letterpaths/blob/5a9645ac23c3778eaf8860f41cfaa75aa937d37d/packages/letterpaths/src/data/schemas/letter-formation-bezier.schema.json#L1">JSON schema</a> to represent the geometry of each letter.</p>
+<p>Frontier LLMs proved unable to convert an image of a letter into the schema. So I asked the LLM to build me the <a href="https://www.robinlinacre.com/letterpaths/editor.html">letter editor</a>. I also created a simple <a href="https://www.robinlinacre.com/letterpaths/gallery.html">letter gallery</a> so I could easily see progress.</p>
+<p>One useful trick here was to allow the browser app to save the JSON files straight back to disk for me using the browser’s File System Access API.</p>
+<div style="display:flex;justify-content:center;margin:1.25rem 0 1.5rem"><figure style="margin:0;width:100%;max-width:500px"><img src="/letterpaths_llms_good_even_when_bad/letter-editor-screenshot.jpg" alt="Screenshot of the letter editor interface" loading="lazy" style="width:100%;display:block;border-radius:12px;background:#f5f2eb"/></figure></div>
+<h2 id="building-a-join-algorithm"><a class="heading-anchor" href="#building-a-join-algorithm">Building a join algorithm</a></h2>
+<p>The join algorithm is the most important feature of the library.  The joins need to look natural and closely approximate how joins are taught in school.</p>
+<p>This turned out to be difficult to describe in words, and models proved incapable of improving the algorithm by looking at screenshots of the results and iterating.</p>
+<p>Instead, I asked the model to generate various different parameterised join algorithms and an interactive visualisation of the results that allowed me to tweak the parameters.</p>
+<div style="display:flex;flex-direction:column;align-items:center;gap:1rem;margin:1.25rem 0 1.5rem"><figure style="margin:0;width:100%;max-width:500px"><img src="/letterpaths_llms_good_even_when_bad/join-algorithm-editor-screenshot.png" alt="Screenshot of the join algorithm debugging interface showing spacing controls and segment calculations" loading="lazy" style="width:100%;display:block;border-radius:12px;background:#f5f2eb"/></figure><figure style="margin:0;width:100%;max-width:360px"><img src="/letterpaths_llms_good_even_when_bad/join-algorithm-detail-screenshot.png" alt="Zoomed screenshot of the join algorithm visualisation showing join geometry and measured gap guides" loading="lazy" style="width:100%;display:block;border-radius:12px;background:#f5f2eb"/></figure></div>
+<p>After many iterations, the final algorithm accounted for horizontal and vertical distance, maximum curvature and total curvature, and also chose kerning (spacing) on their basis.</p>
+<p>But it was still not quite right: there were too many edge cases; specific letter combinations that looked wrong.</p>
+<p>In the end I built a <a href="https://www.robinlinacre.com/letterpaths/kerning_editor/">kerning and join editor</a> that allowed me to review and edit and save all pairwise combinations, sorted in order of how common they were in the English language.</p>
+<p>Many could be saved using their default algorithmic settings, but this allowed me to target any pairs that looked wrong rapidly.</p>
+<div style="display:flex;flex-direction:column;align-items:center;gap:1rem;margin:1.25rem 0 1.5rem"><figure style="margin:0;width:100%;max-width:500px"><img src="/letterpaths_llms_good_even_when_bad/kerning-editor-screenshot.png" alt="Screenshot of the cursive kerning editor showing pair filters, controls, and editable letter combinations" loading="lazy" style="width:100%;display:block;border-radius:12px;background:#f5f2eb"/></figure></div>
+<h2 id="building-a-font-woff2-otf"><a class="heading-anchor" href="#building-a-font-woff2-otf">Building a font (.woff2, .otf)</a></h2>
+<div class="letterpaths-font-section"><p>Letterpaths contains scripts to output the letter and join geometry as a font.</p></div>
+<p>This was particularly difficult to get right - and is still not perfect. But again, what helped was getting the LLM to create a visual interface to compare different algorithmic approaches:</p>
+<div style="display:flex;justify-content:center;margin:1.25rem 0 1.5rem"><figure style="margin:0;width:100%;max-width:500px"><img src="/letterpaths_llms_good_even_when_bad/font-join-comparison-screenshot.png" alt="Screenshot comparing three font join construction strategies from the same letterpaths geometry" loading="lazy" style="width:100%;display:block;border-radius:12px;background:#f5f2eb"/></figure></div>
+<p>The <a href="https://github.com/RobinL/letterpaths/tree/main/packages/letterpaths-font">font builder</a> was the last part that I added to letterpaths, at which point GPT-5.5 and Opus 4.8 were available. Interestingly, only Opus 4.8 was able to do a passable job of generating the font without obvious discontinuities between letters. Even then, it had to be given guidance about how the algorithm should work.</p>
+<h2 id="live-reloading-the-guis-when-code-was-changed"><a class="heading-anchor" href="#live-reloading-the-guis-when-code-was-changed">Live reloading the GUIs when code was changed</a></h2>
+<p>It took me a while to figure out a good pattern for developing the core JavaScript library and associated GUIs. I wanted to ensure the main library code was separate from the disposable GUIs and other code. But at the same time, I needed updates to the core <code>letterpaths</code> library to be immediately reflected in the GUI (live reload). This meant, for instance, that an update to the geometry of a letter would be immediately shown everywhere on save.</p>
+<p>The <a href="https://github.com/robinl/letterpaths">letterpaths repo</a> is an example of a pattern that worked well. It’s set up as a small <code>pnpm</code> monorepo with a <code>packages/</code> directory containing the various apps. This allows the GUIs to use the <code>letterpaths</code> library directly. The apps are run with <code>pnpm dev</code>.</p>
+<p>A secondary trick was to ensure the state of the GUI (which letter is loaded, any settings, which folder from the machine is open) was URL-encoded, so that live reload did not reset the state of the GUI.</p>
+<h2 id="final-thoughts"><a class="heading-anchor" href="#final-thoughts">Final thoughts</a></h2>
+<p>LLMs work best when a feedback loop can be established. Disposable GUIs can often help with this loop.</p>
+<p>This feels like quite a general pattern whether you’re building an education app, a data pipeline, or really any other software: what is the thing you’re currently trying to optimise, and how can you visualise it with high information density. Even when the LLM may get there eventually, you’ll often be able to steer it faster if you can more precisely diagnose the current problem.</p>
+<section data-footnotes class="footnotes"><h2 class="sr-only" id="footnote-label"><a class="heading-anchor" href="#footnote-label">Footnotes</a></h2>
+<ol>
+<li id="user-content-fn-1">
+<p>GPT 5.4 and Opus 4.6 at the time the library was written. <a href="#user-content-fnref-1" data-footnote-backref aria-label="Back to reference 1" class="data-footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>   </article>  </main> <footer class="site-footer"> <hr class="site-rule"> <p><a href="/">Back home</a></p> <p>
+This site is built using <a href="https://observablehq.com">Observable HQ</a> and
+<a href="https://astro.build">Astro</a>. Source code
+<a href="https://github.com/RobinL/robinl.github.io/">here</a>.
+<a href="/thanks/">Say thanks!</a> </p> </footer> </div> </body></html>
