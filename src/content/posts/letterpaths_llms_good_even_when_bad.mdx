@@ -76,6 +76,14 @@ import Subtitle from '../../components/probabilistic/Subtitle.jsx';
 <Subtitle>LLMs are poor at [precise drawing](https://simonwillison.net/tags/pelican-riding-a-bicycle/). So how can we use them to build a library whose output is entirely visual?</Subtitle>
 
 <div className="letterpaths-demo-comparison">
+<figure>
+    <img
+      src="/letterpaths_llms_good_even_when_bad/cursive_joined_handwriting.svg"
+      alt="The word cursive rendered as joined handwriting"
+      loading="lazy"
+    />
+    <figcaption>Bad: LLM only (GPT-5.5)</figcaption>
+  </figure>
   <figure>
     <a
       href="https://www.robinlinacre.com/letterpaths/guided_tracing/?word=cursive&offsetArrowLanes=0"
@@ -97,14 +105,7 @@ import Subtitle from '../../components/probabilistic/Subtitle.jsx';
     </a>
     <figcaption>Good: Human in the loop</figcaption>
   </figure>
-  <figure>
-    <img
-      src="/letterpaths_llms_good_even_when_bad/cursive_joined_handwriting.svg"
-      alt="The word cursive rendered as joined handwriting"
-      loading="lazy"
-    />
-    <figcaption>Bad: LLM only (GPT-5.5)</figcaption>
-  </figure>
+
 </div>
 
 [Letterpaths](https://www.robinlinacre.com/letterpaths/) is a library for generating cursive handwriting to help schoolchildren in the UK.  Its value rests on the quality of the letters and the joins between them.
@@ -113,7 +114,7 @@ Development was LLM driven. But frontier models[^1] were incapable of even basic
 
 And yet, with the help of LLMs I was able to build the whole library in perhaps 20 hours of work.
 
-Where agentic loops fail, we can often put a human in the loop by getting the LLM to build an GUI. Thus, despite being ill suited to the main task, models are able to dramatically accellerate human work.
+In situations like this where the agentic loop fails, the goal is to put a human in the loop in the lowest friction way possible - often by getting the model to build a GUI.  Thus, despite being ill suited to the main task, AI was able to dramatically accellerate human work.
 
 This post reviews some of the tricks I used to get the library working.
 
@@ -148,13 +149,11 @@ One useful trick here was to allow the browser app to save the JSON files straig
 
 ## Building a join algorithm
 
-The join algorithm is the most important feature of the library.  The joins need to look natural and closely approximate how joins are taught.
+The join algorithm is the most important feature of the library.  The joins need to look natural and closely approximate how joins are taught in school.
 
-This turned out to be extremely difficult to describe in words, and models proved incapable of improving the algorithm by looking at screenshots of the results and iterating.
+This turned out to be difficult to describe in words, and models proved incapable of improving the algorithm by looking at screenshots of the results and iterating.
 
 Instead, I asked the model to generate various different parametised join algorithms and an interactive visualisation of the results that allowed me to tweak the parameters.
-
-
 
 
 <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", margin: "1.25rem 0 1.5rem" }}>
@@ -180,9 +179,9 @@ After many iterations, the final algorithm accounted for horizontal and vertical
 
 But it was still not quite right: there were too many edge cases; specific letter combinations that looked wrong.
 
-In the end I chose to build a [kerning and join editor](https://www.robinlinacre.com/letterpaths/kerning_editor/) that allowed me to review and edit and save all pairwise combinations, sorted in order of how common they were in the English language.
+In the end I built a [kerning and join editor](https://www.robinlinacre.com/letterpaths/kerning_editor/) that allowed me to review and edit and save all pairwise combinations, sorted in order of how common they were in the English language.
 
-Many could be saved using their default algorithmic settings, but this allowed me to target any pairs that looked wrong very rapidly.
+Many could be saved using their default algorithmic settings, but this allowed me to target any pairs that looked wrong rapidly.
 
 <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", margin: "1.25rem 0 1.5rem" }}>
   <figure style={{ margin: 0, width: "100%", maxWidth: "500px" }}>
@@ -201,7 +200,7 @@ Many could be saved using their default algorithmic settings, but this allowed m
   Letterpaths contains scripts to output the letter and join geometry as a font.
 </div>
 
-This was particularly difficult to get (approximately) right, but again, what helped was getting the LLM to create a visual interface to compare different approaches:
+This was particularly difficult to get right - and is still not perfect. But again, what helped was getting the LLM to create a visual interface to compare different algorithmic approaches:
 
 
 
@@ -216,8 +215,18 @@ This was particularly difficult to get (approximately) right, but again, what he
   </figure>
 </div>
 
-The [font builder](https://github.com/RobinL/letterpaths/tree/main/packages/letterpaths-font) was the the part I did last, at which point GPT-5.5 and Opus 4.8 were available.  Only Opus 4.8 was able to do a passable job of generating the font, and even then, only with guidance about how the algorithm should work.
+The [font builder](https://github.com/RobinL/letterpaths/tree/main/packages/letterpaths-font) was the the last part that I added to letterpaths, at which point GPT-5.5 and Opus 4.8 were available.  Intereatingly, only Opus 4.8 was able to do a passable job of generating the font without obvious discontinuities between letters. Even then, it had to be given guidance about how the algorithm should work.
+
+## Live reloading the GUIs when code was changed
+
+It took me a while to figure out a good pattern for developing the core javascript library annd associated GUIs.  I wanted to ensure the main library code separate from the disposable GUIs and other code. But at the same time, I needed updates to the core `letterpaths` library to be immediately reflected in the GUI (live reload). This meant, for instance, that an update to the geometry of a letter would be immediately shown everywhere on save.
+
+The [letterpaths repo](https://github.com/robinl/letterpaths) is an example of pattern that worked well.    It's set up as a small `pnpm` monorepo with `packages/` directory containing the various apps.  This allows the GUIs to be used us to use the `letterpaths` library directly.  The apps are run with `pnpm dev`.
+
+A secondary trick was to ensure the state of the GUI (which letter is loaded, any settings, which folder from the machine is open) was urlencoded, so that live reload did not reset the state of the GUI.
 
 
+## Final thoughts
+LLMs work best when a feedback loop can be established. Disposable GUIs can often help with this loop.
 
-##
+This feels like quite a general pattern whether you're building an education app, a data pipeline, or really any other software: what is the thing youre currently trying to optimise, and how can you visualise it with high information density.  Even when the LLM may get there eventually, you'll often be able to steer it faster if you can more precisely diagnose the current problem.
