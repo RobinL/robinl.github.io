@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 260" width="900" height="260" role="img" aria-label="The word cursive written in joined cursive handwriting">
+  <title>cursive in joined handwriting</title>
+  <desc>An approximate joined cursive rendering of the word cursive, drawn as SVG paths.</desc>
+
+  <rect width="100%" height="100%" fill="#fffaf0"/>
+
+  <!-- handwriting guide lines -->
+  <g opacity="0.22" stroke="#8d8d8d" stroke-width="1">
+    <line x1="40" y1="72" x2="860" y2="72"/>
+    <line x1="40" y1="132" x2="860" y2="132"/>
+    <line x1="40" y1="192" x2="860" y2="192"/>
+  </g>
+
+  <!-- joined cursive word: cursive -->
+  <g fill="none" stroke="#1f1f1f" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
+    <!-- entry stroke + c + join into u -->
+    <path d="
+      M 55 178
+      C 80 178, 92 156, 106 136
+      C 126 108, 164 103, 181 128
+      C 194 147, 174 170, 147 169
+      C 119 168, 106 145, 119 124
+
+      C 138 156, 157 177, 183 176
+      C 208 175, 216 146, 216 118
+      C 216 146, 221 174, 245 175
+      C 271 176, 283 149, 284 118
+
+      C 286 141, 292 163, 309 174
+      C 328 186, 350 174, 359 151
+      C 368 126, 353 110, 334 118
+      C 319 124, 315 143, 326 154
+      C 341 168, 363 164, 382 145
+
+      C 396 130, 416 115, 438 119
+      C 455 122, 464 134, 462 147
+      C 460 164, 439 168, 424 159
+      C 406 148, 413 126, 435 121
+      C 459 116, 485 135, 500 156
+
+      C 512 172, 532 177, 551 170
+      C 569 163, 571 145, 557 137
+      C 542 128, 520 134, 517 149
+      C 512 173, 550 182, 574 168
+      C 590 159, 600 140, 603 118
+
+      C 607 148, 615 174, 642 175
+      C 666 176, 681 153, 683 123
+
+      C 687 153, 696 174, 724 174
+      C 750 174, 765 151, 763 131
+      C 761 112, 739 108, 725 121
+      C 705 139, 718 172, 748 176
+      C 780 180, 808 165, 830 140
+    "/>
+
+    <!-- dot on i -->
+    <path d="M 605 82 C 607 78, 613 78, 615 82 C 617 87, 613 91, 608 90 C 604 90, 602 86, 605 82"/>
+  </g>
+</svg>
