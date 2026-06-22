@@ -1,6 +1,6 @@
 ---
 title: "letterpaths: or how LLMs can be good even when they're bad"
-description: "A short note on using LLMs as a practical tool while still keeping the underlying software careful and deterministic"
+description: "Using visualisations and disposable GUIs to give faster feedback to LLMs"
 postDate: "2026-06-15"
 category: "data"
 codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/content/posts/letterpaths_llms_good_even_when_bad.mdx"
@@ -110,11 +110,11 @@ import Subtitle from '../../components/probabilistic/Subtitle.jsx';
 
 [Letterpaths](https://www.robinlinacre.com/letterpaths/) is a library for generating cursive handwriting to help schoolchildren in the UK.  Its value rests on the quality of the letters and the joins between them.
 
-Development was LLM driven. But frontier models[^1] were incapable of even basic visual tasks such as generating accurate letter shapes, let alone generating natural joins. Letters and joins therefore had to be built by hand.
+Development was LLM-driven. But frontier models[^1] were incapable of even basic visual tasks such as generating accurate letter shapes, let alone generating natural joins. Letters and joins therefore had to be built by hand.
 
 And yet, with the help of LLMs I was able to build the whole library in perhaps 20 hours of work.
 
-In situations like this where the agentic loop fails, the goal is to put a human in the loop in the lowest friction way possible - often by getting the model to build a GUI.  Thus, despite being ill suited to the main task, AI was able to dramatically accellerate human work.
+In situations like this where the agentic loop fails, the goal is to put a human in the loop in the lowest-friction way possible - often by getting the model to build a GUI. Thus, despite being ill suited to the main task, AI was able to dramatically accelerate human work.
 
 This post reviews some of the tricks I used to get the library working.
 
@@ -127,9 +127,9 @@ This post reviews some of the tricks I used to get the library working.
 
 
 
-I started by defining a [json schema ](https://github.com/RobinL/letterpaths/blob/5a9645ac23c3778eaf8860f41cfaa75aa937d37d/packages/letterpaths/src/data/schemas/letter-formation-bezier.schema.json#L1) to represent the geometry of each letter.
+I started by defining a [JSON schema](https://github.com/RobinL/letterpaths/blob/5a9645ac23c3778eaf8860f41cfaa75aa937d37d/packages/letterpaths/src/data/schemas/letter-formation-bezier.schema.json#L1) to represent the geometry of each letter.
 
-Frontier LLMs proved unable to convert an image of a letter into the schema.  So I asked the LLM to build me the [letter editor](https://www.robinlinacre.com/letterpaths/editor.html). I also created a simple [letter gallery](https://www.robinlinacre.com/letterpaths/gallery.html) so I could easily see progress.
+Frontier LLMs proved unable to convert an image of a letter into the schema. So I asked the LLM to build me the [letter editor](https://www.robinlinacre.com/letterpaths/editor.html). I also created a simple [letter gallery](https://www.robinlinacre.com/letterpaths/gallery.html) so I could easily see progress.
 
 
 
@@ -153,7 +153,7 @@ The join algorithm is the most important feature of the library.  The joins need
 
 This turned out to be difficult to describe in words, and models proved incapable of improving the algorithm by looking at screenshots of the results and iterating.
 
-Instead, I asked the model to generate various different parametised join algorithms and an interactive visualisation of the results that allowed me to tweak the parameters.
+Instead, I asked the model to generate various different parameterised join algorithms and an interactive visualisation of the results that allowed me to tweak the parameters.
 
 
 <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", margin: "1.25rem 0 1.5rem" }}>
@@ -175,7 +175,7 @@ Instead, I asked the model to generate various different parametised join algori
   </figure>
 </div>
 
-After many iterations, the final algorithm accounted for horizontal and vertical distance maximum curvature and total curvature, and also chose kerning (spacing) on their basis.
+After many iterations, the final algorithm accounted for horizontal and vertical distance, maximum curvature and total curvature, and also chose kerning (spacing) on their basis.
 
 But it was still not quite right: there were too many edge cases; specific letter combinations that looked wrong.
 
@@ -194,7 +194,7 @@ Many could be saved using their default algorithmic settings, but this allowed m
   </figure>
   </div>
 
-## Building a  font (.woff2 .otf)
+## Building a font (.woff2, .otf)
 
 <div className="letterpaths-font-section">
   Letterpaths contains scripts to output the letter and join geometry as a font.
@@ -215,18 +215,18 @@ This was particularly difficult to get right - and is still not perfect. But aga
   </figure>
 </div>
 
-The [font builder](https://github.com/RobinL/letterpaths/tree/main/packages/letterpaths-font) was the the last part that I added to letterpaths, at which point GPT-5.5 and Opus 4.8 were available.  Intereatingly, only Opus 4.8 was able to do a passable job of generating the font without obvious discontinuities between letters. Even then, it had to be given guidance about how the algorithm should work.
+The [font builder](https://github.com/RobinL/letterpaths/tree/main/packages/letterpaths-font) was the last part that I added to letterpaths, at which point GPT-5.5 and Opus 4.8 were available. Interestingly, only Opus 4.8 was able to do a passable job of generating the font without obvious discontinuities between letters. Even then, it had to be given guidance about how the algorithm should work.
 
 ## Live reloading the GUIs when code was changed
 
-It took me a while to figure out a good pattern for developing the core javascript library annd associated GUIs.  I wanted to ensure the main library code separate from the disposable GUIs and other code. But at the same time, I needed updates to the core `letterpaths` library to be immediately reflected in the GUI (live reload). This meant, for instance, that an update to the geometry of a letter would be immediately shown everywhere on save.
+It took me a while to figure out a good pattern for developing the core JavaScript library and associated GUIs. I wanted to ensure the main library code was separate from the disposable GUIs and other code. But at the same time, I needed updates to the core `letterpaths` library to be immediately reflected in the GUI (live reload). This meant, for instance, that an update to the geometry of a letter would be immediately shown everywhere on save.
 
-The [letterpaths repo](https://github.com/robinl/letterpaths) is an example of pattern that worked well.    It's set up as a small `pnpm` monorepo with `packages/` directory containing the various apps.  This allows the GUIs to be used us to use the `letterpaths` library directly.  The apps are run with `pnpm dev`.
+The [letterpaths repo](https://github.com/robinl/letterpaths) is an example of a pattern that worked well. It's set up as a small `pnpm` monorepo with a `packages/` directory containing the various apps. This allows the GUIs to use the `letterpaths` library directly. The apps are run with `pnpm dev`.
 
-A secondary trick was to ensure the state of the GUI (which letter is loaded, any settings, which folder from the machine is open) was urlencoded, so that live reload did not reset the state of the GUI.
+A secondary trick was to ensure the state of the GUI (which letter is loaded, any settings, which folder from the machine is open) was URL-encoded, so that live reload did not reset the state of the GUI.
 
 
 ## Final thoughts
 LLMs work best when a feedback loop can be established. Disposable GUIs can often help with this loop.
 
-This feels like quite a general pattern whether you're building an education app, a data pipeline, or really any other software: what is the thing youre currently trying to optimise, and how can you visualise it with high information density.  Even when the LLM may get there eventually, you'll often be able to steer it faster if you can more precisely diagnose the current problem.
+This feels like quite a general pattern whether you're building an education app, a data pipeline, or really any other software: what is the thing you're currently trying to optimise, and how can you visualise it with high information density. Even when the LLM may get there eventually, you'll often be able to steer it faster if you can more precisely diagnose the current problem.
