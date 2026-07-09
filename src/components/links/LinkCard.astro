@@ -3,7 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import { formatDate } from '../../lib/dates';
 
 interface Props {
-  entry: CollectionEntry<'linksQuotes'>;
+  entry: CollectionEntry<'linksQuotes'> | CollectionEntry<'education'>;
 }
 
 const { entry } = Astro.props;
@@ -49,4 +49,3 @@ const { entry } = Astro.props;
     font-size: 0.88rem;
   }
 </style>
-
