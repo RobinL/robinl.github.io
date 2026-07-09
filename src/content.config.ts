@@ -38,17 +38,26 @@ const microblog = defineCollection({
   }),
 });
 
+const linksQuoteSchema = z.object({
+  type: z.enum(['quote', 'link', 'podcast']),
+  title: z.string().optional(),
+  source: z.string().optional(),
+  author: z.string().optional(),
+  url: z.string().url(),
+  date: z.coerce.date(),
+  tags: z.array(z.string()).default([]),
+  description: z.string().optional(),
+});
+
 const linksQuotes = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/links-quotes' }),
-  schema: z.object({
-    type: z.enum(['quote', 'link', 'podcast']),
-    title: z.string().optional(),
-    source: z.string().optional(),
-    author: z.string().optional(),
-    url: z.string().url(),
-    date: z.coerce.date(),
-    tags: z.array(z.string()).default([]),
-    description: z.string().optional(),
+  schema: linksQuoteSchema,
+});
+
+const education = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/education' }),
+  schema: linksQuoteSchema.extend({
+    type: z.enum(['quote', 'link', 'podcast', 'note']),
   }),
 });
 
@@ -56,4 +65,5 @@ export const collections = {
   posts,
   microblog,
   linksQuotes,
+  education,
 };
