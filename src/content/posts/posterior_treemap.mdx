@@ -3,14 +3,14 @@ title: "Visualising updating a prior"
 description: "Using treemaps to visualise updating the prior with information about a scenario in the Fellegi Sunter model"
 postDate: "2023-10-18"
 category: "probabilistic_linkage"
-codeUrl: "https://observablehq.com/@robinl/updating-a-prior-simplified"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/updating-a-prior-simplified/701498347b3efc32@672.notebook.html"
 probLinkageCategory: "tools"
 stylesheet: "posterior_treemap.css"
 pageWidth: "prose"
 ---
 
-import ObservableCellProvider from '../../components/observable/ObservableCellProvider.jsx';
-import ObservableCell from '../../components/observable/ObservableCell.jsx';
+import NotebookCellProvider from '../../components/notebook-kit/NotebookCellProvider.jsx';
+import NotebookCell from '../../components/notebook-kit/NotebookCell.jsx';
 import DefinitionToolTip from '../../components/probabilistic/DefinitionToolTip.jsx';
 import ProbHomeNav from '../../components/probabilistic/ProbHomeNav.jsx';
 
@@ -39,41 +39,41 @@ This article also explains why it's just a re-statement of Bayes Theorem.
 ## Visualising the parameters in a treemap
 
 
-<ObservableCellProvider client:visible notebook="updating-a-prior-simplified">
+<NotebookCellProvider client:visible notebook="updating-a-prior-simplified">
 
 
     Recall that the <DefinitionToolTip term="prior"/> is the probability that two random records match, which is one of the parameters to be estimated.
 
     We can visualise this parameter by showing how it divides the set of all pairwise record comparisons:
 
-    <ObservableCell cellName="viewof prior_probabability" />
+    <NotebookCell cellName="viewof prior_probabability" />
 
-    <ObservableCell cellName="treemap_1" />
+    <NotebookCell cellName="treemap_1" />
 
     Using the definition of the `m` and `u` probabilities above, we can further subdivide this space as follows:
 
-    <ObservableCell cellName="viewof m" />
-    <ObservableCell cellName="viewof u" />
-    <ObservableCell cellName="viewof scenario_name" />
+    <NotebookCell cellName="viewof m" />
+    <NotebookCell cellName="viewof u" />
+    <NotebookCell cellName="viewof scenario_name" />
 
-    <ObservableCell cellName="treemap_2" />
+    <NotebookCell cellName="treemap_2" />
 
     Given our observation that the scenario holds, we can discard the areas in white as no longer applicable given this new information.
 
-    <ObservableCell cellName="treemap_3" />
+    <NotebookCell cellName="treemap_3" />
 
     Turning this back into formulas we can write:
 
-    <ObservableCell cellName="coloured_formulas" />
-    <ObservableCell cellName="coloured_formulas_2" />
+    <NotebookCell cellName="coloured_formulas" />
+    <NotebookCell cellName="coloured_formulas_2" />
 
     Substituting in numbers we have:
 
-    <ObservableCell cellName="formula_with_numbers" />
+    <NotebookCell cellName="formula_with_numbers" />
 
 
 
-</ObservableCellProvider>
+</NotebookCellProvider>
 
 ## Bayes Theorem
 

@@ -1,0 +1,134 @@
+<!doctype html>
+<notebook>
+  <title>@robinl/birdsong-recordings: fe79dfecacbfd10e@317.js</title>
+
+  <script id="2" type="application/vnd.observable.javascript">
+    md`# Interface`
+  </script>
+
+  <script id="3" type="application/vnd.observable.javascript">
+    bird_interface = function bird_interface(include_rare) {
+      let birds_for_datalist;
+    
+      if (include_rare) {
+        birds_for_datalist = bird_list;
+      } else {
+        birds_for_datalist = bird_list.filter(d => d.roughly_how_common > 100000);
+      }
+    
+      let as = html`<input  id='birdinputbox' name="dep" type="text" autocomplete="off" onfocus="blur();" inputmode='none' value='' placeholder="Type or select a bird to begin" style="font-size: 1em; width:${width}px" list=options>
+              <datalist id="options">
+                  ${birds_for_datalist.map(d =>
+                    Object.assign(html`<option>`, {
+                      label: d["common_name"],
+                      value: d["scientific_name"]
+                    })
+                  )}
+              </datalist>`;
+    
+      let div = html`<div>${as}`;
+      div.value = {};
+    
+      as.children[0].onfocus = function() {
+        document.getElementById('birdinputbox').setAttribute("inputmode", '');
+        as.children[0].value = '';
+      };
+    
+      as.oninput = e => {
+        e.stopPropagation();
+      };
+    
+      as.onchange = () => {
+        let raw_value = as.children[0].value;
+        let cleaned_raw_value = clean_scientific_name(raw_value);
+    
+        document.getElementById('birdinputbox').setAttribute("inputmode", 'none');
+        let value = {};
+        if (cleaned_raw_value in scientific_lookup) {
+          value['free_text'] = false;
+          value['scientific_name'] = raw_value;
+          value['common_name'] =
+            scientific_lookup[cleaned_raw_value]['common_name'];
+          value['inaturalist_id'] =
+            scientific_lookup[cleaned_raw_value]['inaturalist_id'];
+          value['raw'] = raw_value;
+        } else {
+          value['free_text'] = true;
+          value['raw'] = raw_value;
+        }
+    
+        div.value = value;
+        div.dispatchEvent(new CustomEvent('input'));
+      };
+    
+      return div;
+    }
+  </script>
+
+  <script id="4" type="application/vnd.observable.javascript">
+    viewof bird = bird_interface()
+  </script>
+
+  <script id="5" type="application/vnd.observable.javascript">
+    bird
+  </script>
+
+  <script id="6" type="application/vnd.observable.javascript">
+    include_rare_checkbox = function() {
+      return Inputs.toggle({
+        label: "Include rare birds? (causes lag on selection box)",
+        value: false
+      });
+    }
+  </script>
+
+  <script id="7" type="application/vnd.observable.javascript">
+    bird
+  </script>
+
+  <script id="8" type="application/vnd.observable.javascript">
+    d3 = require("d3-dsv","d3-fetch")
+  </script>
+
+  <script id="9" type="application/vnd.observable.javascript">
+    bird_list_old = d3.csv(await FileAttachment("birds-to-learn.csv").url())
+  </script>
+
+  <script id="10" type="application/vnd.observable.javascript">
+    bird_list = d3.csv(
+      await FileAttachment("birds-list.csv").url(),
+      d3.autoType
+    ).then(birds => birds.sort(compare_birds_sort))
+  </script>
+
+  <script id="11" type="application/vnd.observable.javascript">
+    compare_birds_sort = function(a,b)  {
+        if (a["common_name"] > b["common_name"]) {
+        return 1}
+        else {
+          return -1
+        }
+      }
+  </script>
+
+  <script id="12" type="application/vnd.observable.javascript">
+    scientific_lookup = {
+    let sl = {};
+      bird_list.forEach(d => {
+        let key = d["scientific_name"];
+        key = clean_scientific_name(key);
+        sl[key] = d;
+      });
+      return sl;
+    }
+  </script>
+
+  <script id="13" type="application/vnd.observable.javascript">
+    clean_scientific_name = function clean_scientific_name(sci_name) {
+      return sci_name
+        .toLowerCase()
+        .trim()
+        .replace(" ", "");
+    }
+  </script>
+</notebook>

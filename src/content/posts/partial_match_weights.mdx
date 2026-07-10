@@ -3,14 +3,14 @@ title: "Partial match weights"
 description: "Partial match weights in the Fellegi-Sunter model.  Part of an explorable, interactive introduction to probabilistic record linkage (data deduplication) theory"
 postDate: "2023-09-20"
 category: "probabilistic_linkage"
-codeUrl: "https://observablehq.com/@robinl/partial-match-weights"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/partial-match-weights/8fa206ca7e295acc@509.notebook.html"
 probLinkageCategory: "tutorial"
 tutorialNumber: 2
 pageWidth: "prose"
 ---
 
-import ObservableCellProvider from '../../components/observable/ObservableCellProvider.jsx';
-import ObservableCell from '../../components/observable/ObservableCell.jsx';
+import NotebookCellProvider from '../../components/notebook-kit/NotebookCellProvider.jsx';
+import NotebookCell from '../../components/notebook-kit/NotebookCell.jsx';
 import { Vega, VegaLite } from '../../components/probabilistic/Vega.jsx';
 import DefinitionToolTip from '../../components/probabilistic/DefinitionToolTip.jsx';
 import InteractiveCallout from '../../components/probabilistic/InteractiveCallout.jsx';
@@ -113,30 +113,30 @@ Let's take a look at an example record comparison, and see how the partial match
 
 
 
-<ObservableCellProvider client:visible notebook="partial-match-weights">
-    <ObservableCell cellName="input_table" />
+<NotebookCellProvider client:visible notebook="partial-match-weights">
+    <NotebookCell cellName="input_table" />
 
     The first stage is to calculate which scenarios apply for each column.  For example, are the first names an exact match, a fuzzy match, or neither?
 
-    <ObservableCell cellName="text_activated_categories" />
+    <NotebookCell cellName="text_activated_categories" />
 
     In the below chart, I reproduce the partial match weights chart, but with the activated partial match weights highlighted.
 
-    <ObservableCell cellName="partial_match_weights_highligh" />
+    <NotebookCell cellName="partial_match_weights_highligh" />
 
     The activated (selected) partial match weights can then be plotted in a waterfall chart, which represents how they are summed up to compute the final match weight:
 
-    <ObservableCell cellName="waterfall_highlight" />
+    <NotebookCell cellName="waterfall_highlight" />
 
     Alternatively we can represent the calculation of overall match weight as a sum:
 
-    <ObservableCell cellName="waterfall_as_formula" />
+    <NotebookCell cellName="waterfall_as_formula" />
 
     The final match weight is a measure of the similarity of the two records.  In subsequent articles we will see how it can be converted into a probability using the formula:
 
-    <ObservableCell cellName="probability_formula" />
+    <NotebookCell cellName="probability_formula" />
 
-</ObservableCellProvider>
+</NotebookCellProvider>
 
 
 

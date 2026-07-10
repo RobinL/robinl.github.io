@@ -3,14 +3,14 @@ title: "The relationship between probabilities, match weights and Bayes factors"
 description: "Visualising the correspondence between match weights, probabilities, Bayes factors and their intuitive explanations"
 postDate: "2023-07-07"
 category: "probabilistic_linkage"
-codeUrl: "https://observablehq.com/@robinl/interactive-bayes-factor-probability-and-match-weight"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/interactive-bayes-factor-probability-and-match-weight/189e36237ee45054@434.notebook.html"
 probLinkageCategory: "tools"
 latestUpdate: "2023-09-12"
 pageWidth: "wide"
 ---
 
-import ObservableCellProvider from '../../components/observable/ObservableCellProvider.jsx';
-import ObservableCell from '../../components/observable/ObservableCell.jsx';
+import NotebookCellProvider from '../../components/notebook-kit/NotebookCellProvider.jsx';
+import NotebookCell from '../../components/notebook-kit/NotebookCell.jsx';
 import InteractiveCallout from '../../components/probabilistic/InteractiveCallout.jsx';
 import ProbHomeNav from '../../components/probabilistic/ProbHomeNav.jsx';
 
@@ -23,32 +23,32 @@ This chart shows how the partial match weights in a Splink `linker.match_weights
 <InteractiveCallout> Hover over the chart below to select a match weight. </InteractiveCallout>
 
 
-<ObservableCellProvider client:visible notebook="interactive-bayes-factor-probability-and-match-weight">
+<NotebookCellProvider client:visible notebook="interactive-bayes-factor-probability-and-match-weight">
 
-  <ObservableCell cellName="viewof max_match_weight" />
-  <ObservableCell cellName="viewof chart" />
+  <NotebookCell cellName="viewof max_match_weight" />
+  <NotebookCell cellName="viewof chart" />
 
     <br/>
     Caveat: the 'probability' is really only defined if a prior exists.  For the above chart, the prior is assumed to be 50%.
     <br/>
     ## Conversion of partial match weight to probability
     <br/>
-    <ObservableCell cellName="mw_1" />
+    <NotebookCell cellName="mw_1" />
     <br/>
-    <ObservableCell cellName="bf_1" />
+    <NotebookCell cellName="bf_1" />
     <br/>
-    <ObservableCell cellName="p_1" />
+    <NotebookCell cellName="p_1" />
     <br/>
     ## Conversion of probability to partial match weight
     <br/>
-    <ObservableCell cellName="p_2" />
+    <NotebookCell cellName="p_2" />
     <br/>
-    <ObservableCell cellName="bf_2" />
+    <NotebookCell cellName="bf_2" />
     <br/>
-    <ObservableCell cellName="mw_2" />
+    <NotebookCell cellName="mw_2" />
     <br/>
 
-</ObservableCellProvider>
+</NotebookCellProvider>
 
 ## Additional resources
 

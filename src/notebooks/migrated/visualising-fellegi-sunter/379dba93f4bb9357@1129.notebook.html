@@ -1,0 +1,412 @@
+<!doctype html>
+<notebook>
+  <title>@robinl/visualising-fellegi-sunter: 379dba93f4bb9357@1129.js</title>
+
+  <script id="1" type="application/vnd.observable.javascript">
+    md`# Treemap for Bayes Intuition`
+  </script>
+
+  <script id="2" type="application/vnd.observable.javascript">
+    viewof settings_raw = inputs.textarea({
+      value: default_settings,
+      rows: 29
+    })
+  </script>
+
+  <script id="3" type="application/vnd.observable.javascript">
+    viewof max_depth_1 = {
+    let num_levels = settings["comparison_columns"].length;
+    
+      return inputs.range([0, num_levels], {
+        step: 1,
+        label: "How many columns to take account of?"
+      });
+    }
+  </script>
+
+  <script id="4" type="application/vnd.observable.javascript">
+    md`In the following diagram, the outermost rectangle represents the space all pairwise record comparisons.  
+    
+    This can then be recursively split into subsets, beginning with spliting between record pairs that match and those that do not match, then further splitting these rectangles based on comparisons of the values in columns.
+    `
+  </script>
+
+  <script id="5" type="application/vnd.observable.javascript">
+    plot_treemap(settings, max_depth_1, 600)
+  </script>
+
+  <script id="6" type="application/vnd.observable.javascript">
+    plot_treemap = function (settings, max_depth, height) {
+      const data_generated = generate_treemap_data(settings);
+      const root = treemap(data_generated, height);
+    
+      const container = html`<div class="treemap_container">`;
+    
+      const tooltip = d3
+        .select(container)
+        .append("div")
+        .attr("class", "svg-tooltip")
+        .style("position", "absolute")
+        .style("display", "inline-block")
+        .style("visibility", "hidden")
+        .attr("pointer-events", "none");
+    
+      const svg = d3
+        .select(container)
+        .append("svg")
+        .attr("height", height)
+        .attr("width", width);
+    
+      let grouped_data = d3.filter(root, (d) => d.depth <= max_depth + 1);
+      grouped_data = d3.group(grouped_data, (d) => d.height);
+    
+      const node = svg
+        .selectAll("g")
+        .data(grouped_data)
+        .join("g")
+        .selectAll("g")
+        .data((d) => d[1])
+        .join("g")
+        .attr("transform", (d) => `translate(${d.x0},${d.y0})`);
+    
+      node
+        .append("rect")
+        .attr("id", (d) => (d.nodeUid = DOM.uid("node")).id)
+        .attr("width", (d) => d.x1 - d.x0)
+        .attr("height", (d) => d.y1 - d.y0)
+        .attr("stroke-width", "1px")
+        .attr("stroke", "black")
+        .attr("fill", (d) => {
+          if (d.depth == max_depth + 1) {
+            return d3.rgb(d.data.colour);
+          } else {
+            let col = d3.rgb(d.data.colour);
+            if (col.hex() != "#ffffff") {
+              if (d.depth == 1) {
+                col.opacity = 0.3;
+              } else {
+                col.opacity = 0.0;
+              }
+            }
+            return col;
+          }
+        });
+    
+      node
+        .append("foreignObject")
+        .attr("pointer-events", "none")
+        .attr("width", (d) => d.x1 - d.x0)
+        .attr("height", (d) => d.y1 - d.y0)
+        .attr("xmlns", "http://www.w3.org/1999/xhtml")
+        .append("xhtml:div")
+        .attr("class", "wrap-info")
+    
+        .append("div")
+        .html((d) => box_html(d, max_depth));
+    
+      node
+        .filter((d) => d.children)
+        .selectAll("tspan")
+        .attr("dx", 3)
+        .attr("y", 13);
+    
+      node
+        .filter((d) => !d.children)
+        .selectAll("tspan")
+        .attr("x", 3)
+        .attr(
+          "y",
+          (d, i, nodes) => `${(i === nodes.length - 1) * 0.3 + 1.1 + i * 0.9}em`
+        );
+    
+      svg
+        .selectAll("rect")
+        .on("mouseover", function (event) {
+          return tooltip.style("visibility", "visible");
+        })
+        .on("mousemove", function (event) {
+          let this_data = d3.select(this).datum();
+    
+          let b_html = box_html(this_data, max_depth);
+          tooltip.html(b_html);
+    
+          let top;
+          let left;
+    
+          let tt_height = tooltip.node().getBoundingClientRect().height;
+          let tt_width = tooltip.node().getBoundingClientRect().width;
+    
+          top = event.offsetY + 10 + "px";
+    
+          if (width - event.layerX > tt_width) {
+            left = event.offsetX + 10 + "px";
+          } else {
+            left = event.offsetX - tt_width - 10 + "px";
+          }
+    
+          let visible = "visible";
+    
+          if (b_html == "") {
+            visible = "hidden";
+          }
+          return tooltip
+            .style("top", top)
+            .style("left", left)
+            .style("visibility", visible);
+        })
+        .on("click", function (event) {
+          console.log(`height: ${height}`);
+          console.log(`event.layerY: ${event.layerY}`);
+        })
+        .on("mouseout", function () {
+          return tooltip.style("visibility", "hidden");
+        });
+    
+      return container;
+    }
+  </script>
+
+  <script id="7" type="application/vnd.observable.javascript">
+    add_children_from_column = function add_children_from_column(subtree, column, match) {
+      // We want to find all current leaves.
+      if ("children" in subtree) {
+        subtree["children"].forEach((c) => {
+          add_children_from_column(c, column, match);
+        });
+        
+      } 
+      // When a leaf is found, add children
+      else {
+        let items_to_add = children_to_add(column, subtree, match);
+        subtree["children"] = items_to_add;
+      }
+      delete subtree["value"];
+    }
+  </script>
+
+  <script id="8" type="application/vnd.observable.javascript">
+    children_to_add = function children_to_add(col, parent, match) {
+      let children = [];
+      let probabilities;
+      let this_colour;
+      if (match) {
+        probabilities = col["m_probabilities"];
+        this_colour = color_match;
+      } else {
+        probabilities = col["u_probabilities"];
+        this_colour = color_non_match;
+      }
+    
+      probabilities.forEach((prob, i) => {
+        let name = "gamma_" + col["col_name"] + " = " + i;
+        let child = {
+          name: name,
+          name_list: parent["name_list"].concat(name),
+          value: parent["value"] * prob,
+          prob: prob,
+          prob_list: parent["prob_list"].concat(prob)
+        };
+    
+        if (col["gamma_value"] == i && parent["colour"] == this_colour) {
+          child["colour"] = this_colour;
+        } else {
+          child["colour"] = d3.rgb(255, 255, 255);
+        }
+        children.push(child);
+      });
+    
+      return children;
+    }
+  </script>
+
+  <script id="9" type="application/vnd.observable.javascript">
+    generate_treemap_data = function (settings) {
+      let lam = settings["proportion_of_matches"];
+      let start_template = {
+        name: "All comparisons",
+        name_list: [],
+        prob_list: [],
+        prob: 1.0,
+        colour: d3.rgb(255, 255, 255),
+        children: [
+          {
+            name: "matches",
+            name_list: ["match"],
+            prob_list: [lam],
+            prob: lam,
+            value: lam,
+            colour: color_match
+          },
+          {
+            name: "non-match",
+            name_list: ["non-match"],
+            prob_list: [1 - lam],
+            prob: 1 - lam,
+            value: 1 - lam,
+            colour: color_non_match
+          }
+        ]
+      };
+    
+      let matches = start_template["children"][0];
+      let non_matches = start_template["children"][1];
+    
+      settings["comparison_columns"].forEach((c, i) => {
+        add_children_from_column(matches, c, true);
+        add_children_from_column(non_matches, c, false);
+      });
+    
+      return start_template;
+    }
+  </script>
+
+  <script id="10" type="application/vnd.observable.javascript">
+    box_html = function box_html(d, max_depth) {
+      let name_list = d.data.name_list;
+      let prob_list = d.data.prob_list;
+    
+      let zipped = name_list.map((k, i) => [k, prob_list[i]]);
+    
+      let elems = zipped.map((d) => `<p>${d[0]} (${format_perc(d[1])})`);
+    
+      let text = elems.join(" and ");
+      let final_prob = prob_list.reduce((a, b) => a * b, 1);
+      text = text + `<p>Proportion of all comparisons: ${format_perc(final_prob)}`;
+      let contents = html`${text}`;
+    
+      if (d.depth == max_depth + 1) {
+        return contents.innerHTML;
+      } else {
+        return "";
+      }
+    }
+  </script>
+
+  <script id="11" type="application/vnd.observable.javascript">
+    settings = JSON.parse(settings_raw)
+  </script>
+
+  <script id="12" type="application/vnd.observable.javascript">
+    JSON.stringify(settings)
+  </script>
+
+  <script id="13" type="application/vnd.observable.javascript">
+    styles = html`
+    <style>
+    .wrap-info {
+      padding: 5px;
+      font-family: monospace;
+      font-size: 0.6em;
+      line-height: 1.3em;
+    }
+    .wrap-info p {
+      margin-top: 0px;
+      margin-bottom: 0.1rem;
+      
+    }
+    textarea {
+        max-height: 1000em !important
+    }
+    
+    .svg-tooltip {
+    
+        background: rgba(69,77,93,.9);
+        border-radius: .1rem;
+        color: #fff;
+        display: inline-block;
+        max-width: 500px;
+        padding: .2rem .4rem;
+        position: absolute;
+        text-overflow: ellipsis;
+        white-space: pre;
+        z-index: 300;
+        visibility: hidden;
+      }
+    
+    .svg-tooltip p {
+    font-family: sans-serif;
+        padding: 0;
+        margin: 0.2rem;
+          font-size: 0.8em;
+        line-height: 1.0em;
+      }
+    </style>`
+  </script>
+
+  <script id="14" type="application/vnd.observable.javascript">
+    treemap = (data, height) =>
+      d3
+        .treemap()
+        .tile(d3.treemapSquarify)
+        .size([width, height])
+        .paddingOuter(5)
+        .paddingTop(5)
+        .paddingInner(5)
+        .round(true)(
+        d3
+          .hierarchy(data)
+          .sum((d) => d.value)
+          .sort((a, b) => b.value - a.value)
+      )
+  </script>
+
+  <script id="15" type="application/vnd.observable.javascript">
+    default_settings = `{
+        "proportion_of_matches": 0.4,
+        "comparison_columns": [
+            {
+                "col_name": "fname",
+                "m_probabilities": [0.25, 0.75],
+                "u_probabilities": [0.7,  0.3],
+                "gamma_value": 1
+            },
+            {
+                "col_name": "sname",
+                "m_probabilities": [0.2, 0.8],
+                "u_probabilities": [0.8,  0.2],
+                "gamma_value": 0
+            },
+            {
+                "col_name": "dob",
+                "m_probabilities": [0.2, 0.8],
+                "u_probabilities": [0.8,  0.2],
+                "gamma_value": 1
+            },
+            {
+                "col_name": "town",
+                "m_probabilities": [0.2, 0.8],
+                "u_probabilities": [0.8,  0.2],
+                "gamma_value": 1
+            }
+        ]
+    }`
+  </script>
+
+  <script id="16" type="application/vnd.observable.javascript">
+    format_perc = d3.format(".1%")
+  </script>
+
+  <script id="17" type="application/vnd.observable.javascript">
+    colours = d3.scaleOrdinal(d3.schemeCategory10)
+  </script>
+
+  <script id="18" type="application/vnd.observable.javascript">
+    color_match = d3.rgb(colours(2)).brighter(2.5)
+  </script>
+
+  <script id="19" type="application/vnd.observable.javascript">
+    color_non_match = d3.rgb(colours(1)).brighter(1.5)
+  </script>
+
+  <script id="20" type="application/vnd.observable.javascript">
+    d3 = require("d3@6")
+  </script>
+
+  <script id="21" type="application/vnd.observable.javascript">
+    inputs = require("@observablehq/inputs")
+  </script>
+
+  <script id="22" type="application/vnd.observable.javascript">
+    generate_treemap_data(settings)
+  </script>
+</notebook>

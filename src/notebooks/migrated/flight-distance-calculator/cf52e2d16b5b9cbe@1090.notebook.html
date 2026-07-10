@@ -1,0 +1,302 @@
+<!doctype html>
+<notebook>
+  <title>@robinl/flight-distance-calculator: cf52e2d16b5b9cbe@1090.js</title>
+
+  <script id="1" type="module">
+    import {chart} from "./65265a2092377a48@68.notebook.html" with {type: "observable"};
+  </script>
+
+  <script id="2" type="module">
+    import {table} from "./35510f059fbb566b@520.notebook.html" with {type: "observable"};
+  </script>
+
+  <script id="3" type="application/vnd.observable.javascript">
+    title = md`# Flight distance calculator`
+  </script>
+
+  <script id="4" type="application/vnd.observable.javascript">
+    md`*A final version of this notebook can be viewed on my blog [here](https://www.robinlinacre.com/flight_distance/).*`
+  </script>
+
+  <script id="5" type="application/vnd.observable.javascript">
+    viewof flights_list = {
+    const dep_box = html`
+    
+             <input name="dep" type="text" autocomplete="off" 
+              placeholder="Choose departure airport" style="font-size: 1em;" list=options>
+              <datalist id="options">
+                  ${options.map(d =>
+                    Object.assign(html`<option>`, {
+                      value: d
+                    })
+                  )}
+              </datalist>`;
+    
+      const arr_box = html`<input name="arr" type="text" autocomplete="off" 
+              placeholder="Choose arrival airport" style="font-size: 1em;" list=options>
+              <datalist id="options">
+                  ${options.map(d =>
+                    Object.assign(html`<option>`, {
+                      value: d
+                    })
+                  )}
+              </datalist>`;
+    
+      const add_to_list = html`<input type="button" value="Add flight">`;
+      const reset_list = html`<input type="button" value="Clear all flights">`;
+      const empty_inputs = html`<input type="button" value="Clear current inputs">`;
+      const switch_inputs = html`<input type="button" value="Switch departure and arrival airports">`;
+    
+      const div = html`<p>${dep_box} ${arr_box}<br/>${add_to_list}${reset_list}${empty_inputs}${switch_inputs}</p>`;
+    
+      add_to_list.onclick = () => {
+        let dep_value = dep_box.children[0].value;
+        let arr_value = arr_box.children[0].value;
+    
+        if (dep_value != "" && arr_value != "") {
+          div.value.push([
+            get_icao_from_value(dep_value),
+            get_icao_from_value(arr_value)
+          ]);
+        } else {
+          throw "Must select both a departure and arrival airport";
+        }
+    
+        div.dispatchEvent(new CustomEvent('input'));
+      };
+    
+      empty_inputs.onclick = () => {
+        dep_box.children[0].value = "";
+        arr_box.children[0].value = "";
+      };
+    
+      switch_inputs.onclick = () => {
+        let dval = dep_box.children[0].value;
+        dep_box.children[0].value = arr_box.children[0].value;
+        arr_box.children[0].value = dval;
+      };
+    
+      reset_list.onclick = () => {
+        div.value = [];
+        dep_box.children[0].value = "";
+        arr_box.children[0].value = "";
+        div.dispatchEvent(new CustomEvent('input'));
+      };
+      div.value = [];
+      return div;
+    }
+  </script>
+
+  <script id="6" type="application/vnd.observable.javascript">
+    selected_airports = {
+    return flights_list.map(d => [
+        airports_icao_dict.get(d[0]),
+        airports_icao_dict.get(d[1])
+      ]);
+    }
+  </script>
+
+  <script id="7" type="application/vnd.observable.javascript">
+    table_of_distances = {
+    if (data_for_table.length > 0) {
+        return table(data_for_table);
+      } else {
+        return md`Add a flight to display flight data here.`;
+      }
+    }
+  </script>
+
+  <script id="8" type="application/vnd.observable.javascript">
+    blurb = {
+    if (data_for_table.length > 0) {
+        return md`Your total flight distance is ${fmt_num(
+          total_flight_miles
+        )} miles.  If flying economy, this will have required around ${fmt_num_round(
+          total_energy_usage
+        )} kwh of energy, and the total co2 emissions will be around ${fmt_num_round(
+          tonnes_co2
+        )} tonnes. `;
+      } else {
+        return md``;
+      }
+    }
+  </script>
+
+  <script id="9" type="application/vnd.observable.javascript">
+    selected_airports_with_distances = {
+    let sa = selected_airports.map(function(d) {
+        let airport0 = d[0];
+        let airport1 = d[1];
+    
+        let new_dict = {};
+    
+        new_dict["from"] = airport0.name;
+        new_dict["to"] = airport1.name;
+    
+        for (const [key, value] of Object.entries(airport0)) {
+          new_dict[key + "_from"] = value;
+        }
+    
+        for (const [key, value] of Object.entries(airport1)) {
+          new_dict[key + "_to"] = value;
+        }
+        let lat1 = new_dict["lat_from"];
+        let lng1 = new_dict["lng_from"];
+        let lat2 = new_dict["lat_to"];
+        let lng2 = new_dict["lng_to"];
+    
+        new_dict["distance"] = getDistanceFromLatLonInMiles(lat1, lng1, lat2, lng2);
+    
+        return new_dict;
+      });
+      return sa;
+    }
+  </script>
+
+  <script id="10" type="application/vnd.observable.javascript">
+    data_for_table = {
+    let obj = selected_airports_with_distances.map(function(d) {
+        return {
+          from: d["name_from"],
+          to: d["name_to"],
+          miles: d3.format(",.0f")(d["distance"])
+        };
+      });
+      return obj;
+    }
+  </script>
+
+  <script id="11" type="application/vnd.observable.javascript">
+    d3.csvFormat(selected_airports_with_distances)
+  </script>
+
+  <script id="12" type="application/vnd.observable.javascript">
+    download_as_csv = DOM.download(
+      serialize(selected_airports_with_distances),
+      "flights",
+      "Download CSV"
+    )
+  </script>
+
+  <script id="13" type="application/vnd.observable.javascript">
+    file_upload_blurb = md`Bulk import previously created csv (needs at minimum \`icao_from\` and \`icao_to\` fields)`
+  </script>
+
+  <script id="14" type="application/vnd.observable.javascript">
+    viewof upload = html`<input type=file accept="text/csv" >`
+  </script>
+
+  <script id="15" type="application/vnd.observable.javascript">
+    csv_data = {
+    const text = await Files.text(upload);
+      const csv = d3.csvParse(text);
+    
+      viewof flights_list.value = csv.map(d => [d["icao_from"], d["icao_to"]]);
+    
+      viewof flights_list.dispatchEvent(new CustomEvent('input'));
+    }
+  </script>
+
+  <script id="16" type="application/vnd.observable.javascript">
+    flights_chart = chart(selected_airports_with_distances)
+  </script>
+
+  <script id="17" type="application/vnd.observable.javascript">
+    total_flight_miles = d3.sum(selected_airports_with_distances, d => d.distance)
+  </script>
+
+  <script id="18" type="application/vnd.observable.javascript">
+    total_energy_usage = eu.flying.flying_miles_to_kwh(total_flight_miles)
+  </script>
+
+  <script id="19" type="application/vnd.observable.javascript">
+    kwh_to_kg_co2 = function(kwh) {
+      return kwh * eu.convert.per("kg_co2_from_jet_fuel/kwh");
+    }
+  </script>
+
+  <script id="20" type="application/vnd.observable.javascript">
+    tonnes_co2 = kwh_to_kg_co2(eu.flying.flying_miles_to_kwh(total_flight_miles))  /
+      1000
+  </script>
+
+  <script id="21" type="application/vnd.observable.javascript">
+    fmt_num = d3.format(",.0f")
+  </script>
+
+  <script id="22" type="application/vnd.observable.javascript">
+    fmt_num_round = d3.format(",.2r")
+  </script>
+
+  <script id="23" type="application/vnd.observable.javascript">
+    md`### Modules & Imports`
+  </script>
+
+  <script id="24" type="application/vnd.observable.javascript">
+    d3 = require("d3")
+  </script>
+
+  <script id="25" type="application/vnd.observable.javascript">
+    eu = require("@robinl/energy_usage@0.1.6")
+  </script>
+
+  <script id="26" type="application/vnd.observable.javascript">
+    serialize = function serialize (data) {
+     return new Blob([d3.csvFormat(data)], {type: "text/csv"}) 
+    }
+  </script>
+
+  <script id="27" type="application/vnd.observable.javascript">
+    getDistanceFromLatLonInMiles = function getDistanceFromLatLonInMiles(lat1,lon1,lat2,lon2) {
+      
+      function deg2rad(deg) {
+        return deg * (Math.PI/180)
+      }
+      
+      var R = 6371; // Radius of the earth in km
+      var dLat = deg2rad(lat2-lat1);  // deg2rad below
+      var dLon = deg2rad(lon2-lon1); 
+      var a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+        Math.sin(dLon/2) * Math.sin(dLon/2)
+        ; 
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      var d = R * c; // Distance in km
+      return d * 0.621371; //to miles
+    }
+  </script>
+
+  <script id="28" type="application/vnd.observable.javascript">
+    airports = d3
+      .text(await FileAttachment("airports.dat").url())
+      .then(function(t) {
+        var header = "id,name,city,country,iata,icao,lat,lng\n";
+    
+        let t2 = header + t;
+        var data3 = d3.csvParse(t2, d3.autoType);
+    
+        return data3;
+      })
+  </script>
+
+  <script id="29" type="application/vnd.observable.javascript">
+    airports_icao_dict = new Map(airports.map(i => [i.icao, i]))
+  </script>
+
+  <script id="30" type="application/vnd.observable.javascript">
+    options = airports.map(
+      val => `${val.name} ${val.city} ${val.country} ${val.iata} (${val.icao})`
+    )
+  </script>
+
+  <script id="31" type="application/vnd.observable.javascript">
+    get_icao_from_value = function(val) {
+      var myRegexp = /\((\w{4})\)$/g;
+      var match = myRegexp.exec(val);
+      if (match) {
+        return match[1];
+      }
+    }
+  </script>
+</notebook>

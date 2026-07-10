@@ -1,0 +1,195 @@
+<!doctype html>
+<notebook>
+  <title>@robinl/filling-the-country-with-solar-panels: 686908927d2af6bf@727.js</title>
+
+  <script id="1" type="application/vnd.observable.javascript">
+    md`#  Map fill component second attempt`
+  </script>
+
+  <script id="2" type="application/vnd.observable.javascript">
+    projection = d3.geoAlbers()
+        .rotate([4.4, 0])
+        .parallels([50, 60])
+         .fitExtent([[20, 0], [width, height]], {"type": "FeatureCollection", "features":uk.features})
+  </script>
+
+  <script id="3" type="application/vnd.observable.javascript">
+    plot_fill_percentage_of_uk = function plot_fill_percentage_of_uk(perc){
+     
+      const svg = d3.select(DOM.svg(width, height))
+          .style("width", width)
+          .style("height", height);
+      
+    //   svg.append("defs")
+    //      .append('pattern')
+    //      .attr('id', 'locked2')
+    //      .attr('patternUnits', 'userSpaceOnUse')
+    //      .attr('width', 294/2)
+    //      .attr('height', 146/2)
+    //      .append("image")
+    //      .attr("xlink:href", "https://raw.githubusercontent.com/RobinL/cheatsheets_etc/master/solar.png")
+    //      .attr('width', 294/2)
+    //      .attr('height', 146/2);
+      
+     svg.append("g")
+          .call(yAxis);
+    
+      var path = d3.geoPath()
+        .projection(projection)
+        
+    
+    
+      svg.selectAll(".outline")
+          .data(uk.features)
+        .enter().append("path")
+          .attr("class", function(d) { return "subunit " + d.id; })
+          .attr("stroke", function(d) {
+             return "black"
+          })
+        .attr("fill", "none")
+        .attr("stroke-width", 1)
+        .attr("d", path)
+      
+      
+     
+      let lat_cut = perc_to_lat_scale(perc)
+      var bbox = [-20, 50, 10, lat_cut];
+    
+    
+      var bottom_geo = turf.bboxClip(uk.features["0"], bbox)
+    
+       
+    
+      svg.selectAll(".sliced")
+          .data([bottom_geo])
+        .enter().append("path")
+          .attr("class", function(d) { return "subunit " + d.id; })
+          .attr("fill", "green")
+        .attr("d", path)
+      
+    
+      return svg.node();
+    }
+  </script>
+
+  <script id="4" type="application/vnd.observable.javascript">
+    md`## Scale and axis`
+  </script>
+
+  <script id="5" type="application/vnd.observable.javascript">
+    yAxis = svg => svg
+        .attr("transform", `translate(0,0)`)
+        .call(d3.axisRight(perc_to_pix_scale)
+            .tickSize(width ).tickFormat(d3.format(".0p"))
+            )
+        .call(g => g.select(".domain")
+            .remove())
+        .call(g => g.selectAll(".tick line")
+            .attr("stroke-opacity", 0.2))
+        .call(g => g.selectAll(".tick text")
+            .attr("x", 4)
+            .attr("dy", -4))
+  </script>
+
+  <script id="6" type="application/vnd.observable.javascript">
+    perc_to_pix_scale = {
+    let domain = table.map(d =>  d["proportion"])
+      let range = table.map(d =>  d["pix"][1])
+      
+      return d3.scaleLinear().domain(domain).range(range)
+    }
+  </script>
+
+  <script id="7" type="application/vnd.observable.javascript">
+    perc_to_lat_scale = {
+    let domain = table.map(d =>  d["proportion"])
+      let range = table.map(d =>  d["lat"])
+      
+      return d3.scaleLinear().domain(domain).range(range)
+    }
+  </script>
+
+  <script id="8" type="application/vnd.observable.javascript">
+    md`## Geographies`
+  </script>
+
+  <script id="9" type="application/vnd.observable.javascript">
+    uk_json = FileAttachment("uk-topo.json").json()
+  </script>
+
+  <script id="10" type="application/vnd.observable.javascript">
+    uk = topojson.feature(uk_json, uk_json.objects.uk)
+  </script>
+
+  <script id="11" type="application/vnd.observable.javascript">
+    table = {
+    let extent = turf.bbox(uk)
+        let min_lat = extent[1]
+        let max_lat = extent[3]
+    
+        let delta = 0.3
+        let scale_values = d3.range(min_lat, max_lat + delta, delta).map(function(d) {
+      
+      
+          let area = turf.area(uk)
+          let area_sq_miles = turf.convertArea(area, "meters", "miles")
+    
+           // minX, minY, maxX, maxY
+          var bbox = [-20, 50, 10, d];
+          var bbox_rest = [-20, d, 10, 70];
+    
+          var bottom = turf.bboxClip(uk.features["0"], bbox)
+    
+          let area_bottom = turf.area(bottom)
+    
+          let area_sq_miles_bottom = turf.convertArea(area_bottom, "meters", "miles")
+          
+          if (d >= max_lat) {
+            area_sq_miles_bottom = area_sq_miles
+          }
+    
+          return {
+            "area_sq_miles": area_sq_miles, 
+            "area_sq_miles_bottom": area_sq_miles_bottom, 
+            "proportion": area_sq_miles_bottom/area_sq_miles, 
+            "lat": d,
+            "pix":projection([ 0, d])
+        }
+      })
+         
+      return scale_values
+    }
+  </script>
+
+  <script id="12" type="application/vnd.observable.javascript">
+    md`## Size`
+  </script>
+
+  <script id="13" type="application/vnd.observable.javascript">
+    height = 600
+  </script>
+
+  <script id="14" type="application/vnd.observable.javascript">
+    width = height * width_to_height_ratio
+  </script>
+
+  <script id="15" type="application/vnd.observable.javascript">
+    width_to_height_ratio = 0.5373256204432791
+  </script>
+
+  <script id="16" type="application/vnd.observable.javascript">
+    md`### Imports`
+  </script>
+
+  <script id="17" type="application/vnd.observable.javascript">
+    d3 = require("d3")
+  </script>
+
+  <script id="18" type="application/vnd.observable.javascript">
+    topojson = require("topojson")
+  </script>
+
+  <script id="19" type="application/vnd.observable.javascript">
+    turf = require("@turf/turf@5")
+  </script>
+</notebook>

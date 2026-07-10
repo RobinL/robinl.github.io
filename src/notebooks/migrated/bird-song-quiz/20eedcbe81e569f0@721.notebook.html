@@ -1,0 +1,345 @@
+<!doctype html>
+<notebook>
+  <title>@robinl/bird-song-quiz: 20eedcbe81e569f0@721.js</title>
+
+  <script id="1" type="application/vnd.observable.javascript">
+    md`# xeno-canto utils`
+  </script>
+
+  <script id="2" type="application/vnd.observable.javascript">
+    cors_anywhere = 'https://red-wave-c29f.robinlinacre.workers.dev/corsproxy/?apiurl='
+  </script>
+
+  <script id="3" type="application/vnd.observable.javascript">
+    generate_get_request_url = function generate_get_request_url(query='', type='', quality='', country='') {
+      // A query looks like this:
+      // https://cors-anywhere.herokuapp.com/https://www.xeno-canto.org/api/2/recordings?query=troglodytes%20troglodytes"
+      
+     //?query=troglodytes%20troglodytes%20type%3A%22male%22%20cnt%3A%22Italy%22
+      
+    
+      let base_url = cors_anywhere+xeno_endpoint + "query="
+      
+      let elems = []
+      elems.push(query)
+      
+      if (type != '') {
+        elems.push(`type:"${type}"`)
+      }
+      
+      if (quality != '') {
+        elems.push(`q:"${quality}"`)
+      }
+      
+      if (country != '') {
+        elems.push(`cnt:"${toTitleCase(country)}"`)
+      }
+      
+      let query_string = elems.join(" ")
+      query_string = encodeURIComponent(query_string)
+    
+      return base_url + query_string
+       
+    }
+  </script>
+
+  <script id="4" type="application/vnd.observable.javascript">
+    xeno_endpoint = "https://xeno-canto.org/api/2/recordings?"
+  </script>
+
+  <script id="5" type="application/vnd.observable.javascript">
+    get_results_async = function (url) {
+      return fetch(url)
+        .then((d) => d.json())
+        .catch((d) => {
+          return {
+            recordings: [],
+            status: "query_failed",
+            message: "Query failed"
+          };
+        });
+    }
+  </script>
+
+  <script id="6" type="application/vnd.observable.javascript">
+    xeno_canto_query = async function* xeno_canto_query(query='', type='', quality='', country='', min_return_recordings = 3) {
+      
+     yield {recordings: [],
+            status: "query_incomplete",
+            message: "Please wait, querying recordings..."  }
+     
+     if (query == '' ) {
+      yield  {
+              recordings: [],
+              status: "no_query",
+              message: "No search terms entered"  }
+     } else {
+      let url = generate_get_request_url(query, type,quality,country)
+      let url_backup = generate_get_request_url(query, '','','')
+     
+      let results = await get_results_async(url)
+      results['status'] = 'query_successful'
+      results['message'] = 'Query Successful'
+      
+      if (results.recordings.length < min_return_recordings) {
+         console.log(`Fewer than ${min_return_recordings} found, using backup query`)
+         results = await get_results_async(url_backup)
+         results['status'] = 'backup_query_successful'
+         results['message'] = 'Query Successful, but only using backup URL'
+      } 
+       
+      yield results 
+    
+     }
+    }
+  </script>
+
+  <script id="7" type="application/vnd.observable.javascript">
+    recording_to_mp3_url = function recording_to_mp3_url(recording) {
+      let file = recording["file"];
+      file = file.split("/");
+    
+      file = file.filter((x) => x != "");
+      file = file.filter((x) => x != "http:");
+      file = file.filter((x) => x != "https:");
+    
+      return "https://" + file.join("/");
+    }
+  </script>
+
+  <script id="8" type="application/vnd.observable.javascript">
+    player = html`<audio controls><source src='${recording_to_mp3_url(results["recordings"][0])}' type='audio/mpeg'></audio>`
+  </script>
+
+  <script id="9" type="application/vnd.observable.javascript">
+    toTitleCase = function toTitleCase(str) {
+            return str.replace(
+                /\w\S*/g,
+                function(txt) {
+                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                }
+            );
+        }
+  </script>
+
+  <script id="10" type="application/vnd.observable.javascript">
+    get_random_recording_from_results = function get_random_recording_from_results(results) {
+    
+     
+      let num_results = results.recordings.length
+      
+      if (num_results == 0) {
+        return
+      }
+      
+      let result_num = getRandomInt(0, num_results)
+      
+      return results.recordings[result_num]
+      
+    }
+  </script>
+
+  <script id="11" type="application/vnd.observable.javascript">
+    getRandomInt = function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+  </script>
+
+  <script id="12" type="application/vnd.observable.javascript">
+    get_n_from_array_at_random = function get_n_from_array_at_random(arr, n, truncate = true) {
+        var result = new Array(n),
+            len = arr.length,
+            taken = new Array(len);
+        if (n > len){
+            if (truncate) {
+              n = len
+            } else {
+              throw new RangeError("getRandom: more elements taken than available");
+            }
+        }
+        while (n--) {
+            var x = Math.floor(Math.random() * len);
+            result[n] = arr[x in taken ? taken[x] : x];
+            taken[x] = --len in taken ? taken[len] : len;
+        }
+      
+      return result
+    }
+  </script>
+
+  <script id="13" type="application/vnd.observable.javascript">
+    md`## Presentational functions`
+  </script>
+
+  <script id="14" type="application/vnd.observable.javascript">
+    results = xeno_canto_query(
+      "troglodytes troglodytes",
+      "song",
+      "A",
+      "United Kingdom"
+    )
+  </script>
+
+  <script id="15" type="application/vnd.observable.javascript">
+    md`## Demos of functions`
+  </script>
+
+  <script id="16" type="application/vnd.observable.javascript">
+    htl = require("htl@0.2")
+  </script>
+
+  <script id="17" type="application/vnd.observable.javascript">
+    html = htl.html
+  </script>
+
+  <script id="18" type="application/vnd.observable.javascript">
+    rec = get_n_from_array_at_random(results.recordings, 3)
+  </script>
+
+  <script id="19" type="application/vnd.observable.javascript">
+    audio_player_and_buttons = function audio_player_and_buttons(rec, next_rec) {
+      let player_id = `player_${rec.id}`;
+    
+      let next_player_id;
+      if (next_rec == null) {
+        next_player_id = 'player_null';
+      } else {
+        next_player_id = `player_${next_rec.id}`;
+      }
+    
+      function player_toggle_play() {
+        // Pause all audio
+        let audio_elems = document.getElementsByClassName('birdaudio');
+        for (var item of audio_elems) {
+          if (item.id != player_id) {
+            if (!item.paused) {
+              item.pause();
+              console.log("paused");
+              let button_elem = document.getElementsByClassName(
+                `${item.id}_play_button`
+              )[0];
+              button_elem.innerText = "Paused";
+            }
+          }
+        }
+    
+        let button_elem = document.getElementsByClassName(
+          `${player_id}_play_button`
+        )[0];
+    
+        let audio_elem = document.getElementById(`${player_id}`);
+    
+        if (audio_elem.paused) {
+          audio_elem.play();
+          button_elem.innerText = "Pause";
+          button_elem.setAttribute('play_status', 'playing');
+        } else {
+          audio_elem.pause();
+          button_elem.innerText = "Paused";
+          button_elem.setAttribute('play_status', 'paused');
+        }
+      }
+    
+      function player_on_end() {
+        let ending_button_elem = document.getElementsByClassName(
+          `${player_id}_play_button`
+        )[0];
+        ending_button_elem.innerText = "Played";
+        ending_button_elem.setAttribute('play_status', 'played');
+    
+        let next_player_audio_elem = document.getElementById(`${next_player_id}`);
+    
+        next_player_audio_elem.play();
+    
+        let next_play_button = document.getElementsByClassName(
+          `${next_player_id}_play_button`
+        )[0];
+        next_play_button.setAttribute('play_status', 'playing');
+        next_play_button.innerText = "Playing";
+      }
+    
+      let player_html = html`<div>
+     <audio id='${player_id}' 
+            class = 'birdaudio'
+            src="${recording_to_mp3_url(rec)}"
+            onended=${() => player_on_end()}>
+     </audio>
+     <div> 
+      <button class="audioplayer ${player_id}_play_button" 
+              onclick=${() => player_toggle_play()}
+              play_status = "unplayed"
+              >Play</button> 
+    
+      
+    `;
+      return player_html;
+    }
+  </script>
+
+  <script id="20" type="application/vnd.observable.javascript">
+    table_of_audio = function table_of_audio(recordings, max_recordings = 20, random_order = true) {
+      
+      if (recordings.length == 0) {
+        return html`Please wait, fetching audio recordings...`
+      }
+      
+      let num_recordings = recordings.length;
+      let num_rows = Math.min(max_recordings, num_recordings);
+    
+      let rows;
+      if (random_order) {
+        rows = get_n_from_array_at_random(recordings, num_rows);
+      } else {
+        rows = recordings.slice(0, num_rows);
+      }
+    
+      let audio_table = html`<table><tr>
+    <th>Species</th>
+    <th>Type</th>
+    <th>Length</th>
+    <th>Audio</th>
+    
+    </tr>
+    
+    ${rows.map((rec, rec_index) => {
+      let next_recording = rows.slice(rec_index + 1, rec_index + 2);
+    
+      if (next_recording.length == 0) {
+        next_recording = null;
+      } else {
+        next_recording = next_recording[0];
+      }
+    
+      return html`<tr>
+    
+    <td>${rec.en} (<i>${rec.gen} ${rec.sp})
+    
+    <td>${rec.type}
+    <td>${rec.length}
+    <td>${audio_player_and_buttons(rec, next_recording)}`;
+    })}
+    
+    </table>
+     `;
+    
+      return audio_table;
+    }
+  </script>
+
+  <script id="21" type="application/vnd.observable.javascript">
+    table_of_audio(results.recordings)
+  </script>
+
+  <script id="22" type="application/vnd.observable.javascript">
+    md`## Notes urls etc
+    
+    [Docs for inaturalist api](https://api.inaturalist.org/v1/docs/#!/Observations/get_observations)
+    
+    [Docs for xeno-canto api](https://www.xeno-canto.org/article/153)
+    
+    [Docs for quering xeno-canto](https://www.xeno-canto.org/help/search)
+    `
+  </script>
+</notebook>

@@ -1,0 +1,988 @@
+<!doctype html>
+<notebook>
+  <title>@robinl/interactive-bayes-factor-probability-and-match-weight: 189e36237ee45054@434.js</title>
+
+  <script id="1" type="application/vnd.observable.javascript">
+    md`# Interactive Bayes Factor, Probability and Match Weight`
+  </script>
+
+  <script id="2" type="application/vnd.observable.javascript">
+    spec = {
+    let spec_parsed = JSON.parse(spec_json);
+      spec_parsed["datasets"]["mydata"] = chart_data;
+      spec_parsed.vconcat.forEach((obj) => {
+        if (obj.hasOwnProperty("width")) {
+          obj.width = width - 190;
+        }
+      });
+      return spec_parsed;
+    }
+  </script>
+
+  <script id="3" type="application/vnd.observable.javascript">
+    viewof chart = embed(spec)
+  </script>
+
+  <script id="4" type="application/vnd.observable.javascript">
+    mw_1 = {
+    const rounded_partial_match_weight = roundToSignificantFigures(
+        selected_val,
+        4
+      );
+      return html`${tex`\text{Partial Match Weight} = \omega = ${rounded_partial_match_weight}`}`;
+    }
+  </script>
+
+  <script id="5" type="application/vnd.observable.javascript">
+    bf_1 = {
+    const bayes_factor = roundToSignificantFigures(
+        calcBayesFactorFromPartialMatchWeight(selected_val),
+        4
+      );
+      const p_val = calcProbabilityFromPartialMatchWeight(selected_val).toFixed(4);
+      const rounded_partial_match_weight = roundToSignificantFigures(
+        selected_val,
+        4
+      );
+    
+      return html`${tex`\text{Bayes Factor} = K = 2^{\omega} = 2^{{${rounded_partial_match_weight}}} = ${bayes_factor}`}`;
+    }
+  </script>
+
+  <script id="6" type="application/vnd.observable.javascript">
+    p_1 = {
+    const p_val = calcProbabilityFromPartialMatchWeight(selected_val).toFixed(4);
+    
+      const partial_match_weight = roundToSignificantFigures(selected_val, 4);
+    
+      return html`${tex`\text{Probability} = p = \frac{K}{1 + K} = \frac{2^{{${partial_match_weight}}}}{1 + 2^{{${partial_match_weight}}}} = ${p_val}`}`;
+    }
+  </script>
+
+  <script id="7" type="application/vnd.observable.javascript">
+    html`${tex`\text{Bayes Factor} = K = \frac{p}{1-p}`}`
+  </script>
+
+  <script id="8" type="application/vnd.observable.javascript">
+    p_2 = {
+    const p_val = calcProbabilityFromPartialMatchWeight(selected_val);
+      const p_val_rounded = p_val.toFixed(4);
+      return html`${tex`\text{Probability} = p = ${p_val_rounded}`}`;
+    }
+  </script>
+
+  <script id="9" type="application/vnd.observable.javascript">
+    bf_2 = {
+    const p_val = calcProbabilityFromPartialMatchWeight(selected_val);
+      const p_val_rounded = p_val.toFixed(4);
+      const bayes_factor = roundToSignificantFigures(
+        calcBayesFactorFromProbability(p_val),
+        4
+      );
+    
+      return html`${tex`\text{Bayes Factor} = K = \frac{p}{1-p} = \frac{${p_val_rounded}}{1 - ${p_val_rounded}} = ${bayes_factor}`}`;
+    }
+  </script>
+
+  <script id="10" type="application/vnd.observable.javascript">
+    mw_2 = {
+    const bayes_factor = calcBayesFactorFromPartialMatchWeight(selected_val);
+      const bayes_factor_rounded = roundToSignificantFigures(bayes_factor, 4);
+      const rounded_partial_match_weight = roundToSignificantFigures(
+        calcPartialMatchWeightFromBayesFactor(bayes_factor),
+        4
+      );
+    
+      return html`${tex`\text{Partial Match Weight} = \omega = \log_{2} K = \log_{2} {${bayes_factor_rounded}} = ${rounded_partial_match_weight}`}`;
+    }
+  </script>
+
+  <script id="11" type="application/vnd.observable.javascript">
+    viewof prior_probabability = Inputs.range([0, 1], {
+      label: "Prior probability"
+      
+    })
+  </script>
+
+  <script id="12" type="application/vnd.observable.javascript">
+    viewof max_match_weight = Inputs.range([5, 40], {
+      label: "Max match weight",
+      step: 5,
+      value: 10 // Default value
+    })
+  </script>
+
+  <script id="13" type="application/vnd.observable.javascript">
+    {
+    const prior_bayes_factor =
+        calcBayesFactorFromProbability(prior_probabability);
+    
+      const prior_partial_match_weight =
+        calcPartialMatchWeightFromBayesFactor(prior_bayes_factor);
+    
+      const posterior_match_weight = prior_partial_match_weight + selected_val;
+    
+      const posterior_probability = calcProbabilityFromPartialMatchWeight(
+        posterior_match_weight
+      );
+    
+      // I want the following formula to include not just the interpolated values but also the maths that maps from prior probability and partial match weight to posterior probability
+    
+      let a = `With a prior probability of ${prior_probabability.toFixed(
+        4
+      )}, applying a partial match weight of ${roundToSignificantFigures(
+        selected_val,
+        4
+      )} would result in: `;
+      return html`${a} ${tex`
+      \begin{aligned}
+      \text{Prior as probability} &= p_{\text{prior}} &= ${roundToSignificantFigures(
+        prior_probabability,
+        4
+      )}\\
+      \text{Prior as Bayes Factor} &= K = \frac{p_{\text{prior}}}{1 - p_{\text{prior}}} &= ${roundToSignificantFigures(
+        prior_bayes_factor,
+        4
+      )} \\
+      \text{Prior as Match Weight} &= \omega_{\text{prior}} = \log_{2}(K) &= ${roundToSignificantFigures(
+        prior_partial_match_weight,
+        4
+      )} \\
+      \text{Selected Partial Match Weight} &= v &= ${roundToSignificantFigures(
+        selected_val,
+        4
+      )} \\
+      \text{Posterior Match Weight} &= \omega_{\text{posterior}} = \omega_{\text{prior}} + v &= ${roundToSignificantFigures(
+        posterior_match_weight,
+        4
+      )} \\
+      \text{Posterior Probability} &= p_{\text{posterior}} = \frac{2^{\omega_{\text{posterior}}}}{1 + 2^{\omega_{\text{posterior}}}} &= ${roundToSignificantFigures(
+        posterior_probability,
+        4
+      )}
+      \end{aligned}
+    `}`;
+    }
+  </script>
+
+  <script id="14" type="application/vnd.observable.javascript">
+    calcBayesFactorFromPartialMatchWeight = function calcBayesFactorFromPartialMatchWeight(selected_val) {
+      return Math.pow(2, selected_val);
+    }
+  </script>
+
+  <script id="15" type="application/vnd.observable.javascript">
+    calcProbabilityFromPartialMatchWeight = function calcProbabilityFromPartialMatchWeight(selected_val) {
+      return Math.pow(2, selected_val) / (1 + Math.pow(2, selected_val));
+    }
+  </script>
+
+  <script id="16" type="application/vnd.observable.javascript">
+    computeProbabilityFromPartialMatchWeight = function computeProbabilityFromPartialMatchWeight(logOdds) {
+      return Math.pow(2, logOdds) / (1 + Math.pow(2, logOdds));
+    }
+  </script>
+
+  <script id="17" type="application/vnd.observable.javascript">
+    calcPartialMatchWeightFromBayesFactor = function calcPartialMatchWeightFromBayesFactor(K) {
+      return Math.log2(K);
+    }
+  </script>
+
+  <script id="18" type="application/vnd.observable.javascript">
+    calcBayesFactorFromProbability = function calcBayesFactorFromProbability(p) {
+      return p / (1 - p);
+    }
+  </script>
+
+  <script id="19" type="application/vnd.observable.javascript">
+    roundToSignificantFigures = function roundToSignificantFigures(num, sigFigs) {
+      if (num === 0) return 0;
+    
+      // Calculate the order of magnitude of the number
+      const magnitude = Math.floor(Math.log10(Math.abs(num)));
+    
+      // Calculate the scaling factor
+      const scale = Math.pow(10, sigFigs - magnitude - 1);
+    
+      // Round the number and undo the scaling
+      return Math.round(num * scale) / scale;
+    }
+  </script>
+
+  <script id="20" type="application/vnd.observable.javascript">
+    embed = require("vega-embed@6")
+  </script>
+
+  <script id="21" type="application/vnd.observable.javascript">
+    observed_param = observe_chart_data(chart, "param_7")
+  </script>
+
+  <script id="22" type="application/vnd.observable.javascript">
+    selected_val = observed_param["mw"][0]
+  </script>
+
+  <script id="23" type="application/vnd.observable.javascript">
+    observe_chart_data = function observe_chart_data(chart, signal_name) {
+      return Generators.observe(function (notify) {
+        const signaled = (name, value) => notify(value);
+        chart.addSignalListener(signal_name, signaled);
+    
+        notify(chart.signal(signal_name));
+    
+        return () => chart.removeSignalListener(signal_name, signaled);
+      });
+    }
+  </script>
+
+  <script id="24" type="application/vnd.observable.javascript">
+    probToBayesFactor = function probToBayesFactor(prob) {
+        return prob !== 1 ? prob / (1 - prob) : Infinity;
+    }
+  </script>
+
+  <script id="25" type="application/vnd.observable.javascript">
+    probToMatchWeight = function probToMatchWeight(prob) {
+      const bayesFactor = probToBayesFactor(prob);
+      const matchWeight = Math.log2(bayesFactor);
+    
+      // Round to avoid floating point errors
+      const precision = 8; // You can adjust the precision as needed
+      return (
+        Math.round(matchWeight * Math.pow(10, precision)) / Math.pow(10, precision)
+      );
+    }
+  </script>
+
+  <script id="26" type="application/vnd.observable.javascript">
+    matchWeightToBayesFactor = function matchWeightToBayesFactor(weight) {
+      return Math.pow(2, weight);
+    }
+  </script>
+
+  <script id="27" type="application/vnd.observable.javascript">
+    bayesFactorToProb = function bayesFactorToProb(bf) {
+      return bf / (1 + bf);
+    }
+  </script>
+
+  <script id="28" type="application/vnd.observable.javascript">
+    formatBf = function formatBf(bf, mw) {
+      if (bf >= 1000) {
+        return bf.toLocaleString(undefined, { maximumFractionDigits: 0 });
+      } else if (bf >= 100) {
+        return bf.toLocaleString(undefined, { maximumFractionDigits: 1 });
+      } else if (bf >= 10) {
+        return bf.toLocaleString(undefined, { maximumFractionDigits: 2 });
+      } else if (bf >= 1) {
+        return bf
+          .toLocaleString(undefined, { maximumFractionDigits: 3 })
+          .replace(/\.?0+$/, "");
+      } else {
+        // Apply similar formatting logic as prob_fmt for bf < 1
+        const absMw = Math.abs(mw);
+        const additionalDigits = Math.floor(absMw / 5);
+        const minFractionDigits = 4 + additionalDigits;
+    
+        return bf
+          .toLocaleString(undefined, { minimumFractionDigits: minFractionDigits })
+          .replace(/\.?0+$/, "");
+      }
+    }
+  </script>
+
+  <script id="29" type="application/vnd.observable.javascript">
+    chart_data = {
+    const start = -max_match_weight;
+      const end = -1 * start;
+      const subdivisions = 5;
+    
+      // Adjust the length to be inclusive of both start and end
+      let data = Array.from({ length: (end - start) * subdivisions + 1 }, (_, i) =>
+        bayesFactorToProb(
+          matchWeightToBayesFactor((i + start * subdivisions) / subdivisions)
+        )
+      );
+    
+      data = data.map((x) => ({
+        prob: x,
+        bf: probToBayesFactor(x),
+        mw: probToMatchWeight(x)
+      }));
+    
+      data = data.map((d) => {
+        const absMw = Math.abs(d.mw);
+        const additionalDigits = Math.floor(absMw / 5);
+        const minFractionDigits = 4 + additionalDigits;
+    
+        const probFmt = d.prob
+          .toLocaleString(undefined, { minimumFractionDigits: minFractionDigits })
+          .replace(/\.?0+$/, "");
+    
+        const bfFmt = formatBf(d.bf, d.mw);
+        const mwFmt = d.mw.toLocaleString(undefined, { maximumFractionDigits: 1 });
+    
+        let intFmt;
+        if (d.prob > 0.5) {
+          const bfValue = d.bf;
+          if (bfValue > 100) {
+            intFmt = `${bfValue.toLocaleString(undefined, {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0
+            })}x more likely`;
+          } else {
+            intFmt = `${bfValue
+              .toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+              })
+              .replace(/\.?0+$/, "")}x more likely`;
+          }
+        } else if (d.prob < 0.5) {
+          const bfValue = 1 / d.bf;
+          if (bfValue > 100) {
+            intFmt = `${bfValue.toLocaleString(undefined, {
+              minimumFractionDigits: 0,
+              maximumFractionDigits: 0
+            })}x less likely`;
+          } else {
+            intFmt = `${bfValue
+              .toLocaleString(undefined, {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+              })
+              .replace(/\.?0+$/, "")}x less likely`;
+          }
+        } else {
+          intFmt = "no more or less likely";
+        }
+    
+        return {
+          ...d,
+          prob_fmt: probFmt,
+          bf_fmt: bfFmt,
+          mw_fmt: mwFmt,
+          int_fmt: intFmt
+        };
+      });
+    
+      return data; // Return the processed data
+    }
+  </script>
+
+  <script id="30" type="application/vnd.observable.javascript">
+    texd = tex.options({
+      displayMode: true,
+      fleqn: true
+    })
+  </script>
+
+  <script id="31" type="application/vnd.observable.javascript">
+    spec_json = `
+    {
+      "config": {
+        "view": {
+          "continuousWidth": 300,
+          "continuousHeight": 300
+        },
+        "title": {
+          "anchor": "middle"
+        }
+      },
+      "vconcat": [
+        {
+          "layer": [
+            {
+              "mark": {
+                "type": "bar",
+                "opacity": 0.5
+              },
+              "encoding": {
+                "color": {
+                  "field": "mw",
+                  "legend": null,
+                  "scale": {
+                    "domain": [
+                      -100,
+                      -10,
+                      0,
+                      10,
+                      100
+                    ],
+                    "interpolate": "lab",
+                    "range": [
+                      "red",
+                      "red",
+                      "#bbbbbb",
+                      "green",
+                      "green"
+                    ]
+                  },
+                  "title": "Match weight",
+                  "type": "quantitative"
+                },
+                "x": {
+                  "field": "mw",
+                  "type": "quantitative"
+                }
+              },
+              "transform": [
+                {
+                  "filter": {
+                    "param": "param_7",
+                    "empty": false
+                  }
+                }
+              ]
+            },
+            {
+              "mark": {
+                "type": "rule",
+                "color": "#FFAAAA"
+              },
+              "encoding": {
+                "x": {
+                  "field": "mw",
+                  "type": "quantitative"
+                }
+              },
+              "transform": [
+                {
+                  "filter": {
+                    "param": "param_7",
+                    "empty": false
+                  }
+                }
+              ]
+            },
+            {
+              "mark": {
+                "type": "text",
+                "baseline": "middle",
+                "fontSize": 16,
+                "fontWeight": "bold"
+              },
+              "encoding": {
+                "color": {
+                  "field": "mw",
+                  "legend": null,
+                  "scale": {
+                    "domain": [
+                      -100,
+                      -10,
+                      0,
+                      10,
+                      100
+                    ],
+                    "range": [
+                      "#8B0000",
+                      "#8B0000",
+                      "#444444",
+                      "#006400",
+                      "#006400"
+                    ]
+                  },
+                  "type": "quantitative"
+                },
+                "opacity": {
+                  "condition": {
+                    "param": "param_7",
+                    "value": 1,
+                    "empty": false
+                  },
+                  "value": 0
+                },
+                "text": {
+                  "field": "mw_fmt",
+                  "type": "quantitative"
+                },
+                "x": {
+                  "axis": {
+                    "labelExpr": "datum.value",
+                    "title": "Partial Match Weight"
+                  },
+                  "field": "mw",
+                  "type": "quantitative"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "point"
+              },
+              "encoding": {
+                "opacity": {
+                  "value": 0
+                },
+                "x": {
+                  "field": "mw",
+                  "type": "quantitative"
+                }
+              },
+              "name": "view_58"
+            }
+          ],
+          "height": 30,
+          "resolve": {
+            "scale": {
+              "color": "independent"
+            }
+          },
+          "width": 800
+        },
+        {
+          "layer": [
+            {
+              "mark": {
+                "type": "bar",
+                "opacity": 0.5
+              },
+              "encoding": {
+                "color": {
+                  "field": "mw",
+                  "legend": null,
+                  "scale": {
+                    "domain": [
+                      -100,
+                      -10,
+                      0,
+                      10,
+                      100
+                    ],
+                    "interpolate": "lab",
+                    "range": [
+                      "red",
+                      "red",
+                      "#bbbbbb",
+                      "green",
+                      "green"
+                    ]
+                  },
+                  "title": "Match weight",
+                  "type": "quantitative"
+                },
+                "x": {
+                  "field": "mw",
+                  "type": "quantitative"
+                }
+              },
+              "transform": [
+                {
+                  "filter": {
+                    "param": "param_7",
+                    "empty": false
+                  }
+                }
+              ]
+            },
+            {
+              "mark": {
+                "type": "rule",
+                "color": "#FFAAAA"
+              },
+              "encoding": {
+                "x": {
+                  "field": "mw",
+                  "type": "quantitative"
+                }
+              },
+              "transform": [
+                {
+                  "filter": {
+                    "param": "param_7",
+                    "empty": false
+                  }
+                }
+              ]
+            },
+            {
+              "mark": {
+                "type": "text",
+                "baseline": "middle",
+                "fontSize": 16,
+                "fontWeight": "bold"
+              },
+              "encoding": {
+                "color": {
+                  "field": "mw",
+                  "legend": null,
+                  "scale": {
+                    "domain": [
+                      -100,
+                      -10,
+                      0,
+                      10,
+                      100
+                    ],
+                    "range": [
+                      "#8B0000",
+                      "#8B0000",
+                      "#444444",
+                      "#006400",
+                      "#006400"
+                    ]
+                  },
+                  "type": "quantitative"
+                },
+                "opacity": {
+                  "condition": {
+                    "param": "param_7",
+                    "value": 1,
+                    "empty": false
+                  },
+                  "value": 0
+                },
+                "text": {
+                  "field": "bf_fmt",
+                  "type": "nominal"
+                },
+                "x": {
+                  "axis": {
+                    "labelExpr": "if(pow(2, datum.value) >=1, pow(2, datum.value), '1/' + (1/pow(2, datum.value)))",
+                    "title": "Bayes Factor (odds)"
+                  },
+                  "field": "mw",
+                  "type": "quantitative"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "point"
+              },
+              "encoding": {
+                "opacity": {
+                  "value": 0
+                },
+                "x": {
+                  "field": "mw",
+                  "type": "quantitative"
+                }
+              },
+              "name": "view_59"
+            }
+          ],
+          "height": 30,
+          "resolve": {
+            "scale": {
+              "color": "independent"
+            }
+          },
+          "width": 800
+        },
+        {
+          "layer": [
+            {
+              "mark": {
+                "type": "bar",
+                "opacity": 0.5
+              },
+              "encoding": {
+                "color": {
+                  "field": "mw",
+                  "legend": null,
+                  "scale": {
+                    "domain": [
+                      -100,
+                      -10,
+                      0,
+                      10,
+                      100
+                    ],
+                    "interpolate": "lab",
+                    "range": [
+                      "red",
+                      "red",
+                      "#bbbbbb",
+                      "green",
+                      "green"
+                    ]
+                  },
+                  "title": "Match weight",
+                  "type": "quantitative"
+                },
+                "x": {
+                  "field": "mw",
+                  "type": "quantitative"
+                }
+              },
+              "transform": [
+                {
+                  "filter": {
+                    "param": "param_7",
+                    "empty": false
+                  }
+                }
+              ]
+            },
+            {
+              "mark": {
+                "type": "rule",
+                "color": "#FFAAAA"
+              },
+              "encoding": {
+                "x": {
+                  "field": "mw",
+                  "type": "quantitative"
+                }
+              },
+              "transform": [
+                {
+                  "filter": {
+                    "param": "param_7",
+                    "empty": false
+                  }
+                }
+              ]
+            },
+            {
+              "mark": {
+                "type": "text",
+                "baseline": "middle",
+                "fontSize": 16,
+                "fontWeight": "bold"
+              },
+              "encoding": {
+                "color": {
+                  "field": "mw",
+                  "legend": null,
+                  "scale": {
+                    "domain": [
+                      -100,
+                      -10,
+                      0,
+                      10,
+                      100
+                    ],
+                    "range": [
+                      "#8B0000",
+                      "#8B0000",
+                      "#444444",
+                      "#006400",
+                      "#006400"
+                    ]
+                  },
+                  "type": "quantitative"
+                },
+                "opacity": {
+                  "condition": {
+                    "param": "param_7",
+                    "value": 1,
+                    "empty": false
+                  },
+                  "value": 0
+                },
+                "text": {
+                  "field": "prob_fmt",
+                  "type": "nominal"
+                },
+                "x": {
+                  "axis": {
+                    "labelExpr": "format(pow(2, datum.value)/(1+ pow(2, datum.value)), ',.3f')",
+                    "title": "Probability (assuming a prior of 50%)"
+                  },
+                  "field": "mw",
+                  "type": "quantitative"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "point"
+              },
+              "encoding": {
+                "opacity": {
+                  "value": 0
+                },
+                "x": {
+                  "field": "mw",
+                  "type": "quantitative"
+                }
+              },
+              "name": "view_57"
+            }
+          ],
+          "height": 30,
+          "resolve": {
+            "scale": {
+              "color": "independent"
+            }
+          },
+          "width": 800
+        },
+        {
+          "layer": [
+            {
+              "mark": {
+                "type": "bar",
+                "opacity": 0.5
+              },
+              "encoding": {
+                "color": {
+                  "field": "mw",
+                  "legend": null,
+                  "scale": {
+                    "domain": [
+                      -100,
+                      -10,
+                      0,
+                      10,
+                      100
+                    ],
+                    "interpolate": "lab",
+                    "range": [
+                      "red",
+                      "red",
+                      "#bbbbbb",
+                      "green",
+                      "green"
+                    ]
+                  },
+                  "title": "Match weight",
+                  "type": "quantitative"
+                },
+                "x": {
+                  "field": "mw",
+                  "type": "quantitative"
+                }
+              },
+              "transform": [
+                {
+                  "filter": {
+                    "param": "param_7",
+                    "empty": false
+                  }
+                }
+              ]
+            },
+            {
+              "mark": {
+                "type": "rule",
+                "color": "#FFAAAA"
+              },
+              "encoding": {
+                "x": {
+                  "field": "mw",
+                  "type": "quantitative"
+                }
+              },
+              "transform": [
+                {
+                  "filter": {
+                    "param": "param_7",
+                    "empty": false
+                  }
+                }
+              ]
+            },
+            {
+              "mark": {
+                "type": "text",
+                "baseline": "middle",
+                "fontSize": 16,
+                "fontWeight": "bold"
+              },
+              "encoding": {
+                "color": {
+                  "field": "mw",
+                  "legend": null,
+                  "scale": {
+                    "domain": [
+                      -100,
+                      -10,
+                      0,
+                      10,
+                      100
+                    ],
+                    "range": [
+                      "#8B0000",
+                      "#8B0000",
+                      "#444444",
+                      "#006400",
+                      "#006400"
+                    ]
+                  },
+                  "type": "quantitative"
+                },
+                "opacity": {
+                  "condition": {
+                    "param": "param_7",
+                    "value": 1,
+                    "empty": false
+                  },
+                  "value": 0
+                },
+                "text": {
+                  "field": "int_fmt",
+                  "type": "nominal"
+                },
+                "x": {
+                  "axis": {
+                    "labelExpr": "if(pow(2, datum.value) >=1, pow(2, datum.value), (1/pow(2, datum.value)))",
+                    "title": "\u2b05\ufe0f  times less likely                    Intuitive interpretation                    times more likely  \u27a1\ufe0f"
+                  },
+                  "field": "mw",
+                  "type": "quantitative"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "point"
+              },
+              "encoding": {
+                "opacity": {
+                  "value": 0
+                },
+                "x": {
+                  "field": "mw",
+                  "type": "quantitative"
+                }
+              },
+              "name": "view_60"
+            }
+          ],
+          "height": 30,
+          "resolve": {
+            "scale": {
+              "color": "independent"
+            }
+          },
+          "width": 800
+        }
+      ],
+      "data": {
+        "name": "mydata"
+      },
+      "params": [
+        {
+          "name": "param_7",
+          "select": {
+            "type": "point",
+            "fields": [
+              "mw"
+            ],
+            "nearest": true,
+            "on": "mouseover"
+          },
+          "value": [
+            {
+              "mw": 0
+            }
+          ],
+          "views": [
+            "view_58",
+            "view_59",
+            "view_57",
+            "view_60"
+          ]
+        }
+      ],
+      "title": "Correspondence between probability, match weight, and Bayes factor",
+      "$schema": "https://vega.github.io/schema/vega-lite/v5.8.0.json",
+      "datasets": {
+        "mydata": []
+      }
+    }`
+  </script>
+</notebook>

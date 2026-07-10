@@ -1,0 +1,730 @@
+<!doctype html>
+<notebook>
+  <title>@robinl/unsupervised-probabalistic-data-matching-using-the-expec: 20c8b34dc8ac7754@1041.js</title>
+
+  <script id="1" type="module">
+    import {slider, textarea} from "./146f352f1166f0d1@2202.notebook.html" with {type: "observable"};
+  </script>
+
+  <script id="2" type="module">
+    import {vl} from "./7764a40fe6b83ca1@437.notebook.html" with {type: "observable"};
+  </script>
+
+  <script id="3" type="application/vnd.observable.javascript">
+    title = md`# Unsupervised probabalistic data matching using the Expectation Maximisation algorithm`
+  </script>
+
+  <script id="4" type="application/vnd.observable.javascript">
+    out_1 = md`This notebook is an interactive implementation of the Fellegi-Sunter model of record linkage, with record linkage probabilities estimated using the Expectation Maximisation (EM) algorithm.  
+    
+    This is an unsupervised approach to finding matching records, which seems like magic to me - so hopefully this notebook helps demystify how this is possible.
+    `
+  </script>
+
+  <script id="5" type="application/vnd.observable.javascript">
+    out_2 = md`## Input data
+    
+    Consider two tables, which we are trying to match to one another.   \`mob\` stands for month of birth.
+    **Note**: You can edit this data so long as you keep the column names the same.
+    
+    `
+  </script>
+
+  <script id="6" type="application/vnd.observable.javascript">
+    out_3 = md`**Left table:**`
+  </script>
+
+  <script id="7" type="application/vnd.observable.javascript">
+    viewof left_table_csv = textarea({"value":data_left_template, "rows": 6, width: "100%"})
+  </script>
+
+  <script id="8" type="application/vnd.observable.javascript">
+    out_4 = md`${table(data_left)}`
+  </script>
+
+  <script id="9" type="application/vnd.observable.javascript">
+    out_5 = md`**Right table:**`
+  </script>
+
+  <script id="10" type="application/vnd.observable.javascript">
+    viewof right_table_csv = textarea({"value":data_right_template, "rows": 6, width: "100%"})
+  </script>
+
+  <script id="11" type="application/vnd.observable.javascript">
+    out_6 = md`
+    
+    ${table(data_right)}
+    
+    
+    `
+  </script>
+
+  <script id="12" type="application/vnd.observable.javascript">
+    out_7 = md`**Real matches**
+    
+    These are the records which match in reality. You only need to include records which match, i.e. where label = 1.  These are the unknowns the model is trying to estimate 
+    `
+  </script>
+
+  <script id="13" type="application/vnd.observable.javascript">
+    viewof match_pairs_csv = textarea({"value":match_pairs_template, "rows": 6, width: "100%"})
+  </script>
+
+  <script id="14" type="application/vnd.observable.javascript">
+    out_8 = md`${html`<br>`}
+    
+    ${table(match_pairs)}
+    
+    
+    
+    Finally, here are all the possible record comparisons:
+    
+    ${table(combinations)}`
+  </script>
+
+  <script id="15" type="application/vnd.observable.javascript">
+    out_9 = md`To set this up as a maximum likelihood estimation problem, we need to make some assumptions about the structure of the problem, and choose some parameters to estimate.
+    
+    First, we will designate λ the proportion of comparisons which are matches.  This is an unknown parameter to be estimated.  In the case of this data, the true λ is ${num_fmt(true_lambda)}.
+    
+    Next, we will create the concept of a _comparison vector_, which is a way of encoding record comparisons into a vector.  
+    
+    In this simple example our comparison vector, ${tex`\gamma`} will be of length ${tex`k=2`} , i.e. ${tex`\gamma = [\gamma_1, \gamma_2]`} and will encode the following two rules:
+    
+    - If \`mob\` matches,  ${tex`\gamma_1 = 1`} else ${tex`\gamma_1 = 0`}
+    - If \`surname\` matches exactly  ${tex`\gamma_2 = 1`}. If it is similar ${tex`\gamma_2 = 0.5`}.  Otherwise ${tex`\gamma_2 = 0`}
+    
+    
+    We will then assume that element ${tex`i`} of the comparison vector is a draw from one of two discrete distributions:
+    
+    ${tex`\pi_{i,m=1}`}, the discrete distribution of ${tex`\gamma_i`} when the records match
+    
+    and 
+    
+    
+    ${tex`\pi_{i,m=0}`}, the discrete distribution of ${tex`\gamma_i`} when the records do not match
+    
+    `
+  </script>
+
+  <script id="16" type="application/vnd.observable.javascript">
+    out_10 = md` Here are the comparison vectors for this data:
+    
+    ${table(comparison_vectors)}
+    
+    Each row represents the comparison vector, which has two elements [𝛾1, 𝛾2].  
+    
+    `
+  </script>
+
+  <script id="17" type="application/vnd.observable.javascript">
+    out_11 = md`These assumptions are all we need to define the equation for the likelihood.  The equation looks quite complicated (see page 356 [here](https://imai.fas.harvard.edu/research/files/linkage.pdf)):
+    
+    ${tex`\prod_{i=1}^{N_{\mathcal{A}}} \prod_{j=1}^{N_{\mathcal{B}}}\left\{\sum_{m=0}^{1} \lambda^{m}(1-\lambda)^{1-m} \prod_{k=1}^{K}\left(\prod_{\ell=0}^{L_{k}-1} \pi_{k m \ell}^{1\left\{\gamma_{k}(i, j)=\ell\right\}}\right)^{1-\delta_{k}(i, j)}\right\}`}
+    
+    But expressed in words it's quite simple - approximately:
+    
+    - For each element of the comparison vector, the probability of the observed outcome is ${tex`\lambda (\pi_{i,m=1}|\gamma_i)  + (1-\lambda) (\pi_{i,m=0}|\gamma_i)`}
+    - Compute this probability for each of the ${tex`k`} elements of the comparison vector in the row, and multiply together.  This represents the likelihood of the row
+    - Compute this for each row, and multiply together
+    
+    `
+  </script>
+
+  <script id="18" type="application/vnd.observable.javascript">
+    out_12 = md`To estimate which record comparisons are matches, we need to estimate the unknown parameters, which are ${tex`\lambda`} and the parameters of the four discrete distributions ${tex`\pi_{i,m}`}.
+    
+    There's an algorithm called the Expectation Maximisation algorithm which can solve this problem iteratively.
+    
+    In this notebook, rather than implement this algorithm, we will simply let you choose the parameters to try and maximise the log likelihood manually.  
+    
+    ## Estimating matches`
+  </script>
+
+  <script id="19" type="application/vnd.observable.javascript">
+    viewof lambda = slider({
+      title: "Choose λ, the proportion of combinations which are matches",
+      min: 0,
+      max: 1,
+      step: 0.01,
+      value: 0.5
+    })
+  </script>
+
+  <script id="20" type="application/vnd.observable.javascript">
+    viewof pi1_1_m1 = slider({
+      title: "Month of birth comparison, probability month of birth matches given m=1",
+      min: 0,
+      max: 1,
+      step: 0.01,
+      value: 0.5
+    })
+  </script>
+
+  <script id="21" type="application/vnd.observable.javascript">
+    viewof pi1_1_m0 = slider({
+      title: "Month of birth comparison, probability month of birth matches given records DO NOT match",
+      min: 0,
+      max: 1,
+      step: 0.01,
+      value: 0.5
+    })
+  </script>
+
+  <script id="22" type="application/vnd.observable.javascript">
+    viewof pi2_1_m1 = slider({
+      title: "Surname comparison, probability field exactly matches given records match",
+      min: 0,
+      max: 1,
+      step: 0.01,
+      value: 0.3
+    })
+  </script>
+
+  <script id="23" type="application/vnd.observable.javascript">
+    viewof pi2_05_m1 = slider({
+      title: "Surname comparison, probability fields similar given records match",
+      min: 0,
+      max: 1,
+      step: 0.01,
+      value: 0.3
+    })
+  </script>
+
+  <script id="24" type="application/vnd.observable.javascript">
+    viewof pi2_1_m0 = slider({
+      title: "Surname comparison, probability field exactly matches given records DO NOT match",
+      min: 0,
+      max: 1,
+      step: 0.01,
+      value: 0.3
+    })
+  </script>
+
+  <script id="25" type="application/vnd.observable.javascript">
+    viewof pi2_05_m0 = slider({
+      title: "Surname comparison, probability fields similar given records DO NOT match",
+      min: 0,
+      max: 1,
+      step: 0.01,
+      value: 0.3
+    })
+  </script>
+
+  <script id="26" type="application/vnd.observable.javascript">
+    out_13 = md`The log likelihood given these parameters is ${num_fmt(log_likelihood)}`
+  </script>
+
+  <script id="27" type="application/vnd.observable.javascript">
+    out_14 = md`Here's a history of the values of log likelihood as you've been adjusting the sliders:`
+  </script>
+
+  <script id="28" type="application/vnd.observable.javascript">
+    ll_chart = {
+    let a = log_likelihood
+      let data = history_ll.map((d,i)=> { return {"log_likelihood":d["log_likelihood"], "i":i}} )
+       data = data.filter(d => d["log_likelihood"] > -1000000)
+    
+      
+     return vl.markLine()
+      .data(data)
+      .encode(
+        vl.y().field('log_likelihood').type('quantitative').scale({"zero":false}),
+        vl.x().field('i').type('quantitative'),
+    
+    
+      )
+      .height(200)
+    
+      .render()
+    }
+  </script>
+
+  <script id="29" type="application/vnd.observable.javascript">
+    out_15 = md`This chart shows ${tex`\pi_{1,m=0}`} and ${tex`\pi_{1,m=1}`}, the discrete distributions that you've chosen for ${tex`\gamma_1`}, the \`mob\` comparison vector.`
+  </script>
+
+  <script id="30" type="application/vnd.observable.javascript">
+    pi_chart_1 = {
+    let data = [
+               {"𝛾_val":"1", "probability": pi1_1_m1, "m":1, "rule": "mob"},
+               {"𝛾_val":"0", "probability": 1-pi1_1_m1, "m":1, "rule": "mob"},
+               {"𝛾_val":"1", "probability": pi1_1_m0, "m":0, "rule": "mob"},
+               {"𝛾_val":"0", "probability": 1-pi1_1_m0, "m":0, "rule": "mob"}
+              ]
+      
+        return vl.markBar()
+      .data(data)
+      .encode(
+        vl.y().field('𝛾_val').type('nominal'),
+        vl.x().field('probability').type('quantitative'),
+        vl.column().fieldN('m').title(null),
+        vl.color().fieldN('m')
+      )
+      .height(30)
+      .width(100)
+      .render()
+    }
+  </script>
+
+  <script id="31" type="application/vnd.observable.javascript">
+    out_16 = md`This chart shows ${tex`\pi_{2,m=0}`} and ${tex`\pi_{2,m=1}`}, the discrete distributions you've chosen for ${tex`\gamma_2`}, the \`surname\` comparison vector.`
+  </script>
+
+  <script id="32" type="application/vnd.observable.javascript">
+    pi_chart_2 = {
+    let data = [{"𝛾_val":"1", "probability": pi2_1_m1, "m":1, "rule": "surname"},
+               {"𝛾_val":"0.5", "probability": pi2_05_m1, "m":1, "rule": "surname"},
+               {"𝛾_val":"0", "probability": 1-pi2_1_m1-pi2_05_m1, "m":1, "rule": "surname"},
+               {"𝛾_val":"1", "probability": pi2_1_m0, "m":0, "rule": "surname"},
+               {"𝛾_val":"0.5", "probability": pi2_05_m0, "m":0, "rule": "surname"},
+               {"𝛾_val":"0", "probability": 1-pi2_1_m0-pi2_05_m0, "m":0, "rule": "surname"}
+              ]
+      
+      return vl.markBar()
+      .data(data)
+      .encode(
+        vl.y().field('𝛾_val').type('nominal'),
+        vl.x().field('probability').type('quantitative'),
+        vl.column().fieldN('m').title(null),
+        vl.color().fieldN('m')
+      )
+      .height(30)
+      .width(100)
+      .render()
+    }
+  </script>
+
+  <script id="33" type="application/vnd.observable.javascript">
+    out_17 = md`Given the parameter values you've selected, we can now compute the probability that we have a match for each record comparison, ${tex`P(m)`}.
+    
+    We can write the probabilities of observing ${tex`\gamma_i`} given our parameters, and whether the record is a match:
+    
+    ${tex`p1 = \lambda P(\gamma_1|\pi_{1,m=1})`}
+    
+    ${html`<br>`}
+    
+    ${tex`p2 = \lambda P(\gamma_2|\pi_{2,m=1}) `}
+    
+    ${html`<br>`}
+    
+    ${tex`n1 = (1-\lambda) P(\gamma_2|\pi_{2,m=0}) `}
+    
+    ${html`<br>`}
+    
+    ${tex`n2 = (1-\lambda) P(\gamma_2|\pi_{2,m=0}) `}
+    
+    
+    The probability of a given record being a match is then:
+    
+    ${tex`\frac{p1 p2}{p1 p2 + n1 n2} = \frac{1}{1 + \frac{n1 n2}{p1 p2}}`}.
+    `
+  </script>
+
+  <script id="34" type="application/vnd.observable.javascript">
+    out_18 = {
+    let c = combinations.map(function(d) {
+         let cv = get_comparison_vector(d)
+         d = deepcopy(d)
+         d["𝛾1"] = cv["𝛾1"]
+         d["𝛾2"] = cv["𝛾2"]
+         d["prob_match"] = num_fmt(get_estimated_match_probability(d))
+         return d
+      })
+      
+      c.columns = Object.keys(c[0])
+      
+      return table(c)
+    }
+  </script>
+
+  <script id="35" type="application/vnd.observable.javascript">
+    out_19 = md`## Annex: Code
+    
+    This is the code I used to compute the log likelihood:
+    
+    \`\`\`javascript
+    {
+     function log_probability_of_element_of_gamma(elem, pi) {
+        let prob =  lambda * pi["1"][elem] + (1-lambda) * pi["0"][elem]
+        return Math.log(prob)
+      }
+      
+      function log_probability_of_comparison(comparison_vector) {
+        let elem = comparison_vector["𝛾1"]
+        let ln_prob_1 = log_probability_of_element_of_gamma(elem, pi_mob)
+        
+        elem = comparison_vector["𝛾2"]
+        let ln_prob_2 = log_probability_of_element_of_gamma(elem, pi_surname)
+        
+        return ln_prob_1 + ln_prob_2
+      }
+      
+      let log_probs_of_rows = comparison_vectors.map(cv => log_probability_of_comparison(cv))
+      
+      return log_probs_of_rows.reduce((a,b) => a + b)
+    }
+    \`\`\`
+    
+    and the code to compute the probability of a match:
+    
+    
+    \`\`\`javascript 
+    get_estimated_match_probability = function(comparison_vector) {
+      let gamma1 = comparison_vector["𝛾1"]
+      let gamma2 = comparison_vector["𝛾2"]
+      
+      let prob_match_1 = lambda * pi_mob["1"][gamma1]
+      let prob_no_match_1 = (1-lambda) * pi_mob["0"][gamma1]
+      let sum_1 = prob_match_1 + prob_no_match_1
+    
+      
+      let prob_match_2 = lambda * pi_surname["1"][gamma1] 
+      let prob_no_match_2 = (1-lambda) * pi_surname["0"][gamma1]
+      let sum_2 = prob_match_2 + prob_no_match_2
+      
+      // Is the following calculation correct?
+      let lr = (prob_match_1 * prob_match_2) / (prob_match_1*prob_match_2 + prob_no_match_1*prob_no_match_2)  
+      
+      return lr
+     
+    }
+    \`\`\`
+    
+    `
+  </script>
+
+  <script id="36" type="application/vnd.observable.javascript">
+    data_left_template = `row_id_l,mob_l,surname_l
+    1,10,Linacre
+    2,7,Smith
+    `
+  </script>
+
+  <script id="37" type="application/vnd.observable.javascript">
+    data_right_template = `row_id_r,mob_r,surname_r
+    1,10,Linacer
+    2,8,Jones
+    3,7,Smith
+    `
+  </script>
+
+  <script id="38" type="application/vnd.observable.javascript">
+    data_left = {
+    mutable history_ll = []
+      return d3.csvParse(left_table_csv)
+    }
+  </script>
+
+  <script id="39" type="application/vnd.observable.javascript">
+    data_right = {
+    mutable history_ll = []
+      return d3.csvParse(right_table_csv)
+    }
+  </script>
+
+  <script id="40" type="application/vnd.observable.javascript">
+    match_pairs_template = `row_id_l,row_id_r,label
+    1,1,1
+    2,3,1
+    `
+  </script>
+
+  <script id="41" type="application/vnd.observable.javascript">
+    matches = {
+    mutable history_ll = []
+      
+      return d3.csvParse(match_pairs_csv)
+    }
+  </script>
+
+  <script id="42" type="application/vnd.observable.javascript">
+    combinations = {
+    let a = db;
+      
+      alasql("DROP TABLE if exists combinations");
+      
+      let combinations_data = alasql(`select * from df_l
+      cross join df_r
+      left join matches as m
+      on df_l.row_id_l = m.row_id_l and df_r.row_id_r = m.row_id_r
+      `);
+      
+      // Set label = 0 if left join returned null
+      combinations_data = combinations_data.map(function(d) {
+        if (!(d["label"])) {
+          d["label"] = "0"
+        }
+      
+        
+        return d
+      })
+      
+      alasql("CREATE TABLE combinations");
+      alasql.tables.combinations.data = combinations_data
+      
+      
+      return sql_with_cols(`
+      select * from combinations
+    
+    `)
+    }
+  </script>
+
+  <script id="43" type="application/vnd.observable.javascript">
+    md`### Annex 2:  Computation of comparison vectors`
+  </script>
+
+  <script id="44" type="application/vnd.observable.javascript">
+    get_comparison_vector = function get_comparison_vector(row) {
+    
+      return {"𝛾1": month_of_birth(row), "𝛾2": surname(row)}
+      
+    }
+  </script>
+
+  <script id="45" type="application/vnd.observable.javascript">
+    month_of_birth = function month_of_birth(row) {
+      return +(row.mob_l == row.mob_r)
+    }
+  </script>
+
+  <script id="46" type="application/vnd.observable.javascript">
+    surname = function surname(row) {
+     if (row.surname_l == row.surname_r) {return 1}
+     if (levenshtein.get(row.surname_l, row.surname_r) < 3) {return 0.5}
+     return 0
+    }
+  </script>
+
+  <script id="47" type="application/vnd.observable.javascript">
+    comparison_vectors = {
+    let cvs = combinations.map(row => get_comparison_vector(row))
+      cvs.columns = Object.keys(cvs[0])
+      return cvs
+    }
+  </script>
+
+  <script id="48" type="application/vnd.observable.javascript">
+    match_pairs = {
+    let a = db;
+      return sql_with_cols(`
+    
+    select df_l.row_id_l, df_r.row_id_r 
+    from df_l
+      cross join df_r
+      left join matches as m
+    on df_l.row_id_l = m.row_id_l and df_r.row_id_r = m.row_id_r
+    where m.label = '1'
+    
+    `)
+    }
+  </script>
+
+  <script id="49" type="application/vnd.observable.javascript">
+    real_matches = matches.filter(d =>
+      d.match == 1
+    ).map(d => {delete d.match; return d})
+  </script>
+
+  <script id="50" type="application/vnd.observable.javascript">
+    md`### Annex 3:  Likelihood and probability calculations`
+  </script>
+
+  <script id="51" type="application/vnd.observable.javascript">
+    true_lambda = {
+    let c = combinations
+      let count_match =  sql_return_scalar(`
+     select count(*) as count_match
+    from combinations
+     where label = '1' 
+    `);
+      
+      let total_count = sql_return_scalar(`
+    select count(*) from combinations
+    `)
+      
+      return count_match/total_count
+    }
+  </script>
+
+  <script id="52" type="application/vnd.observable.javascript">
+    pi_surname = {
+    let m1 = {
+          "1":pi2_1_m1,
+          "0.5":pi2_05_m1,
+          "0":1 - pi2_1_m1 - pi2_05_m1
+        }
+      
+      let m0 = {
+          "1":pi2_1_m0,
+          "0.5":pi2_05_m0,
+          "0":1-pi2_1_m0-pi2_05_m0
+        }
+     
+      return {
+        "1": m1,
+        "0": m0
+      }
+    }
+  </script>
+
+  <script id="53" type="application/vnd.observable.javascript">
+    pi_mob = {
+    let m1 = {
+          "1":pi1_1_m1,
+          "0":1 - pi1_1_m1 
+        }
+      
+      let m0 = {
+          "1":pi1_1_m0,
+          "0":1-pi1_1_m0
+        }
+     
+      return {
+        "1": m1,
+        "0": m0
+      }
+    }
+  </script>
+
+  <script id="54" type="application/vnd.observable.javascript">
+    get_estimated_match_probability = function(comparison_vector) {
+      let gamma1 = comparison_vector["𝛾1"]
+      let gamma2 = comparison_vector["𝛾2"]
+      
+      let prob_match_1 = lambda * pi_mob["1"][gamma1]
+      let prob_no_match_1 = (1-lambda) * pi_mob["0"][gamma1]
+      let sum_1 = prob_match_1 + prob_no_match_1
+    
+      
+      let prob_match_2 = lambda * pi_surname["1"][gamma1] 
+      let prob_no_match_2 = (1-lambda) * pi_surname["0"][gamma1]
+      let sum_2 = prob_match_2 + prob_no_match_2
+      
+      // Is the following calculation correct?
+      let lr = (prob_match_1 * prob_match_2) / (prob_match_1*prob_match_2 + prob_no_match_1*prob_no_match_2)  
+      
+      return lr
+     
+    }
+  </script>
+
+  <script id="55" type="application/vnd.observable.javascript">
+    log_likelihood = {
+    function log_probability_of_element_of_gamma(elem, pi) {
+        let prob =  lambda * pi["1"][elem] + (1-lambda) * pi["0"][elem]
+        return Math.log(prob)
+      }
+      
+      function log_probability_of_comparison(comparison_vector) {
+        let elem = comparison_vector["𝛾1"]
+        let ln_prob_1 = log_probability_of_element_of_gamma(elem, pi_mob)
+        
+        elem = comparison_vector["𝛾2"]
+        let ln_prob_2 = log_probability_of_element_of_gamma(elem, pi_surname)
+        
+        return ln_prob_1 + ln_prob_2
+      }
+      
+      let log_probs_of_rows = comparison_vectors.map(cv => log_probability_of_comparison(cv))
+      
+      return log_probs_of_rows.reduce((a,b) => a + b)
+    }
+  </script>
+
+  <script id="56" type="application/vnd.observable.javascript">
+    md`### Annex 4: Other functions`
+  </script>
+
+  <script id="57" type="application/vnd.observable.javascript">
+    mutable history_ll = []
+  </script>
+
+  <script id="58" type="application/vnd.observable.javascript">
+    {
+    history_ll.push({"log_likelihood":log_likelihood})
+    }
+  </script>
+
+  <script id="59" type="application/vnd.observable.javascript">
+    db = {
+    let db = alasql("DROP TABLE if exists df_l");
+     alasql("CREATE TABLE df_l");
+      
+     alasql("DROP TABLE if exists df_r");
+     alasql("CREATE TABLE df_r");
+      
+     alasql("DROP TABLE if exists matches");
+     alasql("CREATE TABLE matches");
+    
+      alasql.tables.df_l.data = data_left
+      alasql.tables.df_r.data = data_right
+      alasql.tables.matches.data = matches
+      
+      return db
+    }
+  </script>
+
+  <script id="60" type="application/vnd.observable.javascript">
+    md`### Generic utility libraries and functions`
+  </script>
+
+  <script id="61" type="application/vnd.observable.javascript">
+    sql_with_cols = function(sql) {
+      let tab = alasql(sql)
+      tab.columns = Object.keys(tab[0])
+      return tab
+      
+    }
+  </script>
+
+  <script id="62" type="application/vnd.observable.javascript">
+    table = function table(data) {
+     return html`
+    <table>
+    <thead>
+    <tr>
+    ${data.columns.map(d => html`<th>${d}`)}
+    <tbody>
+    ${data.map(row => html`<tr>
+      ${Object.keys(row).map(key => html`<td>${row[key]}`)}
+    `)}
+    `
+    }
+  </script>
+
+  <script id="63" type="application/vnd.observable.javascript">
+    alasql = require("alasql")
+  </script>
+
+  <script id="64" type="application/vnd.observable.javascript">
+    sql_return_scalar = function(sql) {
+      let result = alasql(sql) 
+      result = result[0]
+      return result[Object.keys(result)[0]]
+    }
+  </script>
+
+  <script id="65" type="application/vnd.observable.javascript">
+    d3 = require("d3")
+  </script>
+
+  <script id="66" type="application/vnd.observable.javascript">
+    num_fmt = d3.format(",.3f")
+  </script>
+
+  <script id="67" type="application/vnd.observable.javascript">
+    levenshtein = require('fast-levenshtein@2.0.6')
+  </script>
+
+  <script id="68" type="application/vnd.observable.javascript">
+    vegalite = require("@observablehq/vega-lite@0.2")
+  </script>
+
+  <script id="69" type="application/vnd.observable.javascript">
+    deepcopy = function(d) {
+    return JSON.parse(JSON.stringify(d) )
+    }
+  </script>
+</notebook>

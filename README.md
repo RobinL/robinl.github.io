@@ -2,275 +2,86 @@
 
 This is the Astro version of the blog. Long-form posts live in `src/content/posts/`.
 
-## pnpm
+## Development
 
-Install dependencies with `pnpm install`. Use `pnpm run dev` instead of `npm run dev`, and `pnpm run build` instead of `npm run build`.
-
-## Authoring A Post With An Observable Notebook
-
-Observable notebooks are treated as vendored local packages. This keeps builds reproducible and avoids depending on a live Observable download during normal development or deployment.
-
-There are two rendering patterns:
-
-- `ObservableNotebook`: render selected notebook cells in order.
-- `ObservableCellProvider` plus `ObservableCell`: interleave selected notebook cells with MDX prose.
-
-## 1. Vendor The Observable Package
-
-Choose a stable Observable notebook version. Observable package URLs have this shape:
-
-```txt
-https://api.observablehq.com/@robinl/<notebook-slug>@<version>.tgz?v=3
-```
-
-Download and unpack it into `vendor/observable/<notebook-slug>/`:
-
-```sh
-curl -L "https://api.observablehq.com/@robinl/my-new-notebook@123.tgz?v=3" -o /tmp/my-new-notebook.tgz
-mkdir -p vendor/observable/my-new-notebook
-tar -xzf /tmp/my-new-notebook.tgz -C vendor/observable/my-new-notebook --strip-components=1
-```
-
-If the notebook package already exists in the old Gatsby checkout under `robinl.github.io/node_modules/@robinl/<package-name>/`, copying that directory is also fine:
-
-```sh
-cp -R robinl.github.io/node_modules/@robinl/my-new-notebook vendor/observable/
-```
-
-Check the vendored package:
-
-```sh
-cat vendor/observable/my-new-notebook/package.json
-```
-
-It should have:
-
-- `name`, usually `@robinl/my-new-notebook`
-- `version`, matching the Observable package version
-- `homepage`, pointing to the Observable notebook
-- `main`, pointing to the generated notebook module
-
-## 2. Add The Local Dependency
-
-Add a `file:` dependency to `package.json`:
-
-```json
-"@robinl/my-new-notebook": "file:./vendor/observable/my-new-notebook"
-```
-
-Then install so `node_modules` and `pnpm-lock.yaml` know about it:
-
-```sh
-pnpm install
-```
-
-## 3. Register The Notebook
-
-Add the notebook to `src/components/observable/notebooks.ts`.
-
-Use the short notebook key you want to reference from MDX, and dynamically import the package:
-
-```ts
-export const notebooks = {
-  // existing entries...
-  'my-new-notebook': () => import('@robinl/my-new-notebook'),
-} satisfies Record<string, NotebookLoader>;
-```
-
-The MDX `notebook="..."` value must exactly match this key.
-
-## 4. Update The Manifest
-
-Update `vendor/observable/manifest.json` with the notebook metadata:
-
-```json
-{
-  "my-new-notebook": {
-    "package": "@robinl/my-new-notebook",
-    "version": "123.0.0",
-    "source": "https://observablehq.com/@robinl/my-new-notebook",
-    "entry": "abcdef123456@123.js"
-  }
-}
-```
-
-The manifest is documentation rather than runtime code, but keep it current. It is the inventory for vendored notebooks.
-
-## 5. Create The MDX Post
-
-Create a new file under `src/content/posts/`, for example:
-
-```txt
-src/content/posts/my_new_observable_post.mdx
-```
-
-Use normal content collection frontmatter:
-
-```mdx
----
-title: "My new Observable post"
-description: "A short description for SEO and listing pages"
-postDate: "2026-04-17"
-category: "data"
-codeUrl: "https://observablehq.com/@robinl/my-new-notebook"
-pageWidth: "wide"
----
-```
-
-Useful fields:
-
-- `category`: one of `data`, `probabilistic_linkage`, `energy`, `other`, `quotes_links`, `non_blog_post`
-- `codeUrl`: if this is an Observable URL, the post meta link says “Live edit this notebook”
-- `pageWidth`: optional, one of `prose`, `wide`, `full`
-- `latestUpdate`: optional date
-- `probLinkageCategory`: optional, for probabilistic linkage pages
-
-Do not use a frontmatter key named `layout`; Astro MDX treats it specially.
-
-## Pattern A: Render Cells In Order
-
-Use this when the post is mostly a notebook embed, or when the notebook cells should appear one after another.
-
-```mdx
----
-title: "My new Observable post"
-description: "A short description"
-postDate: "2026-04-17"
-category: "data"
-codeUrl: "https://observablehq.com/@robinl/my-new-notebook"
-pageWidth: "wide"
----
-
-import ObservableNotebook from '../../components/observable/ObservableNotebook.jsx';
-
-<ObservableNotebook
-  client:visible
-  notebook="my-new-notebook"
-  cells={['title', 'blurb', 'chart']}
-/>
-```
-
-The cell names must match the names exported by the Observable notebook. `viewof` cells should include the `viewof` prefix:
-
-```mdx
-cells={['viewof selected_year', 'chart']}
-```
-
-## Pattern B: Interleave Notebook Cells With Prose
-
-Use this when prose should appear between notebook outputs.
-
-```mdx
----
-title: "My interleaved Observable post"
-description: "A short description"
-postDate: "2026-04-17"
-category: "data"
-codeUrl: "https://observablehq.com/@robinl/my-new-notebook"
----
-
-import ObservableCellProvider from '../../components/observable/ObservableCellProvider.jsx';
-import ObservableCell from '../../components/observable/ObservableCell.jsx';
-
-# My interleaved Observable post
-
-Some static MDX prose before the notebook.
-
-<ObservableCellProvider client:visible notebook="my-new-notebook">
-
-<ObservableCell cellName="viewof input_table" />
-
-This prose is still static MDX, but it appears between Observable cells.
-
-<ObservableCell cellName="chart" />
-
-<ObservableCell cellName="summary_table" />
-
-</ObservableCellProvider>
-```
-
-The provider creates one Observable runtime for the notebook. Each `ObservableCell` marks a DOM target for a named Observable cell.
-
-## Choosing Cell Names
-
-The cell name is the Observable runtime cell name:
-
-```mdx
-<ObservableCell cellName="chart" />
-<ObservableCell cellName="viewof form_values" />
-```
-
-If a cell does not render:
-
-- check the spelling exactly
-- include `viewof` for input cells
-- check that the notebook key exists in `notebooks.ts`
-- check the browser console for notebook runtime errors
-
-## Local Files Used By Notebooks
-
-Observable package exports may include a `files/` directory. Keep that directory inside the vendored package. Do not move those files into `public/` unless you are deliberately changing the notebook code.
-
-For images or JSON used directly by MDX, put them next to the post:
-
-```txt
-src/content/posts/my_new_observable_post.mdx
-src/content/posts/my_new_observable_post/chart_data.json
-src/content/posts/my_new_observable_post/example.png
-```
-
-Then import or reference them from MDX as usual.
-
-## Verify The Post
-
-Run:
-
-```sh
-pnpm run build
-pnpm exec tsc --noEmit
-```
-
-For interactive notebooks, also run the dev server and click through the page:
+Install dependencies with `pnpm install`, then use:
 
 ```sh
 pnpm run dev
+pnpm run check
+pnpm test
+pnpm run build
 ```
 
-Check:
+## Observable notebooks
 
-- the route exists at `/<post_filename>/`
-- static prose renders before hydration
-- Observable cells hydrate when scrolled into view
-- inputs render correctly for `viewof` cells
-- charts or tables resize sensibly in the prose column
+The 28 interactive notebook posts are local Observable Notebook Kit HTML files under
+`src/notebooks`. Astro's Vite pipeline compiles them on demand, so editing a notebook or an
+imported TypeScript module participates in normal dev-server live reload. There are no
+Observable 1.0 generated packages or `file:` package dependencies in the active integration.
 
-## Troubleshooting
+Two React client-island patterns are available:
 
-`Unknown Observable notebook: my-new-notebook`
+- `Notebook` renders an ordered list of named cells.
+- `NotebookCellProvider` and `NotebookCell` interleave cells with static MDX prose.
 
-The notebook key is missing from `src/components/observable/notebooks.ts`, or the MDX `notebook` prop does not match it.
+### Add a notebook
 
-`Rollup failed to resolve import "@robinl/..."`
+1. Create `src/notebooks/my-notebook.notebook.html` using the standard Notebook Kit format.
+   Give every cell a stable numeric ID.
+2. Put calculation, transformation, and chart-construction logic in ordinary TypeScript under
+   `src/lib/notebooks`; keep notebook cells focused on inputs, reactivity, and display.
+3. Import dependencies normally so they are recorded in `package.json` and bundled by Vite.
+4. Add a literal dynamic import to `src/components/notebook-kit/notebooks.ts`.
+5. Reference that registry key from the MDX post.
 
-The package is not installed. Check `package.json`, then run `pnpm install`.
+Render cells by ID when authoring a new Notebook 2.0 notebook:
 
-The page builds but a cell is blank
+```mdx
+import NotebookCellProvider from '../../components/notebook-kit/NotebookCellProvider.jsx';
+import NotebookCell from '../../components/notebook-kit/NotebookCell.jsx';
 
-The cell name probably does not exist, or the notebook cell depends on another cell that throws in the browser. Check the browser console.
+<NotebookCellProvider client:visible notebook="my-notebook">
+  <NotebookCell cellId={1} />
+  <NotebookCell cellId={3} />
+</NotebookCellProvider>
+```
 
-Astro tries to import `prose`, `wide`, or `full`
+The convenience wrapper for ordered named cells exists primarily for recovered notebooks:
 
-The post probably uses `layout:` in frontmatter. Use `pageWidth:` instead.
+```mdx
+import Notebook from '../../components/notebook-kit/Notebook.jsx';
 
-The notebook needs browser APIs
+<Notebook
+  client:visible
+  notebook="my-notebook"
+  cells={['title', 'viewof selected_year', 'chart']}
+/>
+```
 
-That is expected. Always render Observable components as client islands with `client:visible`.
+### Dependencies and data
 
-## Related Files
+The shared runtime exposes a deliberate set of core Observable builtins. D3, Observable Inputs,
+and Vega Embed resolve from the Astro dependency graph. Recovered notebooks may lazily request a
+small number of explicitly versioned CDN packages for compatibility; new notebooks should use
+normal ESM imports instead.
 
-- `src/components/observable/ObservableNotebook.jsx`
-- `src/components/observable/ObservableCellProvider.jsx`
-- `src/components/observable/ObservableCell.jsx`
-- `src/components/observable/notebooks.ts`
-- `vendor/observable/README.md`
-- `vendor/observable/manifest.json`
+Put stable historical data beside its notebook and read it with `FileAttachment`. Keep a remote
+request only when live data is part of the intended interaction.
+
+See `src/notebooks/README.md` for the native-versus-recovered source conventions.
+
+### Troubleshooting
+
+If a notebook is unknown, check that the MDX `notebook` prop exactly matches a key in
+`src/components/notebook-kit/notebooks.ts`. If a named recovered cell is blank, check the spelling
+and retain the `viewof ` prefix for input cells. Notebook code is browser-only and must be
+rendered with a client directive such as `client:visible`.
+
+For a full verification run:
+
+```sh
+pnpm run check
+pnpm test
+pnpm run build
+```

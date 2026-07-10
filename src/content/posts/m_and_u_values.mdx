@@ -3,14 +3,14 @@ title: "m and u values in the Fellegi-Sunter model"
 description: "Deep dive into the role and interpretation of m and u probabilities in the Fellegi-Sunter model for probabilistic linkage. Learn how these probabilities impact match weights and how to quantify the strength of evidence in favor or against a record match."
 postDate: "2023-09-22"
 category: "probabilistic_linkage"
-codeUrl: "https://observablehq.com/@robinl/d51533bbe054b3d8"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/bf-prior-calc/695eee6aed606401@287.notebook.html"
 probLinkageCategory: "tutorial"
 tutorialNumber: 3
 pageWidth: "prose"
 ---
 
-import ObservableCellProvider from '../../components/observable/ObservableCellProvider.jsx';
-import ObservableCell from '../../components/observable/ObservableCell.jsx';
+import NotebookCellProvider from '../../components/notebook-kit/NotebookCellProvider.jsx';
+import NotebookCell from '../../components/notebook-kit/NotebookCell.jsx';
 import { Vega, VegaLite } from '../../components/probabilistic/Vega.jsx';
 import DefinitionToolTip from '../../components/probabilistic/DefinitionToolTip.jsx';
 import InteractiveCallout from '../../components/probabilistic/InteractiveCallout.jsx';
@@ -153,18 +153,18 @@ Here's a calculator which shows how a prior probability is updated with a Bayes 
 
 ## Posterior calculator
 
-<ObservableCellProvider client:visible notebook="bf-prior-calc">
+<NotebookCellProvider client:visible notebook="bf-prior-calc">
     #### Prior
-    <ObservableCell cellName="prior_probability_bound" />
-    <ObservableCell cellName="prior_odds_bound" />
+    <NotebookCell cellName="prior_probability_bound" />
+    <NotebookCell cellName="prior_odds_bound" />
     #### New evidence
-    <ObservableCell cellName="partial_match_weight_bound" />
-    <ObservableCell cellName="bayes_factor" />
-    <ObservableCell cellName="narrative" />
-    <ObservableCell cellName="chart" />
+    <NotebookCell cellName="partial_match_weight_bound" />
+    <NotebookCell cellName="bayes_factor" />
+    <NotebookCell cellName="narrative" />
+    <NotebookCell cellName="chart" />
 
 
-</ObservableCellProvider>
+</NotebookCellProvider>
 
 An alternative way of visualising these concepts can be found <a href="/visualising_fellegi_sunter/">here</a>.
 

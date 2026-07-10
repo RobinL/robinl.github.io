@@ -5,7 +5,8 @@ export type CompiledNotebookCell = Definition & {
   files: string[];
 };
 
-export type CompiledNotebook = {
+export type CompiledNotebook = ((runtime: unknown, observer?: (name: string | null) => unknown) => unknown) & {
   title: string;
+  FileAttachment?: (name: string) => unknown;
   cells: CompiledNotebookCell[];
 };

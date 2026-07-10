@@ -13,8 +13,46 @@ function serialize(value: unknown): string {
 }
 
 function renderNotebookModule(notebook: Notebook): string {
-  const cells = notebook.cells.map((cell) => {
-    const compiled = transpile(cell);
+  const definitions = notebook.cells.map((cell) => ({
+    cell,
+    compiled: transpile(cell, { resolveFiles: true }),
+  }));
+  const files = Array.from(
+    new Set(definitions.flatMap(({ compiled }) => Array.from(compiled.files ?? [])))
+  );
+  const fileImports = files.map((file, index) =>
+    file.endsWith('.html')
+      ? `import __file${index}Source from ${JSON.stringify(`./${file}?raw`)};
+const __file${index} = URL.createObjectURL(new Blob([__file${index}Source], {type: "text/html"}));`
+      : `import __file${index} from ${JSON.stringify(`./${file}?url`)};`
+  );
+  const fileEntries = files.map(
+    (file, index) => `[${JSON.stringify(file)}, __file${index}]`
+  );
+  const fileSupport = files.length
+    ? `import {FileAttachment as __FileAttachment} from "@observablehq/notebook-kit/runtime";
+${fileImports.join('\n')}
+
+const __fileAttachments = new Map([${fileEntries.join(',')}]);
+function __resolveFileAttachment(name) {
+  const key = String(name);
+  let url = __fileAttachments.get(key);
+  if (!url) {
+    const pathname = new URL(key, import.meta.url).pathname;
+    for (const [file, candidate] of __fileAttachments) {
+      if (pathname.endsWith(\`/\${file}\`)) {
+        url = candidate;
+        break;
+      }
+    }
+  }
+  if (!url) throw new Error(\`File not found: \${name}\`);
+  return __FileAttachment(url);
+}
+`
+    : '';
+
+  const cells = definitions.map(({ cell, compiled }) => {
 
     return `{
       id: ${serialize(cell.id)},
@@ -31,12 +69,101 @@ function renderNotebookModule(notebook: Notebook): string {
     }`;
   });
 
-  return `const notebook = {
-    title: ${serialize(notebook.title)},
-    cells: [${cells.join(',\n')}]
+  return `${fileSupport}function observeMutable(initialize) {
+  let resolve;
+  let reject;
+  let value;
+  let stale = false;
+  const dispose = initialize((next) => {
+    value = next;
+    if (resolve) {
+      resolve(next);
+      resolve = reject = undefined;
+    } else {
+      stale = true;
+    }
+  });
+  return {
+    async next() {
+      return {
+        done: false,
+        value: await (stale
+          ? ((stale = false), value)
+          : new Promise((res, rej) => ((resolve = res), (reject = rej))))
+      };
+    },
+    async return() {
+      reject?.(new Error("Generator returned"));
+      resolve = reject = undefined;
+      dispose?.();
+      return {done: true, value: undefined};
+    },
+    [Symbol.asyncIterator]() { return this; }
   };
+}
 
-export default notebook;
+function createMutable(value) {
+  let change;
+  return Object.defineProperty(observeMutable((notify) => {
+    change = notify;
+    if (value !== undefined) notify(value);
+  }), "value", {
+    get: () => value,
+    set: (next) => ((value = next), change?.(value))
+  });
+}
+
+function createMutator(value) {
+  const mutable = createMutable(value);
+  return [mutable, {
+    get value() { return mutable.value; },
+    set value(next) { mutable.value = next; }
+  }];
+}
+
+function defineNotebook(runtime, observer = () => null) {
+  const main = runtime.module();
+  if (defineNotebook.FileAttachment) {
+    main.variable().define("FileAttachment", [], () => defineNotebook.FileAttachment);
+  }
+  for (const definition of defineNotebook.cells) {
+    const inputs = definition.inputs ?? [];
+    const output = definition.output;
+    if (definition.outputs?.length) {
+      const cellName = \`cell \${definition.id}\`;
+      main.variable(observer(null)).define(cellName, inputs, definition.body);
+      for (const name of definition.outputs) {
+        main.variable(true).define(name, [cellName], (outputs) => outputs[name]);
+      }
+    } else if (output) {
+      if (definition.autoview) {
+        main.variable(observer(output)).define(output, inputs, definition.body);
+        const name = output.slice("viewof$".length);
+        main.variable(observer(name)).define(name, ["Generators", output], (Generators, value) => Generators.input(value));
+      } else if (definition.automutable) {
+        const name = output.slice("mutable ".length);
+        const cellName = \`cell \${definition.id}\`;
+        main.define(output, inputs, definition.body);
+        main.define(cellName, [output], createMutator);
+        main.variable(observer(name)).define(name, [cellName], ([mutable]) => mutable);
+        main.variable(true).define(\`mutable$\${name}\`, [cellName], ([, mutator]) => mutator);
+      } else {
+        main.variable(observer(output)).define(output, inputs, definition.body);
+      }
+    } else {
+      main.variable(observer(null)).define(inputs, definition.body);
+    }
+  }
+  return main;
+}
+
+Object.assign(defineNotebook, {
+    title: ${serialize(notebook.title)},
+    FileAttachment: ${files.length ? '__resolveFileAttachment' : 'undefined'},
+    cells: [${cells.join(',\n')}]
+});
+
+export default defineNotebook;
 `;
 }
 

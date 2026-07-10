@@ -26,93 +26,15 @@ importers:
       '@observablehq/notebook-kit':
         specifier: 2.1.8
         version: 2.1.8(@types/markdown-it@14.1.2)(@types/node@24.12.2)(yaml@2.9.0)
-      '@observablehq/runtime':
-        specifier: ^5.9.2
-        version: 5.9.9
-      '@robinl/86fc30325e4106c4':
-        specifier: file:./vendor/observable/86fc30325e4106c4
-        version: file:vendor/observable/86fc30325e4106c4(@observablehq/runtime@5.9.9)
-      '@robinl/bf-prior-calc':
-        specifier: file:./vendor/observable/bf-prior-calc
-        version: file:vendor/observable/bf-prior-calc(@observablehq/runtime@5.9.9)
-      '@robinl/bird-song-quiz':
-        specifier: file:./vendor/observable/bird-song-quiz
-        version: file:vendor/observable/bird-song-quiz(@observablehq/runtime@5.9.9)
-      '@robinl/birdsong-recordings':
-        specifier: file:./vendor/observable/birdsong-recordings
-        version: file:vendor/observable/birdsong-recordings(@observablehq/runtime@5.9.9)
-      '@robinl/computing-the-fellegi-sunter-model':
-        specifier: file:./vendor/observable/computing-the-fellegi-sunter-model
-        version: file:vendor/observable/computing-the-fellegi-sunter-model(@observablehq/runtime@5.9.9)
-      '@robinl/dependencies-between-match-weights':
-        specifier: file:./vendor/observable/dependencies-between-match-weights
-        version: file:vendor/observable/dependencies-between-match-weights(@observablehq/runtime@5.9.9)
-      '@robinl/energy-usage-and-goods-imports-and-exports':
-        specifier: file:./vendor/observable/energy-usage-and-goods-imports-and-exports
-        version: file:vendor/observable/energy-usage-and-goods-imports-and-exports(@observablehq/runtime@5.9.9)
-      '@robinl/fault-tolerant-trie':
-        specifier: file:./vendor/observable/fault-tolerant-trie
-        version: file:vendor/observable/fault-tolerant-trie(@observablehq/runtime@5.9.9)
-      '@robinl/filling-the-country-with-solar-panels':
-        specifier: file:./vendor/observable/filling-the-country-with-solar-panels
-        version: file:vendor/observable/filling-the-country-with-solar-panels(@observablehq/runtime@5.9.9)
-      '@robinl/flight-distance-calculator':
-        specifier: file:./vendor/observable/flight-distance-calculator
-        version: file:vendor/observable/flight-distance-calculator(@observablehq/runtime@5.9.9)
-      '@robinl/how-much-should-carbon-offsetting-cost':
-        specifier: file:./vendor/observable/how-much-should-carbon-offsetting-cost
-        version: file:vendor/observable/how-much-should-carbon-offsetting-cost(@observablehq/runtime@5.9.9)
-      '@robinl/interactive-bayes-factor-probability-and-match-weight':
-        specifier: file:./vendor/observable/interactive-bayes-factor-probability-and-match-weight
-        version: file:vendor/observable/interactive-bayes-factor-probability-and-match-weight(@observablehq/runtime@5.9.9)
-      '@robinl/interactive-blogging-with-observable-notebooks-and-gatsb':
-        specifier: file:./vendor/observable/interactive-blogging-with-observable-notebooks-and-gatsb
-        version: file:vendor/observable/interactive-blogging-with-observable-notebooks-and-gatsb(@observablehq/runtime@5.9.9)
-      '@robinl/intro-prob-linkage':
-        specifier: file:./vendor/observable/intro-prob-linkage
-        version: file:vendor/observable/intro-prob-linkage(@observablehq/runtime@5.9.9)
-      '@robinl/m-and-u-probability-generator':
-        specifier: file:./vendor/observable/m-and-u-probability-generator
-        version: file:vendor/observable/m-and-u-probability-generator(@observablehq/runtime@5.9.9)
-      '@robinl/m-and-u-probability-generator-with-starting-values':
-        specifier: file:./vendor/observable/m-and-u-probability-generator-with-starting-values
-        version: file:vendor/observable/m-and-u-probability-generator-with-starting-values(@observablehq/runtime@5.9.9)
-      '@robinl/my-flights':
-        specifier: file:./vendor/observable/my-flights
-        version: file:vendor/observable/my-flights(@observablehq/runtime@5.9.9)
-      '@robinl/partial-match-weights':
-        specifier: file:./vendor/observable/partial-match-weights
-        version: file:vendor/observable/partial-match-weights(@observablehq/runtime@5.9.9)
-      '@robinl/spark-explain':
-        specifier: file:./vendor/observable/spark-explain
-        version: file:vendor/observable/spark-explain(@observablehq/runtime@5.9.9)
-      '@robinl/the-carbon-impact-of-switiching-to-an-electric-car':
-        specifier: file:./vendor/observable/the-carbon-impact-of-switiching-to-an-electric-car
-        version: file:vendor/observable/the-carbon-impact-of-switiching-to-an-electric-car(@observablehq/runtime@5.9.9)
-      '@robinl/understanding-match-weights':
-        specifier: file:./vendor/observable/understanding-match-weights
-        version: file:vendor/observable/understanding-match-weights(@observablehq/runtime@5.9.9)
-      '@robinl/understanding-the-spark-ui-by-example-sorting-data':
-        specifier: file:./vendor/observable/understanding-the-spark-ui-by-example-sorting-data
-        version: file:vendor/observable/understanding-the-spark-ui-by-example-sorting-data(@observablehq/runtime@5.9.9)
-      '@robinl/understanding-the-spark-ui-by-example-the-left-join':
-        specifier: file:./vendor/observable/understanding-the-spark-ui-by-example-the-left-join
-        version: file:vendor/observable/understanding-the-spark-ui-by-example-the-left-join(@observablehq/runtime@5.9.9)
-      '@robinl/unsupervised-probabalistic-data-matching-using-the-expec':
-        specifier: file:./vendor/observable/unsupervised-probabalistic-data-matching-using-the-expec
-        version: file:vendor/observable/unsupervised-probabalistic-data-matching-using-the-expec(@observablehq/runtime@5.9.9)
-      '@robinl/updating-a-prior-simplified':
-        specifier: file:./vendor/observable/updating-a-prior-simplified
-        version: file:vendor/observable/updating-a-prior-simplified(@observablehq/runtime@5.9.9)
-      '@robinl/visualising-fellegi-sunter':
-        specifier: file:./vendor/observable/visualising-fellegi-sunter
-        version: file:vendor/observable/visualising-fellegi-sunter(@observablehq/runtime@5.9.9)
       astro:
         specifier: ^6.1.7
         version: 6.1.7(@types/node@24.12.2)(rollup@4.60.1)(typescript@5.9.3)(yaml@2.9.0)
       d3:
         specifier: ^7.9.0
         version: 7.9.0
+      d3-require:
+        specifier: ^1.3.0
+        version: 1.3.0
       katex:
         specifier: ^0.16.22
         version: 0.16.45
@@ -786,148 +708,11 @@ packages:
     resolution: {integrity: sha512-S9qfCrAMrL2J229FwMGbyzPskCMqvPkodkn4MJ2r012Bc4yqaNjl8HyT/dKY1zjOwsSrryFQoCiwvWxS8IeASg==}
     engines: {node: '>=14.5.0'}
 
-  '@observablehq/runtime@5.9.9':
-    resolution: {integrity: sha512-vvRNEI+hESOfnM0pzRTMZa5qbhQaO8KX3LzaDB5h6iHr321T+T2k5ZcK8JTgsH73BvvD3d+CuHBe1nnbUI+C8w==}
-
   '@observablehq/runtime@6.0.0':
     resolution: {integrity: sha512-t3UXP69O0JK20HY/neF4/DDDSDorwo92As806Y1pNTgTmj1NtoPyVpesYzfH31gTFOFrXC2cArV+wLpebMk9eA==}
 
-  '@observablehq/stdlib@5.8.8':
-    resolution: {integrity: sha512-XxVfXX4N+8QYqg308+KT2cpXcsiL6yFphrYNOyCNReqezeoK0Zd9xOdSvo/0NX8NJ8HypIZdTQNwPeOvQWOm2Q==}
-    engines: {node: '>=14.5.0'}
-
   '@oslojs/encoding@1.1.0':
     resolution: {integrity: sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ==}
-
-  '@robinl/86fc30325e4106c4@file:vendor/observable/86fc30325e4106c4':
-    resolution: {directory: vendor/observable/86fc30325e4106c4, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/bf-prior-calc@file:vendor/observable/bf-prior-calc':
-    resolution: {directory: vendor/observable/bf-prior-calc, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/bird-song-quiz@file:vendor/observable/bird-song-quiz':
-    resolution: {directory: vendor/observable/bird-song-quiz, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/birdsong-recordings@file:vendor/observable/birdsong-recordings':
-    resolution: {directory: vendor/observable/birdsong-recordings, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/computing-the-fellegi-sunter-model@file:vendor/observable/computing-the-fellegi-sunter-model':
-    resolution: {directory: vendor/observable/computing-the-fellegi-sunter-model, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/dependencies-between-match-weights@file:vendor/observable/dependencies-between-match-weights':
-    resolution: {directory: vendor/observable/dependencies-between-match-weights, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/energy-usage-and-goods-imports-and-exports@file:vendor/observable/energy-usage-and-goods-imports-and-exports':
-    resolution: {directory: vendor/observable/energy-usage-and-goods-imports-and-exports, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/fault-tolerant-trie@file:vendor/observable/fault-tolerant-trie':
-    resolution: {directory: vendor/observable/fault-tolerant-trie, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/filling-the-country-with-solar-panels@file:vendor/observable/filling-the-country-with-solar-panels':
-    resolution: {directory: vendor/observable/filling-the-country-with-solar-panels, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/flight-distance-calculator@file:vendor/observable/flight-distance-calculator':
-    resolution: {directory: vendor/observable/flight-distance-calculator, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/how-much-should-carbon-offsetting-cost@file:vendor/observable/how-much-should-carbon-offsetting-cost':
-    resolution: {directory: vendor/observable/how-much-should-carbon-offsetting-cost, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/interactive-bayes-factor-probability-and-match-weight@file:vendor/observable/interactive-bayes-factor-probability-and-match-weight':
-    resolution: {directory: vendor/observable/interactive-bayes-factor-probability-and-match-weight, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/interactive-blogging-with-observable-notebooks-and-gatsb@file:vendor/observable/interactive-blogging-with-observable-notebooks-and-gatsb':
-    resolution: {directory: vendor/observable/interactive-blogging-with-observable-notebooks-and-gatsb, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/intro-prob-linkage@file:vendor/observable/intro-prob-linkage':
-    resolution: {directory: vendor/observable/intro-prob-linkage, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/m-and-u-probability-generator-with-starting-values@file:vendor/observable/m-and-u-probability-generator-with-starting-values':
-    resolution: {directory: vendor/observable/m-and-u-probability-generator-with-starting-values, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/m-and-u-probability-generator@file:vendor/observable/m-and-u-probability-generator':
-    resolution: {directory: vendor/observable/m-and-u-probability-generator, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/my-flights@file:vendor/observable/my-flights':
-    resolution: {directory: vendor/observable/my-flights, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/partial-match-weights@file:vendor/observable/partial-match-weights':
-    resolution: {directory: vendor/observable/partial-match-weights, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/spark-explain@file:vendor/observable/spark-explain':
-    resolution: {directory: vendor/observable/spark-explain, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/the-carbon-impact-of-switiching-to-an-electric-car@file:vendor/observable/the-carbon-impact-of-switiching-to-an-electric-car':
-    resolution: {directory: vendor/observable/the-carbon-impact-of-switiching-to-an-electric-car, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/understanding-match-weights@file:vendor/observable/understanding-match-weights':
-    resolution: {directory: vendor/observable/understanding-match-weights, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/understanding-the-spark-ui-by-example-sorting-data@file:vendor/observable/understanding-the-spark-ui-by-example-sorting-data':
-    resolution: {directory: vendor/observable/understanding-the-spark-ui-by-example-sorting-data, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/understanding-the-spark-ui-by-example-the-left-join@file:vendor/observable/understanding-the-spark-ui-by-example-the-left-join':
-    resolution: {directory: vendor/observable/understanding-the-spark-ui-by-example-the-left-join, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/unsupervised-probabalistic-data-matching-using-the-expec@file:vendor/observable/unsupervised-probabalistic-data-matching-using-the-expec':
-    resolution: {directory: vendor/observable/unsupervised-probabalistic-data-matching-using-the-expec, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/updating-a-prior-simplified@file:vendor/observable/updating-a-prior-simplified':
-    resolution: {directory: vendor/observable/updating-a-prior-simplified, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
-
-  '@robinl/visualising-fellegi-sunter@file:vendor/observable/visualising-fellegi-sunter':
-    resolution: {directory: vendor/observable/visualising-fellegi-sunter, type: directory}
-    peerDependencies:
-      '@observablehq/runtime': 4 - 5
 
   '@rolldown/pluginutils@1.0.0-rc.3':
     resolution: {integrity: sha512-eybk3TjzzzV97Dlj5c+XrBFW57eTNhzod66y9HrBlzJ6NsCrWCp/2kaPS3K9wJmurBC0Tdw4yPjXKZqlznim3Q==}
@@ -1334,8 +1119,8 @@ packages:
     resolution: {integrity: sha512-HEHNfbars9v4pgpW6SO1KSPkfoS0xVOM/9UzkJltjlsHZmJasxg8aXkuZa7SMf8vKGIBhpUsPluQSqhJFCqebw==}
     engines: {node: '>=0.4.0'}
 
-  acorn@8.16.0:
-    resolution: {integrity: sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw==}
+  acorn@8.17.0:
+    resolution: {integrity: sha512-xRQbDb9BnwDafYNn6Vwl839DYVjqXYb1XVGtWAZ1kcDc6iwAL4hg3B1dZlRiuENFeO2H53gFG3in621AdERVAg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -3202,7 +2987,7 @@ snapshots:
     dependencies:
       '@astrojs/markdown-remark': 7.1.0
       '@mdx-js/mdx': 3.1.1
-      acorn: 8.16.0
+      acorn: 8.17.0
       astro: 6.1.7(@types/node@24.12.2)(rollup@4.60.1)(typescript@5.9.3)(yaml@2.9.0)
       es-module-lexer: 2.0.0
       estree-util-visit: 2.0.0
@@ -3697,7 +3482,7 @@ snapshots:
       '@types/estree-jsx': 1.0.5
       '@types/hast': 3.0.4
       '@types/mdx': 2.0.13
-      acorn: 8.16.0
+      acorn: 8.17.0
       collapse-white-space: 2.1.0
       devlop: 1.1.0
       estree-util-is-identifier-name: 3.0.0
@@ -3706,7 +3491,7 @@ snapshots:
       hast-util-to-jsx-runtime: 2.3.6
       markdown-extensions: 2.0.0
       recma-build-jsx: 1.0.0
-      recma-jsx: 1.0.1(acorn@8.16.0)
+      recma-jsx: 1.0.1(acorn@8.17.0)
       recma-stringify: 1.0.0
       rehype-recma: 1.0.0
       remark-mdx: 3.1.1
@@ -3748,7 +3533,7 @@ snapshots:
       '@observablehq/parser': 6.1.0
       '@observablehq/runtime': 6.0.0
       '@sindresorhus/slugify': 2.2.1
-      acorn: 8.16.0
+      acorn: 8.17.0
       acorn-walk: 8.3.5
       jsdom: 26.1.0
       markdown-it: 14.3.0
@@ -3775,127 +3560,12 @@ snapshots:
 
   '@observablehq/parser@6.1.0':
     dependencies:
-      acorn: 8.16.0
+      acorn: 8.17.0
       acorn-walk: 8.3.5
-
-  '@observablehq/runtime@5.9.9':
-    dependencies:
-      '@observablehq/inspector': 5.0.1
-      '@observablehq/stdlib': 5.8.8
 
   '@observablehq/runtime@6.0.0': {}
 
-  '@observablehq/stdlib@5.8.8':
-    dependencies:
-      d3-array: 3.2.4
-      d3-dsv: 3.0.1
-      d3-require: 1.3.0
-
   '@oslojs/encoding@1.1.0': {}
-
-  '@robinl/86fc30325e4106c4@file:vendor/observable/86fc30325e4106c4(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/bf-prior-calc@file:vendor/observable/bf-prior-calc(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/bird-song-quiz@file:vendor/observable/bird-song-quiz(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/birdsong-recordings@file:vendor/observable/birdsong-recordings(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/computing-the-fellegi-sunter-model@file:vendor/observable/computing-the-fellegi-sunter-model(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/dependencies-between-match-weights@file:vendor/observable/dependencies-between-match-weights(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/energy-usage-and-goods-imports-and-exports@file:vendor/observable/energy-usage-and-goods-imports-and-exports(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/fault-tolerant-trie@file:vendor/observable/fault-tolerant-trie(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/filling-the-country-with-solar-panels@file:vendor/observable/filling-the-country-with-solar-panels(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/flight-distance-calculator@file:vendor/observable/flight-distance-calculator(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/how-much-should-carbon-offsetting-cost@file:vendor/observable/how-much-should-carbon-offsetting-cost(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/interactive-bayes-factor-probability-and-match-weight@file:vendor/observable/interactive-bayes-factor-probability-and-match-weight(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/interactive-blogging-with-observable-notebooks-and-gatsb@file:vendor/observable/interactive-blogging-with-observable-notebooks-and-gatsb(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/intro-prob-linkage@file:vendor/observable/intro-prob-linkage(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/m-and-u-probability-generator-with-starting-values@file:vendor/observable/m-and-u-probability-generator-with-starting-values(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/m-and-u-probability-generator@file:vendor/observable/m-and-u-probability-generator(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/my-flights@file:vendor/observable/my-flights(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/partial-match-weights@file:vendor/observable/partial-match-weights(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/spark-explain@file:vendor/observable/spark-explain(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/the-carbon-impact-of-switiching-to-an-electric-car@file:vendor/observable/the-carbon-impact-of-switiching-to-an-electric-car(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/understanding-match-weights@file:vendor/observable/understanding-match-weights(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/understanding-the-spark-ui-by-example-sorting-data@file:vendor/observable/understanding-the-spark-ui-by-example-sorting-data(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/understanding-the-spark-ui-by-example-the-left-join@file:vendor/observable/understanding-the-spark-ui-by-example-the-left-join(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/unsupervised-probabalistic-data-matching-using-the-expec@file:vendor/observable/unsupervised-probabalistic-data-matching-using-the-expec(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/updating-a-prior-simplified@file:vendor/observable/updating-a-prior-simplified(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
-
-  '@robinl/visualising-fellegi-sunter@file:vendor/observable/visualising-fellegi-sunter(@observablehq/runtime@5.9.9)':
-    dependencies:
-      '@observablehq/runtime': 5.9.9
 
   '@rolldown/pluginutils@1.0.0-rc.3': {}
 
@@ -4304,15 +3974,15 @@ snapshots:
       convert-source-map: 2.0.0
       tinyrainbow: 3.1.0
 
-  acorn-jsx@5.3.2(acorn@8.16.0):
+  acorn-jsx@5.3.2(acorn@8.17.0):
     dependencies:
-      acorn: 8.16.0
+      acorn: 8.17.0
 
   acorn-walk@8.3.5:
     dependencies:
-      acorn: 8.16.0
+      acorn: 8.17.0
 
-  acorn@8.16.0: {}
+  acorn@8.17.0: {}
 
   agent-base@7.1.4: {}
 
@@ -4787,7 +4457,7 @@ snapshots:
   esast-util-from-js@2.0.1:
     dependencies:
       '@types/estree-jsx': 1.0.5
-      acorn: 8.16.0
+      acorn: 8.17.0
       esast-util-from-estree: 2.0.0
       vfile-message: 4.0.3
 
@@ -5574,8 +5244,8 @@ snapshots:
 
   micromark-extension-mdxjs@3.0.0:
     dependencies:
-      acorn: 8.16.0
-      acorn-jsx: 5.3.2(acorn@8.16.0)
+      acorn: 8.17.0
+      acorn-jsx: 5.3.2(acorn@8.17.0)
       micromark-extension-mdx-expression: 3.0.1
       micromark-extension-mdx-jsx: 3.0.2
       micromark-extension-mdx-md: 2.0.0
@@ -5855,10 +5525,10 @@ snapshots:
       estree-util-build-jsx: 3.0.1
       vfile: 6.0.3
 
-  recma-jsx@1.0.1(acorn@8.16.0):
+  recma-jsx@1.0.1(acorn@8.17.0):
     dependencies:
-      acorn: 8.16.0
-      acorn-jsx: 5.3.2(acorn@8.16.0)
+      acorn: 8.17.0
+      acorn-jsx: 5.3.2(acorn@8.17.0)
       estree-util-to-js: 2.0.0
       recma-parse: 1.0.0
       recma-stringify: 1.0.0
