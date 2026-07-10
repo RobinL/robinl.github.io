@@ -3,6 +3,17 @@ import { require as cdnRequire } from 'd3-require';
 import * as Inputs from '@observablehq/inputs';
 import vegaEmbed from 'vega-embed';
 
+export function createLegacyVegaEmbed(embed, createContainer = () => document.createElement('div')) {
+  return function legacyVegaEmbed(...args) {
+    if (args.length !== 1) return embed(...args);
+
+    const container = createContainer();
+    return Promise.resolve(embed(container, args[0])).then(() => container);
+  };
+}
+
+export const legacyVegaEmbed = createLegacyVegaEmbed(vegaEmbed);
+
 const pinnedLegacyPackages = {
   alasql: 'alasql@4.6.6',
   'fast-levenshtein': 'fast-levenshtein@2.0.6',
@@ -25,7 +36,7 @@ const pinnedLegacyRequests = {
 const localModules = {
   '@observablehq/inputs': Inputs,
   d3,
-  'vega-embed': vegaEmbed,
+  'vega-embed': legacyVegaEmbed,
 };
 
 export function packageName(specifier) {

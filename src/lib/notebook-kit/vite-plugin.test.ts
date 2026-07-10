@@ -67,6 +67,7 @@ describe('compileNotebook', () => {
     const runtime = new NotebookRuntime();
     const main = defineNotebook(runtime.runtime);
 
+    await expect(valueWithin(main, 'viewof choice')).resolves.toMatchObject({ value: 7 });
     await expect(valueWithin(main, 'choice')).resolves.toBe(7);
     await expect(valueWithin(main, 'count')).resolves.toBe(2);
     await expect(valueWithin(main, 'result')).resolves.toBe(9);

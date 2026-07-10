@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import {
+  createLegacyVegaEmbed,
   legacyPackageResolution,
   legacyRequire,
+  legacyVegaEmbed,
   packageName,
 } from './legacy-require';
 
@@ -38,5 +40,27 @@ describe('legacy notebook require compatibility', () => {
     const combined = await legacyRequire('d3-dsv', 'd3-fetch');
     expect(combined.csv).toBeTypeOf('function');
     expect(combined.csvParse).toBeTypeOf('function');
+  });
+
+  it('provides Observable-style one-argument Vega embedding', async () => {
+    const calls: unknown[][] = [];
+    const container = {} as HTMLDivElement;
+    const embed = createLegacyVegaEmbed(
+      (...args: unknown[]) => {
+        calls.push(args);
+        return Promise.resolve({});
+      },
+      () => container
+    );
+    const spec = { mark: 'bar' };
+    const result = await embed(spec);
+
+    expect(result).toBe(container);
+    expect(calls).toEqual([[result, spec]]);
+    expect(legacyVegaEmbed).toBeTypeOf('function');
+    expect(legacyPackageResolution('vega-embed')).toEqual({
+      kind: 'local',
+      name: 'vega-embed',
+    });
   });
 });

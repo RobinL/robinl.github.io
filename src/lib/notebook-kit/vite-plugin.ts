@@ -137,9 +137,10 @@ function defineNotebook(runtime, observer = () => null) {
       }
     } else if (output) {
       if (definition.autoview) {
-        main.variable(observer(output)).define(output, inputs, definition.body);
         const name = output.slice("viewof$".length);
-        main.variable(observer(name)).define(name, ["Generators", output], (Generators, value) => Generators.input(value));
+        const viewName = \`viewof \${name}\`;
+        main.variable(observer(viewName)).define(viewName, inputs, definition.body);
+        main.variable(observer(name)).define(name, ["Generators", viewName], (Generators, value) => Generators.input(value));
       } else if (definition.automutable) {
         const name = output.slice("mutable ".length);
         const cellName = \`cell \${definition.id}\`;
