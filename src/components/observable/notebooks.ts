@@ -31,8 +31,6 @@ export const notebooks = {
   'm-and-u-probability-generator-with-starting-values': () =>
     import('@robinl/m-and-u-probability-generator-with-starting-values'),
   'partial-match-weights': () => import('@robinl/partial-match-weights'),
-  'probability-match-weight-bayes-factor-converter': () =>
-    import('@robinl/probability-match-weight-bayes-factor-converter'),
   'spark-explain': () => import('@robinl/spark-explain'),
   'the-carbon-impact-of-switiching-to-an-electric-car': () =>
     import('@robinl/the-carbon-impact-of-switiching-to-an-electric-car'),

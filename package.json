@@ -7,13 +7,17 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "check": "tsc --noEmit",
+    "preview": "astro preview",
+    "test": "vitest run"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.3",
     "@astrojs/react": "^5.0.3",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
+    "@observablehq/inputs": "^0.12.0",
+    "@observablehq/notebook-kit": "2.1.8",
     "@observablehq/runtime": "^5.9.2",
     "@robinl/86fc30325e4106c4": "file:./vendor/observable/86fc30325e4106c4",
     "@robinl/bf-prior-calc": "file:./vendor/observable/bf-prior-calc",
@@ -34,14 +38,13 @@
     "@robinl/m-and-u-probability-generator-with-starting-values": "file:./vendor/observable/m-and-u-probability-generator-with-starting-values",
     "@robinl/my-flights": "file:./vendor/observable/my-flights",
     "@robinl/partial-match-weights": "file:./vendor/observable/partial-match-weights",
-    "@robinl/probability-match-weight-bayes-factor-converter": "file:./vendor/observable/probability-match-weight-bayes-factor-converter",
     "@robinl/spark-explain": "file:./vendor/observable/spark-explain",
     "@robinl/the-carbon-impact-of-switiching-to-an-electric-car": "file:./vendor/observable/the-carbon-impact-of-switiching-to-an-electric-car",
-    "@robinl/unsupervised-probabalistic-data-matching-using-the-expec": "file:./vendor/observable/unsupervised-probabalistic-data-matching-using-the-expec",
-    "@robinl/updating-a-prior-simplified": "file:./vendor/observable/updating-a-prior-simplified",
     "@robinl/understanding-match-weights": "file:./vendor/observable/understanding-match-weights",
     "@robinl/understanding-the-spark-ui-by-example-sorting-data": "file:./vendor/observable/understanding-the-spark-ui-by-example-sorting-data",
     "@robinl/understanding-the-spark-ui-by-example-the-left-join": "file:./vendor/observable/understanding-the-spark-ui-by-example-the-left-join",
+    "@robinl/unsupervised-probabalistic-data-matching-using-the-expec": "file:./vendor/observable/unsupervised-probabalistic-data-matching-using-the-expec",
+    "@robinl/updating-a-prior-simplified": "file:./vendor/observable/updating-a-prior-simplified",
     "@robinl/visualising-fellegi-sunter": "file:./vendor/observable/visualising-fellegi-sunter",
     "astro": "^6.1.7",
     "katex": "^0.16.22",
@@ -58,8 +61,12 @@
     "vega-lite": "^5.15.0"
   },
   "devDependencies": {
+    "@types/jsdom": "^28.0.3",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
-    "typescript": "^5.8.0"
+    "jsdom": "^29.1.1",
+    "typescript": "^5.8.0",
+    "vite": "^7.3.2",
+    "vitest": "^4.1.10"
   }
 }
