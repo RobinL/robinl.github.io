@@ -1,0 +1,158 @@
+<!doctype html>
+<notebook>
+  <title>Energy usage ready reckoner</title>
+
+  <script id="1" type="module" hidden>
+    import * as Inputs from "@observablehq/inputs";
+    import {
+      createDrivingControls,
+      createEatingControls,
+      createElectricityControls,
+      createFlyingControls,
+      createHeatingControls,
+      createPetsControls,
+      createShowerBathControls,
+      createStuffControls
+    } from "../lib/notebooks/energy-usage/controls";
+    import {
+      calculateBathKwh,
+      calculateDrivingKwh,
+      calculateEatingKwh,
+      calculateElectricityKwh,
+      calculateFlyingKwh,
+      calculateHeatingKwh,
+      calculatePetsKwh,
+      calculateShowerKwh,
+      calculateStuffKwh
+    } from "../lib/notebooks/energy-usage/calculations";
+    import {
+      renderBreakdownChart,
+      renderSummaryText,
+      renderTreemap,
+      renderUnitChart
+    } from "../lib/notebooks/energy-usage/charts";
+  </script>
+
+  <script id="2" type="module">
+    const drivingInput = view(createDrivingControls(Inputs));
+  </script>
+
+  <script id="3" type="module" hidden>
+    const drivingKwh = calculateDrivingKwh(drivingInput);
+  </script>
+
+  <script id="4" type="module">
+    display(renderUnitChart([{name: "Driving", value: drivingKwh}], width));
+  </script>
+
+  <script id="5" type="module">
+    const flyingInput = view(createFlyingControls(Inputs));
+  </script>
+
+  <script id="6" type="module" hidden>
+    const flyingKwh = calculateFlyingKwh(flyingInput);
+  </script>
+
+  <script id="7" type="module">
+    display(renderUnitChart([{name: "Flying", value: flyingKwh}], width));
+  </script>
+
+  <script id="8" type="module">
+    const heatingInput = view(createHeatingControls(Inputs));
+  </script>
+
+  <script id="9" type="module">
+    const showerBathInput = view(createShowerBathControls(Inputs));
+  </script>
+
+  <script id="10" type="module" hidden>
+    const showerKwh = calculateShowerKwh(showerBathInput);
+    const bathKwh = calculateBathKwh(showerBathInput);
+    const heatingKwh = calculateHeatingKwh(heatingInput, showerKwh, bathKwh);
+  </script>
+
+  <script id="11" type="module">
+    display(renderUnitChart([{name: "Heating", value: heatingKwh}], width));
+  </script>
+
+  <script id="12" type="module">
+    display(renderUnitChart([
+      {name: "Showers", value: showerKwh},
+      {name: "Baths", value: bathKwh}
+    ], width));
+  </script>
+
+  <script id="13" type="module">
+    const electricityInput = view(createElectricityControls(Inputs));
+  </script>
+
+  <script id="14" type="module" hidden>
+    const electricityKwh = calculateElectricityKwh(electricityInput);
+  </script>
+
+  <script id="15" type="module">
+    display(renderUnitChart([{name: "Electricity", value: electricityKwh}], width));
+  </script>
+
+  <script id="16" type="module">
+    const stuffInput = view(createStuffControls(Inputs));
+  </script>
+
+  <script id="17" type="module" hidden>
+    const stuffKwh = calculateStuffKwh(stuffInput);
+  </script>
+
+  <script id="18" type="module">
+    display(renderUnitChart([{name: "Stuff", value: stuffKwh}], width));
+  </script>
+
+  <script id="19" type="module">
+    const eatingInput = view(createEatingControls(Inputs));
+  </script>
+
+  <script id="20" type="module" hidden>
+    const eatingKwh = calculateEatingKwh(eatingInput);
+  </script>
+
+  <script id="21" type="module">
+    display(renderUnitChart([{name: "Food/Eating", value: eatingKwh}], width));
+  </script>
+
+  <script id="22" type="module">
+    const petsInput = view(createPetsControls(Inputs));
+  </script>
+
+  <script id="23" type="module" hidden>
+    const petsKwh = calculatePetsKwh(petsInput);
+  </script>
+
+  <script id="24" type="module">
+    display(renderUnitChart([{name: "Dogs", value: petsKwh}], width));
+  </script>
+
+  <script id="25" type="module" hidden>
+    const allEnergyData = [
+      {name: "Driving", value: drivingKwh},
+      {name: "Flying", value: flyingKwh},
+      {name: "Electricity", value: electricityKwh},
+      {name: "Food/Eating", value: eatingKwh},
+      {name: "Dogs", value: petsKwh},
+      {name: "Heating", value: heatingKwh},
+      {name: "Showers", value: showerKwh},
+      {name: "Baths", value: bathKwh},
+      {name: "Stuff", value: stuffKwh}
+    ];
+  </script>
+
+  <script id="26" type="module">
+    display(renderSummaryText(allEnergyData));
+  </script>
+
+  <script id="27" type="module">
+    display(renderBreakdownChart(allEnergyData, width));
+  </script>
+
+  <script id="28" type="module">
+    display(renderTreemap(allEnergyData, width));
+  </script>
+</notebook>

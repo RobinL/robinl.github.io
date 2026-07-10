@@ -13,8 +13,6 @@ export const notebooks = {
   'dependencies-between-match-weights': () => import('@robinl/dependencies-between-match-weights'),
   'energy-usage-and-goods-imports-and-exports': () =>
     import('@robinl/energy-usage-and-goods-imports-and-exports'),
-  'energy-usage-calculator-for-everyday-activities': () =>
-    import('@robinl/energy-usage-calculator-for-everyday-activities'),
   'my-flights': () => import('@robinl/my-flights'),
   'fault-tolerant-trie': () => import('@robinl/fault-tolerant-trie'),
   'filling-the-country-with-solar-panels': () =>

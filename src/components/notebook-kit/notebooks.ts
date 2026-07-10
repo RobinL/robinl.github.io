@@ -7,6 +7,7 @@ type NotebookModule = {
 type NotebookLoader = () => Promise<NotebookModule>;
 
 const notebooks = {
+  'energy-usage': () => import('../../notebooks/energy-usage.notebook.html'),
   'match-weight-calculator': () =>
     import('../../notebooks/match-weight-calculator.notebook.html'),
 } satisfies Record<string, NotebookLoader>;

@@ -26,7 +26,6 @@
     "@robinl/computing-the-fellegi-sunter-model": "file:./vendor/observable/computing-the-fellegi-sunter-model",
     "@robinl/dependencies-between-match-weights": "file:./vendor/observable/dependencies-between-match-weights",
     "@robinl/energy-usage-and-goods-imports-and-exports": "file:./vendor/observable/energy-usage-and-goods-imports-and-exports",
-    "@robinl/energy-usage-calculator-for-everyday-activities": "file:./vendor/observable/energy-usage-calculator-for-everyday-activities",
     "@robinl/fault-tolerant-trie": "file:./vendor/observable/fault-tolerant-trie",
     "@robinl/filling-the-country-with-solar-panels": "file:./vendor/observable/filling-the-country-with-solar-panels",
     "@robinl/flight-distance-calculator": "file:./vendor/observable/flight-distance-calculator",
@@ -47,6 +46,7 @@
     "@robinl/updating-a-prior-simplified": "file:./vendor/observable/updating-a-prior-simplified",
     "@robinl/visualising-fellegi-sunter": "file:./vendor/observable/visualising-fellegi-sunter",
     "astro": "^6.1.7",
+    "d3": "^7.9.0",
     "katex": "^0.16.22",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -61,6 +61,7 @@
     "vega-lite": "^5.15.0"
   },
   "devDependencies": {
+    "@types/d3": "^7.4.3",
     "@types/jsdom": "^28.0.3",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
