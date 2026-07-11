@@ -1,0 +1,11 @@
+<!doctype html>
+<notebook>
+  <title>Fault tolerant trie</title>
+  <script id="1" type="module" hidden>import {createAddressListInput, createMessyAddressInput, buildAddressTrie, renderAddressTrace, renderExampleTrie} from "../lib/notebooks/fault-tolerant-trie";</script>
+  <script id="2" type="module">display(renderExampleTrie()); const example_trie_for_blog = null;</script>
+  <script id="3" type="module">const test_addresses = view(createAddressListInput());</script>
+  <script id="4" type="module" hidden>const address_trie = buildAddressTrie(test_addresses);</script>
+  <script id="5" type="module">const messy_address_to_lookup = view(createMessyAddressInput());</script>
+  <script id="6" type="module">display(renderAddressTrace(messy_address_to_lookup, address_trie)); const trie_with_route = null;</script>
+</notebook>
+

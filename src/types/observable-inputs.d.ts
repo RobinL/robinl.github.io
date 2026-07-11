@@ -16,6 +16,17 @@ declare module '@observablehq/inputs' {
     options?: {label?: string | Node; value?: T; format?: (value: T) => string},
   ): Input<T>;
 
+  export function toggle(options?: {label?: string | Node; value?: boolean}): Input<boolean>;
+
+  export function textarea(options?: {
+    label?: string | Node;
+    value?: string;
+    rows?: number;
+    width?: number | string;
+    resize?: string;
+    spellcheck?: boolean;
+  }): Input<string>;
+
   export function form<T extends Record<string, Input<unknown>>>(
     inputs: T,
   ): Input<{[Key in keyof T]: T[Key]['value']}>;

@@ -1,0 +1,12 @@
+<!doctype html>
+<notebook>
+  <title>UK Birdsong quiz</title>
+  <script id="1" type="module" hidden>import {createHeading, createQuizSettings, createQuizOtherLink, createQuizSelector, createBirdQuiz} from "../lib/notebooks/birdsong";</script>
+  <script id="2" type="module">display(createHeading("UK Birdsong quiz")); const title = null;</script>
+  <script id="3" type="module">const tag = "Are you able to identify common UK birds from their song?"; display(tag);</script>
+  <script id="4" type="module">display(createQuizSettings()); const settings = null;</script>
+  <script id="5" type="module">const select_your_quiz = view(createQuizSelector());</script>
+  <script id="6" type="module">display(createHeading("Quiz", 2)); const quiz = null;</script>
+  <script id="7" type="module">display(createBirdQuiz(select_your_quiz, width)); const my_interface = null;</script>
+  <script id="8" type="module">display(createQuizOtherLink()); const other_link = null;</script>
+</notebook>

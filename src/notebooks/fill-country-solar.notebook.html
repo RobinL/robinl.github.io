@@ -1,0 +1,8 @@
+<!doctype html>
+<notebook>
+  <title>Filling the country with solar panels</title>
+  <script id="1" type="module" hidden>import {createSolarPercentageSlider, renderSolarMap, renderSolarOutput} from "../lib/notebooks/solar-country";</script>
+  <script id="2" type="module">const solarPercentage = view(createSolarPercentageSlider());</script>
+  <script id="3" type="module">display(renderSolarMap(solarPercentage)); const map = null;</script>
+  <script id="4" type="module">display(renderSolarOutput(solarPercentage)); const total = null;</script>
+</notebook>

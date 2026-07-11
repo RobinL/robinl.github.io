@@ -1,0 +1,15 @@
+<!doctype html>
+<notebook>
+  <title>Flight distance calculator</title>
+  <script id="1" type="module" hidden>import {createFlightListControl, flightRoutes, renderFlightTable, renderFlightBlurb, createFlightsDownload, createFlightsUpload, renderFlightMap} from "../lib/notebooks/flight-distance";</script>
+  <script id="2" type="module">display(md`# Flight distance calculator`); const title = null;</script>
+  <script id="3" type="module" hidden>const flights_control = createFlightListControl();</script>
+  <script id="4" type="module">const flights_list = view(flights_control);</script>
+  <script id="5" type="module" hidden>const routes = flightRoutes(flights_list);</script>
+  <script id="6" type="module">display(renderFlightBlurb(routes)); const blurb = null;</script>
+  <script id="7" type="module">display(renderFlightTable(routes)); const table_of_distances = null;</script>
+  <script id="8" type="module">display(createFlightsDownload(routes)); const download_as_csv = null;</script>
+  <script id="9" type="module">display(renderFlightMap(routes, width)); const flights_chart = null;</script>
+  <script id="10" type="module">display(md`Bulk import previously created csv (needs at minimum \`icao_from\` and \`icao_to\` fields)`); const file_upload_blurb = null;</script>
+  <script id="11" type="module">const upload = view(createFlightsUpload(flights_control));</script>
+</notebook>
