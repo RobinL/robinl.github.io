@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import * as Inputs from '@observablehq/inputs';
-import '@observablehq/inputs/dist/index.css';
 import { legacyRequire } from './legacy-require';
 import { legacyHtml, legacySvg } from './legacy-template';
 import { loadNotebook } from './notebooks';
