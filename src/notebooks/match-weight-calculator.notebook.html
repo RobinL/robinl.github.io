@@ -1,0 +1,37 @@
+<!doctype html>
+<notebook>
+  <title>Match weight calculator</title>
+
+  <script id="1" type="module">
+    import * as Inputs from "@observablehq/inputs";
+    import {valueTypes} from "../lib/notebooks/match-weight-calculator";
+
+    const formValues = view(Inputs.form([
+      Inputs.number({
+        label: "Numeric Input:",
+        placeholder: "Enter a value",
+        min: 0,
+        required: true,
+        value: 5.1,
+        width: "100%"
+      }),
+      Inputs.select(valueTypes, {
+        label: "Value type:",
+        value: "Match Weight",
+        width: "100%"
+      })
+    ]));
+  </script>
+
+  <script id="2" type="module" hidden>
+    import {calculateMatchWeight} from "../lib/notebooks/match-weight-calculator";
+
+    const calculation = calculateMatchWeight(formValues[0], formValues[1]);
+  </script>
+
+  <script id="3" type="module">
+    import {renderMatchWeightCalculation} from "../lib/notebooks/match-weight-calculator";
+
+    display(renderMatchWeightCalculation(calculation));
+  </script>
+</notebook>

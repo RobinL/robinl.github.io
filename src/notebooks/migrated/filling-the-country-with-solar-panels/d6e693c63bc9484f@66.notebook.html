@@ -1,0 +1,57 @@
+<!doctype html>
+<notebook>
+  <title>@robinl/filling-the-country-with-solar-panels: d6e693c63bc9484f@66.js</title>
+
+  <script id="1" type="module">
+    import {slider} from "./146f352f1166f0d1@2202.notebook.html" with {type: "observable"};
+  </script>
+
+  <script id="2" type="module">
+    import {plot_fill_percentage_of_uk} from "./686908927d2af6bf@727.notebook.html" with {type: "observable"};
+  </script>
+
+  <script id="3" type="application/vnd.observable.javascript">
+    title = md`# Filling the country with solar panels
+    
+    What would happen if we covered the entire country in solar panels?`
+  </script>
+
+  <script id="4" type="application/vnd.observable.javascript">
+    md`*A final version of this notebook can be viewed on my blog [here](https://www.robinlinacre.com/fill_country_solar/).*`
+  </script>
+
+  <script id="5" type="application/vnd.observable.javascript">
+    viewof solar_perc = slider( {min: 0, 
+      max: 1, 
+      step: 0.0025, 
+      format: ".1p",
+      title: "Choose percentage to fill with solar panels", 
+      description: ""})
+  </script>
+
+  <script id="6" type="application/vnd.observable.javascript">
+    map = plot_fill_percentage_of_uk(solar_perc)
+  </script>
+
+  <script id="7" type="application/vnd.observable.javascript">
+    total_kwh = md`If we covered this much of the UK with solar panels, we'd generate about ${d3.format(",.0f")(kwh_per_person_per_day)} kWh a day per person.
+    
+    See [here](http://robinlinacre.com/country_energy_usage) for daily energy usage by country`
+  </script>
+
+  <script id="8" type="application/vnd.observable.javascript">
+    kwh_per_person_per_day = kwh_uk_total * solar_perc / 66e6
+  </script>
+
+  <script id="9" type="application/vnd.observable.javascript">
+    kwh_uk_total = 242.495e9 * (20/1000) * 24
+  </script>
+
+  <script id="10" type="application/vnd.observable.javascript">
+    md`## Imports`
+  </script>
+
+  <script id="11" type="application/vnd.observable.javascript">
+    d3 = require("d3")
+  </script>
+</notebook>

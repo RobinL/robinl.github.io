@@ -7,6 +7,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import { notebookKitCells } from './src/lib/notebook-kit/vite-plugin.ts';
 
 export default defineConfig({
   site: 'https://www.robinlinacre.com',
@@ -37,5 +38,8 @@ export default defineConfig({
     shikiConfig: {
       theme: 'github-dark',
     },
+  },
+  vite: {
+    plugins: [notebookKitCells()],
   },
 });

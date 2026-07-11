@@ -1,0 +1,80 @@
+<!doctype html>
+<notebook>
+  <title>@robinl/birdsong-recordings: 98208622758b559c@442.js</title>
+
+  <script id="1" type="module">
+    import {bird_interface, include_rare_checkbox} from "./fe79dfecacbfd10e@317.notebook.html" with {type: "observable"};
+  </script>
+
+  <script id="2" type="module">
+    import {inaturalist_query, picture_gallery} from "./d313b158e2200d6b@274.notebook.html" with {type: "observable"};
+  </script>
+
+  <script id="3" type="module">
+    import {xeno_canto_query, table_of_audio} from "./20eedcbe81e569f0@721.notebook.html" with {type: "observable"};
+  </script>
+
+  <script id="4" type="application/vnd.observable.javascript">
+    title = md`# UK birdsong recordings
+    Select a bird from the list below or type a scientific name for best results.
+    
+    Source of recordings:  [xeno-canto](https://www.xeno-canto.org/)`
+  </script>
+
+  <script id="5" type="application/vnd.observable.javascript">
+    xeno_results = xeno_canto_query(search_string)
+  </script>
+
+  <script id="6" type="application/vnd.observable.javascript">
+    viewof bird = bird_interface(include_rare)
+  </script>
+
+  <script id="7" type="application/vnd.observable.javascript">
+    bird
+  </script>
+
+  <script id="8" type="application/vnd.observable.javascript">
+    viewof include_rare = include_rare_checkbox()
+  </script>
+
+  <script id="9" type="application/vnd.observable.javascript">
+    audio_table = table_of_audio(xeno_results.recordings)
+  </script>
+
+  <script id="10" type="application/vnd.observable.javascript">
+    photos_title = md`## Photos from iNaturalist
+    Click on photo for full size
+    `
+  </script>
+
+  <script id="11" type="application/vnd.observable.javascript">
+    gallery = picture_gallery(inat_results)
+  </script>
+
+  <script id="12" type="application/vnd.observable.javascript">
+    inat_results = {
+    if (Object.keys(bird).length > 0) {
+        return inaturalist_query(bird);
+      } else {
+        return [];
+      }
+    }
+  </script>
+
+  <script id="13" type="application/vnd.observable.javascript">
+    search_string = {
+    if (bird == '') {
+        return ''
+      }
+      if (bird['free_text']) {
+        return bird['raw']
+      } else {
+        return bird['scientific_name']
+      }
+    }
+  </script>
+
+  <script id="14" type="application/vnd.observable.javascript">
+    md`## Imports`
+  </script>
+</notebook>

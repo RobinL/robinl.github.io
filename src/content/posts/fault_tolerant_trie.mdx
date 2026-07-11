@@ -3,12 +3,12 @@ title: "Using a fault tolerant trie for address matching"
 description: "An interactive explanation of how a fault tolerant trie can be used for address matching"
 postDate: "2025-09-23"
 category: "probabilistic_linkage"
-codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/mdx/fault_tolerant_trie.mdx"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/fault-tolerant-trie/965ed303c3f15178@322.notebook.html"
 probLinkageCategory: "other_articles"
 ---
 
-import ObservableCellProvider from '../../components/observable/ObservableCellProvider.jsx';
-import ObservableCell from '../../components/observable/ObservableCell.jsx';
+import NotebookCellProvider from '../../components/notebook-kit/NotebookCellProvider.jsx';
+import NotebookCell from '../../components/notebook-kit/NotebookCell.jsx';
 
 # Address matching using a fault tolerant trie
 
@@ -29,9 +29,9 @@ ANNEX 5 HIGH STREET WESTMINSTER
 
 These can be represented as a trie as follows, where the blue nodes represent terminal nodes (the end of an address):
 
-<ObservableCellProvider client:visible notebook="fault-tolerant-trie">
+<NotebookCellProvider client:visible notebook="fault-tolerant-trie">
 
-<ObservableCell cellName="example_trie_for_blog" />
+<NotebookCell cellName="example_trie_for_blog" />
 
 Observe how the trie structure encodes a lot of useful information about the tokens in the addresses. For example:
 
@@ -65,16 +65,16 @@ Let's see how this works in practice. In the following I use a simple set of fau
 Consider the following canonical addresses (note: this is ✨interactive✨ and you can edit the addresses):
 
 
-<ObservableCell cellName="viewof test_addresses" />
+<NotebookCell cellName="viewof test_addresses" />
 
 
 We can look up a messy address in the trie as follows.  Again, this is ✨interactive✨.
 
-<ObservableCell cellName="viewof messy_address_to_lookup" />
-<ObservableCell cellName="trie_with_route" />
+<NotebookCell cellName="viewof messy_address_to_lookup" />
+<NotebookCell cellName="trie_with_route" />
 
 
-</ObservableCellProvider>
+</NotebookCellProvider>
 
 ## Implementing as a DuckDB Community extension
 

@@ -3,12 +3,12 @@ title: "Visualising the Fellegi Sunter model"
 description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article presents a way of visualising how the model works."
 postDate: "2021-05-22"
 category: "probabilistic_linkage"
-codeUrl: "https://observablehq.com/@robinl/visualising-fellegi-sunter"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/visualising-fellegi-sunter/060a32b021a09f92@1011.notebook.html"
 probLinkageCategory: "tools"
 pageWidth: "wide"
 ---
 
-import ObservableNotebook from '../../components/observable/ObservableNotebook.jsx';
+import Notebook from '../../components/notebook-kit/Notebook.jsx';
 import ProbHomeNav from '../../components/probabilistic/ProbHomeNav.jsx';
 
 export const output_order = [
@@ -46,11 +46,10 @@ export const output_order = [
   "treemap_5",
   "para_16",
   "annex",
-  "additional_styles",
   "styles2",
   "css_styles"
 ];
 
 <ProbHomeNav />
-<ObservableNotebook client:visible notebook="visualising-fellegi-sunter" cells={output_order} />
+<Notebook client:visible notebook="visualising-fellegi-sunter" cells={output_order} />
 <ProbHomeNav />

@@ -3,25 +3,25 @@ title: "Flight distance calculator"
 description: "Simple flight distance calculator.  Advert free.  Export data to spreadsheet."
 postDate: "2019-10-09"
 category: "energy"
-codeUrl: "https://observablehq.com/@robinl/flight-distance-calculator/"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/flight-distance-calculator/cf52e2d16b5b9cbe@1090.notebook.html"
 stylesheet: "flight_distance_calc.css"
 pageWidth: "prose"
 ---
 
-import ObservableCellProvider from '../../components/observable/ObservableCellProvider.jsx';
-import ObservableCell from '../../components/observable/ObservableCell.jsx';
+import NotebookCellProvider from '../../components/notebook-kit/NotebookCellProvider.jsx';
+import NotebookCell from '../../components/notebook-kit/NotebookCell.jsx';
 
-<ObservableCellProvider client:visible notebook="flight-distance-calculator">
-
-
-  <ObservableCell cellName="title" />
-  <ObservableCell cellName="viewof flights_list" />
-  <ObservableCell cellName="blurb" />
-  <ObservableCell cellName="table_of_distances" />
-  <ObservableCell cellName="download_as_csv" />
-  <ObservableCell cellName="flights_chart" />
-  <ObservableCell cellName="file_upload_blurb" />
-  <ObservableCell cellName="viewof upload" />
+<NotebookCellProvider client:visible notebook="flight-distance-calculator">
 
 
-</ObservableCellProvider>
+  <NotebookCell cellName="title" />
+  <NotebookCell cellName="viewof flights_list" />
+  <NotebookCell cellName="blurb" />
+  <NotebookCell cellName="table_of_distances" />
+  <NotebookCell cellName="download_as_csv" />
+  <NotebookCell cellName="flights_chart" />
+  <NotebookCell cellName="file_upload_blurb" />
+  <NotebookCell cellName="viewof upload" />
+
+
+</NotebookCellProvider>

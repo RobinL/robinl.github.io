@@ -532,6 +532,10 @@ button {
   padding: 0.75rem;
 }
 
+.match-weight-formulas .katex-display > .katex {
+  text-align: left;
+}
+
 .observablehq code {
   font-size: 0.85rem;
 }

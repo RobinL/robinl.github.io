@@ -1,0 +1,154 @@
+<!doctype html>
+<notebook>
+  <title>@robinl/birdsong-recordings: d313b158e2200d6b@274.js</title>
+
+  <script id="1" type="application/vnd.observable.javascript">
+    md`# iNaturalist utils`
+  </script>
+
+  <script id="2" type="application/vnd.observable.javascript">
+    call_api = function call_api(taxon_name='', inaturalist_id=null) {
+      let endpoint = 'https://api.inaturalist.org/v1/observations'
+      
+      
+      let params = {
+        photos: true,
+        verifiable:true,
+        order_by: "votes",
+        lat:53.807321,
+        lng:-1.387255,
+        radius:1400
+      }
+      
+      if (inaturalist_id !== null) {
+        params["taxon_id"] = inaturalist_id
+      } else {
+        params["taxon_name"] = taxon_name
+      }
+      
+      params = Object.entries(params).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
+      
+      return endpoint + "?" + params
+    
+    }
+  </script>
+
+  <script id="3" type="application/vnd.observable.javascript">
+    inaturalist_query = function *inaturalist_query(bird) {
+     
+     yield []
+      
+     if (bird.raw == '') {
+     yield []
+     } else {
+      
+     let url
+     if ('inaturalist_id' in bird) {
+         url = call_api(bird.raw, bird.inaturalist_id)
+       } else {
+         url = call_api(bird.raw)
+       }
+     
+     yield fetch(url).then(d=>d.json()).then((d) => {
+       
+       d.results.forEach(r => r.photos.forEach(p => {p.url_medium = p.url.replace("square", "medium");
+                                                     p.url_large = p.url.replace("square", "original")}))
+       
+       let results = d.results
+       
+       results.sort((a,b) => { a.faves_count-b.faves_count})
+       
+      
+       return results 
+     })
+     }
+                                              
+                                              
+    }
+  </script>
+
+  <script id="4" type="application/vnd.observable.javascript">
+    getRandomInt = function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+  </script>
+
+  <script id="5" type="application/vnd.observable.javascript">
+    get_random_inat_from_results = function get_random_inat_from_results(results) {
+    
+     
+      let num_results = results.results.length
+      
+      if (num_results == 0) {
+        return
+      }
+      
+      let result_num = getRandomInt(0, num_results)
+      
+      return results.results[result_num]
+      
+    }
+  </script>
+
+  <script id="6" type="application/vnd.observable.javascript">
+    md`## Presentational functions`
+  </script>
+
+  <script id="7" type="application/vnd.observable.javascript">
+    picture_gallery = function picture_gallery(results) {
+      
+     if (results.length == 0) {
+      return html`Please wait, loading pictures...` 
+     }
+      
+     let res = results 
+     let default_photo =  res[0].taxon.default_photo.medium_url
+     let default_photo_orig = default_photo.replace('medium', 'original')
+     
+     return html`
+    <style> 
+    .collection {width: ${width}px}
+    .collection .species { display: inline-block; }
+    .collection img { display: block; width: 12em; height: 12em; object-fit: cover}
+    
+    </style>
+    
+    <h2>
+    
+    <div class="collection">
+    <div class="species">
+     <a href="${default_photo_orig}"  target="_blank"><img src="${default_photo}"></a></div>
+    
+    
+    ${res.map(s => `<div class="species">
+      <a href="${s.photos[0].url_large}"  target="_blank"><img src="${s.photos[0].url_medium}"></a></div>
+    `)}
+    </div>
+    `
+    }
+  </script>
+
+  <script id="8" type="application/vnd.observable.javascript">
+    md`## Demo of functions`
+  </script>
+
+  <script id="9" type="application/vnd.observable.javascript">
+    results2 = inaturalist_query({"raw": "Lagopus lagopus scotica", "inaturalist_id": 362643})
+  </script>
+
+  <script id="10" type="application/vnd.observable.javascript">
+    results = inaturalist_query({"raw": "Lagopus lagopus"})
+  </script>
+
+  <script id="11" type="application/vnd.observable.javascript">
+    picture_gallery(results2)
+  </script>
+
+  <script id="12" type="application/vnd.observable.javascript">
+    md`## Notes urls etc
+    
+    [Docs for inaturalist api](https://api.inaturalist.org/v1/docs/#!/Observations/get_observations)`
+  </script>
+</notebook>

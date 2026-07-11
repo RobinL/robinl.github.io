@@ -3,54 +3,77 @@ title: "Energy usage ready reckoner"
 description: "Energy usage calculator for everyday activities"
 postDate: "2019-10-05"
 category: "energy"
-codeUrl: "https://observablehq.com/@robinl/energy-usage-calculator-for-everyday-activities"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/energy-usage.notebook.html"
 stylesheet: "energy_usage.css"
 pageWidth: "prose"
 ---
 
-import ObservableNotebook from '../../components/observable/ObservableNotebook.jsx';
+import NotebookCellProvider from '../../components/notebook-kit/NotebookCellProvider.jsx';
+import NotebookCell from '../../components/notebook-kit/NotebookCell.jsx';
 
-export const output_order = [
-  "title",
-  "under_title_blurb",
-  "key_to_graphics_title",
-  "key_to_graphics_text",
-  "driving_title",
-  "driving_text_output",
-  "driving_chart_output",
-  "flying_title",
-  "flying_text_output",
-  "flying_chart_output",
-  "heating_title",
-  "heating_text_output",
-  "heating_chart_output",
-  "showers_baths_title",
-  "showers_baths_text_output",
-  "showers_bath_chart_output",
-  "electricity_title",
-  "electricity_text_output",
-  "electricity_chart_output",
-  "stuff_title",
-  "stuff_text_output",
-  "stuff_chart_output",
-  "showers_title",
-  "showers_text_output",
-  "showers_chart_output",
-  "eating_title",
-  "eating_text_output",
-  "eating_chart_output",
-  "washing_title",
-  "washing_text_output",
-  "washing_chart_output",
-  "dogs_title",
-  "dogs_text_output",
-  "dogs_chart_output",
-  "summary_title",
-  "summary_text_output",
-  "summary_chart_output",
-  "summary_text_output_2",
-  "energy_use_treemap"
-];
+<NotebookCellProvider client:visible notebook="energy-usage" className="energy_usage">
 
+# Energy usage ready reckoner for everyday activities
 
-<ObservableNotebook client:visible notebook="energy-usage-calculator-for-everyday-activities" cells={output_order} className={"energy_usage"}/>
+This is a **rough ready reckoner** to help you understand your personal energy consumption.
+
+I'm sure these estimates could be significantly improved—suggestions are gratefully received in the [site repository](https://github.com/RobinL/robinl.github.io/pulls).
+
+Following [David MacKay](https://www.withouthotair.com/c2/page_24.shtml), I standardise everything in kilowatt hours.
+
+You can find the assumptions and calculations in the local [energy usage TypeScript modules](https://github.com/RobinL/robinl.github.io/tree/dev/src/lib/notebooks/energy-usage), or click a section heading for its calculation source.
+
+## Key to graphics
+
+Each full square (<svg width="16" height="16" aria-label="one outlined grey square"><rect x="0" y="0" width="16" height="16" fill="#BBB" stroke="gray" /></svg>) in the visualisations represents 1 kilowatt hour (kwh), the amount of energy consumed by using 1,000 watts of power for one hour.
+
+## [Driving](https://github.com/RobinL/robinl.github.io/blob/dev/src/lib/notebooks/energy-usage/calculations.ts)
+
+<NotebookCell cellId={2} />
+<NotebookCell cellId={4} />
+
+## [Flying](https://github.com/RobinL/robinl.github.io/blob/dev/src/lib/notebooks/energy-usage/calculations.ts)
+
+<NotebookCell cellId={5} />
+<NotebookCell cellId={7} />
+
+## [Heating](https://github.com/RobinL/robinl.github.io/blob/dev/src/lib/notebooks/energy-usage/calculations.ts)
+
+<NotebookCell cellId={8} />
+<NotebookCell cellId={11} />
+
+## [Showers/baths](https://github.com/RobinL/robinl.github.io/blob/dev/src/lib/notebooks/energy-usage/calculations.ts)
+
+<NotebookCell cellId={9} />
+<NotebookCell cellId={12} />
+
+## [Electricity](https://github.com/RobinL/robinl.github.io/blob/dev/src/lib/notebooks/energy-usage/calculations.ts)
+
+<NotebookCell cellId={13} />
+<NotebookCell cellId={15} />
+
+## [Stuff](https://github.com/RobinL/robinl.github.io/blob/dev/src/lib/notebooks/energy-usage/calculations.ts)
+
+<NotebookCell cellId={16} />
+<NotebookCell cellId={18} />
+
+## [Eating](https://github.com/RobinL/robinl.github.io/blob/dev/src/lib/notebooks/energy-usage/calculations.ts)
+
+<NotebookCell cellId={19} />
+<NotebookCell cellId={21} />
+
+## [Pets](https://github.com/RobinL/robinl.github.io/blob/dev/src/lib/notebooks/energy-usage/calculations.ts)
+
+<NotebookCell cellId={22} />
+<NotebookCell cellId={24} />
+
+# Summary
+
+<NotebookCell cellId={26} />
+<NotebookCell cellId={27} />
+
+Here's another representation of how your energy usage breaks down:
+
+<NotebookCell cellId={28} />
+
+</NotebookCellProvider>

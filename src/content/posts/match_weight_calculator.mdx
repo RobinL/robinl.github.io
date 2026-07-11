@@ -3,13 +3,13 @@ title: "Match weight calculator"
 description: "A calculator for converting between match weights, probabilities, and Bayes factors"
 postDate: "2024-09-02"
 category: "probabilistic_linkage"
-codeUrl: "https://observablehq.com/@robinl/probability-match-weight-bayes-factor-converter"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/match-weight-calculator.notebook.html"
 probLinkageCategory: "tools"
 pageWidth: "prose"
 ---
 
-import ObservableCellProvider from '../../components/observable/ObservableCellProvider.jsx';
-import ObservableCell from '../../components/observable/ObservableCell.jsx';
+import NotebookCellProvider from '../../components/notebook-kit/NotebookCellProvider.jsx';
+import NotebookCell from '../../components/notebook-kit/NotebookCell.jsx';
 import ProbHomeNav from '../../components/probabilistic/ProbHomeNav.jsx';
 
 <ProbHomeNav />
@@ -17,19 +17,51 @@ import ProbHomeNav from '../../components/probabilistic/ProbHomeNav.jsx';
 
 
 
-<ObservableCellProvider client:visible notebook="probability-match-weight-bayes-factor-converter">
+<NotebookCellProvider client:visible notebook="match-weight-calculator">
 
-  <ObservableCell cellName="viewof form_values" />
+  <NotebookCell cellId={1} />
 
 
 
     <br/>
-    <ObservableCell cellName="calculated_values" />
-    <br/>
-    <ObservableCell cellName="conversion_formulas" />
+    <NotebookCell cellId={3} />
 
 
-</ObservableCellProvider>
+</NotebookCellProvider>
+
+### Conversion Formulas:
+
+<div className="match-weight-formulas">
+
+$$
+\text{Partial Match Weight} = \omega
+$$
+
+$$
+\text{Bayes Factor} = K
+$$
+
+$$
+\text{Probability} = p
+$$
+
+$$
+K = 2^{\omega}
+$$
+
+$$
+p = \frac{K}{1 + K} = \frac{2^{\omega}}{1 + 2^{\omega}}
+$$
+
+$$
+K = \frac{p}{1 - p}
+$$
+
+$$
+\omega = \log_{2}(K) = \log_{2}\left(\frac{p}{1 - p}\right)
+$$
+
+</div>
 
 
 ## Additional resources

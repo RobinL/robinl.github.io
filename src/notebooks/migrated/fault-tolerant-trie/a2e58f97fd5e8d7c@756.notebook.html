@@ -1,0 +1,420 @@
+<!doctype html>
+<notebook>
+  <title>@robinl/fault-tolerant-trie: a2e58f97fd5e8d7c@756.js</title>
+
+  <script id="1" type="application/vnd.observable.javascript">
+    md`# Introduction to inputs
+    
+    These lightweight interface components — buttons, sliders, dropdowns, tables, and the like — help you explore data and build interactive displays. For a walkthrough of how you might use these to support data analysis, see [Hello, Inputs!](/@observablehq/hello-inputs)`
+  </script>
+
+  <script id="2" type="application/vnd.observable.javascript">
+    usage = md`---
+    ## Usage
+    
+    Declare your inputs with [viewof](/@observablehq/introduction-to-views), like so:`
+  </script>
+
+  <script id="3" type="application/vnd.observable.javascript">
+    viewof gain = Inputs.range([0, 11], {value: 5, step: 0.1, label: "Gain"})
+  </script>
+
+  <script id="4" type="application/vnd.observable.javascript">
+    now = md`Now you can reference the input’s value (here *gain*) in any cell, and the cell will run whenever the input changes. No event listeners required!`
+  </script>
+
+  <script id="5" type="application/vnd.observable.javascript">
+    gain2 = gain
+  </script>
+
+  <script id="6" type="application/vnd.observable.javascript">
+    currentgain = md`The current gain is ${gain.toFixed(1)}!`
+  </script>
+
+  <script id="7" type="application/vnd.observable.javascript">
+    md`Observable Inputs are released under the [ISC license](https://github.com/observablehq/inputs/blob/main/LICENSE) and depend only on [Hypertext Literal](/@observablehq/htl), our tagged template literal for safely generating dynamic HTML. If you are interested in contributing or wish to report an issue, please see [our repository](https://github.com/observablehq/inputs). For recent changes, please see [our release notes](https://github.com/observablehq/inputs/releases).`
+  </script>
+
+  <script id="8" type="application/vnd.observable.javascript">
+    basics = md`---
+    
+    ## Basics
+    
+    These basic inputs will get you started.
+    
+    * [Button](/@observablehq/input-button) - do something when a button is clicked
+    * [Toggle](/@observablehq/input-toggle) - toggle between two values (on or off)
+    * [Checkbox](/@observablehq/input-checkbox) - choose any from a set
+    * [Radio](/@observablehq/input-radio) - choose one from a set
+    * [Range](/@observablehq/input-range) or [Number](/@observablehq/input-range) - choose a number in a range (slider)
+    * [Select](/@observablehq/input-select) - choose one or any from a set (drop-down menu)
+    * [Text](/@observablehq/input-text) - enter freeform single-line text
+    * [Textarea](/@observablehq/input-textarea) - enter freeform multi-line text
+    * [Date](/@observablehq/input-date) or [Datetime](/@observablehq/input-date) - choose a date
+    * [Color](/@observablehq/input-color) - choose a color
+    * [File](/@observablehq/input-file) - choose a local file`
+  </script>
+
+  <script id="9" type="application/vnd.observable.javascript">
+    button = md`---
+    
+    ### [Button](/@observablehq/input-button) 
+    
+    Do something when a button is clicked. [Examples ›](/@observablehq/input-button) [API Reference ›](https://github.com/observablehq/inputs/blob/main/README.md#button)`
+  </script>
+
+  <script id="10" type="application/vnd.observable.javascript">
+    viewof clicks = Inputs.button("Click me")
+  </script>
+
+  <script id="11" type="application/vnd.observable.javascript">
+    clicks
+  </script>
+
+  <script id="12" type="application/vnd.observable.javascript">
+    toggle = md`---
+    
+    ### [Toggle](/@observablehq/input-toggle) 
+    
+    Toggle between two values (on or off). [Examples ›](/@observablehq/input-toggle) [API Reference ›](https://github.com/observablehq/inputs/blob/main/README.md#toggle)`
+  </script>
+
+  <script id="13" type="application/vnd.observable.javascript">
+    viewof mute = Inputs.toggle({label: "Mute"})
+  </script>
+
+  <script id="14" type="application/vnd.observable.javascript">
+    mute
+  </script>
+
+  <script id="15" type="application/vnd.observable.javascript">
+    checkbox = md`---
+    
+    ### [Checkbox](/@observablehq/input-checkbox) 
+    
+    Choose any from a set. [Examples ›](/@observablehq/input-checkbox) [API Reference ›](https://github.com/observablehq/inputs/blob/main/README.md#checkbox)`
+  </script>
+
+  <script id="16" type="application/vnd.observable.javascript">
+    viewof flavors = Inputs.checkbox(["salty", "sweet", "bitter", "sour", "umami"], {label: "Flavors"})
+  </script>
+
+  <script id="17" type="application/vnd.observable.javascript">
+    flavors
+  </script>
+
+  <script id="18" type="application/vnd.observable.javascript">
+    radio = md`---
+    
+    ### [Radio](/@observablehq/input-radio)
+    
+    Choose one from a set. [Examples ›](/@observablehq/input-radio) [API Reference ›](https://github.com/observablehq/inputs/blob/main/README.md#radio)`
+  </script>
+
+  <script id="19" type="application/vnd.observable.javascript">
+    viewof flavor = Inputs.radio(["salty", "sweet", "bitter", "sour", "umami"], {label: "Flavor"})
+  </script>
+
+  <script id="20" type="application/vnd.observable.javascript">
+    flavor
+  </script>
+
+  <script id="21" type="application/vnd.observable.javascript">
+    range = md`---
+    
+    ### [Range](/@observablehq/input-range)
+    
+    Pick a number. [Examples ›](/@observablehq/input-range) [API Reference ›](https://github.com/observablehq/inputs/blob/main/README.md#range)`
+  </script>
+
+  <script id="22" type="application/vnd.observable.javascript">
+    viewof n = Inputs.range([0, 255], {step: 1, label: "Favorite number"})
+  </script>
+
+  <script id="23" type="application/vnd.observable.javascript">
+    n
+  </script>
+
+  <script id="24" type="application/vnd.observable.javascript">
+    select = md`---
+    
+    ### [Select](/@observablehq/input-select)
+    
+    Choose one, or any, from a menu. [Examples ›](/@observablehq/input-select) [API Reference ›](https://github.com/observablehq/inputs/blob/main/README.md#select)`
+  </script>
+
+  <script id="25" type="application/vnd.observable.javascript">
+    viewof homeState = Inputs.select([null].concat(stateNames), {label: "Home state"})
+  </script>
+
+  <script id="26" type="application/vnd.observable.javascript">
+    homeState
+  </script>
+
+  <script id="27" type="application/vnd.observable.javascript">
+    viewof visitedStates = Inputs.select(stateNames, {label: "Visited states", multiple: true})
+  </script>
+
+  <script id="28" type="application/vnd.observable.javascript">
+    visitedStates
+  </script>
+
+  <script id="29" type="application/vnd.observable.javascript">
+    md`---
+    
+    ### [Text](/@observablehq/input-text)
+    
+    Enter freeform single-line text. [Examples ›](/@observablehq/input-text) [API Reference ›](https://github.com/observablehq/inputs/blob/main/README.md#text)`
+  </script>
+
+  <script id="30" type="application/vnd.observable.javascript">
+    viewof name = Inputs.text({label: "Name", placeholder: "What’s your name?"})
+  </script>
+
+  <script id="31" type="application/vnd.observable.javascript">
+    name
+  </script>
+
+  <script id="32" type="application/vnd.observable.javascript">
+    md`---
+    
+    ### [Textarea](/@observablehq/input-textarea)
+    
+    Enter freeform multi-line text. [Examples ›](/@observablehq/input-textarea) [API Reference ›](https://github.com/observablehq/inputs/blob/main/README.md#textarea)`
+  </script>
+
+  <script id="33" type="application/vnd.observable.javascript">
+    viewof bio = Inputs.textarea({label: "Biography", placeholder: "What’s your story?"})
+  </script>
+
+  <script id="34" type="application/vnd.observable.javascript">
+    bio
+  </script>
+
+  <script id="35" type="application/vnd.observable.javascript">
+    md`---
+    
+    ### [Date](/@observablehq/input-date)
+    
+    Choose a date, or a date and time. [Examples ›](/@observablehq/input-date) [API Reference ›](https://github.com/observablehq/inputs/blob/main/README.md#date)`
+  </script>
+
+  <script id="36" type="application/vnd.observable.javascript">
+    viewof birthday = Inputs.date({label: "Birthday"})
+  </script>
+
+  <script id="37" type="application/vnd.observable.javascript">
+    birthday
+  </script>
+
+  <script id="38" type="application/vnd.observable.javascript">
+    md`---
+    
+    ### [Color](/@observablehq/input-color)
+    
+    Choose a color. [Examples ›](/@observablehq/input-color) [API Reference ›](https://github.com/observablehq/inputs/blob/main/README.md#color)`
+  </script>
+
+  <script id="39" type="application/vnd.observable.javascript">
+    viewof color = Inputs.color({label: "Favorite color", value: "#4682b4"})
+  </script>
+
+  <script id="40" type="application/vnd.observable.javascript">
+    color
+  </script>
+
+  <script id="41" type="application/vnd.observable.javascript">
+    md`---
+    
+    ### [File](/@observablehq/input-file)
+    
+    Choose a local file. [Examples ›](/@observablehq/input-file) [API Reference ›](https://github.com/observablehq/inputs/blob/main/README.md#file)`
+  </script>
+
+  <script id="42" type="application/vnd.observable.javascript">
+    viewof file = Inputs.file({label: "CSV file", accept: ".csv", required: true})
+  </script>
+
+  <script id="43" type="application/vnd.observable.javascript">
+    data = file.csv({typed: true})
+  </script>
+
+  <script id="44" type="application/vnd.observable.javascript">
+    tables = md`---
+    
+    ## Tabular data
+    
+    These fancy inputs are designed to work with tabular data such as CSV or TSV [file attachments](/@observablehq/file-attachments) and [database clients](/@observablehq/databases).
+    
+    * [Search](/@observablehq/input-search) - query a tabular dataset
+    * [Table](/@observablehq/input-table) - browse a tabular dataset`
+  </script>
+
+  <script id="45" type="application/vnd.observable.javascript">
+    md`---
+    
+    ### [Search](/@observablehq/input-search)
+    
+    Query a tabular dataset. [Examples ›](/@observablehq/input-search) [API Reference ›](https://github.com/observablehq/inputs/blob/main/README.md#search)`
+  </script>
+
+  <script id="46" type="application/vnd.observable.javascript">
+    viewof search = Inputs.search(capitals, {placeholder: "Search U.S. capitals"})
+  </script>
+
+  <script id="47" type="application/vnd.observable.javascript">
+    search
+  </script>
+
+  <script id="48" type="application/vnd.observable.javascript">
+    md`---
+    
+    ### [Table](/@observablehq/input-table)
+    
+    Browse a tabular dataset. [Examples ›](/@observablehq/input-table) [API Reference ›](https://github.com/observablehq/inputs/blob/main/README.md#table)`
+  </script>
+
+  <script id="49" type="application/vnd.observable.javascript">
+    viewof rows = Inputs.table(search)
+  </script>
+
+  <script id="50" type="application/vnd.observable.javascript">
+    rows
+  </script>
+
+  <script id="51" type="application/vnd.observable.javascript">
+    techniques = md`---
+    
+    ## And more!
+    
+    Got the basics? Here are a few more advanced techniques:
+    
+    * [Form](https://observablehq.com/@observablehq/input-form?collection=@observablehq/inputs) - combine multiple inputs for a compact display
+    * [Synchronized inputs](https://observablehq.com/@observablehq/synchronized-inputs?collection=@observablehq/inputs) - bind two or more inputs
+    * [Introduction to Views](/@observablehq/introduction-to-views) - more on Observable’s viewof`
+  </script>
+
+  <script id="52" type="application/vnd.observable.javascript">
+    md`We are grateful to Jeremy Ashkenas for blazing the trail with [“The Grand Native Inputs Bazaar”](/@jashkenas/inputs). To migrate from Jeremy’s inputs to our new official inputs, consider our [legacy inputs](/@observablehq/legacy-inputs).`
+  </script>
+
+  <script id="53" type="application/vnd.observable.javascript">
+    md`For even more, consider these “friends & family” inputs and techniques shared by the Observable community:`
+  </script>
+
+  <script id="54" type="application/vnd.observable.javascript">
+    Inputs.table([
+      [["2D Slider", "/d/98bbb19bf9e859ee"], "Fabian Iwand", "a two-dimensional range"],
+      [["Binary Input", "/@rreusser/binary-input"], "Ricky Reusser", "bitwise IEEE floating point"],
+      [["DIY inputs", "/@bartok32/diy-inputs"], "Bartosz Prusinowski", "inputs with fun, custom styles"],
+      [["FineRange", "/@rreusser/fine-range"], "Ricky Reusser", "high-precision numeric control"],
+      [["Form Input", "/@mbostock/form-input"], "Mike Bostock", "multiple inputs in single cell"],
+      [["Inputs", "/@jashkenas/inputs"], "Jeremy Ashkenas", "the original"],
+      [["Player", "/@oscar6echo/player"], "oscar6echo", "detailed timing control for animation"],
+      [["Scrubber", "/@mbostock/scrubber"], "Mike Bostock", "play/pause/scrub control for animation"],
+      [["Range Slider", "/@mootari/range-slider"], "Fabian Iwand", "a two-ended range"],
+      [["Ternary Slider", "/@yurivish/ternary-slider"], "Yuri Vishnevsky", "a proportion of three values"],
+      [["Data driven range sliders", "/@bumbeishvili/data-driven-range-sliders"], "David B.", "a range input with a histogram"],
+      [["Snapping Histogram Slider", "/@trebor/snapping-histogram-slider"], "Robert Harris", "a range input with a histogram"],
+      [["Inputs in grid", "/@bumbeishvili/input-groups"], "David B.", "combine multiple inputs into a compact grid"],
+      [["List Input", "/@harrislapiroff/list-input"], "Harris L.", "enter more than one of something"],
+      [["Copier", "/@mbostock/copier"], "Mike Bostock", "a button to copy to the clipboard"],
+      [["Tangle", "/@mbostock/tangle"], "Mike Bostock", "Bret Victor-inspired inline scrubbable numbers"],
+      [["Editor", "/@cmudig/editor"], "CMU Data Interaction Group", "code editor with syntax highlighting"],
+      [["Color Scheme Picker", "/@zechasault/color-schemes-and-interpolators-picker"], "Zack Ciminera", "pick a D3 color scheme"],
+      [["Easing Curve Editor", "/@nhogs/easing-graphs-editor"], "Nhogs", "create a custom easing curve"]
+    ].map(([Name, Author, Description]) => ({Name, Author, Description})), {
+      sort: "Name",
+      rows: Infinity,
+      layout: "auto",
+      width: {
+        "Description": "60%"
+      },
+      format: {
+        Name: ([title, link]) => html`<a href=${link} target=_blank>${title}`
+      }
+    })
+  </script>
+
+  <script id="55" type="application/vnd.observable.javascript">
+    md`To share your reusable input or technique, please leave a comment.`
+  </script>
+
+  <script id="56" type="application/vnd.observable.javascript">
+    md`---
+    
+    ## Appendix`
+  </script>
+
+  <script id="57" type="application/vnd.observable.javascript">
+    capitals = FileAttachment("us-state-capitals.tsv").tsv({typed: true})
+  </script>
+
+  <script id="58" type="application/vnd.observable.javascript">
+    stateNames = capitals.map(d => d.State)
+  </script>
+
+  <script id="59" type="application/vnd.observable.javascript">
+    md`The cells below provide deprecated aliases for older versions of Inputs. Please use Inputs.button *etc.* instead of importing from this notebook.`
+  </script>
+
+  <script id="60" type="application/vnd.observable.javascript">
+    Button = Inputs.button
+  </script>
+
+  <script id="61" type="application/vnd.observable.javascript">
+    Toggle = Inputs.toggle
+  </script>
+
+  <script id="62" type="application/vnd.observable.javascript">
+    Radio = Inputs.radio
+  </script>
+
+  <script id="63" type="application/vnd.observable.javascript">
+    Checkbox = Inputs.checkbox
+  </script>
+
+  <script id="64" type="application/vnd.observable.javascript">
+    Range = Inputs.range
+  </script>
+
+  <script id="65" type="application/vnd.observable.javascript">
+    Select = Inputs.select
+  </script>
+
+  <script id="66" type="application/vnd.observable.javascript">
+    Text = Inputs.text
+  </script>
+
+  <script id="67" type="application/vnd.observable.javascript">
+    Textarea = Inputs.textarea
+  </script>
+
+  <script id="68" type="application/vnd.observable.javascript">
+    Search = Inputs.search
+  </script>
+
+  <script id="69" type="application/vnd.observable.javascript">
+    Table = Inputs.table
+  </script>
+
+  <script id="70" type="application/vnd.observable.javascript">
+    Input = Inputs.input
+  </script>
+
+  <script id="71" type="application/vnd.observable.javascript">
+    bind = Inputs.bind
+  </script>
+
+  <script id="72" type="application/vnd.observable.javascript">
+    disposal = Inputs.disposal
+  </script>
+
+  <script id="73" type="application/vnd.observable.javascript">
+    svg = htl.svg
+  </script>
+
+  <script id="74" type="application/vnd.observable.javascript">
+    html = htl.html
+  </script>
+</notebook>
