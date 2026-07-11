@@ -1,15 +1,33 @@
-.energy_usage .observablehq {
+.energy_usage .notebook-kit-cell {
     margin-bottom: 0rem;
 }
 
-.energy_usage .observablehq > svg {
+.energy_usage .notebook-kit-cell > svg {
+    display: block;
     margin-bottom: 2.5rem;
+    max-width: 100%;
 }
 
-.energy_usage input[type='number'] {
+.energy_usage form.energy-inline-control {
+    display: inline-flex;
+    margin: 0 0.15rem;
+    min-height: 0;
+    vertical-align: baseline;
+    width: var(--input-width);
+}
+
+.energy_usage .energy-inline-control > label {
+    display: none;
+}
+
+.energy_usage .energy-inline-control input[type='number'] {
     min-width: 2.5rem;
 }
 
-.energy_usage .observablehq h2 {
+.energy_usage .energy-sentence-form p {
+    margin-bottom: 0.6rem;
+}
+
+.energy_usage h2 {
     margin-bottom: 0rem;
 }

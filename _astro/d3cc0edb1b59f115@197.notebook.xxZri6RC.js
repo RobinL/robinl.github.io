@@ -1,0 +1,23 @@
+function y(i){let e,t,u,l=!1;const a=i(n=>{u=n,e?(e(n),e=t=void 0):l=!0});return{async next(){return{done:!1,value:await(l?(l=!1,u):new Promise((n,o)=>(e=n,t=o)))}},async return(){return t?.(new Error("Generator returned")),e=t=void 0,a?.(),{done:!0,value:void 0}},[Symbol.asyncIterator](){return this}}}function _(i){let e;return Object.defineProperty(y(t=>{e=t,i!==void 0&&t(i)}),"value",{get:()=>i,set:t=>(i=t,e?.(i))})}function h(i){const e=_(i);return[e,{get value(){return e.value},set value(t){e.value=t}}]}function f(i,e=()=>null){const t=i.module();f.FileAttachment&&t.variable().define("FileAttachment",[],()=>f.FileAttachment);for(const u of f.cells){const l=u.inputs??[],a=u.output;if(u.outputs?.length){const n=`cell ${u.id}`;t.variable(e(null)).define(n,l,u.body);for(const o of u.outputs)t.variable(!0).define(o,[n],s=>s[o])}else if(a)if(u.autoview){const n=a.slice(7),o=`viewof ${n}`;t.variable(e(o)).define(o,l,u.body),t.variable(e(n)).define(n,["Generators",o],(s,d)=>s.input(d))}else if(u.automutable){const n=a.slice(8),o=`cell ${u.id}`;t.define(a,l,u.body),t.define(o,[a],h),t.variable(e(n)).define(n,[o],([s])=>s),t.variable(!0).define(`mutable$${n}`,[o],([,s])=>s)}else t.variable(e(a)).define(a,l,u.body);else t.variable(e(null)).define(l,u.body)}return t}Object.assign(f,{title:"@robinl/how-much-should-carbon-offsetting-cost: d3cc0edb1b59f115@197.js",FileAttachment:void 0,cells:[{id:1,mode:"ojs",body:function(i){return i`# Magic energy usage and carbon emissions converter`},inputs:["md"],outputs:void 0,output:void 0,display:!1,autodisplay:!0,autoview:!1,automutable:!1,files:[]},{id:2,mode:"ojs",body:function(e,t,u){const l=e`<input type="number" >`,a=e`
+         <input name="unit_from" type="text" autocomplete="off" 
+          placeholder="Units to convert from" style="font-size: 1em;" list=options>
+          <datalist id="options">
+              ${t.map(d=>Object.assign(e`<option>`,{value:d}))}
+          </datalist>`,n=e`<input name="units_to" type="text" autocomplete="off" 
+          placeholder="Units to convert to" style="font-size: 1em;" list=options2>
+          <datalist id="options2">
+              ${t.map(d=>Object.assign(e`<option>`,{value:d}))}
+          </datalist>`;function o(){s.value={value:l.value,from:a.children[0].value,to:n.children[0].value},s.dispatchEvent(new CustomEvent("input"))}a.onclick=()=>{a.children[0].value="",n.children[0].value=""},n.onclick=()=>{n.children[0].value=""},a.onchange=()=>{let d=a.children[0].value,c=Object.keys(u.convert._constants_dict[d]),p=n.children[1],r=c.reduce((m,b)=>`${m}<option value="${b}">`,""),v=e`options_list`;console.log(v.outerHTML),p.innerHTML=r,o()},l.onkeyup=o,n.onchange=o;const s=e`<p>Convert the value ${l} <br/> from ${a} <br/> into ${n}<br/></p>`;return s.value={value:"",from:"",to:""},s},inputs:["html","from_options","eu"],outputs:void 0,output:"viewof$conversion",display:!1,autodisplay:!0,autoview:!0,automutable:!1,files:[]},{id:3,mode:"ojs",body:function(e,t,u){let l=e.value!="",a=e.from!="",n=e.to!="";if(l&&a&&n){let o=e,s=t.convert.convert_units(o.from,o.to)*o.value;return u`${o.value} ${o.from} is ${s} ${o.to}`}else return u`Please enter a value and select from and to units`},inputs:["conversion","eu","md"],outputs:void 0,output:"converted_value",display:!1,autodisplay:!0,autoview:!1,automutable:!1,files:[]},{id:4,mode:"ojs",body:function(i,e){return i(e.from,e.to)},inputs:["get_sources","conversion"],outputs:void 0,output:void 0,display:!1,autodisplay:!0,autoview:!1,automutable:!1,files:[]},{id:5,mode:"ojs",body:function(e,t,u){return(function(a,n){function o(r){return r||""}function s(r){return r?`<a href="${r}">link</a>`:""}let d=e`Conversion from \`${a}\` to \`${n}\``,c=t.convert._constants_dict[a][n].sources,p=u`<table> 
+   <tr>
+    <th>Unit conversion</th>
+    <th>URL</th>
+    <th>Notes</th>
+</tr>
+   
+   ${c.map(r=>u`<tr>
+<td>${o(r.from_to)}</td>
+<td>${s(r.url)}</td>
+<td>${o(r.desc)}</td>
+</tr>`)}
+   
+`;return u`${d} ${p}`})},inputs:["md","eu","html"],outputs:void 0,output:"get_sources",display:!1,autodisplay:!0,autoview:!1,automutable:!1,files:[]},{id:6,mode:"ojs",body:function(e){return Object.keys(e.convert._constants_dict)},inputs:["eu"],outputs:void 0,output:"from_options",display:!1,autodisplay:!0,autoview:!1,automutable:!1,files:[]},{id:7,mode:"ojs",body:function(i){return i.convert._constants_dict.imperial_gas_units.gbp_to_generate_nuclear_hinkley_point_uk},inputs:["eu"],outputs:void 0,output:void 0,display:!1,autodisplay:!0,autoview:!1,automutable:!1,files:[]},{id:8,mode:"ojs",body:function(e){return e("@robinl/energy_usage@0.1.6")},inputs:["require"],outputs:void 0,output:"eu",display:!1,autodisplay:!0,autoview:!1,automutable:!1,files:[]}]});export{f as default};
