@@ -19,7 +19,9 @@ import {
 } from './model';
 import {
   createEvidenceControls,
+  createEvidenceControlPair,
   createPriorControls,
+  createPriorControlPair,
   posteriorCalculation,
   posteriorChartSpec,
 } from './posterior';
@@ -82,6 +84,7 @@ describe('record-linkage UI and conversions', () => {
     vi.stubGlobal('Node', window.Node);
     vi.stubGlobal('NodeList', window.NodeList);
     vi.stubGlobal('HTMLCollection', window.HTMLCollection);
+    vi.stubGlobal('Event', window.Event);
 
     try {
       const prior = createPriorControls();
@@ -95,6 +98,17 @@ describe('record-linkage UI and conversions', () => {
       matchWeightSlider.valueAsNumber = 3;
       matchWeightSlider.dispatchEvent(new window.Event('input', {bubbles: true}));
       expect(evidence.value).toMatchObject({partialMatchWeight: 3, bayesFactor: 8});
+
+      const priorPair = createPriorControlPair();
+      expect(priorPair.probability.value).toBe(0.25);
+      expect(priorPair.odds.value).toBeCloseTo(1 / 3);
+      priorPair.odds.value = 1;
+      priorPair.odds.dispatchEvent(new window.Event('input', {bubbles: true}));
+      expect(priorPair.probability.value).toBe(0.5);
+
+      const evidencePair = createEvidenceControlPair();
+      expect(evidencePair.matchWeight.value).toBe(6);
+      expect(evidencePair.bayesFactor.value).toBe(64);
     } finally {
       vi.unstubAllGlobals();
     }

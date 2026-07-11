@@ -3,17 +3,17 @@ declare module '@observablehq/inputs' {
 
   export function range(
     extent?: [number, number],
-    options?: {label?: string; value?: number; step?: number; width?: number | string},
+    options?: {label?: string | Node; value?: number; step?: number; width?: number | string},
   ): Input<number>;
 
   export function number(
     extent?: [number, number],
-    options?: {label?: string; value?: number; step?: number; width?: number | string},
+    options?: {label?: string | Node; value?: number; step?: number; width?: number | string},
   ): Input<number>;
 
   export function radio<T extends string>(
     values: readonly T[],
-    options?: {label?: string; value?: T; format?: (value: T) => string},
+    options?: {label?: string | Node; value?: T; format?: (value: T) => string},
   ): Input<T>;
 
   export function form<T extends Record<string, Input<unknown>>>(

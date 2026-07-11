@@ -14,60 +14,70 @@ import ProbHomeNav from '../../components/probabilistic/ProbHomeNav.jsx';
 
 <ProbHomeNav />
 
-# Visualising the Fellegi-Sunter model
+# Visualising the Fellegi Sunter model
 
-The [mathematics article](/maths_of_fellegi_sunter/) presented the Fellegi-Sunter model and showed that match probability can be represented as:
+The [previous article](/maths_of_fellegi_sunter/) presented an implementation of the Fellegi Sunter model. We showed that match probability could be represented by Equation 1 - which is reproduced below:
 
 $$
-\operatorname{Pr}(\text{records match}\mid\gamma_1,\ldots,\gamma_K)
-=\frac{\lambda m_{1\ell}\cdots m_{K\ell}}
-{\lambda m_{1\ell}\cdots m_{K\ell}+(1-\lambda)u_{1\ell}\cdots u_{K\ell}}
+\operatorname{Pr}(\text{records match}|\gamma_{1},\gamma_{2},\ldots,\gamma_{K})
+= \frac{\lambda m_{1\ell}m_{2\ell}\ldots m_{K\ell}}{\lambda m_{1\ell}m_{2\ell}\ldots m_{K\ell}+ (1-\lambda)u_{1\ell}u_{1\ell} \ldots u_{K\ell}}
 $$
 
-This article presents a way to understand and visualise that formula. We take each piece of evidence into account in turn, using the model's assumption that comparison columns are conditionally independent given match status.
+This article presents a way to understand and visualise this formula.
 
-The example uses four comparison columns: `fname` (first name), `sname` (surname), `dob` (date of birth), and `town`. The default parameter values are deliberately chosen to keep the diagrams legible.
+In our visualisation, we are going to take each piece of evidence into account in turn. This is possible due to our assumption of conditional independence of comparison columns given the match status.
+
+The means Equation 1 is equivalent to a repeated application of Bayes' Theorem (see annex). See [here](https://www.youtube.com/watch?v=HZGCoVF3YvM) is more in depth video about Bayes Theorem.
+
+## Example
+
+We are going to compute match probability for a record comparison with the following comparison columns:
+
+- `fname` (first name)
+- `sname` (surname)
+- `dob` (date of birth)
+- `town`
+
+The default parameter values are a bit unrealistic, but help make sure the diagrams are legible.
 
 <NotebookCellProvider client:visible notebook="visualising-fellegi-sunter">
 
-## Step 1 — Prior probability
+## Step 1
 
-We begin with the space of all pairwise record comparisons, split between matching and non-matching pairs using the prior probability, $\lambda$.
+We begin by visualising the space of all pairwise record comparisons, splitting the overall comparison space into <span className="fs-match-highlight">matches</span> and <span className="fs-non-match-highlight">non-matches</span> using our prior, $\operatorname{Pr}(\text{records match})=\lambda$.
 
 <NotebookCell cellId={2} />
 <NotebookCell cellId={8} />
 <NotebookCell cellId={9} />
 
-## Step 2 — First name
+## Step 2 - First name
 
-Choose whether first name matches and adjust the model's `m` and `u` probabilities. Paired probabilities remain complementary.
+We will now choose the parameters of the model for the first name field, and then take this information into account in the diagram.
 
 <NotebookCell cellId={3} />
 <NotebookCell cellId={10} />
 <NotebookCell cellId={11} />
 <NotebookCell cellId={12} />
 
-## Step 3 — Surname
+## Step 3 - Surname
 
-Now add the surname evidence.
+Let's also choose parameters for `sname`, the surname field:
 
 <NotebookCell cellId={4} />
 <NotebookCell cellId={13} />
 <NotebookCell cellId={14} />
 <NotebookCell cellId={15} />
 
-## Step 4 — Date of birth
-
-Next add date of birth.
+## Step 4 - Date of birth
 
 <NotebookCell cellId={5} />
 <NotebookCell cellId={16} />
 <NotebookCell cellId={17} />
 <NotebookCell cellId={18} />
 
-## Step 5 — Town
+## Step 5: Town
 
-Finally add town to obtain the overall match probability.
+The final column is town.
 
 <NotebookCell cellId={6} />
 <NotebookCell cellId={19} />
@@ -76,37 +86,45 @@ Finally add town to obtain the overall match probability.
 
 </NotebookCellProvider>
 
-## Annex: mathematical representation
+## Annex: Mathematical representation
 
-The step-by-step calculation is a repeated application of Bayes' theorem:
+This annex shows why it's possible to represent the calculation of match probability as a step-by-step computation.
+
+In particular, we will show that we can calculate match probability using a repeated application of Bayes Theorem. In pseudocode, our algorithm will be:
 
 ```text
 prior = lambda
-for column in comparison_columns:
-  posterior = bayes(column, prior)
+for col in compaison_columns:
+  posterior = bayes(col, prior)
   prior = posterior
 ```
 
-For two columns, first apply Bayes' theorem to the first comparison:
+Where the final value of the posterior is equal to $\operatorname{Pr}(\text{records match}|\gamma_{1},\gamma_{2},\ldots,\gamma_{K})$.
+
+To demonstrate why this works, consider equation 1, for the case of two columns:
 
 $$
-t=\operatorname{Pr}(\text{match}\mid\gamma_1)
-=\frac{\lambda m_{1\ell}}{\lambda m_{1\ell}+(1-\lambda)u_{1\ell}}
+\operatorname{Pr}(\text{records match}|\gamma_{1},\gamma_{2}) = \frac{\lambda m_{1\ell}m_{2\ell}}{\lambda m_{1\ell}m_{2\ell}+ (1-\lambda)u_{1\ell}u_{1\ell}} \tag{2.1}
 $$
 
-This posterior becomes the prior for the second comparison:
+We start by applying Bayes Theorem once, accounting for the first comparison column:
 
 $$
-\operatorname{Pr}(\text{match}\mid\gamma_1,\gamma_2)
-=\frac{t m_{2\ell}}{t m_{2\ell}+(1-t)u_{2\ell}}
+\operatorname{Pr}(\text{records match}|\gamma_{1}) = t = \frac{\lambda m_{1\ell}}{\lambda m_{1\ell}+ (1-\lambda)u_{1\ell}}
 $$
 
-Substituting the expression for $t$ and cancelling the common denominator gives:
+This posterior, $t$, becomes the new prior, which we now use instead of lambda:
 
 $$
-\operatorname{Pr}(\text{match}\mid\gamma_1,\gamma_2)
-=\frac{\lambda m_{1\ell}m_{2\ell}}
-{\lambda m_{1\ell}m_{2\ell}+(1-\lambda)u_{1\ell}u_{2\ell}}
+\text{posterior} = \operatorname{Pr}(\text{records match}|\gamma_{1},\gamma_{2}) = \frac{t m_{2\ell}}{t m_{2\ell}+ (1-t)u_{2\ell}}\tag{2.2}
 $$
+
+Note that:
+
+$$
+1-t = 1-\frac{\lambda m_{1\ell}}{\lambda m_{1\ell}+ (1-\lambda)u_{1\ell}} = \frac{\lambda m_{1\ell}+ (1-\lambda)u_{1\ell}-\lambda m_{1\ell}}{\lambda m_{1\ell}+ (1-\lambda)u_{1\ell}} = \frac{(1-\lambda)u_{1\ell}}{\lambda m_{1\ell}+ (1-\lambda)u_{1\ell}}\tag{2.3}
+$$
+
+But $(2.3)$ shows that the term $(\lambda m_{1\ell}+ (1-\lambda)u_{1\ell})$ appears on both top and bottom of $(2.2)$ and therefore cancels, leaving $(2.1)$ as desired.
 
 <ProbHomeNav />

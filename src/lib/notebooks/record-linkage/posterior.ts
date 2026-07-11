@@ -28,6 +28,62 @@ export type EvidenceControlValues = {
   bayesFactor: number;
 };
 
+export type PriorControlPair = {
+  probability: InputElement<number>;
+  odds: InputElement<number>;
+};
+
+export type EvidenceControlPair = {
+  matchWeight: InputElement<number>;
+  bayesFactor: InputElement<number>;
+};
+
+export function createPriorControlPair(): PriorControlPair {
+  const probability = Inputs.range([0, 1], {label: 'Prior probability', value: 0.2, step: 0.01}) as InputElement<number>;
+  const odds = Inputs.number([0, bayesFactorFromProbability(0.999)], {label: 'Equivalent prior odds', value: bayesFactorFromProbability(0.2)}) as InputElement<number>;
+  probability.value = 0.25;
+  odds.value = roundToSignificantFigures(bayesFactorFromProbability(0.25), 8);
+  let syncing = false;
+  probability.addEventListener('input', () => {
+    if (syncing) return;
+    syncing = true;
+    odds.value = roundToSignificantFigures(bayesFactorFromProbability(probability.value), 8);
+    odds.dispatchEvent(new Event('input', {bubbles: true}));
+    syncing = false;
+  });
+  odds.addEventListener('input', () => {
+    if (syncing) return;
+    syncing = true;
+    probability.value = odds.value / (1 + odds.value);
+    probability.dispatchEvent(new Event('input', {bubbles: true}));
+    syncing = false;
+  });
+  return {probability, odds};
+}
+
+export function createEvidenceControlPair(): EvidenceControlPair {
+  const matchWeight = Inputs.range([-10, 10], {label: 'Partial match weight', value: 2}) as InputElement<number>;
+  const bayesFactor = Inputs.number([2 ** -10, 2 ** 10], {label: 'Equivalent Bayes Factor', value: 2}) as InputElement<number>;
+  matchWeight.value = 6;
+  bayesFactor.value = 64;
+  let syncing = false;
+  matchWeight.addEventListener('input', () => {
+    if (syncing) return;
+    syncing = true;
+    bayesFactor.value = roundToSignificantFigures(bayesFactorFromMatchWeight(matchWeight.value), 8);
+    bayesFactor.dispatchEvent(new Event('input', {bubbles: true}));
+    syncing = false;
+  });
+  bayesFactor.addEventListener('input', () => {
+    if (syncing) return;
+    syncing = true;
+    matchWeight.value = matchWeightFromBayesFactor(bayesFactor.value);
+    matchWeight.dispatchEvent(new Event('input', {bubbles: true}));
+    syncing = false;
+  });
+  return {matchWeight, bayesFactor};
+}
+
 export function createPriorControls(): InputElement<PriorControlValues> {
   const probability = Inputs.range([0, 1], {
     label: 'Prior probability',
@@ -96,11 +152,11 @@ export function renderPosteriorNarrative(
 ): HTMLDivElement {
   const result = posteriorCalculation(values);
   const root = document.createElement('div');
-  const direction = values.bayesFactor >= 1
+  const direction = values.bayesFactor > 1
     ? `${roundToSignificantFigures(values.bayesFactor, 4)} times more likely`
     : `${roundToSignificantFigures(1 / values.bayesFactor, 4)} times less likely`;
   const paragraphs = [
-    `The partial match weight of ${roundToSignificantFigures(values.partialMatchWeight, 4)} is equivalent to a Bayes Factor of ${roundToSignificantFigures(values.bayesFactor, 4)}.`,
+    `The partial match weight of ${roundToSignificantFigures(values.partialMatchWeight, 4)} is equivalent a Bayes Factor of ${roundToSignificantFigures(values.bayesFactor, 4)}.`,
     `This means after updating the prior, the records are ${direction} to be a match.`,
     `Our updated (posterior) belief about the probability of a match is ${roundToSignificantFigures(result.posteriorProbability, 4)}.`,
   ];

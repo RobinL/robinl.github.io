@@ -4,13 +4,16 @@
   <script id="1" type="module" hidden>
     import {createBayesFactorChart, createMuEditor, editorValueToSettings} from "../lib/notebooks/m-u-editor";
     const genderSettings = {proportion_of_matches:.3,comparison_columns:[{col_name:"gender",m_probabilities:[.1,.9],u_probabilities:[.5,.5]}],level_names:["Gender mismatches","Gender matches"]};
-    const forenameTwo = {proportion_of_matches:.3,comparison_columns:[{col_name:"forename",m_probabilities:[.3,.7],u_probabilities:[.9,.1]}],level_names:["Forename mismatches","Forename matches exactly"]};
-    const forenameThree = {proportion_of_matches:.3,comparison_columns:[{col_name:"forename",m_probabilities:[.05,.25,.7],u_probabilities:[.75,.15,.1]}],level_names:["Forename mismatches","Forename fuzzy matches","Forename matches"]};
+    const forenameTwo = {proportion_of_matches:.3,comparison_columns:[{col_name:"gender",m_probabilities:[.3,.7],u_probabilities:[.9,.1]}],level_names:["Forname mismatches","Forename matches exactly"]};
+    const forenameThree = {proportion_of_matches:.3,comparison_columns:[{col_name:"gender",m_probabilities:[.05,.25,.7],u_probabilities:[.75,.15,.1]}],level_names:["Forname mismatches","Forename fuzzy matches","Forename matches"]};
   </script>
-  <script id="2" type="module">const gender = view(createMuEditor(genderSettings, width, 400));</script>
-  <script id="3" type="module">display(createBayesFactorChart(editorValueToSettings(gender), width)); const genderChart = null;</script>
-  <script id="4" type="module">const forename1 = view(createMuEditor(forenameTwo, width, 400, 3));</script>
-  <script id="5" type="module">display(createBayesFactorChart(editorValueToSettings(forename1), width)); const forename1Chart = null;</script>
-  <script id="6" type="module">const forename2 = view(createMuEditor(forenameThree, width, 400, 3));</script>
-  <script id="7" type="module">display(createBayesFactorChart(editorValueToSettings(forename2), width)); const forename2Chart = null;</script>
+  <script id="2" type="module">resetGender; const gender = view(createMuEditor(genderSettings, width, 400));</script>
+  <script id="3" type="module">const resetGender = view(Inputs.button("Reset gender values"));</script>
+  <script id="4" type="module">display(createBayesFactorChart(editorValueToSettings(gender), width)); const genderChart = null;</script>
+  <script id="5" type="module">resetForename1; const forename1 = view(createMuEditor(forenameTwo, width, 400));</script>
+  <script id="6" type="module">const resetForename1 = view(Inputs.button("Reset forename values"));</script>
+  <script id="7" type="module">display(createBayesFactorChart(editorValueToSettings(forename1), width)); const forename1Chart = null;</script>
+  <script id="8" type="module">resetForename2; const forename2 = view(createMuEditor(forenameThree, width, 400));</script>
+  <script id="9" type="module">const resetForename2 = view(Inputs.button("Reset forename values"));</script>
+  <script id="10" type="module">display(createBayesFactorChart(editorValueToSettings(forename2), width)); const forename2Chart = null;</script>
 </notebook>

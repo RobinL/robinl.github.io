@@ -4,35 +4,43 @@
 
   <script id="1" type="module" hidden>
     import {
-      createEvidenceControls,
-      createPriorControls,
+      createEvidenceControlPair,
+      createPriorControlPair,
       renderPosteriorChart,
       renderPosteriorNarrative
     } from "../lib/notebooks/record-linkage/posterior";
   </script>
 
-  <script id="2" type="module">
-    const priorControls = view(createPriorControls());
+  <script id="2" type="module" hidden>
+    const priorPair = createPriorControlPair();
   </script>
 
   <script id="3" type="module">
-    const evidenceControls = view(createEvidenceControls());
+    const priorProbability = view(priorPair.probability);
   </script>
 
-  <script id="4" type="module" hidden>
+  <script id="4" type="module">const priorOdds = view(priorPair.odds);</script>
+
+  <script id="5" type="module" hidden>const evidencePair = createEvidenceControlPair();</script>
+
+  <script id="6" type="module">const partialMatchWeight = view(evidencePair.matchWeight);</script>
+
+  <script id="7" type="module">const bayesFactor = view(evidencePair.bayesFactor);</script>
+
+  <script id="8" type="module" hidden>
     const calculatorValues = ({
-      priorProbability: priorControls.priorProbability,
-      partialMatchWeight: evidenceControls.partialMatchWeight,
-      bayesFactor: evidenceControls.bayesFactor
+      priorProbability,
+      partialMatchWeight,
+      bayesFactor
     });
   </script>
 
-  <script id="5" type="module">
+  <script id="9" type="module">
     display(renderPosteriorNarrative(calculatorValues));
     const narrative = null;
   </script>
 
-  <script id="6" type="module">
+  <script id="10" type="module">
     display(await renderPosteriorChart(calculatorValues));
     const chart = null;
   </script>

@@ -103,7 +103,10 @@ export function renderTreemap(
     tooltip.innerHTML = description;
     tooltip.style.visibility = description ? 'visible' : 'hidden';
   }).on('mousemove', (event) => {
-    tooltip.style.left = `${event.offsetX + 10}px`;
+    const tooltipWidth = tooltip.getBoundingClientRect().width;
+    tooltip.style.left = chartWidth - event.layerX > tooltipWidth
+      ? `${event.offsetX + 10}px`
+      : `${event.offsetX - tooltipWidth - 10}px`;
     tooltip.style.top = `${event.offsetY + 10}px`;
   }).on('mouseleave', () => {
     tooltip.style.visibility = 'hidden';

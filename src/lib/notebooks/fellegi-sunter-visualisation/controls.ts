@@ -1,13 +1,13 @@
 import * as Inputs from '@observablehq/inputs';
+import katex from 'katex';
 import type {ComparisonColumn} from './types';
 
 type InputElement<T> = HTMLElement & {value: T};
 
 export function createPriorControl(initialValue: number): InputElement<number> {
   return Inputs.range([0, 1], {
-    label: 'λ — prior probability that two records match',
+    label: mathLabel(String.raw`\lambda`),
     value: initialValue,
-    step: 0.01,
   }) as InputElement<number>;
 }
 
@@ -16,10 +16,10 @@ export function createComparisonControl(initial: ComparisonColumn): InputElement
     label: `Comparison of ${initial.col_name} is a:`,
     value: initial.gamma_value === 1 ? 'match' : 'mismatch',
   }) as InputElement<'match' | 'mismatch'>;
-  const u0 = probabilityControl(`u — ${initial.col_name}, level 0`, initial.u_probabilities[0]);
-  const u1 = probabilityControl(`u — ${initial.col_name}, level 1`, initial.u_probabilities[1]);
-  const m0 = probabilityControl(`m — ${initial.col_name}, level 0`, initial.m_probabilities[0]);
-  const m1 = probabilityControl(`m — ${initial.col_name}, level 1`, initial.m_probabilities[1]);
+  const u0 = probabilityControl(String.raw`u_\text{${initial.col_name},level\_0}`, initial.u_probabilities[0]);
+  const u1 = probabilityControl(String.raw`u_\text{${initial.col_name},level\_1}`, initial.u_probabilities[1]);
+  const m0 = probabilityControl(String.raw`m_\text{${initial.col_name},level\_0}`, initial.m_probabilities[0]);
+  const m1 = probabilityControl(String.raw`m_\text{${initial.col_name},level\_1}`, initial.m_probabilities[1]);
 
   complement(u0, u1);
   complement(u1, u0);
@@ -51,7 +51,13 @@ export function createComparisonControl(initial: ComparisonColumn): InputElement
 }
 
 function probabilityControl(label: string, value: number): InputElement<number> {
-  return Inputs.range([0, 1], {label, value, step: 0.01}) as InputElement<number>;
+  return Inputs.range([0, 1], {label: mathLabel(label), value}) as InputElement<number>;
+}
+
+function mathLabel(expression: string): HTMLElement {
+  const label = globalThis.document.createElement('span');
+  katex.render(expression, label, {throwOnError: false});
+  return label.removeChild(label.firstElementChild!) as HTMLElement;
 }
 
 function complement(source: InputElement<number>, target: InputElement<number>): void {
