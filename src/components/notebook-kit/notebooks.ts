@@ -10,15 +10,13 @@ const notebooks = {
   '86fc30325e4106c4': () =>
     import('../../notebooks/migrated/86fc30325e4106c4/86fc30325e4106c4@851.notebook.html'),
   'bf-prior-calc': () =>
-    import('../../notebooks/migrated/bf-prior-calc/695eee6aed606401@287.notebook.html'),
+    import('../../notebooks/bf-prior-calc.notebook.html'),
   'bird-song-quiz': () =>
     import('../../notebooks/migrated/bird-song-quiz/fd53a58c4291210e@731.notebook.html'),
   'birdsong-recordings': () =>
     import('../../notebooks/migrated/birdsong-recordings/98208622758b559c@442.notebook.html'),
   'computing-the-fellegi-sunter-model': () =>
-    import(
-      '../../notebooks/migrated/computing-the-fellegi-sunter-model/0068042ce3b10dd1@284.notebook.html'
-    ),
+    import('../../notebooks/computing-fellegi-sunter.notebook.html'),
   'dependencies-between-match-weights': () =>
     import(
       '../../notebooks/migrated/dependencies-between-match-weights/9547bc35da079fbb@158.notebook.html'
@@ -51,7 +49,7 @@ const notebooks = {
       '../../notebooks/migrated/interactive-blogging-with-observable-notebooks-and-gatsb/30c5bf135cab7285@518.notebook.html'
     ),
   'intro-prob-linkage': () =>
-    import('../../notebooks/migrated/intro-prob-linkage/3ec7a740cff5f9ad@84.notebook.html'),
+    import('../../notebooks/intro-prob-linkage.notebook.html'),
   'm-and-u-probability-generator': () =>
     import(
       '../../notebooks/migrated/m-and-u-probability-generator/c6839403e2c35642@79.notebook.html'
@@ -65,7 +63,7 @@ const notebooks = {
   'my-flights': () =>
     import('../../notebooks/migrated/my-flights/fe522555ef506fc9@514.notebook.html'),
   'partial-match-weights': () =>
-    import('../../notebooks/migrated/partial-match-weights/8fa206ca7e295acc@509.notebook.html'),
+    import('../../notebooks/partial-match-weights.notebook.html'),
   'spark-explain': () =>
     import('../../notebooks/migrated/spark-explain/8578dcec2a3fe626@647.notebook.html'),
   'the-carbon-impact-of-switiching-to-an-electric-car': () =>

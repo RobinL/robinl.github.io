@@ -1,0 +1,37 @@
+<!doctype html>
+<notebook>
+  <title>Interactive introduction to probabilistic linkage</title>
+
+  <script id="1" type="module" hidden>
+    import {tutorialComparisonFunctions} from "../lib/notebooks/record-linkage/comparisons";
+    import {applyComparisonFunctions, createComparisonRows, settingsToWaterfall} from "../lib/notebooks/record-linkage/model";
+    import {tutorialSettings} from "../lib/notebooks/record-linkage/settings";
+    import {renderWaterfallChart} from "../lib/notebooks/record-linkage/charts";
+    import {createEditableRecordTable, renderEstimatedProbability} from "../lib/notebooks/record-linkage/ui";
+  </script>
+
+  <script id="2" type="module">
+    const input_table = view(createEditableRecordTable([
+      {first_name: "Robin", surname: "Linacre", postcode: "W1A 1AA", gender: "female"},
+      {first_name: "Robyn", surname: "Linacre", postcode: "W1A 1AA", gender: "male"}
+    ]));
+  </script>
+
+  <script id="3" type="module" hidden>
+    const comparisonVector = applyComparisonFunctions(
+      createComparisonRows(input_table),
+      tutorialComparisonFunctions
+    )[0];
+    const waterfall = settingsToWaterfall(tutorialSettings, comparisonVector);
+  </script>
+
+  <script id="4" type="module">
+    display(renderEstimatedProbability(waterfall));
+    const estimated_probability = null;
+  </script>
+
+  <script id="5" type="module">
+    display(await renderWaterfallChart(waterfall, false, width));
+    const waterfall_chart = null;
+  </script>
+</notebook>

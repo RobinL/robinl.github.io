@@ -3,7 +3,7 @@ title: "Partial match weights"
 description: "Partial match weights in the Fellegi-Sunter model.  Part of an explorable, interactive introduction to probabilistic record linkage (data deduplication) theory"
 postDate: "2023-09-20"
 category: "probabilistic_linkage"
-codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/partial-match-weights/8fa206ca7e295acc@509.notebook.html"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/partial-match-weights.notebook.html"
 probLinkageCategory: "tutorial"
 tutorialNumber: 2
 pageWidth: "prose"
@@ -114,27 +114,27 @@ Let's take a look at an example record comparison, and see how the partial match
 
 
 <NotebookCellProvider client:visible notebook="partial-match-weights">
-    <NotebookCell cellName="input_table" />
+    <NotebookCell cellId={2} />
 
     The first stage is to calculate which scenarios apply for each column.  For example, are the first names an exact match, a fuzzy match, or neither?
 
-    <NotebookCell cellName="text_activated_categories" />
+    <NotebookCell cellId={4} />
 
     In the below chart, I reproduce the partial match weights chart, but with the activated partial match weights highlighted.
 
-    <NotebookCell cellName="partial_match_weights_highligh" />
+    <NotebookCell cellId={5} />
 
     The activated (selected) partial match weights can then be plotted in a waterfall chart, which represents how they are summed up to compute the final match weight:
 
-    <NotebookCell cellName="waterfall_highlight" />
+    <NotebookCell cellId={6} />
 
     Alternatively we can represent the calculation of overall match weight as a sum:
 
-    <NotebookCell cellName="waterfall_as_formula" />
+    <NotebookCell cellId={7} />
 
     The final match weight is a measure of the similarity of the two records.  In subsequent articles we will see how it can be converted into a probability using the formula:
 
-    <NotebookCell cellName="probability_formula" />
+    <NotebookCell cellId={8} />
 
 </NotebookCellProvider>
 

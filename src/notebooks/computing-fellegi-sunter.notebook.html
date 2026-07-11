@@ -1,0 +1,58 @@
+<!doctype html>
+<notebook>
+  <title>Computing the Fellegi-Sunter model</title>
+
+  <script id="1" type="module" hidden>
+    import {computeLinkageTutorial} from "../lib/notebooks/record-linkage/computing";
+    import {createEditableRecordTable, renderDataTable, renderSettingsTable} from "../lib/notebooks/record-linkage/ui";
+  </script>
+
+  <script id="2" type="module">
+    const input_table_l = view(createEditableRecordTable([
+      {first_name: "Robin", surname: "Linacre", postcode: "W1A 1AA", gender: "male"},
+      {first_name: "Emma", surname: "Williams", postcode: "EC4M 8AD", gender: "female"},
+      {first_name: "Sarah", surname: "Williams", postcode: "SW7 2AZ", gender: "female"}
+    ], true));
+  </script>
+
+  <script id="3" type="module">
+    const input_table_r = view(createEditableRecordTable([
+      {first_name: "Robyn", surname: "Linacre", postcode: "W1A 1AA", gender: "male"},
+      {first_name: "Emma", surname: "Williams", postcode: "EC4M 8AD", gender: "female"}
+    ], true));
+  </script>
+
+  <script id="4" type="module" hidden>
+    const calculation = computeLinkageTutorial(input_table_l, input_table_r);
+  </script>
+
+  <script id="5" type="module">
+    display(renderDataTable(calculation.comparisonPairs, {tintColumns: true}));
+    const comparison_pairs_no_gamma = null;
+  </script>
+
+  <script id="6" type="module">
+    display(renderSettingsTable(calculation.lookupRows));
+    const lookup_table = null;
+  </script>
+
+  <script id="7" type="module">
+    display(renderDataTable(calculation.vectors, {tintColumns: true}));
+    const comparison_pairs_with_gamma = null;
+  </script>
+
+  <script id="8" type="module">
+    display(renderDataTable(calculation.vectorValues, {tintColumns: true}));
+    const comparison_vector_values_only = null;
+  </script>
+
+  <script id="9" type="module">
+    display(renderDataTable(calculation.gammaAndWeights, {roundNumbers: true, tintColumns: true}));
+    const cv_pmw_sum = null;
+  </script>
+
+  <script id="10" type="module">
+    display(renderDataTable(calculation.finalScores, {roundNumbers: true, tintColumns: true}));
+    const raw_values_with_final_match_prob = null;
+  </script>
+</notebook>

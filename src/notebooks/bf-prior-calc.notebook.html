@@ -1,0 +1,39 @@
+<!doctype html>
+<notebook>
+  <title>Bayes factor and prior calculator</title>
+
+  <script id="1" type="module" hidden>
+    import {
+      createEvidenceControls,
+      createPriorControls,
+      renderPosteriorChart,
+      renderPosteriorNarrative
+    } from "../lib/notebooks/record-linkage/posterior";
+  </script>
+
+  <script id="2" type="module">
+    const priorControls = view(createPriorControls());
+  </script>
+
+  <script id="3" type="module">
+    const evidenceControls = view(createEvidenceControls());
+  </script>
+
+  <script id="4" type="module" hidden>
+    const calculatorValues = ({
+      priorProbability: priorControls.priorProbability,
+      partialMatchWeight: evidenceControls.partialMatchWeight,
+      bayesFactor: evidenceControls.bayesFactor
+    });
+  </script>
+
+  <script id="5" type="module">
+    display(renderPosteriorNarrative(calculatorValues));
+    const narrative = null;
+  </script>
+
+  <script id="6" type="module">
+    display(await renderPosteriorChart(calculatorValues));
+    const chart = null;
+  </script>
+</notebook>

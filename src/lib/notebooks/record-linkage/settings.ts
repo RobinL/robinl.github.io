@@ -1,0 +1,47 @@
+import type { ModelSettings } from './types';
+
+export const tutorialSettings: ModelSettings = {
+  link_type: 'dedupe_only',
+  comparisons: [
+    {
+      output_column_name: 'first_name',
+      comparison_levels: [
+        {sql_condition: '"first_name_l" IS NULL OR "first_name_r" IS NULL', label_for_charts: 'Null', is_null_level: true},
+        {sql_condition: '"first_name_l" = "first_name_r"', label_for_charts: 'Exact match', m_probability: 0.85, u_probability: 0.0053644029607975525},
+        {sql_condition: 'jaro_similarity("first_name_l", "first_name_r") >= 0.9', label_for_charts: 'Jaro_similarity >= 0.9', m_probability: 0.05, u_probability: 0.0010275673770916635},
+        {sql_condition: 'ELSE', label_for_charts: 'All other comparisons', m_probability: 0.1, u_probability: 0.9936080296621108},
+      ],
+      comparison_description: 'Exact match vs. First_Name within jaro_similarity threshold 0.9 vs. anything else',
+    },
+    {
+      output_column_name: 'surname',
+      comparison_levels: [
+        {sql_condition: '"surname_l" IS NULL OR "surname_r" IS NULL', label_for_charts: 'Null', is_null_level: true},
+        {sql_condition: '"surname_l" = "surname_r"', label_for_charts: 'Exact match', m_probability: 0.8, u_probability: 0.0005227236116471686},
+        {sql_condition: 'jaro_similarity("surname_l", "surname_r") >= 0.9', label_for_charts: 'Jaro_similarity >= 0.9', m_probability: 0.15, u_probability: 0.00022325217333017645},
+        {sql_condition: 'ELSE', label_for_charts: 'All other comparisons', m_probability: 0.05, u_probability: 0.9992540242150226},
+      ],
+      comparison_description: 'Exact match vs. Surname within jaro_similarity threshold 0.9 vs. anything else',
+    },
+    {
+      output_column_name: 'postcode',
+      comparison_levels: [
+        {sql_condition: '"postcode_l" IS NULL OR "postcode_r" IS NULL', label_for_charts: 'Null', is_null_level: true},
+        {sql_condition: '"postcode_l" = "postcode_r"', label_for_charts: 'Exact match', m_probability: 0.3, u_probability: 0.000024076080414108584},
+        {sql_condition: 'levenshtein("postcode_l", "postcode_r") <= 1', label_for_charts: 'Levenshtein <= 1', m_probability: 0.3, u_probability: 0.000051088268195791384},
+        {sql_condition: 'ELSE', label_for_charts: 'All other comparisons', m_probability: 0.4, u_probability: 0.9999248356513901},
+      ],
+      comparison_description: 'Exact match vs. Postcode within levenshtein threshold 1 vs. anything else',
+    },
+    {
+      output_column_name: 'gender',
+      comparison_levels: [
+        {sql_condition: '"gender_l" IS NULL OR "gender_r" IS NULL', label_for_charts: 'Null', is_null_level: true},
+        {sql_condition: '"gender_l" = "gender_r"', label_for_charts: 'Exact match', m_probability: 0.995, u_probability: 0.6962695593603181},
+        {sql_condition: 'ELSE', label_for_charts: 'All other comparisons', m_probability: 0.005, u_probability: 0.30373044063968185},
+      ],
+      comparison_description: 'Exact match vs. anything else',
+    },
+  ],
+  probability_two_random_records_match: 0.000001,
+};

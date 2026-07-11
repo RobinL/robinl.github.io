@@ -3,7 +3,7 @@ title: "m and u values in the Fellegi-Sunter model"
 description: "Deep dive into the role and interpretation of m and u probabilities in the Fellegi-Sunter model for probabilistic linkage. Learn how these probabilities impact match weights and how to quantify the strength of evidence in favor or against a record match."
 postDate: "2023-09-22"
 category: "probabilistic_linkage"
-codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/bf-prior-calc/695eee6aed606401@287.notebook.html"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/bf-prior-calc.notebook.html"
 probLinkageCategory: "tutorial"
 tutorialNumber: 3
 pageWidth: "prose"
@@ -155,13 +155,11 @@ Here's a calculator which shows how a prior probability is updated with a Bayes 
 
 <NotebookCellProvider client:visible notebook="bf-prior-calc">
     #### Prior
-    <NotebookCell cellName="prior_probability_bound" />
-    <NotebookCell cellName="prior_odds_bound" />
+    <NotebookCell cellId={2} />
     #### New evidence
-    <NotebookCell cellName="partial_match_weight_bound" />
-    <NotebookCell cellName="bayes_factor" />
-    <NotebookCell cellName="narrative" />
-    <NotebookCell cellName="chart" />
+    <NotebookCell cellId={3} />
+    <NotebookCell cellId={5} />
+    <NotebookCell cellId={6} />
 
 
 </NotebookCellProvider>
