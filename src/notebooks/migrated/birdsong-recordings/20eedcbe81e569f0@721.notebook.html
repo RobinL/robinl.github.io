@@ -12,16 +12,18 @@
 
   <script id="3" type="application/vnd.observable.javascript">
     generate_get_request_url = function generate_get_request_url(query='', type='', quality='', country='') {
-      // A query looks like this:
-      // https://cors-anywhere.herokuapp.com/https://www.xeno-canto.org/api/2/recordings?query=troglodytes%20troglodytes"
+      // The complete Xeno-canto URL must be encoded as the apiurl value so
+      // that its query string is forwarded intact by the CORS worker.
       
      //?query=troglodytes%20troglodytes%20type%3A%22male%22%20cnt%3A%22Italy%22
       
     
-      let base_url = cors_anywhere+xeno_endpoint + "query="
+      let base_url = xeno_endpoint + "query="
       
       let elems = []
-      elems.push(query)
+      // API v3 only accepts tagged searches. The pages supply a scientific
+      // name, so express it as an exact species query.
+      elems.push(`sp:"${query}"`)
       
       if (type != '') {
         elems.push(`type:"${type}"`)
@@ -38,19 +40,25 @@
       let query_string = elems.join(" ")
       query_string = encodeURIComponent(query_string)
     
-      return base_url + query_string
+      return cors_anywhere + encodeURIComponent(base_url + query_string)
        
     }
   </script>
 
   <script id="4" type="application/vnd.observable.javascript">
-    xeno_endpoint = "https://xeno-canto.org/api/2/recordings?"
+    xeno_endpoint = "https://xeno-canto.org/api/3/recordings?"
   </script>
 
   <script id="5" type="application/vnd.observable.javascript">
     get_results_async = function (url) {
       return fetch(url)
-        .then((d) => d.json())
+        .then(async (response) => {
+          const results = await response.json();
+          if (!response.ok || !Array.isArray(results.recordings)) {
+            throw new Error(results.message || "Xeno-canto query failed");
+          }
+          return results;
+        })
         .catch((d) => {
           return {
             recordings: [],
