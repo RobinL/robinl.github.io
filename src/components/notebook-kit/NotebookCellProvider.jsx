@@ -4,6 +4,7 @@ import * as Inputs from '@observablehq/inputs';
 import { legacyRequire } from './legacy-require';
 import { legacyHtml, legacySvg } from './legacy-template';
 import { loadNotebook } from './notebooks';
+import { runtimeCellNames } from './runtime-cell-names';
 
 function makeBuiltins(library, container, legacySyntax, FileAttachment) {
   const generators = library.Generators();
@@ -27,12 +28,6 @@ function makeBuiltins(library, container, legacySyntax, FileAttachment) {
     vl: library.vl,
     width: () => generators.width(container),
   };
-}
-
-function runtimeCellName(cell) {
-  return cell.output
-    ?.replace(/^viewof\$/, 'viewof ')
-    .replace(/^mutable\$/, 'mutable ');
 }
 
 export default function NotebookCellProvider({ notebook, children, className = '' }) {
@@ -76,7 +71,11 @@ export default function NotebookCellProvider({ notebook, children, className = '
         );
 
         for (const cell of definition.cells) {
-          const root = targetsById.get(cell.id) ?? targetsByName.get(runtimeCellName(cell));
+          const root =
+            targetsById.get(cell.id) ??
+            runtimeCellNames(cell)
+              .map((name) => targetsByName.get(name))
+              .find(Boolean);
           const state = {
             root: root ?? document.createElement('div'),
             expanded: [],
