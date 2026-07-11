@@ -1,0 +1,13 @@
+<!doctype html>
+<notebook>
+  <title>m and u probability generator with starting values</title>
+  <script id="1" type="module" hidden>
+    import {createBayesFactorChart, createMuEditor, editorValueToSettings} from "../lib/notebooks/m-u-editor";
+    const initialValue = `{"proportion_of_matches":0.3,"comparison_columns":[{"col_name":" ","m_probabilities":[0.8,0.1,0.1],"u_probabilities":[0.1,0.2,0.7]}]}`;
+  </script>
+  <script id="2" type="module">const startingData = view(Inputs.textarea({label: "Settings", value: initialValue, rows: 12}));</script>
+  <script id="3" type="module">const parsedSettings = JSON.parse(startingData);</script>
+  <script id="4" type="module">const editor = view(createMuEditor(parsedSettings, width, 700));</script>
+  <script id="5" type="module">display(createBayesFactorChart(editorValueToSettings(editor), width)); const chart = null;</script>
+  <script id="6" type="module">const pre = document.createElement("pre"); pre.textContent = JSON.stringify(editorValueToSettings(editor), null, 4); display(pre); const settingsOutput = null;</script>
+</notebook>

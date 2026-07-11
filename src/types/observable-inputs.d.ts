@@ -11,6 +11,11 @@ declare module '@observablehq/inputs' {
     options?: {label?: string; value?: number; step?: number; width?: number | string},
   ): Input<number>;
 
+  export function radio<T extends string>(
+    values: readonly T[],
+    options?: {label?: string; value?: T; format?: (value: T) => string},
+  ): Input<T>;
+
   export function form<T extends Record<string, Input<unknown>>>(
     inputs: T,
   ): Input<{[Key in keyof T]: T[Key]['value']}>;

@@ -3,53 +3,110 @@ title: "Visualising the Fellegi Sunter model"
 description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article presents a way of visualising how the model works."
 postDate: "2021-05-22"
 category: "probabilistic_linkage"
-codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/visualising-fellegi-sunter/060a32b021a09f92@1011.notebook.html"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/visualising-fellegi-sunter.notebook.html"
 probLinkageCategory: "tools"
 pageWidth: "wide"
 ---
 
-import Notebook from '../../components/notebook-kit/Notebook.jsx';
+import NotebookCellProvider from '../../components/notebook-kit/NotebookCellProvider.jsx';
+import NotebookCell from '../../components/notebook-kit/NotebookCell.jsx';
 import ProbHomeNav from '../../components/probabilistic/ProbHomeNav.jsx';
 
-export const output_order = [
-  "additional_styles",
-  "title",
-  "para_1",
-  "para_2",
-  "para_3",
-  "para_4",
-  "subhead_1",
-  "para_5",
-  "lam_view",
-  "treemap_1",
-  "para_6",
-  "subhead_2",
-  "para_7",
-  "fname_view",
-  "para_8",
-  "treemap_2",
-  "para_9",
-  "subhead_3",
-  "para_10",
-  "sname_view",
-  "para_11",
-  "treemap_3",
-  "para_12",
-  "subhead_4",
-  "dob_view",
-  "para_13",
-  "treemap_4",
-  "para_14",
-  "subhead_5",
-  "town_view",
-  "para_15",
-  "treemap_5",
-  "para_16",
-  "annex",
-  "styles2",
-  "css_styles"
-];
-
 <ProbHomeNav />
-<Notebook client:visible notebook="visualising-fellegi-sunter" cells={output_order} />
+
+# Visualising the Fellegi-Sunter model
+
+The [mathematics article](/maths_of_fellegi_sunter/) presented the Fellegi-Sunter model and showed that match probability can be represented as:
+
+$$
+\operatorname{Pr}(\text{records match}\mid\gamma_1,\ldots,\gamma_K)
+=\frac{\lambda m_{1\ell}\cdots m_{K\ell}}
+{\lambda m_{1\ell}\cdots m_{K\ell}+(1-\lambda)u_{1\ell}\cdots u_{K\ell}}
+$$
+
+This article presents a way to understand and visualise that formula. We take each piece of evidence into account in turn, using the model's assumption that comparison columns are conditionally independent given match status.
+
+The example uses four comparison columns: `fname` (first name), `sname` (surname), `dob` (date of birth), and `town`. The default parameter values are deliberately chosen to keep the diagrams legible.
+
+<NotebookCellProvider client:visible notebook="visualising-fellegi-sunter">
+
+## Step 1 — Prior probability
+
+We begin with the space of all pairwise record comparisons, split between matching and non-matching pairs using the prior probability, $\lambda$.
+
+<NotebookCell cellId={2} />
+<NotebookCell cellId={8} />
+<NotebookCell cellId={9} />
+
+## Step 2 — First name
+
+Choose whether first name matches and adjust the model's `m` and `u` probabilities. Paired probabilities remain complementary.
+
+<NotebookCell cellId={3} />
+<NotebookCell cellId={10} />
+<NotebookCell cellId={11} />
+<NotebookCell cellId={12} />
+
+## Step 3 — Surname
+
+Now add the surname evidence.
+
+<NotebookCell cellId={4} />
+<NotebookCell cellId={13} />
+<NotebookCell cellId={14} />
+<NotebookCell cellId={15} />
+
+## Step 4 — Date of birth
+
+Next add date of birth.
+
+<NotebookCell cellId={5} />
+<NotebookCell cellId={16} />
+<NotebookCell cellId={17} />
+<NotebookCell cellId={18} />
+
+## Step 5 — Town
+
+Finally add town to obtain the overall match probability.
+
+<NotebookCell cellId={6} />
+<NotebookCell cellId={19} />
+<NotebookCell cellId={20} />
+<NotebookCell cellId={21} />
+
+</NotebookCellProvider>
+
+## Annex: mathematical representation
+
+The step-by-step calculation is a repeated application of Bayes' theorem:
+
+```text
+prior = lambda
+for column in comparison_columns:
+  posterior = bayes(column, prior)
+  prior = posterior
+```
+
+For two columns, first apply Bayes' theorem to the first comparison:
+
+$$
+t=\operatorname{Pr}(\text{match}\mid\gamma_1)
+=\frac{\lambda m_{1\ell}}{\lambda m_{1\ell}+(1-\lambda)u_{1\ell}}
+$$
+
+This posterior becomes the prior for the second comparison:
+
+$$
+\operatorname{Pr}(\text{match}\mid\gamma_1,\gamma_2)
+=\frac{t m_{2\ell}}{t m_{2\ell}+(1-t)u_{2\ell}}
+$$
+
+Substituting the expression for $t$ and cancelling the common denominator gives:
+
+$$
+\operatorname{Pr}(\text{match}\mid\gamma_1,\gamma_2)
+=\frac{\lambda m_{1\ell}m_{2\ell}}
+{\lambda m_{1\ell}m_{2\ell}+(1-\lambda)u_{1\ell}u_{2\ell}}
+$$
+
 <ProbHomeNav />

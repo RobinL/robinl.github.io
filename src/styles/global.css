@@ -20,6 +20,57 @@
   --radius: 6px;
 }
 
+.fs-parameter-control {
+  margin: 1rem 0;
+}
+
+.fs-parameter-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.fs-parameter-grid > div {
+  flex: 1 1 18rem;
+}
+
+.fs-treemap-container {
+  position: relative;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.fs-treemap-info {
+  padding: 5px;
+  font-family: monospace;
+  font-size: 0.6em;
+  line-height: 1.3em;
+}
+
+.fs-treemap-info p,
+.fs-treemap-tooltip p {
+  margin: 0.2rem;
+}
+
+.fs-treemap-tooltip {
+  position: absolute;
+  z-index: 300;
+  visibility: hidden;
+  max-width: 500px;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.1rem;
+  background: rgb(69 77 93 / 90%);
+  color: #fff;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.fs-match-highlight,
+.fs-non-match-highlight {
+  display: inline-block;
+  padding-inline: 0.15rem;
+}
+
 * {
   box-sizing: border-box;
 }

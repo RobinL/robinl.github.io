@@ -1,0 +1,105 @@
+<!doctype html>
+<notebook>
+  <title>Visualising the Fellegi-Sunter model</title>
+
+  <script id="1" type="module" hidden>
+    import {createComparisonControl, createPriorControl} from "../lib/notebooks/fellegi-sunter-visualisation/controls";
+    import {renderPriorExplanation, renderProbabilityExplanation, renderStepDetails} from "../lib/notebooks/fellegi-sunter-visualisation/calculations";
+    import {createSettings, initialColumns, initialPrior} from "../lib/notebooks/fellegi-sunter-visualisation/settings";
+    import {renderTreemap} from "../lib/notebooks/fellegi-sunter-visualisation/treemap";
+  </script>
+
+  <script id="2" type="module">
+    const prior = view(createPriorControl(initialPrior));
+  </script>
+
+  <script id="3" type="module">
+    const firstName = view(createComparisonControl(initialColumns[0]));
+  </script>
+
+  <script id="4" type="module">
+    const surname = view(createComparisonControl(initialColumns[1]));
+  </script>
+
+  <script id="5" type="module">
+    const dateOfBirth = view(createComparisonControl(initialColumns[2]));
+  </script>
+
+  <script id="6" type="module">
+    const town = view(createComparisonControl(initialColumns[3]));
+  </script>
+
+  <script id="7" type="module" hidden>
+    const settings = createSettings(prior, [firstName, surname, dateOfBirth, town]);
+  </script>
+
+  <script id="8" type="module">
+    display(renderTreemap(settings, 0, 300, width));
+    const priorTreemap = null;
+  </script>
+
+  <script id="9" type="module">
+    display(renderPriorExplanation(settings));
+    const priorExplanation = null;
+  </script>
+
+  <script id="10" type="module">
+    display(renderStepDetails(settings, 1));
+    const firstNameDetails = null;
+  </script>
+
+  <script id="11" type="module">
+    display(renderTreemap(settings, 1, 300, width));
+    const firstNameTreemap = null;
+  </script>
+
+  <script id="12" type="module">
+    display(renderProbabilityExplanation(settings, 1));
+    const firstNameProbability = null;
+  </script>
+
+  <script id="13" type="module">
+    display(renderStepDetails(settings, 2));
+    const surnameDetails = null;
+  </script>
+
+  <script id="14" type="module">
+    display(renderTreemap(settings, 2, 300, width));
+    const surnameTreemap = null;
+  </script>
+
+  <script id="15" type="module">
+    display(renderProbabilityExplanation(settings, 2));
+    const surnameProbability = null;
+  </script>
+
+  <script id="16" type="module">
+    display(renderStepDetails(settings, 3));
+    const dateOfBirthDetails = null;
+  </script>
+
+  <script id="17" type="module">
+    display(renderTreemap(settings, 3, 300, width));
+    const dateOfBirthTreemap = null;
+  </script>
+
+  <script id="18" type="module">
+    display(renderProbabilityExplanation(settings, 3));
+    const dateOfBirthProbability = null;
+  </script>
+
+  <script id="19" type="module">
+    display(renderStepDetails(settings, 4));
+    const townDetails = null;
+  </script>
+
+  <script id="20" type="module">
+    display(renderTreemap(settings, 4, 300, width));
+    const townTreemap = null;
+  </script>
+
+  <script id="21" type="module">
+    display(renderProbabilityExplanation(settings, 4));
+    const finalProbability = null;
+  </script>
+</notebook>

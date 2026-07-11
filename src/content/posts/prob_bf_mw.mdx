@@ -3,7 +3,7 @@ title: "The relationship between probabilities, match weights and Bayes factors"
 description: "Visualising the correspondence between match weights, probabilities, Bayes factors and their intuitive explanations"
 postDate: "2023-07-07"
 category: "probabilistic_linkage"
-codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/interactive-bayes-factor-probability-and-match-weight/189e36237ee45054@434.notebook.html"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/probability-conversions.notebook.html"
 probLinkageCategory: "tools"
 latestUpdate: "2023-09-12"
 pageWidth: "wide"
@@ -25,27 +25,19 @@ This chart shows how the partial match weights in a Splink `linker.match_weights
 
 <NotebookCellProvider client:visible notebook="interactive-bayes-factor-probability-and-match-weight">
 
-  <NotebookCell cellName="viewof max_match_weight" />
-  <NotebookCell cellName="viewof chart" />
+  <NotebookCell cellId={2} />
+  <NotebookCell cellId={3} />
 
     <br/>
     Caveat: the 'probability' is really only defined if a prior exists.  For the above chart, the prior is assumed to be 50%.
     <br/>
     ## Conversion of partial match weight to probability
     <br/>
-    <NotebookCell cellName="mw_1" />
-    <br/>
-    <NotebookCell cellName="bf_1" />
-    <br/>
-    <NotebookCell cellName="p_1" />
+    <NotebookCell cellId={4} />
     <br/>
     ## Conversion of probability to partial match weight
     <br/>
-    <NotebookCell cellName="p_2" />
-    <br/>
-    <NotebookCell cellName="bf_2" />
-    <br/>
-    <NotebookCell cellName="mw_2" />
+    <NotebookCell cellId={5} />
     <br/>
 
 </NotebookCellProvider>

@@ -3,20 +3,26 @@ title: "m and u probability generator with starting values"
 description: "Generate m and u probabilities to input into Splink. Part of the introduction to Fellegi Sunter series."
 postDate: "2021-11-15"
 category: "probabilistic_linkage"
-codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/m-and-u-probability-generator-with-starting-values/1d09c6cf5d576e0a@119.notebook.html"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/m-u-generator-starting.notebook.html"
 probLinkageCategory: "archive"
 pageWidth: "wide"
 ---
 
-import Notebook from '../../components/notebook-kit/Notebook.jsx';
+import NotebookCellProvider from '../../components/notebook-kit/NotebookCellProvider.jsx';
+import NotebookCell from '../../components/notebook-kit/NotebookCell.jsx';
 
-export const output_order = [
-    "title",
-    "viewof starting_data",
-    "viewof d",
-    "bf_chart",
-    "para_1",
-    "settings_output"
-];
+# m and u probability generator with starting values
 
-<Notebook client:visible notebook="m-and-u-probability-generator-with-starting-values" cells={output_order} />
+Paste settings below, then drag within the rectangles to refine the m and u probabilities.
+
+An alternative version with simpler input controls can be found [here](/m_u_generator/).
+
+<NotebookCellProvider client:visible notebook="m-and-u-probability-generator-with-starting-values">
+<NotebookCell cellId={2} />
+<NotebookCell cellId={4} />
+<NotebookCell cellId={5} />
+
+You may now use the following settings in your Splink settings object:
+
+<NotebookCell cellId={6} />
+</NotebookCellProvider>

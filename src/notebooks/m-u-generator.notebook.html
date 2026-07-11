@@ -1,0 +1,11 @@
+<!doctype html>
+<notebook>
+  <title>m and u probability generator</title>
+  <script id="1" type="module" hidden>
+    import {createBayesFactorChart, createMuEditor, editorValueToSettings, generateStartingSettings} from "../lib/notebooks/m-u-editor";
+  </script>
+  <script id="2" type="module">const numLevels = view(Inputs.range([2,8], {label:"Choose num levels", step:1, value:3}));</script>
+  <script id="3" type="module">const editor = view(createMuEditor(generateStartingSettings(Number(numLevels)), width, 700));</script>
+  <script id="4" type="module">display(createBayesFactorChart(editorValueToSettings(editor), width)); const chart = null;</script>
+  <script id="5" type="module">const pre = document.createElement("pre"); pre.textContent = JSON.stringify(editorValueToSettings(editor), null, 4); display(pre); const settingsOutput = null;</script>
+</notebook>

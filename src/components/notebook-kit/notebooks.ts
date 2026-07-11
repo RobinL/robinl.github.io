@@ -18,9 +18,7 @@ const notebooks = {
   'computing-the-fellegi-sunter-model': () =>
     import('../../notebooks/computing-fellegi-sunter.notebook.html'),
   'dependencies-between-match-weights': () =>
-    import(
-      '../../notebooks/migrated/dependencies-between-match-weights/9547bc35da079fbb@158.notebook.html'
-    ),
+    import('../../notebooks/match-weight-dependencies.notebook.html'),
   'energy-usage': () => import('../../notebooks/energy-usage.notebook.html'),
   'energy-usage-and-goods-imports-and-exports': () =>
     import(
@@ -41,9 +39,7 @@ const notebooks = {
       '../../notebooks/migrated/how-much-should-carbon-offsetting-cost/9c1004c2b84b8b80@478.notebook.html'
     ),
   'interactive-bayes-factor-probability-and-match-weight': () =>
-    import(
-      '../../notebooks/migrated/interactive-bayes-factor-probability-and-match-weight/189e36237ee45054@434.notebook.html'
-    ),
+    import('../../notebooks/probability-conversions.notebook.html'),
   'interactive-blogging-with-observable-notebooks-and-gatsb': () =>
     import(
       '../../notebooks/migrated/interactive-blogging-with-observable-notebooks-and-gatsb/30c5bf135cab7285@518.notebook.html'
@@ -51,13 +47,9 @@ const notebooks = {
   'intro-prob-linkage': () =>
     import('../../notebooks/intro-prob-linkage.notebook.html'),
   'm-and-u-probability-generator': () =>
-    import(
-      '../../notebooks/migrated/m-and-u-probability-generator/c6839403e2c35642@79.notebook.html'
-    ),
+    import('../../notebooks/m-u-generator.notebook.html'),
   'm-and-u-probability-generator-with-starting-values': () =>
-    import(
-      '../../notebooks/migrated/m-and-u-probability-generator-with-starting-values/1d09c6cf5d576e0a@119.notebook.html'
-    ),
+    import('../../notebooks/m-u-generator-starting.notebook.html'),
   'match-weight-calculator': () =>
     import('../../notebooks/match-weight-calculator.notebook.html'),
   'my-flights': () =>
@@ -87,13 +79,9 @@ const notebooks = {
       '../../notebooks/migrated/unsupervised-probabalistic-data-matching-using-the-expec/20c8b34dc8ac7754@1041.notebook.html'
     ),
   'updating-a-prior-simplified': () =>
-    import(
-      '../../notebooks/migrated/updating-a-prior-simplified/701498347b3efc32@672.notebook.html'
-    ),
+    import('../../notebooks/posterior-treemap.notebook.html'),
   'visualising-fellegi-sunter': () =>
-    import(
-      '../../notebooks/migrated/visualising-fellegi-sunter/060a32b021a09f92@1011.notebook.html'
-    ),
+    import('../../notebooks/visualising-fellegi-sunter.notebook.html'),
 } satisfies Record<string, NotebookLoader>;
 
 export type NotebookName = keyof typeof notebooks;

@@ -1,0 +1,9 @@
+<!doctype html>
+<notebook>
+  <title>The relationship between probabilities, match weights and Bayes factors</title>
+  <script id="1" type="module" hidden>import {conversionText, createConversionChart} from "../lib/notebooks/probability-conversions";</script>
+  <script id="2" type="module">const maxWeight = view(Inputs.range([5,40], {label:"Max match weight", step:5, value:10}));</script>
+  <script id="3" type="module">const selectedWeight = view(createConversionChart(maxWeight,width));</script>
+  <script id="4" type="module">display(conversionText(selectedWeight,"weight")); const fromWeight=null;</script>
+  <script id="5" type="module">display(conversionText(selectedWeight,"probability")); const fromProbability=null;</script>
+</notebook>

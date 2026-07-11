@@ -2,6 +2,10 @@
 <notebook>
   <title>@robinl/unsupervised-probabalistic-data-matching-using-the-expec: 146f352f1166f0d1@2202.js</title>
 
+  <script id="114" type="module">
+    import {d3format, d3geo, topojson, usa, world} from "../../local-notebook-dependencies.notebook.html" with {type: "observable"};
+  </script>
+
   <script id="1" type="application/vnd.observable.javascript">
     md`| <h3>Friends & Family:</h3>  |   |
     |---|---|
@@ -1291,19 +1295,19 @@
   </script>
 
   <script id="108" type="application/vnd.observable.javascript">
-    d3geo = require("d3-geo@1")
+    legacy_d3geo_cell = null
   </script>
 
   <script id="109" type="application/vnd.observable.javascript">
-    d3format = require("d3-format@1")
+    legacy_d3format_cell = null
   </script>
 
   <script id="110" type="application/vnd.observable.javascript">
-    topojson = require("topojson-client@3")
+    legacy_topojson_cell = null
   </script>
 
   <script id="111" type="application/vnd.observable.javascript">
-    world = (await fetch("https://cdn.jsdelivr.net/npm/world-atlas@1/world/110m.json")).json()
+    legacy_world_cell = null
   </script>
 
   <script id="112" type="application/vnd.observable.javascript">
@@ -1315,7 +1319,7 @@
   </script>
 
   <script id="114" type="application/vnd.observable.javascript">
-    usa = (await fetch("https://cdn.jsdelivr.net/npm/us-atlas@^2.1/us/states-10m.json")).json()
+    legacy_usa_cell = null
   </script>
 
   <script id="115" type="application/vnd.observable.javascript">

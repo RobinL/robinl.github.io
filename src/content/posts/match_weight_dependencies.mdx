@@ -3,30 +3,55 @@ title: "Dependencies between match weights"
 description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage. The dependencies between match weights."
 postDate: "2021-06-10"
 category: "probabilistic_linkage"
-codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/dependencies-between-match-weights/9547bc35da079fbb@158.notebook.html"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/match-weight-dependencies.notebook.html"
 probLinkageCategory: "archive"
 pageWidth: "wide"
 ---
 
-import Notebook from '../../components/notebook-kit/Notebook.jsx';
+import NotebookCellProvider from '../../components/notebook-kit/NotebookCellProvider.jsx';
+import NotebookCell from '../../components/notebook-kit/NotebookCell.jsx';
 
-export const output_order = [
-    "title",
-    "para_1",
-    "para_2",
-    "viewof gen",
-    "viewof reset_gender",
-    "bf_chart_gender",
-    "para_3",
-    "para_4",
-    "viewof fn1",
-    "viewof reset_fn1",
-    "bf_chart_fn_1",
-    "para_5",
-    "viewof fn2",
-    "viewof reset_fn2",
-    "bf_chart_fn_2",
-    "para_6"
-];
+# Dependencies between match weights
 
-<Notebook client:visible notebook="dependencies-between-match-weights" cells={output_order} />
+The values of a column's match weights are interdependent: only certain combinations of values are possible. Some types of data also result in maximum and minimum match weights. Understanding these constraints can help you build better models and extract more information from comparison columns.
+
+<NotebookCellProvider client:visible notebook="dependencies-between-match-weights">
+
+## Example of a maximum match weight: Gender
+
+Assume there is an equal split of males and females. A match on gender does not provide strong evidence because it is common amongst non-matching records. This gives an upper bound of 2.0 on the Bayes factor.
+
+Amongst non-matching records, gender is just as likely to match as to mismatch: $u_{\text{gender, level 0}}=u_{\text{gender, level 1}}=0.5$.
+
+✨ Drag within the rectangles to see the effect of different m and u values on match weights. ✨
+
+<NotebookCell cellId={2} />
+<NotebookCell cellId={3} />
+
+### Observations
+
+- There is a maximum bound of 2 on the match weight associated with a match on gender.
+- There is no minimum bound on the weight associated with a mismatch. If gender is highly accurate, a mismatch is very strong evidence against a match.
+
+## Example of a minimum match weight: Forename
+
+Nicknames and diminutives mean that, amongst matches, forename may not exactly match. With only exact-match and mismatch levels, a mismatch therefore cannot provide very strong evidence against a match.
+
+<NotebookCell cellId={4} />
+<NotebookCell cellId={5} />
+
+Using a fuzzy matching level distinguishes similar names from completely different names:
+
+- Level 2: exact match
+- Level 1: fuzzy match
+- Level 0: mismatch
+
+<NotebookCell cellId={6} />
+<NotebookCell cellId={7} />
+
+## Observations
+
+- With two levels, John versus Jonny receives the same negative weight as John versus Robin, losing information.
+- With three levels, the mismatch level contains only completely different names, allowing a much stronger negative weight.
+
+</NotebookCellProvider>

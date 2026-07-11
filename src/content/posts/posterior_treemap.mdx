@@ -3,7 +3,7 @@ title: "Visualising updating a prior"
 description: "Using treemaps to visualise updating the prior with information about a scenario in the Fellegi Sunter model"
 postDate: "2023-10-18"
 category: "probabilistic_linkage"
-codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/updating-a-prior-simplified/701498347b3efc32@672.notebook.html"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/posterior-treemap.notebook.html"
 probLinkageCategory: "tools"
 stylesheet: "posterior_treemap.css"
 pageWidth: "prose"
@@ -46,30 +46,31 @@ This article also explains why it's just a re-statement of Bayes Theorem.
 
     We can visualise this parameter by showing how it divides the set of all pairwise record comparisons:
 
-    <NotebookCell cellName="viewof prior_probabability" />
+    <NotebookCell cellId={2} />
 
-    <NotebookCell cellName="treemap_1" />
+    <NotebookCell cellId={3} />
 
     Using the definition of the `m` and `u` probabilities above, we can further subdivide this space as follows:
 
-    <NotebookCell cellName="viewof m" />
-    <NotebookCell cellName="viewof u" />
-    <NotebookCell cellName="viewof scenario_name" />
+    <NotebookCell cellId={4} />
+    <NotebookCell cellId={5} />
+    <NotebookCell cellId={6} />
 
-    <NotebookCell cellName="treemap_2" />
+    <NotebookCell cellId={7} />
 
     Given our observation that the scenario holds, we can discard the areas in white as no longer applicable given this new information.
 
-    <NotebookCell cellName="treemap_3" />
+    <NotebookCell cellId={8} />
 
     Turning this back into formulas we can write:
 
-    <NotebookCell cellName="coloured_formulas" />
-    <NotebookCell cellName="coloured_formulas_2" />
+    $	ext{match probability} = \frac{\colorbox{yellow}{\text{yellow area}}}{\colorbox{yellow}{\text{yellow area}} + \colorbox{#35cbff}{\text{blue area}}}$
+
+    The yellow area is $\lambda m$ and the blue area is $(1-\lambda)u$.
 
     Substituting in numbers we have:
 
-    <NotebookCell cellName="formula_with_numbers" />
+    <NotebookCell cellId={9} />
 
 
 
