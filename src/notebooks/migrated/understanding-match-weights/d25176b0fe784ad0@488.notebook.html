@@ -265,7 +265,7 @@
       let p = d["match_probability"].toPrecision(3);
       let m_part = d["size_of_match_portion"].toPrecision(3);
       let u_part = d["size_of_non_match_portion"].toPrecision(3);
-      return `\\frac{${m_tex}}{(${m_tex}) + (${u_tex})}  \\newline\[10pt] = \\frac{${m_part}}{${m_part} + ${u_part}}  \\newline\[10pt] = ${p}`;
+      return `\\frac{${m_tex}}{(${m_tex}) + (${u_tex})}  \\newline = \\frac{${m_part}}{${m_part} + ${u_part}}  \\newline = ${p}`;
     }
   </script>
 

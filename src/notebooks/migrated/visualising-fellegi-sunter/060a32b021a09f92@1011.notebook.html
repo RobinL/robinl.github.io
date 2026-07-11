@@ -29,7 +29,7 @@
   <script id="7" type="application/vnd.observable.javascript">
     para_1 = md`The [previous article](https://www.robinlinacre.com/maths_of_fellegi_sunter/) presented an implementation of the Fellegi Sunter model.  We showed that match probability could be represented by Equation 1 - which is reproduced below:
     ${texd`
-    \operatorname{Pr}(\text{records match}|\gamma_{1},\gamma_{2},\ldots,\gamma_{K})  \newline [10pt] = \frac{\lambda m_{1\ell}m_{2\ell}\ldots m_{K\ell}}{\lambda m_{1\ell}m_{2\ell}\ldots m_{K\ell}+ (1-\lambda)u_{1\ell}u_{1\ell} \ldots u_{K\ell}} `}
+    \operatorname{Pr}(\text{records match}|\gamma_{1},\gamma_{2},\ldots,\gamma_{K})  \newline = \frac{\lambda m_{1\ell}m_{2\ell}\ldots m_{K\ell}}{\lambda m_{1\ell}m_{2\ell}\ldots m_{K\ell}+ (1-\lambda)u_{1\ell}u_{1\ell} \ldots u_{K\ell}} `}
     
     `
   </script>
@@ -79,7 +79,7 @@
   <script id="15" type="application/vnd.observable.javascript">
     para_6 = md`Using only this information, our estimate of match probability is just the prior:
     
-    ${texd`\text{match probability} =  \frac{\lambda }{\lambda + (1-\lambda)}  \newline [10pt] = \frac{\colorbox{${color_match.hex()}}{\text{yellow area}}}{\colorbox{${color_match.hex()}}{\text{yellow area}} + \colorbox{${color_non_match.hex()}}{\text{blue area}} }= ${splink_settings[
+    ${texd`\text{match probability} =  \frac{\lambda }{\lambda + (1-\lambda)}  \newline = \frac{\colorbox{${color_match.hex()}}{\text{yellow area}}}{\colorbox{${color_match.hex()}}{\text{yellow area}} + \colorbox{${color_non_match.hex()}}{\text{blue area}} }= ${splink_settings[
       "proportion_of_matches"
     ].toPrecision(4)} `}
     
