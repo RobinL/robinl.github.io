@@ -2,15 +2,9 @@ import * as d3 from 'd3';
 import { require as cdnRequire } from 'd3-require';
 import * as Inputs from '@observablehq/inputs';
 import vegaEmbed from 'vega-embed';
+import { createObservableVegaEmbed } from '../../lib/notebooks/observable-vega-embed';
 
-export function createLegacyVegaEmbed(embed, createContainer = () => document.createElement('div')) {
-  return function legacyVegaEmbed(...args) {
-    if (args.length !== 1) return embed(...args);
-
-    const container = createContainer();
-    return Promise.resolve(embed(container, args[0])).then(() => container);
-  };
-}
+export const createLegacyVegaEmbed = createObservableVegaEmbed;
 
 export const legacyVegaEmbed = createLegacyVegaEmbed(vegaEmbed);
 

@@ -14,7 +14,7 @@ const startEndDate = d3.extent(routes, (route) => route.date);
 const totalMiles = d3.sum(routes, (route) => route.distance);
 const averageMiles = d3.mean(routes, (route) => route.distance);
 const flightKwh = flying.flying_miles_to_kwh(totalMiles);
-const tonnesCo2 = flightKwh * convert.per('kg_co2_jet_fuel/kwh') / 1000;
+const tonnesCo2 = flightKwh * convert.per('kg_co2_from_jet_fuel/kwh') / 1000;
 const formatDate = (date) => date.toISOString().split('T')[0];
 const years = Math.abs(Math.round(((startEndDate[1] - startEndDate[0]) / 1000 / 60 / 60 / 24) / 365.25));
 

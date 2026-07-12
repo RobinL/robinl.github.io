@@ -9,13 +9,17 @@ import * as vegaLiteApi from 'vega-lite-api';
 import * as topojson from 'topojson-client';
 import world from 'world-atlas/world/110m.json';
 import usa from 'us-atlas/us/states-10m.json';
+import {createObservableVegaEmbed} from './observable-vega-embed';
 
 export {Inputs, d3, topojson};
 export {world};
 export {usa};
 export const d3geo = d3;
 export const d3format = d3;
-export const embed = embedImport;
+// Recovered Observable notebooks call Vega Embed with a single spec argument.
+// The package ESM API instead expects (element, spec), so retain Observable's
+// one-argument container behaviour while still allowing the normal ESM form.
+export const embed = createObservableVegaEmbed(embedImport) as typeof embedImport;
 export const alasql = alasqlImport;
 export const levenshtein = levenshteinImport;
 export const vl = vegaLiteApi.register(vega, vegalite, {

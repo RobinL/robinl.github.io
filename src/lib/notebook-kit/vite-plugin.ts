@@ -181,9 +181,14 @@ export function notebookKitCells(): Plugin {
     async resolveId(source, importer, options) {
       if (!source.endsWith(NOTEBOOK_SUFFIX)) return null;
 
-      // Vite supplies this flag to plugin hooks during dependency scanning, but it is not
-      // currently declared on the public ResolveIdHook options type.
-      if ((options as typeof options & { scan?: boolean }).scan) return null;
+      // Notebook HTML is compiled by this plugin when Vite loads the actual module.
+      // During optimizeDeps scanning, externalise it: esbuild otherwise parses the
+      // Observable import syntax as ordinary ESM and reports spurious missing exports,
+      // causing dependency optimisation (and subsequently dev-server URLs) to go stale.
+      // Vite supplies `scan` internally but does not declare it on the public type.
+      if ((options as typeof options & { scan?: boolean }).scan) {
+        return {id: source, external: true};
+      }
 
       const resolved = await this.resolve(source, importer, { skipSelf: true });
       return resolved ? `${resolved.id}${COMPILED_QUERY}` : null;
