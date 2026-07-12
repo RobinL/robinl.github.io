@@ -14,10 +14,26 @@ export type LegacySplinkSettings = {
 export const defaultSplinkSettings = `{
   "proportion_of_matches": 0.001,
   "comparison_columns": [
-    {"col_name":"fname","u_probabilities":[0.8,0.2],"m_probabilities":[0.2,0.8]},
-    {"col_name":"sname","u_probabilities":[0.9,0.1],"m_probabilities":[0.2,0.8]},
-    {"col_name":"dob","u_probabilities":[0.99,0.01],"m_probabilities":[0.2,0.8]},
-    {"col_name":"town","u_probabilities":[0.7,0.3],"m_probabilities":[0.3,0.7]}
+    {
+      "col_name": "fname",
+      "u_probabilities": [0.8, 0.2],
+      "m_probabilities": [0.2, 0.8]
+    },
+    {
+      "col_name": "sname",
+      "u_probabilities": [0.9, 0.1],
+      "m_probabilities": [0.2, 0.8]
+    },
+    {
+      "col_name": "dob",
+      "u_probabilities": [0.99, 0.01],
+      "m_probabilities": [0.2, 0.8]
+    },
+    {
+      "col_name": "town",
+      "u_probabilities": [0.7, 0.3],
+      "m_probabilities": [0.3, 0.7]
+    }
   ]
 }`;
 

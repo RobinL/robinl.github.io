@@ -616,6 +616,27 @@ button {
   padding: 0.25rem 0.45rem;
 }
 
+/* The original EM notebook places each long control description above its
+   slider. Observable Inputs otherwise reserves a fixed, narrow label column. */
+.em-algorithm-notebook form.inputs-3a86ea {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
+.em-algorithm-notebook form.inputs-3a86ea > label {
+  width: 100%;
+  margin-right: 0;
+  padding: 0 0 0.2rem;
+  white-space: nowrap;
+}
+
+.em-algorithm-notebook form.inputs-3a86ea > .inputs-3a86ea-input {
+  width: 240px;
+}
+
 .prob-nav {
   border-radius: var(--radius);
   background: #f3f4f6;
