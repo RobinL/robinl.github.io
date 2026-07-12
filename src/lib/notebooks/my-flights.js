@@ -3,8 +3,8 @@ import versor from 'versor';
 import {feature} from 'topojson-client';
 import {convert} from '@robinl/energy_usage/src/convert.js';
 import {flying} from '@robinl/energy_usage/src/flying.js';
-import routesCsv from '../../notebooks/migrated/my-flights/my-flights.csv?raw';
-import world from '../../notebooks/migrated/my-flights/world-110m.json';
+import routesCsv from '../../notebooks/assets/my-flights/my-flights.csv?raw';
+import world from '../../notebooks/assets/my-flights/world-110m.json';
 
 const routes = d3.csvParse(routesCsv, d3.autoType).map((route) => {
   route.random = ((Math.random() - 0.5) * route.distance) / 1000;

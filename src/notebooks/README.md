@@ -4,15 +4,11 @@ Notebook source lives here as standard Observable Notebook Kit HTML. Astro's Vit
 compiles each `.notebook.html` import on demand with Notebook Kit's `deserialize` and
 `transpile` functions; no generated notebook package is committed.
 
-All 28 notebook-backed posts use this path. Twelve are native Notebook 2.0 notebooks with thin cells
-and ordinary TypeScript modules under `src/lib/notebooks`. These include the energy and match-weight
-calculators; the four core Fellegi-Sunter tutorial notebooks; the visual Fellegi-Sunter walkthrough;
-both m/u generators; the match-weight-dependencies article; the posterior treemap; and the
-probability/Bayes-factor conversion tool. The notebooks under `migrated/` were
-reconstructed from the former Observable 1.0 packages. They use Notebook Kit's standard
-`application/vnd.observable.javascript` migration cell type, including supported `viewof` and
-`mutable` syntax. Their imported child notebooks are local `.notebook.html` files rather than
-generated `define(runtime, observer)` packages.
+All notebook-backed posts now use a single, local Notebook Kit source file in this directory.
+Notebook cells are limited to presentation and reactive wiring; calculations, data preparation,
+controls, and chart construction live in ordinary modules under `src/lib/notebooks`. Stable data
+and HTML inputs used by those modules live under `src/notebooks/assets`. The recovered Observable
+package graphs used during migration have been removed.
 
 Keep cells focused on reactivity and presentation. Put reusable logic in
 `src/lib/notebooks`, import it from the notebook like normal application code, and cover it

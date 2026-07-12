@@ -1,8 +1,8 @@
 import * as Inputs from '@observablehq/inputs';
-import glossary from '../../notebooks/migrated/spark-explain/spark-glossary.json';
-import sparkExplainHtml from '../../notebooks/migrated/spark-explain/spark-ui.html?raw';
-import sortHtml from '../../notebooks/migrated/understanding-the-spark-ui-by-example-sorting-data/sql-tab.html?raw';
-import leftJoinHtml from '../../notebooks/migrated/understanding-the-spark-ui-by-example-the-left-join/sql-tab.html?raw';
+import glossary from '../../notebooks/assets/spark-ui/spark-glossary.json';
+import sparkExplainHtml from '../../notebooks/assets/spark-ui/spark-ui.html?raw';
+import sortHtml from '../../notebooks/assets/spark-ui/sort-sql-tab.html?raw';
+import leftJoinHtml from '../../notebooks/assets/spark-ui/left-join-sql-tab.html?raw';
 
 export {sparkExplainHtml, sortHtml, leftJoinHtml};
 

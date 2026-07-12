@@ -1,7 +1,7 @@
 import * as turf from '@turf/turf';
 import * as d3 from 'd3';
 import {feature} from 'topojson-client';
-import ukTopology from '../../notebooks/migrated/filling-the-country-with-solar-panels/uk-topo.json';
+import ukTopology from '../../notebooks/assets/solar-country/uk-topo.json';
 
 type ValueForm = HTMLFormElement & {value: number; input: HTMLInputElement; output: HTMLOutputElement};
 

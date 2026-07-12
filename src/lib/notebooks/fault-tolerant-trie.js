@@ -290,9 +290,10 @@ const SUCCESS_COLOR = "#2ca02c";
     if (typeof renderTraceStepsTable === "function") {
       const tableEl = renderTraceStepsTable(trace);
       if (tableEl) {
-        container.appendChild(
-          md`The following explains how the algorithm walked through the trie from root to branch token by token:`
-        );
+        const explanation = document.createElement("p");
+        explanation.textContent =
+          "The following explains how the algorithm walked through the trie from root to branch token by token:";
+        container.appendChild(explanation);
         container.appendChild(tableEl);
       }
     }
@@ -993,7 +994,10 @@ class TrieNode {
   const build = (rows) => {
     const root = new TrieNode();
 
-    for (const [uprn, text] of rows) {
+    for (const row of rows) {
+      const [uprn, text] = Array.isArray(row)
+        ? row
+        : [row.uprn, row.address ?? row.text];
       const tokens = text.split(" ").reverse();
       let node = root;
 
@@ -1197,4 +1201,3 @@ export function createMessyAddressInput() {
 export function buildAddressTrie(text) { const lines=text.split('\\n').map(d=>d.trim()).filter(Boolean).map((address,i)=>({uprn:i+1,address})); return buildReverseTrie(lines); }
 export function renderAddressTrace(address,trie) { return show_highlighted_trie_using_d3(address,trie); }
 export function renderExampleTrie() { const lines=hard_coded_addresses.split('\\n').map(d=>d.trim()).filter(Boolean).map((address,i)=>({uprn:i+1,address})); return show_trie_using_d3(buildReverseTrie(lines)); }
-

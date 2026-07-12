@@ -8,7 +8,7 @@ type NotebookLoader = () => Promise<NotebookModule>;
 
 const notebooks = {
   '86fc30325e4106c4': () =>
-    import('../../notebooks/migrated/86fc30325e4106c4/86fc30325e4106c4@851.notebook.html'),
+    import('../../notebooks/archived-maths-fellegi-sunter.notebook.html'),
   'bf-prior-calc': () =>
     import('../../notebooks/bf-prior-calc.notebook.html'),
   'bird-song-quiz': () =>
@@ -49,21 +49,15 @@ const notebooks = {
   'spark-explain': () =>
     import('../../notebooks/spark-explain.notebook.html'),
   'the-carbon-impact-of-switiching-to-an-electric-car': () =>
-    import(
-      '../../notebooks/migrated/the-carbon-impact-of-switiching-to-an-electric-car/a74844ec61541eb4@1053.notebook.html'
-    ),
+    import('../../notebooks/carbon-electric-car.notebook.html'),
   'understanding-match-weights': () =>
-    import(
-      '../../notebooks/migrated/understanding-match-weights/94c3728fad39c9e8@644.notebook.html'
-    ),
+    import('../../notebooks/understanding-match-weights.notebook.html'),
   'understanding-the-spark-ui-by-example-sorting-data': () =>
     import('../../notebooks/spark-sort.notebook.html'),
   'understanding-the-spark-ui-by-example-the-left-join': () =>
     import('../../notebooks/spark-left-join.notebook.html'),
   'unsupervised-probabalistic-data-matching-using-the-expec': () =>
-    import(
-      '../../notebooks/migrated/unsupervised-probabalistic-data-matching-using-the-expec/20c8b34dc8ac7754@1041.notebook.html'
-    ),
+    import('../../notebooks/em-algorithm-interactive.notebook.html'),
   'updating-a-prior-simplified': () =>
     import('../../notebooks/posterior-treemap.notebook.html'),
   'visualising-fellegi-sunter': () =>

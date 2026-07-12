@@ -4,8 +4,8 @@ import versor from 'versor';
 import {feature} from 'topojson-client';
 import {convert} from '@robinl/energy_usage/src/convert.js';
 import {flying} from '@robinl/energy_usage/src/flying.js';
-import airportsText from '../../notebooks/migrated/flight-distance-calculator/airports.dat?raw';
-import world from '../../notebooks/migrated/flight-distance-calculator/world-110m.json';
+import airportsText from '../../notebooks/assets/flight-distance/airports.dat?raw';
+import world from '../../notebooks/assets/flight-distance/world-110m.json';
 
 const airports = d3.csvParse('id,name,city,country,iata,icao,lat,lng\n' + airportsText, d3.autoType);
 const airportsByIcao = new Map(airports.map((airport) => [airport.icao, airport]));

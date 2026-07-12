@@ -1,12 +1,12 @@
 import embed from 'vega-embed';
-import countriesRaw from '../../notebooks/migrated/energy-usage-and-goods-imports-and-exports/countries.json';
-import finalEnergyRaw from '../../notebooks/migrated/energy-usage-and-goods-imports-and-exports/final-energy-2014.json';
-import finalEnergyDefinition from '../../notebooks/migrated/energy-usage-and-goods-imports-and-exports/final-energy-definition.json';
-import populationRaw from '../../notebooks/migrated/energy-usage-and-goods-imports-and-exports/population-2014.json';
-import primaryEnergyRaw from '../../notebooks/migrated/energy-usage-and-goods-imports-and-exports/primary-energy-2014.json';
-import primaryEnergyDefinition from '../../notebooks/migrated/energy-usage-and-goods-imports-and-exports/primary-energy-definition.json';
-import countryCodes from '../../notebooks/migrated/energy-usage-and-goods-imports-and-exports/world-country-codes.json';
-import world from '../../notebooks/migrated/energy-usage-and-goods-imports-and-exports/world-110m.json';
+import countriesRaw from '../../notebooks/assets/country-energy/countries.json';
+import finalEnergyRaw from '../../notebooks/assets/country-energy/final-energy-2014.json';
+import finalEnergyDefinition from '../../notebooks/assets/country-energy/final-energy-definition.json';
+import populationRaw from '../../notebooks/assets/country-energy/population-2014.json';
+import primaryEnergyRaw from '../../notebooks/assets/country-energy/primary-energy-2014.json';
+import primaryEnergyDefinition from '../../notebooks/assets/country-energy/primary-energy-definition.json';
+import countryCodes from '../../notebooks/assets/country-energy/world-country-codes.json';
+import world from '../../notebooks/assets/country-energy/world-110m.json';
 
 type WorldBankRow = {country: {id: string}; countryiso3code: string; indicator: {value: string}; value: number | null};
 type CountryRow = {id: string; iso2Code: string};

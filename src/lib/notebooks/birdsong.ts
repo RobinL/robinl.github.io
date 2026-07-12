@@ -1,11 +1,11 @@
 import {csvParse, autoType} from 'd3';
 import * as Inputs from '@observablehq/inputs';
-import birdsListCsv from '../../notebooks/migrated/birdsong-recordings/birds-list.csv?raw';
-import britishBirdsCsv from '../../notebooks/migrated/bird-song-quiz/british-birds.csv?raw';
-import top10Csv from '../../notebooks/migrated/bird-song-quiz/top-10.csv?raw';
-import top20Csv from '../../notebooks/migrated/bird-song-quiz/top-20.csv?raw';
-import top30Csv from '../../notebooks/migrated/bird-song-quiz/top-30.csv?raw';
-import top40Csv from '../../notebooks/migrated/bird-song-quiz/top-40.csv?raw';
+import birdsListCsv from '../../notebooks/assets/birdsong/birds-list.csv?raw';
+import britishBirdsCsv from '../../notebooks/assets/birdsong/british-birds.csv?raw';
+import top10Csv from '../../notebooks/assets/birdsong/top-10.csv?raw';
+import top20Csv from '../../notebooks/assets/birdsong/top-20.csv?raw';
+import top30Csv from '../../notebooks/assets/birdsong/top-30.csv?raw';
+import top40Csv from '../../notebooks/assets/birdsong/top-40.csv?raw';
 
 export type Bird = {
   common_name: string;

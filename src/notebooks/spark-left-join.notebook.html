@@ -49,7 +49,10 @@ Technical note: To make this post more informative, I've asked Spark to use a [s
 
 `); const intro = null;
   </script>
-  <script id="4" type="module" hidden>const annotations = {
+  <script id="4" type="module" hidden>const exchange = `Spark has seen the left join on \`dest\`.  In order to perform this join, data needs to be sorted by the \`dest\` column.  Spark uses a hash partition using the default 200 shuffle partitions (see original tooltip) to split the data between executors.  The data from both the \`parquet\` and the \`csv\` file will be hashpartitioned on the \`dest\` field. This means data from the same \`dest\` ends up on the same executor node (computer), meaning that this part of data can be joined without further shuffles.
+
+This process will work well if the data is evenly distributed across \`dest\` values. We can get an indication of whether this is the case from the timings: if the maximum timing is much greater than the median, we probably have a problem.`;</script>
+  <script id="5" type="module" hidden>const annotations = {
  cluster_7: `Spark has generated optimised Java code that combines three operations:  read the data, filter it, and select the requested columns (project).  Since the incoming data is in multiple files, Spark will be able to perform these operations in parallel.
     
 The timings are  \`28.9 s (302 ms, 1.2 s, 2.3 s)\`.  These numbers are total (min, median, max).  They give us basic information about how effectively parallelisation has worked.  A large disparity between median and max may be indicative of data skew (i.e. one part of the data taking a lot longer to process than others, and thereby holding up the whole operation)
@@ -127,4 +130,3 @@ display(md`## References and useful resources:
   <script id="12" type="module">display(sparkStyles()); const mystyles = null;</script>
   <script id="13" type="module">display(renderSparkMetadata(leftJoinHtml)); const metadata = null;</script>
 </notebook>
-
