@@ -53,35 +53,44 @@ describe('compileNotebook', () => {
     expect(module).not.toContain('cdn.jsdelivr.net');
   });
 
-  it('preserves legacy view and mutable runtime semantics', async () => {
+  it('preserves native reactive view semantics', async () => {
     const defineNotebook = await importCompiledNotebook(`<!doctype html>
       <notebook>
-        <script id="1" type="application/vnd.observable.javascript">
-          viewof choice = ({value: 7, addEventListener() {}, removeEventListener() {}})
+        <script id="1" type="module">
+          const choice = view(({value: 7, addEventListener() {}, removeEventListener() {}}));
         </script>
-        <script id="2" type="application/vnd.observable.javascript">mutable count = 2</script>
-        <script id="3" type="application/vnd.observable.javascript">
-          result = choice + count
+        <script id="2" type="module">
+          const result = choice + 2;
         </script>
       </notebook>`);
     const runtime = new NotebookRuntime();
-    const main = defineNotebook(runtime.runtime);
+    for (const cell of defineNotebook.cells) {
+      runtime.define(
+        {root: document.createElement('div'), expanded: [], variables: []},
+        cell
+      );
+    }
 
-    await expect(valueWithin(main, 'viewof choice')).resolves.toMatchObject({ value: 7 });
-    await expect(valueWithin(main, 'choice')).resolves.toBe(7);
-    await expect(valueWithin(main, 'count')).resolves.toBe(2);
-    await expect(valueWithin(main, 'result')).resolves.toBe(9);
+    await expect(valueWithin(runtime.main, 'choice')).resolves.toBe(7);
+    await expect(valueWithin(runtime.main, 'result')).resolves.toBe(9);
     runtime.runtime.dispose();
+  });
+
+  it('rejects legacy Observable cells so compatibility syntax cannot return', () => {
+    expect(() => compileNotebook(`<!doctype html>
+      <notebook>
+        <script id="1" type="application/vnd.observable.javascript">answer = 42</script>
+      </notebook>`)).toThrow('must be migrated to a module cell');
   });
 
   it('emits local file attachments as Vite-managed asset imports', () => {
     const module = compileNotebook(`<!doctype html>
       <notebook>
-        <script id="1" type="application/vnd.observable.javascript">
-          data = FileAttachment("example.csv").csv()
+        <script id="1" type="module">
+          const data = FileAttachment("example.csv").csv();
         </script>
-        <script id="2" type="application/vnd.observable.javascript">
-          page = FileAttachment("example.html").text()
+        <script id="2" type="module">
+          const page = FileAttachment("example.html").text();
         </script>
       </notebook>`);
 

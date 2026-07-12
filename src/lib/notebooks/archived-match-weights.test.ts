@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest';
-import {comparisonRow, defaultSplinkSettings, matchProbability, waterfallData} from './legacy-match-weights';
+import {comparisonRow, defaultSplinkSettings, matchProbability, waterfallData} from './archived-match-weights';
 
 describe('archived match-weight article model', () => {
   it('keeps the comparison selectors wired to the waterfall and posterior', () => {

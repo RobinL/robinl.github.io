@@ -64,64 +64,11 @@ function __resolveFileAttachment(name) {
       display: ${cell.mode === 'js' || cell.mode === 'ts'},
       autodisplay: ${serialize(compiled.autodisplay)},
       autoview: ${serialize(compiled.autoview)},
-      automutable: ${serialize(compiled.automutable)},
       files: ${serialize(Array.from(compiled.files ?? []))}
     }`;
   });
 
-  return `${fileSupport}function observeMutable(initialize) {
-  let resolve;
-  let reject;
-  let value;
-  let stale = false;
-  const dispose = initialize((next) => {
-    value = next;
-    if (resolve) {
-      resolve(next);
-      resolve = reject = undefined;
-    } else {
-      stale = true;
-    }
-  });
-  return {
-    async next() {
-      return {
-        done: false,
-        value: await (stale
-          ? ((stale = false), value)
-          : new Promise((res, rej) => ((resolve = res), (reject = rej))))
-      };
-    },
-    async return() {
-      reject?.(new Error("Generator returned"));
-      resolve = reject = undefined;
-      dispose?.();
-      return {done: true, value: undefined};
-    },
-    [Symbol.asyncIterator]() { return this; }
-  };
-}
-
-function createMutable(value) {
-  let change;
-  return Object.defineProperty(observeMutable((notify) => {
-    change = notify;
-    if (value !== undefined) notify(value);
-  }), "value", {
-    get: () => value,
-    set: (next) => ((value = next), change?.(value))
-  });
-}
-
-function createMutator(value) {
-  const mutable = createMutable(value);
-  return [mutable, {
-    get value() { return mutable.value; },
-    set value(next) { mutable.value = next; }
-  }];
-}
-
-function defineNotebook(runtime, observer = () => null) {
+  return `${fileSupport}function defineNotebook(runtime, observer = () => null) {
   const main = runtime.module();
   if (defineNotebook.FileAttachment) {
     main.variable().define("FileAttachment", [], () => defineNotebook.FileAttachment);
@@ -141,13 +88,6 @@ function defineNotebook(runtime, observer = () => null) {
         const viewName = \`viewof \${name}\`;
         main.variable(observer(viewName)).define(viewName, inputs, definition.body);
         main.variable(observer(name)).define(name, ["Generators", viewName], (Generators, value) => Generators.input(value));
-      } else if (definition.automutable) {
-        const name = output.slice("mutable ".length);
-        const cellName = \`cell \${definition.id}\`;
-        main.define(output, inputs, definition.body);
-        main.define(cellName, [output], createMutator);
-        main.variable(observer(name)).define(name, [cellName], ([mutable]) => mutable);
-        main.variable(true).define(\`mutable$\${name}\`, [cellName], ([, mutator]) => mutator);
       } else {
         main.variable(observer(output)).define(output, inputs, definition.body);
       }
@@ -170,7 +110,12 @@ export default defineNotebook;
 
 export function compileNotebook(html: string): string {
   const parser = new window.DOMParser();
-  return renderNotebookModule(deserialize(html, { parser }));
+  const notebook = deserialize(html, { parser });
+  const legacyCell = notebook.cells.find((cell) => cell.mode === 'ojs');
+  if (legacyCell) {
+    throw new Error(`Legacy Observable cell ${legacyCell.id ?? '(without id)'} must be migrated to a module cell`);
+  }
+  return renderNotebookModule(notebook);
 }
 
 export function notebookKitCells(): Plugin {

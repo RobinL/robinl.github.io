@@ -3,331 +3,353 @@
   <title>Understanding match weights</title>
 
   <script id="1" type="module" hidden>
-    import {inputs, default_splink_settings, get_m_u_chart, get_bayes_factor_chart, get_waterfall_chart, get_match_probability_components, comparisonRow} from "../lib/notebooks/legacy-match-weights";
+    import {inputs, default_splink_settings, get_m_u_chart, get_bayes_factor_chart, get_waterfall_chart, get_match_probability_components, comparisonRow} from "../lib/notebooks/archived-match-weights";
   </script>
 
-  <script id="5" type="application/vnd.observable.javascript">
-    title = md`# Understanding match weights`
+  <script id="5" type="module">
+    const title = md`# Understanding match weights`;
+    display(title);
   </script>
 
-  <script id="6" type="application/vnd.observable.javascript">
-    para_1 = md`Some columns are more important than others to the calculation of overall match probability.  For example, a match on date of birth provides stronger evidence in favour of a match than a match on gender.
-    
+  <script id="6" type="module">
+    const para_1 = md`Some columns are more important than others to the calculation of overall match probability.  For example, a match on date of birth provides stronger evidence in favour of a match than a match on gender.
+
     The relative importance of columns is quantified in a model's _match weights_.
-    
-    In this article, we explore the concept of match weights, using visualisations to help build intuition for how they work.  
-    
+
+    In this article, we explore the concept of match weights, using visualisations to help build intuition for how they work.
+
     The annex to this article presents the maths for how our implementation of the Fellegi Sunter model can be decomposed into a series of match weights.
-    
-    `
+
+    `;
+    display(para_1);
   </script>
 
-  <script id="7" type="application/vnd.observable.javascript">
-    para_2 = md`## Match weights 
-    
+  <script id="7" type="module">
+    const para_2 = md`## Match weights
+
     A single comparison column provides evidence in favour or against a match, but this evidence is rarely conclusive.  The ambiguity arises because any observation on the comparison column is consistent with two possibilities.
-    
-    
-    
+
+
+
     - **A match on a column is consistent with the possibility that the entities match, but could also be due to two different entities sharing the same information (a 'collision').**
-    
+
       The comparative likelihood of these two possibilities is a measure of the amount of evidence in favour of a match.  That is, we want to compare:
-      
+
       ${tex`\operatorname{Pr}(\text{column matches}|\text{records match})`} vs. ${tex`\operatorname{Pr}(\text{column matches}|\text{records do not match})`}
-    
+
       or, using the more succinct notation of m and u probabilities:
-    
+
       ${tex`m_\text{col, level 1}`} vs. ${tex`u_\text{col, level 1}`}.
-    
-    
+
+
     - **A non-match on a column is consistent with the possibility the entities differ, but could also be due to typos or other variations in how information has been recorded about the same entity.**
-      
-       The comparative likelihood of these two possibilities is a measure of the amount of evidence against a match.  
-      
+
+       The comparative likelihood of these two possibilities is a measure of the amount of evidence against a match.
+
         ${tex`\operatorname{Pr}(\text{column mismatches}|\text{records match})`} vs. ${tex`\operatorname{Pr}(\text{column mismatches}|\text{records do not match})`}
-    
+
       or, using the more succinct notation of m and u probabilities:
-    
+
       ${tex`m_\text{col, level 0}`} vs. ${tex`u_\text{col, level 0}`}.
-    
+
     We use the ratio of these values to compare their magnitude.  This ratio is known as a Bayes Factor.
-    
-    `
+
+    `;
+    display(para_2);
   </script>
 
-  <script id="8" type="application/vnd.observable.javascript">
-    para_3 = md`## Bayes Factors
-    
+  <script id="8" type="module">
+    const para_3 = md`## Bayes Factors
+
     Mathematically we can define the [Bayes Factor](https://betterexplained.com/articles/understanding-bayes-theorem-with-ratios/) for a given comparison column as:
-    
+
     ${texd`K_\text{col, level} =  \frac{m_\text{col, level}}{u_\text{col, level}}= \frac{\operatorname{Pr}(\gamma_\text{col,level}|\text{records match})}{\operatorname{Pr}(\gamma_\text{col,level}|\text{records do not match})}`}
-    
-    
+
+
     Bayes factors can be explained in words.  For example, a Bayes Factor of 20 for a given column means that an overall match is now 20 times more probable.  A Bayes Factor of ${tex`\frac{1}{10}`} for a given column means an overall match is 10 times less probable.
-    
+
     In this sense, a Bayes Factor is are similar to the concept of odds.  Odds of 4 mean that an even happens four out of five times, or in some sense it is four times more likely for the even to happen than not happen.
-    
+
     However, Bayes Factors differ from odds in that they are only meaningful in the context of a prior.  A Bayes Factor is an adjustment - it tells us something is more or less likely.  But we need a starting value - otherwise there's nothing to apply the adjustment to.
-    
+
     Let's see how this works:
-    
-    
-    `
+
+
+    `;
+    display(para_3);
   </script>
 
-  <script id="9" type="application/vnd.observable.javascript">
-    viewof prior = inputs.range([0, 1], {
+  <script id="9" type="module">
+    const prior = view(inputs.range([0, 1], {
       step: 0.01,
       label: `prior probability =`,
       value: 0.5
-    })
+    }));
   </script>
 
-  <script id="10" type="application/vnd.observable.javascript">
-    viewof m = inputs.range([0, 1], {
+  <script id="10" type="module">
+    const m = view(inputs.range([0, 1], {
       step: 0.01,
       label: tex`m_\text{col, level} =`,
       value: 0.8
-    })
+    }));
   </script>
 
-  <script id="11" type="application/vnd.observable.javascript">
-    viewof u = inputs.range([0, 1], {
+  <script id="11" type="module">
+    const u = view(inputs.range([0, 1], {
       step: 0.01,
       label: tex`u_\text{col, level} =`,
       value: 0.2
-    })
+    }));
   </script>
 
-  <script id="12" type="application/vnd.observable.javascript">
-    bf = tex`\text{Bayes Factor} = \frac{m_\text{col, level}}{u_\text{col, level}} = \frac{${m}}{${u}} = ${(
+  <script id="12" type="module">
+    const bf = tex`\text{Bayes Factor} = \frac{m_\text{col, level}}{u_\text{col, level}} = \frac{${m}}{${u}} = ${(
       m / u
-    ).toPrecision(4)} `
+    ).toPrecision(4)} `;
+    display(bf);
   </script>
 
-  <script id="13" type="application/vnd.observable.javascript">
-    post = tex`\text{posterior} = \frac{\text{prior}\times m}{\text{prior}\times m + (1-\text{prior})\times u}= ${(
+  <script id="13" type="module">
+    const post = tex`\text{posterior} = \frac{\text{prior}\times m}{\text{prior}\times m + (1-\text{prior})\times u}= ${(
       (prior * m) /
       (prior * m + (1 - prior) * u)
-    ).toPrecision(4)}`
+    ).toPrecision(4)}`;
+    display(post);
   </script>
 
-  <script id="14" type="application/vnd.observable.javascript">
-    subhead_1 = md`## Match weights`
+  <script id="14" type="module">
+    const subhead_1 = md`## Match weights`;
+    display(subhead_1);
   </script>
 
-  <script id="15" type="application/vnd.observable.javascript">
-    para_4 = md`Finally, it can be convenient to take the logarithm of Bayes Factors because this [enables match weights to be added together](https://math.stackexchange.com/questions/965500/intuitive-understanding-of-logarithms) rather than being multiplied.
-    
+  <script id="15" type="module">
+    const para_4 = md`Finally, it can be convenient to take the logarithm of Bayes Factors because this [enables match weights to be added together](https://math.stackexchange.com/questions/965500/intuitive-understanding-of-logarithms) rather than being multiplied.
+
     ${texd`\text{match weight for dob} =  \log(K_\text{col, level})`}
-    
+
     This transformation is also useful for visualising match weights.  Bayes factors are difficult to represent on a single scale becuse they represent ratios, which can be very large or very tiny, whereas log bayes factors can easily be viewed and compared on a single scale.
-    `
+    `;
+    display(para_4);
   </script>
 
-  <script id="16" type="application/vnd.observable.javascript">
-    para_5 = md`## Determinants of match weights
-    
+  <script id="16" type="module">
+    const para_5 = md`## Determinants of match weights
+
     ### Column matches
-    
-    Where a column matches, the key determinant of match weight is the cardinality of the column (the number of unique values).  
-    
+
+    Where a column matches, the key determinant of match weight is the cardinality of the column (the number of unique values).
+
     For example, imagine we are linking a dataset of children, and consider the date of birth field.
-    
-    The Bayes Factor is ${tex`\frac{m_\text{dob, level 1}}{u_\text{dob, level 1}}`}  
-    
+
+    The Bayes Factor is ${tex`\frac{m_\text{dob, level 1}}{u_\text{dob, level 1}}`}
+
     The numerator is the probability that date of birth matches amongst records which truly match.
-    
+
     This is likely to be high.  With good data quality it will approach 1.0, and even with poor data quality it's likely to be above 0.8.
-    
-    The term ${tex`u_\text{dob, level 1}`} is the probability that date of birth matches amongst records which do not match.  
-    
-    
+
+    The term ${tex`u_\text{dob, level 1}`} is the probability that date of birth matches amongst records which do not match.
+
+
     This is likely to be very small.  If the children are aged below 18, then there will be ${tex`18 \times 365`} = ${(
       18 * 365
     ).toLocaleString()} different dates of birth.  We can therefore estimate that:
-    
+
     ${texd`u_\text{dob, level 1} = \frac{1}{${18 * 365}} = ${(
       1 /
       (18 * 365)
     ).toPrecision(4)}`}
-    
+
     Let's assume that the numerator is 0.9.  The Bayes Factor would be ${tex`\frac{0.9}{${(
       1 /
       (18 * 365)
     ).toPrecision(4)}}`} = ${
       0.9 * 18 * 365
-    }  i.e. very strong evidence in favour of a match.    
-    
+    }  i.e. very strong evidence in favour of a match.
+
     The denominator drives this result - the precise value of the numerator does not matter much.
-    
+
     ### Column does not match
-    
+
     Where a column does not match, the key deterinant of match weight is the probability of mismatches among records that truly match.  This could be due to typos, transcription errors, or other reasons for variation in data (e.g. change of address).  Loosely speaking, this is a measure of data quality.
-    
+
     For example, imagine we are linking a large dataset of people, and consider the gender field.  Imagine this is recorded with high precision, and for the sake of this example, suppose no-one in the dataset has changed their gender.
-    
-    The Bayes Factor is ${tex`\frac{m_\text{gender, level 0}}{u_\text{gender, level 0}}`}  
-    
+
+    The Bayes Factor is ${tex`\frac{m_\text{gender, level 0}}{u_\text{gender, level 0}}`}
+
     The numerator tells us how often we observe a mismatch on gender amongst truly matching records.  Since data is entered with high precision, this number is low.  Let's say the rate of error is one in a thousand.
-    
+
     The denominator tells us how often we observe a mismatch on gender among truly non-matching records.  For gender this is likely to be around 0.5.  Note that the denominator would generally be a high number (almost always in the range 0.5 - 1.0) irrespective of the column type.
-    
+
     The Bayes Factor would be ${tex`\frac{0.001}{0.5}`} = ${
       0.001 / 0.5
     }  .  This is very strong evidence against a match.
-    
+
     The numerator drives this result - the precise value of the denominator does not matter.
-    
-    
-    `
+
+
+    `;
+    display(para_5);
   </script>
 
-  <script id="17" type="application/vnd.observable.javascript">
-    subhead_2 = md`## Visualising match weights`
+  <script id="17" type="module">
+    const subhead_2 = md`## Visualising match weights`;
+    display(subhead_2);
   </script>
 
-  <script id="18" type="application/vnd.observable.javascript">
-    para_6 = md`These concepts allow us to succinctly summarise the m and u values and match weights of a Fellegi Sunter model graphically.  For instance, consider the following model: (*You may adjust the m and u values*):`
+  <script id="18" type="module">
+    const para_6 = md`These concepts allow us to succinctly summarise the m and u values and match weights of a Fellegi Sunter model graphically.  For instance, consider the following model: (*You may adjust the m and u values*):`;
+    display(para_6);
   </script>
 
-  <script id="19" type="application/vnd.observable.javascript">
-    para_7 = md`This allows a succinct visualisation of the match weights for a Fellegi Sunter model as follows.  You may edit these values to see how they affect the charts.`
+  <script id="19" type="module">
+    const para_7 = md`This allows a succinct visualisation of the match weights for a Fellegi Sunter model as follows.  You may edit these values to see how they affect the charts.`;
+    display(para_7);
   </script>
 
-  <script id="20" type="application/vnd.observable.javascript">
-    viewof splink_settings = inputs.textarea({
+  <script id="20" type="module">
+    const splink_settings = view(inputs.textarea({
       value: default_splink_settings,
       rows: 26,
       spellcheck: false
-    })
+    }));
   </script>
 
-  <script id="21" type="application/vnd.observable.javascript">
-    para_8 = md`The m and u probabilities can be shown in the following chart:`
+  <script id="21" type="module">
+    const para_8 = md`The m and u probabilities can be shown in the following chart:`;
+    display(para_8);
   </script>
 
-  <script id="22" type="application/vnd.observable.javascript">
-    chart_1 = get_m_u_chart(JSON.parse(splink_settings))
+  <script id="22" type="module">
+    const chart_1 = await get_m_u_chart(JSON.parse(splink_settings));
+    display(chart_1);
   </script>
 
-  <script id="23" type="application/vnd.observable.javascript">
-    para_9 = md`And the Bayes Factors can be visualised as follows:`
+  <script id="23" type="module">
+    const para_9 = md`And the Bayes Factors can be visualised as follows:`;
+    display(para_9);
   </script>
 
-  <script id="24" type="application/vnd.observable.javascript">
-    chart_2 = get_bayes_factor_chart(JSON.parse(splink_settings))
+  <script id="24" type="module">
+    const chart_2 = await get_bayes_factor_chart(JSON.parse(splink_settings));
+    display(chart_2);
   </script>
 
-  <script id="25" type="application/vnd.observable.javascript">
-    para_10 = md`## Waterfall chart
-    
-    Finally, for given values of the comparison columns, we can use the log 2 Bayes Factors to plot a chart that shows the calculation of the final probability.  The log 2 Bayes Factor is on the right hand access, and the probability is shown on the right hand axis.  Hover over the bars for more information.`
+  <script id="25" type="module">
+    const para_10 = md`## Waterfall chart
+
+    Finally, for given values of the comparison columns, we can use the log 2 Bayes Factors to plot a chart that shows the calculation of the final probability.  The log 2 Bayes Factor is on the right hand access, and the probability is shown on the right hand axis.  Hover over the bars for more information.`;
+    display(para_10);
   </script>
 
-  <script id="26" type="application/vnd.observable.javascript">
-    viewof fname_radio = inputs.radio(["Values do not match", "Values match"], {
+  <script id="26" type="module">
+    const fname_radio = view(inputs.radio(["Values do not match", "Values match"], {
       label: "Comparison of fname column",
       value: "Values match"
-    })
+    }));
   </script>
 
-  <script id="27" type="application/vnd.observable.javascript">
-    viewof sname_radio = inputs.radio(["Values do not match", "Values match"], {
+  <script id="27" type="module">
+    const sname_radio = view(inputs.radio(["Values do not match", "Values match"], {
       label: "Comparison of sname column",
       value: "Values match"
-    })
+    }));
   </script>
 
-  <script id="28" type="application/vnd.observable.javascript">
-    viewof dob_radio = inputs.radio(["Values do not match", "Values match"], {
+  <script id="28" type="module">
+    const dob_radio = view(inputs.radio(["Values do not match", "Values match"], {
       label: "Comparison of dob column",
       value: "Values match"
-    })
+    }));
   </script>
 
-  <script id="29" type="application/vnd.observable.javascript">
-    viewof town_radio = inputs.radio(["Values do not match", "Values match"], {
+  <script id="29" type="module">
+    const town_radio = view(inputs.radio(["Values do not match", "Values match"], {
       label: "Comparison of town column",
       value: "Values do not match"
-    })
+    }));
   </script>
 
-  <script id="30" type="application/vnd.observable.javascript">
-    chart_3 = get_waterfall_chart(row, JSON.parse(splink_settings), { height: 300 }, false)
+  <script id="30" type="module">
+    const chart_3 = await get_waterfall_chart(row, JSON.parse(splink_settings), { height: 300 }, false);
+    display(chart_3);
   </script>
 
-  <script id="31" type="application/vnd.observable.javascript">
-    para_11 = md`Final match probability:
+  <script id="31" type="module">
+    const para_11 = md`Final match probability:
     ${get_match_probability_components(row, JSON.parse(splink_settings))[
       "match_probability"
-    ].toPrecision(4)}`
+    ].toPrecision(4)}`;
+    display(para_11);
   </script>
 
-  <script id="32" type="application/vnd.observable.javascript">
-    annex = md`## Mathematical annex: Rewriting the Fellegi Sunter formula in terms of odds, and Bayes Factors`
+  <script id="32" type="module">
+    const annex = md`## Mathematical annex: Rewriting the Fellegi Sunter formula in terms of odds, and Bayes Factors`;
+    display(annex);
   </script>
 
-  <script id="33" type="application/vnd.observable.javascript">
-    para_12 = md`In this section, we show why it is possible to compute match probabilities by adding together log2 Bayes Factors.
-    
+  <script id="33" type="module">
+    const para_12 = md`In this section, we show why it is possible to compute match probabilities by adding together log2 Bayes Factors.
+
     Start with our equation for match probability:
-    
+
     ${texd`
     \operatorname{Pr}(\text{records match}|\gamma_{1},\gamma_{2},\ldots,\gamma_{K}) = \frac{\lambda m_{1\ell}m_{2\ell}\ldots m_{K\ell}}{\lambda m_{1\ell}m_{2\ell}\ldots m_{K\ell}+ (1-\lambda)u_{1\ell}u_{1\ell} \ldots u_{K\ell}}\tag{1.1} `}
-    
+
     And note that we could similarly define:
-    
+
     ${texd`
     \operatorname{Pr}(\text{records do not match}|\gamma_{1},\gamma_{2},\ldots,\gamma_{K}) = \frac{(1-\lambda) u_{1\ell}u_{2\ell}\ldots u_{K\ell}}{\lambda m_{1\ell}m_{2\ell}\ldots m_{K\ell}+ (1-\lambda)u_{1\ell}u_{1\ell} \ldots u_{K\ell}}\tag{1.2} `}
-    
-    `
+
+    `;
+    display(para_12);
   </script>
 
-  <script id="34" type="application/vnd.observable.javascript">
-    para_13 = md`Now we introduce the [formula for odds](https://en.wikipedia.org/wiki/Odds#Statistical_usage): 
-    
-    ${texd`\text{odds} = \frac{p}{1-p}`} 
+  <script id="34" type="module">
+    const para_13 = md`Now we introduce the [formula for odds](https://en.wikipedia.org/wiki/Odds#Statistical_usage):
+
+    ${texd`\text{odds} = \frac{p}{1-p}`}
     where p is probability.
-    
-    
+
+
     For example odds of 4 mean that this event happens 4 out of 5 times, which correponds to a probability of 80%.
-    
+
     Dividing (1.1) by (1.2) we see that:
-    
+
     ${texd`
     \text{odds}(\text{records  match}|\gamma_{1},\gamma_{2},\ldots,\gamma_{K}) = \frac{\lambda m_{1\ell}m_{2\ell}\ldots m_{K\ell}}{(1-\lambda) u_{1\ell}u_{2\ell}\ldots u_{K\ell}}\tag{1.3} `}
-    
+
     Also recall that the Bayes Factor for column i can be defined as:
-    ${texd`b_{i\ell}=\frac{m_{i\ell}}{u_{i\ell}}`} 
+    ${texd`b_{i\ell}=\frac{m_{i\ell}}{u_{i\ell}}`}
     so we can write the odds that records match as :
-    
+
     ${texd`
     \text{odds of match} = \frac{\lambda }{(1-\lambda) } b_{1\ell}b_{2\ell}\ldots b_{K\ell}\tag{1.4} `}
-    
-    
+
+
     Which can then be converted into a probability using:
-    
+
     ${texd`p = \frac{\text{odds}}{1+\text{odds}}`}
-    
+
     Sometimes it can also be convenient to use log odds, because these can be computed with addition rather than multiplication:
-    
+
     ${texd`
     \text{log odds of match} = \log{(\frac{\lambda }{(1-\lambda) })} \log({b_{1\ell}})+\log({b_{2\ell}})+\ldots +\log({b_{K\ell})}\tag{1.5} `}
-    
+
     This final representation is what is used in the waterfall chart to represent the computation of match probability
-    `
+    `;
+    display(para_13);
   </script>
 
-  <script id="35" type="application/vnd.observable.javascript">
-    texd = tex.options({
+  <script id="35" type="module" hidden>
+    const texd = tex.options({
       displayMode: true,
       fleqn: true
-    })
+    });
   </script>
 
-  <script id="36" type="application/vnd.observable.javascript">
-    css_styles = html`<style>
+  <script id="36" type="module">
+    const css_styles = html`<style>
     .katex-display>.katex { font-size: 1em}
     .katex-display {
         max-width: None;
@@ -336,11 +358,12 @@
         max-height: 1000em !important;
         font-family: monospace !important;
     }
-    </style>`
+    </style>`;
+    display(css_styles);
   </script>
 
-  <script id="37" type="application/vnd.observable.javascript">
-    row = comparisonRow(fname_radio, sname_radio, dob_radio, town_radio)
+  <script id="37" type="module" hidden>
+    const row = comparisonRow(fname_radio, sname_radio, dob_radio, town_radio);
   </script>
 
 </notebook>
