@@ -91,7 +91,7 @@ More generally, we can see from the formula that strong positive match weights o
 Suppose we observe that gender does not match.
 
 - Amongst matching records, it will be rare to observe a non-match on gender.  If there are occasional data entry errors, we may have $m = 0.02$
-- Amongst non matching records, gender will match around half the time.  So $u = 0.5$.
+- Amongst non matching records, gender will not match around half the time.  So $u = 0.5$.
 
 $\text{Bayes Factor} = K = \frac{m}{u} = \frac{0.02}{0.5} = 0.04 = \frac{1}{25}$.
 
@@ -158,7 +158,7 @@ So $\text{posterior odds} =  \frac{1}{120}  \times 12 = \frac{1}{10}$
 
 $\text{posterior probability} = \frac{\frac{1}{10}}{1 + \frac{1}{10}} = \frac{1}{11} \approx 0.0909$
 
-So after observing that the month of birth matches, the odds of the records being a match would be 1 in 10, or a probability of approximately 9.1%.
+So after observing that the month of birth matches, the odds of the records being a match would be 1 to 10, corresponding to a probability of approximately 9.1% (about 1 in 11).
 
 Here's a calculator which shows how a prior probability is updated with a Bayes Factor:
 
