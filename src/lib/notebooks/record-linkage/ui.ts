@@ -12,7 +12,7 @@ const colors: Record<string, string> = {
   'Final score': '#17becf',
 };
 
-type ReactiveTable = HTMLTableElement & {value: DataRecord[]};
+type ReactiveTable = HTMLTableElement & { value: DataRecord[] };
 
 export function createEditableRecordTable(
   initialRecords: Array<Record<(typeof columns)[number], string>>,
@@ -53,7 +53,7 @@ export function createEditableRecordTable(
 
   const updateValue = () => {
     table.value = Array.from(table.rows).slice(1).map((row, index) => {
-      const record: DataRecord = {uid: index + 1};
+      const record: DataRecord = { uid: index + 1 };
       columns.forEach((column, columnIndex) => {
         const cell = row.cells[columnIndex];
         const select = cell.querySelector('select');
@@ -110,9 +110,24 @@ function monospace(text: string, document: Document): HTMLSpanElement {
 
 export function waterfallFormula(waterfall: WaterfallRecord[]): string {
   const inputs = waterfall.slice(0, -1);
-  const terms = inputs.map((item) => item.log2_bayes_factor.toFixed(2)).join(' + ');
-  const total = waterfall.at(-1)?.log2_bayes_factor.toFixed(2) ?? '0.00';
-  return String.raw`\begin{aligned}\omega_{prior} + \omega_{first\_name} + \omega_{surname} + \omega_{postcode} + \omega_{gender} &= \omega_{final} \\ ${terms} &= ${total}\end{aligned}`;
+  const finalScore = waterfall.at(-1);
+  const symbols = [
+    String.raw`\omega_{prior}`,
+    ...inputs.slice(1).map((item) => String.raw`\omega_{${item.column_name.replace('_', '\\_')}}`),
+  ];
+  const coloredSymbols = inputs
+    .map((item, index) => colorFormulaTerm(symbols[index], colors[item.column_name]))
+    .join(' + ');
+  const coloredTerms = inputs
+    .map((item) => colorFormulaTerm(item.log2_bayes_factor.toFixed(2), colors[item.column_name]))
+    .join(' + ');
+  const finalSymbol = colorFormulaTerm(String.raw`\omega_{final}`, colors['Final score']);
+  const finalTerm = colorFormulaTerm(finalScore?.log2_bayes_factor.toFixed(2) ?? '0.00', colors['Final score']);
+  return String.raw`\begin{aligned}${coloredSymbols} &= ${finalSymbol} \\ ${coloredTerms} &= ${finalTerm}\end{aligned}`;
+}
+
+function colorFormulaTerm(term: string, color: string | undefined): string {
+  return color ? String.raw`\color{${color}}{${term}}` : term;
 }
 
 export function probabilityFormula(waterfall: WaterfallRecord[]): string {
@@ -125,13 +140,13 @@ export function renderFormula(
   document: Document = globalThis.document,
 ): HTMLDivElement {
   const root = document.createElement('div');
-  katex.render(formula, root, {displayMode: true, throwOnError: false});
+  katex.render(formula, root, { displayMode: true, throwOnError: false });
   return root;
 }
 
 export function renderDataTable(
   records: Array<Record<string, unknown>>,
-  options: {roundNumbers?: boolean; tintColumns?: boolean} = {},
+  options: { roundNumbers?: boolean; tintColumns?: boolean } = {},
   document: Document = globalThis.document,
 ): HTMLTableElement {
   const table = document.createElement('table');
@@ -166,7 +181,7 @@ export function renderSettingsTable(
 ): HTMLTableElement {
   const [headings, ...body] = rows;
   const records = body.map((row) => Object.fromEntries(headings.map((heading, index) => [heading, row[index]])));
-  return renderDataTable(records, {roundNumbers: true, tintColumns: true}, document);
+  return renderDataTable(records, { roundNumbers: true, tintColumns: true }, document);
 }
 
 export function comparisonVectorRows(
