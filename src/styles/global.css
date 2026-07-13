@@ -756,6 +756,43 @@ button {
   display: block;
 }
 
+.definition-paragraph,
+.definition-list,
+.definition-blockquote,
+.definition-preformatted {
+  display: block;
+}
+
+.definition-paragraph + .definition-paragraph,
+.definition-list + .definition-paragraph,
+.definition-paragraph + .definition-list,
+.definition-list + .definition-list,
+.definition-blockquote + .definition-paragraph,
+.definition-preformatted + .definition-paragraph {
+  margin-top: 0.5rem;
+}
+
+.definition-list {
+  padding-left: 1.25rem;
+}
+
+.definition-list-item {
+  display: list-item;
+}
+
+.definition-list > .definition-list-item {
+  list-style-type: disc;
+}
+
+.definition-blockquote {
+  border-left: 2px solid var(--line);
+  padding-left: 0.5rem;
+}
+
+.definition-preformatted {
+  overflow-x: auto;
+}
+
 .vega-chart {
   margin: 1rem 0;
   overflow-x: auto;

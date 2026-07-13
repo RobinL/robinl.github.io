@@ -27,11 +27,11 @@ In the previous article we saw that the Fellegi-Sunter model makes its predictio
 
 But what are partial match weights and where do they come from?[^1]
 
-[^1]: In this context, the word 'partial' means 'using only a subset of the information in the record' - often a single column.  There is then a partial match weight for each column.
+[^1]: In this context, the word 'partial' means 'using only part of the information in the record' - typically a single column.  There is then a partial match weight for each column.
 
 ## What are they?
 
-Some columns are more important than others to the calculation of overall match probability.[^2]  This is quantified by the partial match weights.
+Some columns are more important than others to the calculation of overall match weight.[^2]  This is quantified by the partial match weights.
 
 [^2]: In this article, for simplicity,  there's a one to one correspondence between columns and partial match weights. Each column is treated as a separate piece of information.  In reality, the model allows for more flexibility.  We could split a column (e.g. date of birth) into several pieces of information (e.g. day, month, year) and estimate partial match weights for each.  Or we could combine several columns (e.g. first, middle and surname) into a single piece of information and estimate a partial match weights for this information.
 
@@ -42,16 +42,20 @@ For example:
 
 Positive values indicate evidence in favour of a match whilst negative values mean evidence against a match.
 
-The concept applies more generally than just to matches and non-matches: partial match weights can be estimated for more subtle <DefinitionToolTip term="scenario" />s like 'first name not an exact match, but similar'.
+The concept applies more generally than just to exact matches and non-matches: partial match weights can be estimated for more subtle scenarios like 'first name not an exact match, but similar'.
 
-It is up to the modeller to define these scenarios and the resultant partial match weights they wish to estimate.
+These scenarios thus correspond to a definition how information in the record is compared, since similarity will be defined differently for different types of information. For instance, two addresses may be considered similar if they're geographically close together, whereas two names may be considered similar if they sound the same despite different spellings.
 
-### Example:  First name column
+For this reason, we call each scenario a '<DefinitionToolTip term="comparison_level" text="comparison level" />'.
 
-For first name, we could define the following three scenarios:
+It is up to the modeller to define these comparison levels and the resultant partial match weights they wish to estimate.
+
+### Example:  Defining <DefinitionToolTip term="comparison_level" text="comparison levels" /> for a first name column
+
+For first name, we could define the following three <DefinitionToolTip term="comparison_level" text="comparison levels" />:
 
 1. Exact match: First names are identical
-2. Fuzzy match:  First names are similar according to the [Jaro Winkler](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance#Jaro%E2%80%93Winkler_similarity) measure
+2. Fuzzy match:  First names are similar according to the Jaro Winkler measure, see [here](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance#Jaro%E2%80%93Winkler_similarity).
 3. All other cases
 
 The estimated partial match weights may look like this:[^3]
@@ -75,14 +79,15 @@ else:
     first_name_partial_match_weight = -3.3
 ```
 
+We can refer to this group of <DefinitionToolTip term="comparison_level" text="comparison levels" /> as a <DefinitionToolTip term="comparison" />.
 
 ### Remaining columns
 
-We can also estimate partial match weights for the remaining columns.
+Similarly, we can define <DefinitionToolTip term="comparison" text="comparisons" /> for the remaining columns and estimate the partial match weights of each of their <DefinitionToolTip term="comparison_level" text="comparison levels" />.
 
-The number of scenarios modelled and the definition of these scenarios can vary depending on the type of information.
+The number of <DefinitionToolTip term="comparison" text="comparisons" /> modelled and their definition can vary depending on the type of information.
 
-For example, since gender is a categorical variable we'd likely have just two partial weights: match, and non-match.
+For example, since gender is a categorical variable we'd likely have just two comparison levels: match, and non-match.
 
 For date of birth, we may define three scenarios, but [Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance) would be more suitable than [Jaro Winkler](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) for assessing similarity.
 
@@ -106,7 +111,7 @@ Conversely, a mismatch on postcode may offer little evidence against a match sin
 
 ## Understanding the partial match weight chart and waterfall chart
 
-Let's take a look at an example record comparison, and see how the partial match weights are used.
+Let's take a look at an example record <DefinitionToolTip term="comparison" />, and see how the partial match weights are used.
 
 
 <InteractiveCallout>You can edit the data in the below table to see how the calculation changes</InteractiveCallout>
