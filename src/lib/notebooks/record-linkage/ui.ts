@@ -116,18 +116,21 @@ export function waterfallFormula(waterfall: WaterfallRecord[]): string {
     ...inputs.slice(1).map((item) => String.raw`\omega_{${item.column_name.replace('_', '\\_')}}`),
   ];
   const coloredSymbols = inputs
-    .map((item, index) => colorFormulaTerm(symbols[index], colors[item.column_name]))
-    .join(' + ');
+    .map((item, index) => colorFormulaTerm(symbols[index], colors[item.column_name]));
   const coloredTerms = inputs
-    .map((item) => colorFormulaTerm(item.log2_bayes_factor.toFixed(2), colors[item.column_name]))
-    .join(' + ');
+    .map((item) => colorFormulaTerm(item.log2_bayes_factor.toFixed(2), colors[item.column_name]));
   const finalSymbol = colorFormulaTerm(String.raw`\omega_{final}`, colors['Final score']);
   const finalTerm = colorFormulaTerm(finalScore?.log2_bayes_factor.toFixed(2) ?? '0.00', colors['Final score']);
-  return String.raw`\begin{aligned}${coloredSymbols} &= ${finalSymbol} \\ ${coloredTerms} &= ${finalTerm}\end{aligned}`;
+  return String.raw`\begin{array}{ccccccccccc}${formulaRow(coloredSymbols, finalSymbol)} \\ ${formulaRow(coloredTerms, finalTerm)}\end{array}`;
 }
 
 function colorFormulaTerm(term: string, color: string | undefined): string {
   return color ? String.raw`\color{${color}}{${term}}` : term;
+}
+
+function formulaRow(terms: string[], finalTerm: string): string {
+  return terms.map((term, index) => (index === 0 ? term : String.raw` & + & ${term}`)).join('')
+    + String.raw` & = & ${finalTerm}`;
 }
 
 export function probabilityFormula(waterfall: WaterfallRecord[]): string {
