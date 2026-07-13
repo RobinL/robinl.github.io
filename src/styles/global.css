@@ -590,6 +590,11 @@ button {
   font-size: 0.85rem;
 }
 
+.notebook-kit-scope .editable-record-table th,
+.notebook-kit-scope .editable-record-table td {
+  padding: 0 0.25rem;
+}
+
 .observablehq input[type='number'],
 .observablehq input[type='text'],
 .observablehq input[type='password'],

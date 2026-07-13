@@ -20,6 +20,7 @@ export function createEditableRecordTable(
   document: Document = globalThis.document,
 ): ReactiveTable {
   const table = document.createElement('table') as ReactiveTable;
+  table.className = 'editable-record-table';
   const header = table.insertRow();
   for (const column of columns) {
     const cell = document.createElement('th');
