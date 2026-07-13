@@ -49,7 +49,7 @@ We start with a <DefinitionToolTip term="prior" />, which represents the probabi
 
 The amount we increase and decrease the match probability is determined by the '<DefinitionToolTip term="partial_match_weight" />s' of the model.
 
-For example, a match on postcode gives us more evidence in favour of a match on gender, since the latter is much more likely to occur by chance.
+For example, a match on postcode gives us more evidence in favour of a match than a match on gender, since the latter is much more likely to occur by chance.
 
 The final prediction is a simple calculation:  we sum up <DefinitionToolTip term="partial_match_weight" />s to compute a final match weight, which is then converted into a probability.
 
