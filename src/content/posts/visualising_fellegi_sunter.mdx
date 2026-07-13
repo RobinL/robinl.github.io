@@ -3,53 +3,128 @@ title: "Visualising the Fellegi Sunter model"
 description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article presents a way of visualising how the model works."
 postDate: "2021-05-22"
 category: "probabilistic_linkage"
-codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/visualising-fellegi-sunter/060a32b021a09f92@1011.notebook.html"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/visualising-fellegi-sunter.notebook.html"
 probLinkageCategory: "tools"
 pageWidth: "wide"
 ---
 
-import Notebook from '../../components/notebook-kit/Notebook.jsx';
+import NotebookCellProvider from '../../components/notebook-kit/NotebookCellProvider.jsx';
+import NotebookCell from '../../components/notebook-kit/NotebookCell.jsx';
 import ProbHomeNav from '../../components/probabilistic/ProbHomeNav.jsx';
 
-export const output_order = [
-  "additional_styles",
-  "title",
-  "para_1",
-  "para_2",
-  "para_3",
-  "para_4",
-  "subhead_1",
-  "para_5",
-  "lam_view",
-  "treemap_1",
-  "para_6",
-  "subhead_2",
-  "para_7",
-  "fname_view",
-  "para_8",
-  "treemap_2",
-  "para_9",
-  "subhead_3",
-  "para_10",
-  "sname_view",
-  "para_11",
-  "treemap_3",
-  "para_12",
-  "subhead_4",
-  "dob_view",
-  "para_13",
-  "treemap_4",
-  "para_14",
-  "subhead_5",
-  "town_view",
-  "para_15",
-  "treemap_5",
-  "para_16",
-  "annex",
-  "styles2",
-  "css_styles"
-];
-
 <ProbHomeNav />
-<Notebook client:visible notebook="visualising-fellegi-sunter" cells={output_order} />
+
+# Visualising the Fellegi Sunter model
+
+The [previous article](/maths_of_fellegi_sunter/) presented an implementation of the Fellegi Sunter model. We showed that match probability could be represented by Equation 1 - which is reproduced below:
+
+$$
+\operatorname{Pr}(\text{records match}|\gamma_{1},\gamma_{2},\ldots,\gamma_{K})
+= \frac{\lambda m_{1\ell}m_{2\ell}\ldots m_{K\ell}}{\lambda m_{1\ell}m_{2\ell}\ldots m_{K\ell}+ (1-\lambda)u_{1\ell}u_{1\ell} \ldots u_{K\ell}}
+$$
+
+This article presents a way to understand and visualise this formula.
+
+In our visualisation, we are going to take each piece of evidence into account in turn. This is possible due to our assumption of conditional independence of comparison columns given the match status.
+
+The means Equation 1 is equivalent to a repeated application of Bayes' Theorem (see annex). See [here](https://www.youtube.com/watch?v=HZGCoVF3YvM) is more in depth video about Bayes Theorem.
+
+## Example
+
+We are going to compute match probability for a record comparison with the following comparison columns:
+
+- `fname` (first name)
+- `sname` (surname)
+- `dob` (date of birth)
+- `town`
+
+The default parameter values are a bit unrealistic, but help make sure the diagrams are legible.
+
+<NotebookCellProvider client:visible notebook="visualising-fellegi-sunter">
+
+## Step 1
+
+We begin by visualising the space of all pairwise record comparisons, splitting the overall comparison space into <span className="fs-match-highlight">matches</span> and <span className="fs-non-match-highlight">non-matches</span> using our prior, $\operatorname{Pr}(\text{records match})=\lambda$.
+
+<NotebookCell cellId={2} />
+<NotebookCell cellId={8} />
+<NotebookCell cellId={9} />
+
+## Step 2 - First name
+
+We will now choose the parameters of the model for the first name field, and then take this information into account in the diagram.
+
+<NotebookCell cellId={3} />
+<NotebookCell cellId={10} />
+<NotebookCell cellId={11} />
+<NotebookCell cellId={12} />
+
+## Step 3 - Surname
+
+Let's also choose parameters for `sname`, the surname field:
+
+<NotebookCell cellId={4} />
+<NotebookCell cellId={13} />
+<NotebookCell cellId={14} />
+<NotebookCell cellId={15} />
+
+## Step 4 - Date of birth
+
+<NotebookCell cellId={5} />
+<NotebookCell cellId={16} />
+<NotebookCell cellId={17} />
+<NotebookCell cellId={18} />
+
+## Step 5: Town
+
+The final column is town.
+
+<NotebookCell cellId={6} />
+<NotebookCell cellId={19} />
+<NotebookCell cellId={20} />
+<NotebookCell cellId={21} />
+
+</NotebookCellProvider>
+
+## Annex: Mathematical representation
+
+This annex shows why it's possible to represent the calculation of match probability as a step-by-step computation.
+
+In particular, we will show that we can calculate match probability using a repeated application of Bayes Theorem. In pseudocode, our algorithm will be:
+
+```text
+prior = lambda
+for col in compaison_columns:
+  posterior = bayes(col, prior)
+  prior = posterior
+```
+
+Where the final value of the posterior is equal to $\operatorname{Pr}(\text{records match}|\gamma_{1},\gamma_{2},\ldots,\gamma_{K})$.
+
+To demonstrate why this works, consider equation 1, for the case of two columns:
+
+$$
+\operatorname{Pr}(\text{records match}|\gamma_{1},\gamma_{2}) = \frac{\lambda m_{1\ell}m_{2\ell}}{\lambda m_{1\ell}m_{2\ell}+ (1-\lambda)u_{1\ell}u_{1\ell}} \tag{2.1}
+$$
+
+We start by applying Bayes Theorem once, accounting for the first comparison column:
+
+$$
+\operatorname{Pr}(\text{records match}|\gamma_{1}) = t = \frac{\lambda m_{1\ell}}{\lambda m_{1\ell}+ (1-\lambda)u_{1\ell}}
+$$
+
+This posterior, $t$, becomes the new prior, which we now use instead of lambda:
+
+$$
+\text{posterior} = \operatorname{Pr}(\text{records match}|\gamma_{1},\gamma_{2}) = \frac{t m_{2\ell}}{t m_{2\ell}+ (1-t)u_{2\ell}}\tag{2.2}
+$$
+
+Note that:
+
+$$
+1-t = 1-\frac{\lambda m_{1\ell}}{\lambda m_{1\ell}+ (1-\lambda)u_{1\ell}} = \frac{\lambda m_{1\ell}+ (1-\lambda)u_{1\ell}-\lambda m_{1\ell}}{\lambda m_{1\ell}+ (1-\lambda)u_{1\ell}} = \frac{(1-\lambda)u_{1\ell}}{\lambda m_{1\ell}+ (1-\lambda)u_{1\ell}}\tag{2.3}
+$$
+
+But $(2.3)$ shows that the term $(\lambda m_{1\ell}+ (1-\lambda)u_{1\ell})$ appears on both top and bottom of $(2.2)$ and therefore cancels, leaving $(2.1)$ as desired.
+
 <ProbHomeNav />

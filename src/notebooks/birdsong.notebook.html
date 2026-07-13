@@ -1,0 +1,14 @@
+<!doctype html>
+<notebook>
+  <title>UK birdsong recordings</title>
+  <script id="1" type="module" hidden>import {createBirdsongTitle, createBirdPhotosTitle, createBirdSelector, createRareBirdToggle, queryXenoCanto, queryINaturalist, createAudioTable, createPictureGallery} from "../lib/notebooks/birdsong";</script>
+  <script id="2" type="module">display(createBirdsongTitle()); const title = null;</script>
+  <script id="3" type="module">const include_rare = view(createRareBirdToggle());</script>
+  <script id="4" type="module">const bird = view(createBirdSelector(include_rare, width));</script>
+  <script id="5" type="module" hidden>const search_string = !bird?.raw ? "" : bird.free_text ? bird.raw : bird.scientific_name;</script>
+  <script id="6" type="module" hidden>const xeno_results = await queryXenoCanto(search_string);</script>
+  <script id="7" type="module">display(createAudioTable(xeno_results.recordings)); const audio_table = null;</script>
+  <script id="8" type="module">display(createBirdPhotosTitle()); const photos_title = null;</script>
+  <script id="9" type="module" hidden>const inat_results = bird?.raw ? await queryINaturalist(bird) : [];</script>
+  <script id="10" type="module">display(createPictureGallery(inat_results, width)); const gallery = null;</script>
+</notebook>

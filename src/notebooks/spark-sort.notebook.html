@@ -1,0 +1,75 @@
+<!doctype html>
+<notebook>
+  <title>Understanding the Spark UI by example: sorting data</title>
+  <script id="1" type="module" hidden>import {sortHtml, renderSparkJobs, renderSparkPlan, renderSparkMetadata, sparkStyles} from "../lib/notebooks/spark-ui";</script>
+  <script id="2" type="module">
+display(md`# Understanding the Spark UI by example: sorting data`); const title = null;
+  </script>
+  <script id="3" type="module">
+display(md`
+
+### Introduction 
+
+This post uses the output of the Spark UI to explain what happens when you ask Spark to sort a large(ish) dataset. 
+
+For more information about the Spark UI and the dataset we're using, see the [first post](https://robinl.github.io/robinlinacre/left_join/) in this series.  
+
+We're going to execute the following 
+
+\`\`\`sql
+SELECT distance, origin, dest
+FROM flights
+ORDER BY distance DESC
+\`\`\`
+
+against the \`flights\` table, which has 123,534,969 records.
+
+You can see the script [here](https://github.com/RobinL/understanding_spark_ui/blob/master/04-sort.ipynb)
+
+### Interactive Spark UI
+
+The following is the contents of the SQL tab in the Spark UI.  I've added additional details to the tooltips to help explain what's going on:
+
+
+
+`); const intro = null;
+  </script>
+  <script id="4" type="module">display(renderSparkJobs(sortHtml)); const jobs = null;</script>
+  <script id="5" type="module" hidden>const annotations = {
+    node_3: `Shuffle the data using rangepartitioning.  To sort a large dataset in parallel across \`n\` worker nodes, it wouldn't be particularly useful to randomly assign data to different worker nodes.   Instead, we need a strategy where each worker node can sort the data, and this results in a globally sorted dataset. This is what a range partitioner does: it tries to partition your dataset into \`spark.sql.shuffle.partition\` partitions of roughly equal ranges.
+
+Each partition will have a min and max row, relative to the given ordering. All rows that are in between min and max in this ordering will reside in the partition. 
+
+This explains why two scans of data are needed, and this SQL plan consists of two jobs (remember each job corresponds to an RDD action).  The first scan is needed to determine the min and max of each partition.  Spark samples (using reservoir sampling, see [here](https://github.com/eBay/Spark/blob/master/core/src/main/scala/org/apache/spark/util/random/SamplingUtils.scala#L33)) the whole dataset to determine min and max values for each partition that should roughly equally split the data.  In the second job, these values are used to shuffle the data.
+
+The actual number of partitions created by the RangePartitioner might not be the same as the partitions parameter, in the case where the number of sampled records is less than the value of partitions.
+`,
+  node_6: `Read in the original data.  Note that the 'number of output rows' is 247m, twice the input data size of 123.5m rows.  This gives us a clue that the data has been scanned twice. See the tooltip for the 'exchange' node for more details. `
+  };</script>
+  <script id="6" type="module">display(renderSparkPlan(sortHtml, annotations)); const plan = null;</script>
+  <script id="7" type="module">
+display(md`## Observations
+
+The most interesting performance-related clues we see from the UI are:
+
+- There are two jobs, despite the job appearing to correspond to a single action.  See the notes on the 'exchange' node to see why there are in fact two actions, and therefore two jobs.
+- We can see from the 'scan parquet' node that the data is scanned twice.  See the notes on the 'exchange' node for an explanation.
+`); const observations = null;
+  </script>
+  <script id="10" type="module">
+display(md`## References and useful resources:
+
+[Stackoverflow: How does Spark achieve sort order](https://stackoverflow.com/questions/32887595/how-does-spark-achieve-sort-order/32888236#32888236)
+
+[Stackoverflow: Number of dataframe partitions after sorting?](https://stackoverflow.com/questions/53786188/number-of-dataframe-partitions-after-sorting)
+
+[The determineBounds method that the range partitioner uses](https://github.com/apache/spark/blob/3da71f2da192276af041024b73e85e0acaac66a4/core/src/main/scala/org/apache/spark/Partitioner.scala#L322)
+
+[The sampling method that the range partitioner uses](https://github.com/apache/spark/blob/16f1b23d75c0b44aac61111bfb2ae9bb0f3fab68/core/src/main/scala/org/apache/spark/util/random/SamplingUtils.scala#L33)
+
+`); const references = null;
+  </script>
+  <script id="11" type="module">display(sparkStyles()); const mystyles = null;</script>
+  <script id="12" type="module">display(renderSparkMetadata(sortHtml)); const metadata = null;</script>
+</notebook>
+

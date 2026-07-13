@@ -1,0 +1,14 @@
+<!doctype html>
+<notebook>
+  <title>Spark UI SQL detailed annotator</title>
+  <script id="1" type="module" hidden>import {sparkExplainHtml, createSparkHtmlInput, renderSparkPlan, renderSparkGlossary, renderSparkMetadata, sparkStyles} from "../lib/notebooks/spark-ui";</script>
+  <script id="2" type="module">display(md`# Spark UI SQL detailed annotator`); const title = null;</script>
+  <script id="3" type="module">display(md`Paste the whole of the html page from the Spark SQL tab of the spark UI here (an example is provided)`); const md_1 = null;</script>
+  <script id="4" type="module">const raw_html = view(createSparkHtmlInput(sparkExplainHtml));</script>
+  <script id="5" type="module">display(renderSparkPlan(raw_html)); const output_svg = null;</script>
+  <script id="6" type="module">display(renderSparkGlossary()); const md_glossary = null;</script>
+  <script id="7" type="module">display(renderSparkMetadata(raw_html)); const metadata = null;</script>
+  <script id="8" type="module">display(sparkStyles()); const styles1 = null;</script>
+  <script id="9" type="module">const styles2 = null;</script>
+</notebook>
+

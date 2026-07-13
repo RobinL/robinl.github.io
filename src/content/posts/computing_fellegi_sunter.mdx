@@ -3,7 +3,7 @@ title: "Computing the Fellegi Sunter model"
 description: "A set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage.  This article shows how to compute the model from an algorithmic perspective"
 postDate: "2023-10-02"
 category: "probabilistic_linkage"
-codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/computing-the-fellegi-sunter-model/0068042ce3b10dd1@284.notebook.html"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/computing-fellegi-sunter.notebook.html"
 probLinkageCategory: "tutorial"
 stylesheet: "computing_fellegi_sunter.css"
 tutorialNumber: 5
@@ -34,10 +34,10 @@ The aim of the model is to compute a prediction of which records match. This pre
     <InteractiveCallout>The following two input tables are interactive!  Edit the values and all the calculations in the rest of this article will update.</InteractiveCallout>
 
     ### Input table 1
-    <NotebookCell cellName="input_table_l" className="observableTableWithScrollbar"/>
+    <NotebookCell cellId={2} className="observableTableWithScrollbar"/>
 
     ### Input table 2:
-    <NotebookCell cellName="input_table_r" className="observableTableWithScrollbar"/>
+    <NotebookCell cellId={3} className="observableTableWithScrollbar"/>
 
     In the first step of the calculation we compare each record in the first table with all records in the second table.[^1]
 
@@ -45,7 +45,7 @@ The aim of the model is to compute a prediction of which records match. This pre
 
     We wish to predict which of these pairwise record comparisons represent the same entity (i.e. which records match).
 
-    <NotebookCell cellName="comparison_pairs_no_gamma" className="observableTableWithScrollbar"/>
+    <NotebookCell cellId={5} className="observableTableWithScrollbar"/>
     <p class="table-note">Table scrolls right →</p>
 
     At first glance, it may seem challenging to turn this table of text into a numeric prediction.  But this can be achieved using the concepts of <DefinitionToolTip term="scenario" />s and <DefinitionToolTip term="partial_match_weight" />s <a href="/partial_match_weights/">introduced earlier in this tutorial</a>.
@@ -55,7 +55,7 @@ The aim of the model is to compute a prediction of which records match. This pre
     For example, we may choose to define our scenarios as follows:
 
 
-    <NotebookCell cellName="lookup_table" className="observableTableWithScrollbar"/>
+    <NotebookCell cellId={6} className="observableTableWithScrollbar"/>
 
     Note the 'comparison vector value' column in this table.  This is an integer value that identifies the scenario within the column. We will use it to help us look up the correct partial match weights.
 
@@ -64,7 +64,7 @@ The aim of the model is to compute a prediction of which records match. This pre
 
 
 <NotebookCell
-  cellName="comparison_pairs_with_gamma"
+  cellId={7}
   className="observableTableWithScrollbar"
 />
 
@@ -72,13 +72,13 @@ The aim of the model is to compute a prediction of which records match. This pre
 
     Now that we've used the text values to compute the comparison vector value, we no longer need it.  What remains are known as the comparison vectors for each pairwise comparison:
 
-    <NotebookCell cellName="comparison_vector_values_only" />
+    <NotebookCell cellId={8} />
 
     Each row in this table is known as the 'comparison vector' for the record comparison
 
     We now look up the partial match weights from the comparison vector.  I've also added the <DefinitionToolTip term="prior" />, expressed as a partial match weight, and the sum of the match weights:
 
-    <NotebookCell cellName="cv_pmw_sum" className="observableTableWithScrollbar"/>
+    <NotebookCell cellId={9} className="observableTableWithScrollbar"/>
     <p class="table-note">Table scrolls right →</p>
 
      Finally, we can then sum the values in the partial match weights to produce a final match weight.  This can then be converted into a probability using:
@@ -88,7 +88,7 @@ The aim of the model is to compute a prediction of which records match. This pre
     We can now see how the original comparison pairs were scored by this simple model:
 
 
-    <NotebookCell cellName="raw_values_with_final_match_prob" className="observableTableWithScrollbar"/>
+    <NotebookCell cellId={10} className="observableTableWithScrollbar"/>
     <p class="table-note">Table scrolls right →</p>
 
 

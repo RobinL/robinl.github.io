@@ -1,0 +1,13 @@
+<!doctype html>
+<notebook>
+  <title>Visualising updating a prior</title>
+  <script id="1" type="module" hidden>import {posteriorFormula, renderPosteriorTreemap} from "../lib/notebooks/posterior-treemap";</script>
+  <script id="2" type="module">const prior = view(Inputs.range([0,1], {label:"Prior probability", value:.3}));</script>
+  <script id="3" type="module">display(renderPosteriorTreemap(prior,.8,.2,"",width,1)); const priorTreemap=null;</script>
+  <script id="4" type="module">const m = view(Inputs.range([.01,.99], {label:"m probability", value:.8}));</script>
+  <script id="5" type="module">const u = view(Inputs.range([.01,.99], {label:"u probability", value:.2}));</script>
+  <script id="6" type="module">const scenario = view(Inputs.text({label:"Scenario name (optional):", placeholder:"e.g. 'first names are equal'", value:""}));</script>
+  <script id="7" type="module">display(renderPosteriorTreemap(prior,m,u,scenario,width,2)); const fullTreemap=null;</script>
+  <script id="8" type="module">display(renderPosteriorTreemap(prior,m,u,scenario,width,3)); const posteriorTreemap=null;</script>
+  <script id="9" type="module">display(posteriorFormula(prior,m,u)); const formula=null;</script>
+</notebook>

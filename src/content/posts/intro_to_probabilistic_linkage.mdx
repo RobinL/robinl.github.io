@@ -3,7 +3,7 @@ title: "An Interactive Introduction to Record Linkage (Data Deduplication) in th
 description: "The first in a series of interactive, explorable explanations of the Fellegi-Sunter model, providing an introduction to probabilistic record linkage (data deduplication)."
 postDate: "2021-05-20"
 category: "probabilistic_linkage"
-codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/intro-prob-linkage/3ec7a740cff5f9ad@84.notebook.html"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/intro-prob-linkage.notebook.html"
 probLinkageCategory: "tutorial"
 latestUpdate: "2023-09-12"
 tutorialNumber: 1
@@ -61,9 +61,9 @@ Let's take a look at an example of a simple Fellegi-Sunter model to calculate ma
 <InteractiveCallout>You may edit the values in the table to see how the match probability changes.</InteractiveCallout>
 
 <NotebookCellProvider client:visible notebook="intro-prob-linkage">
-    <NotebookCell cellName="input_table" />
+    <NotebookCell cellId={2} />
 
-    <NotebookCell cellName="estimated_probability" />
+    <NotebookCell cellId={4} />
 
     We can decompose this calculation into the sum of the <DefinitionToolTip term="partial_match_weight" />s using a waterfall chart, which is read from left to right. We start with the prior, and take each column into account in turn.  The size of the bar corresponds to the {<DefinitionToolTip term="partial_match_weight" />}.
 
@@ -71,7 +71,7 @@ Let's take a look at an example of a simple Fellegi-Sunter model to calculate ma
 
     The final estimated match probability is shown in the rightmost bar.  Note that the y axis on the right converts match weight into probability.
 
-    <NotebookCell cellName="waterfall_chart" />
+    <NotebookCell cellId={5} />
 
     In the next article, we will look at partial match weights in great depth.
 

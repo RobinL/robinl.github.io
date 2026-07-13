@@ -3,30 +3,87 @@ title: "Dependencies between match weights"
 description: "An set of interactive, explorable explanations of the Fellegi Sunter model of probabilistic record linkage. The dependencies between match weights."
 postDate: "2021-06-10"
 category: "probabilistic_linkage"
-codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/dependencies-between-match-weights/9547bc35da079fbb@158.notebook.html"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/match-weight-dependencies.notebook.html"
 probLinkageCategory: "archive"
 pageWidth: "wide"
 ---
 
-import Notebook from '../../components/notebook-kit/Notebook.jsx';
+import NotebookCellProvider from '../../components/notebook-kit/NotebookCellProvider.jsx';
+import NotebookCell from '../../components/notebook-kit/NotebookCell.jsx';
 
-export const output_order = [
-    "title",
-    "para_1",
-    "para_2",
-    "viewof gen",
-    "viewof reset_gender",
-    "bf_chart_gender",
-    "para_3",
-    "para_4",
-    "viewof fn1",
-    "viewof reset_fn1",
-    "bf_chart_fn_1",
-    "para_5",
-    "viewof fn2",
-    "viewof reset_fn2",
-    "bf_chart_fn_2",
-    "para_6"
-];
+# Dependencies between match weights
 
-<Notebook client:visible notebook="dependencies-between-match-weights" cells={output_order} />
+The values of a column's match weights are interdependent: Only certain combinations of values are possible.
+
+Some types of data also result in maximum and minimum match weights.
+
+Understanding why these constraints occur can help you build better models, because it can help you find ways to extract more information from your comparison columns.
+
+This article tries to build an intuition for why these constraints occur and why they matter.
+
+<NotebookCellProvider client:visible notebook="dependencies-between-match-weights">
+
+## Example of a maximum match weight:  Gender
+
+Consider a column for gender, and let's assume there's an equal split of males and females in our data.
+
+A match on gender does not provide strong evidence in favour of a match because it's common to observe a match on gender amongst non-matching records.
+
+This suggests there is an upper bound on the Bayes Factor for gender. It turns out that, for this data, the maximum Bayes Factor is 2.0.
+
+Let's explore what this looks like visually, which will reveal the constraint. Note that:
+
+- Amongst non-matching records, the gender field is just as likely to match as to mismatch, i.e. $u_\text{gender, level 0}=0.5$ and $u_\text{gender, level 1}=0.5$.
+- ✨You can drag within the rectangles of the following diagram to see the effect of different m and u values on match weights✨
+
+<NotebookCell cellId={2} />
+<NotebookCell cellId={3} />
+<NotebookCell cellId={4} />
+
+### Observations
+
+Two important findings emerge from this example:
+
+- There is a maximum bound of 2 on the match weight associated with a match on gender. This is intuitive: a match weight of two means that, if we observe a match on gender, it's now twice as likely that the records are a match - reflecting the equal split of genders.
+- There is no minimum bound of the match weight associated with a mismatch on gender. This is also intuitive. If gender is recorded with very high accuracy, then a mismatch on gender represents very strong evidence against a match.
+
+## Example of a minimum match weights:  Forename
+
+Consider a forename column. Let's assume that nicknames, diminutives are common in this dataset. For example, it may be common for someone called 'Jonathan' to appear variously as 'Jonathan', 'John' or 'Jonny'. As such, it will be common that, amongst matches, the forename does not exactly match.
+
+Consider the following chart, which models this column with two comparison levels:
+
+- Level 1: Forename matches exactly
+- Level 0: Forname mismatches
+
+In this scenario, the observation of a mismatch on forename does not provide strong evidence against a match, because it is so common to observe a mismatch amongst matching records.
+
+<NotebookCell cellId={5} />
+<NotebookCell cellId={6} />
+<NotebookCell cellId={7} />
+
+Using a more sophisticted modelling approach, we can do better.
+
+Let's assume that we can capture the vast majority of nicknames and diminutives using a fuzzy matching function. This allows us to draw a distinction between two scenarios:
+
+- Values do not match, but are similar
+- Values do not match, and are completely different.
+
+We now set up our levels as follows:
+
+- Level 2: Exact match on forename
+- Level 1: Fuzzy match on forename
+- Level 0: Forename mismatches
+
+<NotebookCell cellId={8} />
+<NotebookCell cellId={9} />
+<NotebookCell cellId={10} />
+
+## Observations
+
+- When we modelled two levels, two names that fuzzy matched (John vs Jonny) would have been assigned the same negative match weight as two names which were completely different (John vs Robin). We therefore lost information
+- When we model three levels, a much stronger negative weight on a mismatch is possible. This is because the lowest level (level_0) now contains only names which are completely different, rather than being a mix of fuzzy matching names, and names which are competely different.
+
+Modelling three levels thereby allows us to extract substantially more information from the data.
+
+</NotebookCellProvider>

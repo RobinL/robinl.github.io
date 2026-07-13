@@ -2,17 +2,19 @@
 title: "Filling the country with solar panels"
 postDate: "2020-04-17"
 category: "energy"
-codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/migrated/filling-the-country-with-solar-panels/d6e693c63bc9484f@66.notebook.html"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/notebooks/fill-country-solar.notebook.html"
 pageWidth: "prose"
 ---
 
-import Notebook from '../../components/notebook-kit/Notebook.jsx';
+import NotebookCellProvider from '../../components/notebook-kit/NotebookCellProvider.jsx';
+import NotebookCell from '../../components/notebook-kit/NotebookCell.jsx';
 
-export const output_order = [
-  "title",
-  "viewof solar_perc",
-  "map",
-  "total_kwh"
-];
+# Filling the country with solar panels
 
-<Notebook client:visible notebook="filling-the-country-with-solar-panels" cells={output_order} />
+What would happen if we covered the entire country in solar panels?
+
+<NotebookCellProvider client:visible notebook="filling-the-country-with-solar-panels">
+<NotebookCell cellId={2} />
+<NotebookCell cellId={3} />
+<NotebookCell cellId={4} />
+</NotebookCellProvider>

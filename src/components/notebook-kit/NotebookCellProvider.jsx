@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import * as Inputs from '@observablehq/inputs';
-import { legacyRequire } from './legacy-require';
-import { legacyHtml, legacySvg } from './legacy-template';
 import { loadNotebook } from './notebooks';
+import { runtimeCellNames } from './runtime-cell-names';
 
-function makeBuiltins(library, container, legacySyntax, FileAttachment) {
+function makeBuiltins(library, container, FileAttachment) {
   const generators = library.Generators();
   return {
     DOM: library.DOM,
@@ -16,23 +15,16 @@ function makeBuiltins(library, container, legacySyntax, FileAttachment) {
     Mutable: library.Mutable,
     Promises: library.Promises,
     d3: () => d3,
-    html: legacySyntax ? () => legacyHtml : library.html,
+    html: library.html,
     htl: library.htl,
     md: library.md,
     now: library.now,
-    require: () => legacyRequire,
-    svg: legacySyntax ? () => legacySvg : library.svg,
+    svg: library.svg,
     tex: library.tex,
     topojson: library.topojson,
     vl: library.vl,
     width: () => generators.width(container),
   };
-}
-
-function runtimeCellName(cell) {
-  return cell.output
-    ?.replace(/^viewof\$/, 'viewof ')
-    .replace(/^mutable\$/, 'mutable ');
 }
 
 export default function NotebookCellProvider({ notebook, children, className = '' }) {
@@ -63,20 +55,20 @@ export default function NotebookCellProvider({ notebook, children, className = '
             .map((element) => [element.dataset.notebookCellName, element])
         );
 
-        const legacySyntax = definition.cells.some(
-          (cell) => cell.mode === 'ojs' || cell.mode === 'observable'
-        );
         runtime = new NotebookRuntime(
           makeBuiltins(
             library,
             containerRef.current,
-            legacySyntax,
             definition.FileAttachment
           )
         );
 
         for (const cell of definition.cells) {
-          const root = targetsById.get(cell.id) ?? targetsByName.get(runtimeCellName(cell));
+          const root =
+            targetsById.get(cell.id) ??
+            runtimeCellNames(cell)
+              .map((name) => targetsByName.get(name))
+              .find(Boolean);
           const state = {
             root: root ?? document.createElement('div'),
             expanded: [],

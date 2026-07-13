@@ -417,12 +417,12 @@
         }
     ],
     "data": {
-        "name": "data-0dca1104bbb5bf68f01d38a90b11d9e1"
+        "name": "mydata"
     },
     "title": "Updating a prior probability of x with a partial match weight of y",
     "$schema": "https://vega.github.io/schema/vega-lite/v5.14.1.json",
     "datasets": {
-        "data-0dca1104bbb5bf68f01d38a90b11d9e1": [
+        "mydata": [
             {
                 "prior_match_weight": 2,
                 "posterior_match_weight": -5.5,

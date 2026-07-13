@@ -1,0 +1,68 @@
+<!doctype html>
+<notebook>
+  <title>Partial match weights</title>
+
+  <script id="1" type="module" hidden>
+    import {tutorialComparisonFunctions} from "../lib/notebooks/record-linkage/comparisons";
+    import {renderPartialMatchWeightsChart, renderWaterfallChart} from "../lib/notebooks/record-linkage/charts";
+    import {
+      applyComparisonFunctions,
+      createComparisonRows,
+      setActivePartialMatchWeights,
+      settingsToPartialMatchWeightsData,
+      settingsToWaterfall
+    } from "../lib/notebooks/record-linkage/model";
+    import {tutorialSettings} from "../lib/notebooks/record-linkage/settings";
+    import {
+      createEditableRecordTable,
+      probabilityFormula,
+      renderActivatedCategories,
+      renderFormula,
+      waterfallFormula
+    } from "../lib/notebooks/record-linkage/ui";
+  </script>
+
+  <script id="2" type="module">
+    const input_table = view(createEditableRecordTable([
+      {first_name: "Robin", surname: "Linacre", postcode: "W1A 1AA", gender: "female"},
+      {first_name: "Robyn", surname: "Linacre", postcode: "W1A 1AA", gender: "male"}
+    ], true));
+  </script>
+
+  <script id="3" type="module" hidden>
+    const comparisonVector = applyComparisonFunctions(
+      createComparisonRows(input_table),
+      tutorialComparisonFunctions
+    )[0];
+    const waterfallData = settingsToWaterfall(tutorialSettings, comparisonVector);
+    const partialMatchWeightData = setActivePartialMatchWeights(
+      settingsToPartialMatchWeightsData(tutorialSettings),
+      comparisonVector
+    );
+  </script>
+
+  <script id="4" type="module">
+    display(renderActivatedCategories(waterfallData));
+    const text_activated_categories = null;
+  </script>
+
+  <script id="5" type="module">
+    display(await renderPartialMatchWeightsChart(partialMatchWeightData, true, width));
+    const partial_match_weights_highligh = null;
+  </script>
+
+  <script id="6" type="module">
+    display(await renderWaterfallChart(waterfallData, true, width));
+    const waterfall_highlight = null;
+  </script>
+
+  <script id="7" type="module">
+    display(renderFormula(waterfallFormula(waterfallData)));
+    const waterfall_as_formula = null;
+  </script>
+
+  <script id="8" type="module">
+    display(renderFormula(probabilityFormula(waterfallData)));
+    const probability_formula = null;
+  </script>
+</notebook>
