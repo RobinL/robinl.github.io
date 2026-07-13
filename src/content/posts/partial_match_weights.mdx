@@ -48,14 +48,22 @@ These scenarios thus correspond to a definition how information in the record is
 
 For this reason, we call each scenario a '<DefinitionToolTip term="comparison_level" text="comparison level" />'.
 
-It is up to the modeller to define these comparison levels and the resultant partial match weights they wish to estimate.
 
-### Example:  Defining <DefinitionToolTip term="comparison_level" text="comparison levels" /> for a first name column
+In summary:
 
-For first name, we could define the following three <DefinitionToolTip term="comparison_level" text="comparison levels" />:
+- The overall model is made up of a set of comparisons
+- Each comparison is made up of a set of similarity scenarios known as 'comparison levels'
+- Each comparison level has an associated partial match weight
+
+
+It is up to the modeller to define the comparison levels and the resultant partial match weights they wish to estimate.
+
+### Example:  Defining comparison levels for a first name column
+
+For first name, we could define the following three comparison levels.
 
 1. Exact match: First names are identical
-2. Fuzzy match:  First names are similar according to the Jaro Winkler measure, see [here](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance#Jaro%E2%80%93Winkler_similarity).
+2. Fuzzy match:  First names are similar according to the <DefinitionToolTip term="jaro_winkler" text="Jaro Winkler" /> measure.
 3. All other cases
 
 The estimated partial match weights may look like this:[^3]
@@ -68,7 +76,7 @@ Observe that:
 - An exact match on first name provides stronger evidence in favour of a match than a fuzzy match
 - If the first name is completely different (neither and exact nor fuzzy match), this is evidence against the records being a match.
 
-These scenarios are mutually exclusive, and are implemented like a sequence of `if` statements:
+These comparison levels are mutually exclusive, and are implemented like a sequence of `if` statements:
 
 ```python
 if first_name_l == first_name_r:
@@ -89,7 +97,7 @@ The number of <DefinitionToolTip term="comparison" text="comparisons" /> modelle
 
 For example, since gender is a categorical variable we'd likely have just two comparison levels: match, and non-match.
 
-For date of birth, we may define three scenarios, but [Levenshtein](https://en.wikipedia.org/wiki/Levenshtein_distance) would be more suitable than [Jaro Winkler](https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance) for assessing similarity.
+For date of birth, we may define three scenarios, but <DefinitionToolTip term="levenshtein" text="Levenshtein" /> would be more suitable than <DefinitionToolTip term="jaro_winkler" text="Jaro Winkler" /> for assessing similarity.
 
 We can plot all the partial match weights in a single chart like this:
 
@@ -111,7 +119,7 @@ Conversely, a mismatch on postcode may offer little evidence against a match sin
 
 ## Understanding the partial match weight chart and waterfall chart
 
-Let's take a look at an example record <DefinitionToolTip term="comparison" />, and see how the partial match weights are used.
+Let's take a look at an example record comparison, and see how the partial match weights are used.
 
 
 <InteractiveCallout>You can edit the data in the below table to see how the calculation changes</InteractiveCallout>
