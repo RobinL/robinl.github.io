@@ -15,6 +15,7 @@ import {
 import {
   applyComparisonFunctions,
   createComparisonRows,
+  settingsTable,
   settingsToWaterfall,
 } from './model';
 import {
@@ -26,7 +27,13 @@ import {
   posteriorChartSpec,
 } from './posterior';
 import {tutorialSettings} from './settings';
-import {createEditableRecordTable, renderEstimatedProbability} from './ui';
+import {
+  createEditableRecordTable,
+  renderComparisonVectorTable,
+  renderDataTable,
+  renderEstimatedProbability,
+  renderSettingsTable,
+} from './ui';
 
 describe('record-linkage scoring', () => {
   it('preserves the published comparison levels', () => {
@@ -67,6 +74,11 @@ describe('record-linkage scoring', () => {
     expect(calculation.comparisonPairs).toHaveLength(6);
     expect(calculation.vectorValues).toHaveLength(6);
     expect(calculation.finalScores[0]).toHaveProperty('match_probability');
+    expect(Object.keys(calculation.vectors[0]).slice(0, 6)).toEqual([
+      'first_name_l', 'first_name_r', 'γ_first_name', 'surname_l', 'surname_r', 'γ_surname',
+    ]);
+    expect(Object.keys(calculation.weights[0])).not.toContain('γ_first_name');
+    expect(Object.keys(calculation.weights[0])).toContain('ω_prior');
   });
 });
 
@@ -147,5 +159,43 @@ describe('record-linkage UI and conversions', () => {
     const element = renderEstimatedProbability([{log2_bayes_factor: 1} as never], document);
     expect(element.textContent).toContain('66.7%');
     expect(element.querySelector('mark')).not.toBeNull();
+  });
+
+  it('renders comparison settings with the published labels and a tinted prior row', () => {
+    const document = new JSDOM().window.document;
+    const rows = settingsTable(tutorialSettings);
+    const table = renderSettingsTable(rows, document);
+
+    expect(Array.from(table.rows[0].cells).map((cell) => cell.textContent)).toEqual([
+      'Comparison', 'Comparison Level', 'Comparison Vector Value (γ)', 'm probability',
+      'u probability', 'Bayes Factor', 'Partial Match Weight (ω)',
+    ]);
+    expect(table.rows[1].cells[0].textContent).toBe('Prior');
+    expect(table.rows[1].cells[0].style.backgroundColor).toBe('rgba(31, 119, 180, 0.35)');
+    expect(table.rows[1].cells[1].style.backgroundColor).toBe('rgba(31, 119, 180, 0.1)');
+  });
+
+  it('renders gamma values with their colour-coded partial match weights', () => {
+    const document = new JSDOM().window.document;
+    const table = renderComparisonVectorTable([{
+      'γ_first_name': 1,
+      'ω_first_name': 5.605,
+    }], document);
+
+    expect(table.rows[1].cells[0].textContent).toBe('γ = 1 (ω_first_name = 5.6)');
+    expect(table.querySelector('.comparison-vector-weight')?.getAttribute('style')).toContain('color');
+  });
+
+  it('uses the final-score turquoise for final weight and probability columns', () => {
+    const document = new JSDOM().window.document;
+    const table = renderDataTable([{
+      'ω_final_match_weight': 4.2,
+      match_probability: 0.95,
+    }], {tintColumns: true}, document);
+
+    expect(table.rows[0].cells[0].style.backgroundColor).toBe('rgba(23, 190, 207, 0.35)');
+    expect(table.rows[0].cells[1].style.backgroundColor).toBe('rgba(23, 190, 207, 0.35)');
+    expect(table.rows[1].cells[0].style.backgroundColor).toBe('rgba(23, 190, 207, 0.1)');
+    expect(table.rows[1].cells[1].style.backgroundColor).toBe('rgba(23, 190, 207, 0.1)');
   });
 });

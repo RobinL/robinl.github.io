@@ -153,13 +153,14 @@ export function renderDataTable(
   document: Document = globalThis.document,
 ): HTMLTableElement {
   const table = document.createElement('table');
+  table.className = 'record-linkage-table';
   if (records.length === 0) return table;
   const keys = Object.keys(records[0]);
   const header = table.insertRow();
   for (const key of keys) {
     const cell = document.createElement('th');
     cell.textContent = key;
-    const colorKey = Object.keys(colors).find((candidate) => key.includes(candidate));
+    const colorKey = colorKeyForField(key);
     if (options.tintColumns && colorKey) cell.style.backgroundColor = colorWithAlpha(colors[colorKey], 0.35);
     header.append(cell);
   }
@@ -171,7 +172,7 @@ export function renderDataTable(
       cell.textContent = typeof value === 'number' && options.roundNumbers
         ? String(roundToSignificantFigures(value, 3))
         : String(value ?? '');
-      const colorKey = Object.keys(colors).find((candidate) => key.includes(candidate));
+      const colorKey = colorKeyForField(key);
       if (options.tintColumns && colorKey) cell.style.backgroundColor = colorWithAlpha(colors[colorKey], 0.1);
     }
   }
@@ -184,7 +185,55 @@ export function renderSettingsTable(
 ): HTMLTableElement {
   const [headings, ...body] = rows;
   const records = body.map((row) => Object.fromEntries(headings.map((heading, index) => [heading, row[index]])));
-  return renderDataTable(records, { roundNumbers: true, tintColumns: true }, document);
+  const table = renderDataTable(records, { roundNumbers: true }, document);
+  records.forEach((record, rowIndex) => {
+    const comparison = String(record.Comparison ?? '');
+    const colorKey = colorKeyForField(comparison);
+    if (!colorKey) return;
+    Array.from(table.rows[rowIndex + 1].cells).forEach((cell, cellIndex) => {
+      cell.style.backgroundColor = colorWithAlpha(colors[colorKey], cellIndex === 0 ? 0.35 : 0.1);
+    });
+  });
+  return table;
+}
+
+export function renderComparisonVectorTable(
+  records: Array<Record<string, unknown>>,
+  document: Document = globalThis.document,
+): HTMLTableElement {
+  const gammaKeys = Object.keys(records[0] ?? {}).filter((key) => key.startsWith('γ_'));
+  const table = document.createElement('table');
+  table.className = 'record-linkage-table';
+  if (gammaKeys.length === 0) return table;
+
+  const header = table.insertRow();
+  gammaKeys.forEach((key) => {
+    const cell = document.createElement('th');
+    cell.textContent = key;
+    const colorKey = colorKeyForField(key);
+    if (colorKey) cell.style.backgroundColor = colorWithAlpha(colors[colorKey], 0.35);
+    header.append(cell);
+  });
+
+  records.forEach((record) => {
+    const row = table.insertRow();
+    gammaKeys.forEach((gammaKey) => {
+      const column = gammaKey.slice(2);
+      const weight = Number(record[`ω_${column}`]);
+      const cell = row.insertCell();
+      cell.append(`γ = ${String(record[gammaKey] ?? '')} `);
+      const weightLabel = document.createElement('span');
+      weightLabel.className = 'comparison-vector-weight';
+      weightLabel.textContent = `(ω_${column} = ${Number.isFinite(weight) ? weight.toFixed(1) : 'N/A'})`;
+      const colorKey = colorKeyForField(column);
+      if (colorKey) {
+        cell.style.backgroundColor = colorWithAlpha(colors[colorKey], 0.1);
+        weightLabel.style.color = colors[colorKey];
+      }
+      cell.append(weightLabel);
+    });
+  });
+  return table;
 }
 
 export function comparisonVectorRows(
@@ -207,4 +256,12 @@ function colorWithAlpha(color: string, alpha: number): string {
   const green = Number.parseInt(color.slice(3, 5), 16);
   const blue = Number.parseInt(color.slice(5, 7), 16);
   return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+}
+
+function colorKeyForField(field: string): string | undefined {
+  const normalized = field.toLowerCase();
+  if (normalized.includes('final_match_weight') || normalized.includes('match_probability')) {
+    return 'Final score';
+  }
+  return Object.keys(colors).find((candidate) => normalized.includes(candidate.toLowerCase()));
 }

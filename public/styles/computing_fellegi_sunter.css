@@ -13,12 +13,11 @@
     }
 }
 
-th {
-    padding-left: 0.3rem;
-    padding-right: 0.3rem;
+.notebook-kit-scope .record-linkage-table th,
+.notebook-kit-scope .record-linkage-table td {
+    padding: 0 0.25rem;
 }
 
-td {
-    padding-left: 0.3rem;
-    padding-right: 0.3rem;
+.comparison-vector-weight {
+    white-space: nowrap;
 }

@@ -4,7 +4,7 @@
 
   <script id="1" type="module" hidden>
     import {computeLinkageTutorial} from "../lib/notebooks/record-linkage/computing";
-    import {createEditableRecordTable, renderDataTable, renderSettingsTable} from "../lib/notebooks/record-linkage/ui";
+    import {createEditableRecordTable, renderComparisonVectorTable, renderDataTable, renderSettingsTable} from "../lib/notebooks/record-linkage/ui";
   </script>
 
   <script id="2" type="module">
@@ -42,12 +42,12 @@
   </script>
 
   <script id="8" type="module">
-    display(renderDataTable(calculation.vectorValues, {tintColumns: true}));
+    display(renderComparisonVectorTable(calculation.vectorValuesAndWeights));
     const comparison_vector_values_only = null;
   </script>
 
   <script id="9" type="module">
-    display(renderDataTable(calculation.gammaAndWeights, {roundNumbers: true, tintColumns: true}));
+    display(renderDataTable(calculation.weights, {roundNumbers: true, tintColumns: true}));
     const cv_pmw_sum = null;
   </script>
 

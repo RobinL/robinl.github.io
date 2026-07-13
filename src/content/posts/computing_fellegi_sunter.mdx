@@ -59,7 +59,7 @@ The aim of the model is to compute a prediction of which records match. This pre
 
     Note the 'comparison vector value' column in this table.  This is an integer value that identifies the comparison level within the comparison. We will use it to help us look up the correct partial match weights.
 
-    We then proceed by computing which comparison level is <DefinitionToolTip term="activate" />d for each pairwise record comparison, and representing this using the comparison vector value.  We use the gamma symbol (γ) to refer to the comparison vector value.
+    We then proceed by computing which <DefinitionToolTip term="comparison_level" text="comparison level" /> is <DefinitionToolTip term="activate" />d for each pairwise record <DefinitionToolTip term="comparison" text="comparison" />, and representing this using the comparison vector value.  We use the gamma symbol (γ) to refer to the comparison vector value.
 
 
 
@@ -70,7 +70,7 @@ The aim of the model is to compute a prediction of which records match. This pre
 
 <p class="table-note">Table scrolls right →</p>
 
-    Now that we've used the text values to compute the comparison vector value, we no longer need it.  What remains are known as the comparison vectors for each pairwise comparison:
+    Now that we've used the text values to compute the comparison vector values, we no longer need the original text values. What remains are known as the comparison vectors for each pairwise comparison.  To help you see what's going on, I have annotated the comparison vector values with the corresponding partial match weights in brackets, which we will use in the next step.
 
     <NotebookCell cellId={8} />
 

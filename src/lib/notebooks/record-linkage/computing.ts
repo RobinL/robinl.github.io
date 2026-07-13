@@ -15,10 +15,11 @@ export function computeLinkageTutorial(left: DataRecord[], right: DataRecord[]) 
   const scored = addModelParametersToComparisonVectors(vectors, tutorialSettings);
   return {
     comparisonPairs: withoutKeys(comparisonPairs, ['uid_l', 'uid_r']),
-    vectors: withoutKeys(vectors, ['uid_l', 'uid_r']),
+    vectors: interleaveComparisonColumns(withoutKeys(vectors, ['uid_l', 'uid_r'])),
     vectorValues: selectPrefixes(vectors, ['γ_']),
-    gammaAndWeights: scored.map((row) => {
-      const selected = Object.fromEntries(Object.entries(row).filter(([key]) => key.startsWith('γ_')));
+    vectorValuesAndWeights: scored,
+    weights: scored.map((row) => {
+      const selected: Record<string, unknown> = {};
       selected.ω_prior = row.ω_prior;
       Object.assign(selected, Object.fromEntries(Object.entries(row).filter(([key]) => key.startsWith('ω_') && key !== 'ω_prior')));
       return selected;
@@ -44,4 +45,16 @@ function selectPrefixes(rows: Array<Record<string, unknown>>, prefixes: string[]
   return rows.map((row) => Object.fromEntries(
     Object.entries(row).filter(([key]) => prefixes.some((prefix) => key.startsWith(prefix))),
   ));
+}
+
+function interleaveComparisonColumns(rows: Array<Record<string, unknown>>) {
+  return rows.map((row) => {
+    const output: Record<string, unknown> = {};
+    for (const column of tutorialSettings.comparisons.map((comparison) => comparison.output_column_name)) {
+      output[`${column}_l`] = row[`${column}_l`];
+      output[`${column}_r`] = row[`${column}_r`];
+      output[`γ_${column}`] = row[`γ_${column}`];
+    }
+    return output;
+  });
 }
