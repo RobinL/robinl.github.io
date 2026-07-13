@@ -87,17 +87,17 @@ else:
     first_name_partial_match_weight = -3.3
 ```
 
-We can refer to this group of <DefinitionToolTip term="comparison_level" text="comparison levels" /> as a <DefinitionToolTip term="comparison" />.
+
 
 ### Remaining columns
 
 Similarly, we can define <DefinitionToolTip term="comparison" text="comparisons" /> for the remaining columns and estimate the partial match weights of each of their <DefinitionToolTip term="comparison_level" text="comparison levels" />.
 
-The number of <DefinitionToolTip term="comparison" text="comparisons" /> modelled and their definition can vary depending on the type of information.
+The number of comparison levels modelled and their definition can vary depending on the type of information.
 
 For example, since gender is a categorical variable we'd likely have just two comparison levels: match, and non-match.
 
-For date of birth, we may define three scenarios, but <DefinitionToolTip term="levenshtein" text="Levenshtein" /> would be more suitable than <DefinitionToolTip term="jaro_winkler" text="Jaro Winkler" /> for assessing similarity.
+For date of birth, we may define three comparison levels, but <DefinitionToolTip term="levenshtein" text="Levenshtein" /> would be more suitable than <DefinitionToolTip term="jaro_winkler" text="Jaro Winkler" /> for assessing similarity.
 
 We can plot all the partial match weights in a single chart like this:
 
