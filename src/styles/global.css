@@ -337,6 +337,20 @@ button {
   margin-bottom: 0;
 }
 
+.prose .post-alert {
+  margin: 0 0 1.5rem;
+  padding: 1rem 1.125rem;
+  border: 1px solid #f0b429;
+  border-left-width: 5px;
+  border-radius: 4px;
+  background: #fff8df;
+  color: #553c00;
+}
+
+.prose .post-alert strong {
+  color: #3d2b00;
+}
+
 .prose code:not(pre code) {
   padding: 0.1rem 0.25rem;
   border: 1px solid #e5e7eb;
