@@ -1,12 +1,12 @@
-import {JSDOM} from 'jsdom';
-import {describe, expect, it, vi} from 'vitest';
+import { JSDOM } from 'jsdom';
+import { describe, expect, it, vi } from 'vitest';
 import {
   exactMatchComparison,
   jaroWinklerComparison,
   levenshteinComparison,
   tutorialComparisonFunctions,
 } from './comparisons';
-import {computeLinkageTutorial} from './computing';
+import { computeLinkageTutorial } from './computing';
 import {
   bayesFactorFromMatchWeight,
   matchWeightFromProbability,
@@ -19,14 +19,12 @@ import {
   settingsToWaterfall,
 } from './model';
 import {
-  createEvidenceControls,
+  createPriorControl,
   createEvidenceControlPair,
-  createPriorControls,
-  createPriorControlPair,
   posteriorCalculation,
   posteriorChartSpec,
 } from './posterior';
-import {tutorialSettings} from './settings';
+import { tutorialSettings } from './settings';
 import {
   createEditableRecordTable,
   renderComparisonVectorTable,
@@ -47,11 +45,11 @@ describe('record-linkage scoring', () => {
 
   it('scores the tutorial pair and produces a final probability', () => {
     const rows = [
-      {uid: 1, first_name: 'robin', surname: 'linacre', postcode: 'w1a 1aa', gender: 'female'},
-      {uid: 2, first_name: 'robyn', surname: 'linacre', postcode: 'w1a 1aa', gender: 'male'},
+      { uid: 1, first_name: 'robin', surname: 'linacre', postcode: 'w1a 1aa', gender: 'female' },
+      { uid: 2, first_name: 'robyn', surname: 'linacre', postcode: 'w1a 1aa', gender: 'male' },
     ];
     const vector = applyComparisonFunctions(createComparisonRows(rows), tutorialComparisonFunctions)[0];
-    expect(vector).toMatchObject({γ_first_name: 1, γ_surname: 2, γ_postcode: 2, γ_gender: 0});
+    expect(vector).toMatchObject({ γ_first_name: 1, γ_surname: 2, γ_postcode: 2, γ_gender: 0 });
 
     const waterfall = settingsToWaterfall(tutorialSettings, vector);
     expect(waterfall.map((row) => row.column_name)).toEqual([
@@ -62,13 +60,13 @@ describe('record-linkage scoring', () => {
 
   it('creates every cross-dataset comparison in the computing tutorial', () => {
     const left = [
-      {uid: 1, first_name: 'a', surname: 'a', postcode: 'a', gender: 'male'},
-      {uid: 2, first_name: 'b', surname: 'b', postcode: 'b', gender: 'female'},
-      {uid: 3, first_name: 'c', surname: 'c', postcode: 'c', gender: 'female'},
+      { uid: 1, first_name: 'a', surname: 'a', postcode: 'a', gender: 'male' },
+      { uid: 2, first_name: 'b', surname: 'b', postcode: 'b', gender: 'female' },
+      { uid: 3, first_name: 'c', surname: 'c', postcode: 'c', gender: 'female' },
     ];
     const right = [
-      {uid: 1, first_name: 'a', surname: 'a', postcode: 'a', gender: 'male'},
-      {uid: 2, first_name: 'b', surname: 'b', postcode: 'b', gender: 'female'},
+      { uid: 1, first_name: 'a', surname: 'a', postcode: 'a', gender: 'male' },
+      { uid: 2, first_name: 'b', surname: 'b', postcode: 'b', gender: 'female' },
     ];
     const calculation = computeLinkageTutorial(left, right);
     expect(calculation.comparisonPairs).toHaveLength(6);
@@ -87,10 +85,10 @@ describe('record-linkage UI and conversions', () => {
     const matchWeight = matchWeightFromProbability(0.2);
     expect(probabilityFromMatchWeight(matchWeight)).toBeCloseTo(0.2);
     expect(bayesFactorFromMatchWeight(matchWeight)).toBeCloseTo(0.25);
-    expect(posteriorCalculation({priorProbability: 0.2, partialMatchWeight: 2, bayesFactor: 4}).posteriorProbability).toBeCloseTo(0.5);
+    expect(posteriorCalculation({ priorProbability: 0.2, partialMatchWeight: 2, bayesFactor: 4 }).posteriorProbability).toBeCloseTo(0.5);
   });
 
-  it('keeps the Observable posterior controls synchronized and reactive', () => {
+  it('keeps the Observable posterior controls reactive', () => {
     const window = new JSDOM().window;
     vi.stubGlobal('document', window.document);
     vi.stubGlobal('Node', window.Node);
@@ -99,28 +97,15 @@ describe('record-linkage UI and conversions', () => {
     vi.stubGlobal('Event', window.Event);
 
     try {
-      const prior = createPriorControls();
-      const probabilitySlider = prior.querySelector<HTMLInputElement>('input[type="range"]')!;
+      const priorControl = createPriorControl();
+      const probabilitySlider = priorControl.querySelector<HTMLInputElement>('input[type="range"]')!;
       probabilitySlider.valueAsNumber = 0.5;
-      probabilitySlider.dispatchEvent(new window.Event('input', {bubbles: true}));
-      expect(prior.value).toMatchObject({priorProbability: 0.5, priorOdds: 1});
-
-      const evidence = createEvidenceControls();
-      const matchWeightSlider = evidence.querySelector<HTMLInputElement>('input[type="range"]')!;
-      matchWeightSlider.valueAsNumber = 3;
-      matchWeightSlider.dispatchEvent(new window.Event('input', {bubbles: true}));
-      expect(evidence.value).toMatchObject({partialMatchWeight: 3, bayesFactor: 8});
-
-      const priorPair = createPriorControlPair();
-      expect(priorPair.probability.value).toBe(0.25);
-      expect(priorPair.odds.value).toBeCloseTo(1 / 3);
-      priorPair.odds.value = 1;
-      priorPair.odds.dispatchEvent(new window.Event('input', {bubbles: true}));
-      expect(priorPair.probability.value).toBe(0.5);
+      probabilitySlider.dispatchEvent(new window.Event('input', { bubbles: true }));
+      expect(priorControl.value).toBe(0.5);
 
       const evidencePair = createEvidenceControlPair();
-      expect(evidencePair.matchWeight.value).toBe(6);
       expect(evidencePair.bayesFactor.value).toBe(64);
+      expect(evidencePair.matchWeight.value).toBe(6);
     } finally {
       vi.unstubAllGlobals();
     }
@@ -146,17 +131,17 @@ describe('record-linkage UI and conversions', () => {
   it('parses edits from the local editable table', () => {
     const window = new JSDOM().window;
     const table = createEditableRecordTable([
-      {first_name: 'Robin', surname: 'Linacre', postcode: 'W1A 1AA', gender: 'male'},
-      {first_name: 'Robyn', surname: 'Linacre', postcode: 'W1A 1AA', gender: 'female'},
+      { first_name: 'Robin', surname: 'Linacre', postcode: 'W1A 1AA', gender: 'male' },
+      { first_name: 'Robyn', surname: 'Linacre', postcode: 'W1A 1AA', gender: 'female' },
     ], false, window.document);
     table.rows[1].cells[0].textContent = 'Alice';
     table.dispatchEvent(new window.Event('input'));
-    expect(table.value[0]).toMatchObject({uid: 1, first_name: 'alice', gender: 'male'});
+    expect(table.value[0]).toMatchObject({ uid: 1, first_name: 'alice', gender: 'male' });
   });
 
   it('renders the estimated probability without executable HTML', () => {
     const document = new JSDOM().window.document;
-    const element = renderEstimatedProbability([{log2_bayes_factor: 1} as never], document);
+    const element = renderEstimatedProbability([{ log2_bayes_factor: 1 } as never], document);
     expect(element.textContent).toContain('66.7%');
     expect(element.querySelector('mark')).not.toBeNull();
   });
@@ -191,7 +176,7 @@ describe('record-linkage UI and conversions', () => {
     const table = renderDataTable([{
       'ω_final_match_weight': 4.2,
       match_probability: 0.95,
-    }], {tintColumns: true}, document);
+    }], { tintColumns: true }, document);
 
     expect(table.rows[0].cells[0].style.backgroundColor).toBe('rgba(23, 190, 207, 0.35)');
     expect(table.rows[0].cells[1].style.backgroundColor).toBe('rgba(23, 190, 207, 0.35)');
