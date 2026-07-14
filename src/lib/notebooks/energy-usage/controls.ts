@@ -14,7 +14,7 @@ type InputsApi = {
   number(options: { value: number; width?: string }): ValueElement<number>;
   select<T extends string>(
     values: readonly T[],
-    options: { value: T; width?: string }
+    options: { value: T; width?: string; format?: (value: T) => string }
   ): ValueElement<T>;
   form<T extends Record<string, unknown>>(
     inputs: { [K in keyof T]: ValueElement<T[K]> },
@@ -45,9 +45,10 @@ function select<T extends string>(
   Inputs: InputsApi,
   values: readonly T[],
   value: T,
-  width?: string
+  width?: string,
+  format?: (value: T) => string
 ): ValueElement<T> {
-  return decorateControl(Inputs.select(values, { value, width }));
+  return decorateControl(Inputs.select(values, { value, width, format }));
 }
 
 function sentenceForm<T extends Record<string, unknown>>(
@@ -125,13 +126,7 @@ export function createHeatingControls(
     imperial_gas_units: 'Imperial units (100s of cubic feet)',
     metric_gas_units: 'Metric units',
   };
-  const unitControl = select(Inputs, gasUnits, 'metric_gas_units', '15rem');
-  const selectElement = unitControl.querySelector('select');
-  if (selectElement) {
-    for (const option of Array.from(selectElement.options)) {
-      option.textContent = labels[option.value as keyof typeof labels];
-    }
-  }
+  const unitControl = select(Inputs, gasUnits, 'metric_gas_units', '15rem', (unit) => labels[unit]);
 
   return sentenceForm<HeatingInput>(
     Inputs,

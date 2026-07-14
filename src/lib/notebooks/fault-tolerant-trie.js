@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import * as Inputs from '@observablehq/inputs';
 
 export const show_highlighted_trie_using_d3 = (() => {
-const SUCCESS_COLOR = "#2ca02c";
+  const SUCCESS_COLOR = "#2ca02c";
   const FAILURE_COLOR = "#d62728";
   const NEUTRAL_COLOR = "#1f77b4";
 
@@ -11,8 +11,8 @@ const SUCCESS_COLOR = "#2ca02c";
       const children = node?.children
         ? Array.from(node.children.entries(), ([tok, child]) => nodeToObj(tok, child))
         : Array.isArray(node?.kids)
-        ? node.kids.map(([tok, child]) => nodeToObj(tok, child))
-        : [];
+          ? node.kids.map(([tok, child]) => nodeToObj(tok, child))
+          : [];
       return {
         name: label,
         uprn: node?.uprn ?? null,
@@ -403,7 +403,7 @@ export const renderTraceStepsTable = (trace, options = {}) => {
 };
 
 export const traceAddressRoute = (() => {
-const MAX_TRAILING_TOKENS_TO_IGNORE = 2;
+  const MAX_TRAILING_TOKENS_TO_IGNORE = 2;
   const tokenize = (text) =>
     text ? text.trim().split(/\s+/).filter(Boolean) : [];
 
@@ -859,10 +859,10 @@ const MAX_TRAILING_TOKENS_TO_IGNORE = 2;
             const reason = !isLeaf
               ? "terminal_non_leaf_consumed_all_tokens"
               : remainingTokens > 0
-              ? "terminal_leaf_accept_with_remaining"
-              : tailIgnoredCount > 0
-              ? "terminal_leaf_accept_with_trailing_tokens"
-              : "terminal_leaf_accept";
+                ? "terminal_leaf_accept_with_remaining"
+                : tailIgnoredCount > 0
+                  ? "terminal_leaf_accept_with_trailing_tokens"
+                  : "terminal_leaf_accept";
 
             attempt.matched = true;
             attempt.decision = {
@@ -966,7 +966,7 @@ const MAX_TRAILING_TOKENS_TO_IGNORE = 2;
 })();
 
 export const buildReverseTrie = (() => {
-class TrieNode {
+  class TrieNode {
     constructor() {
       this.children = new Map(); // preserve insertion order for deterministic traversals
       this.uprn = null;
@@ -1020,7 +1020,7 @@ class TrieNode {
 })();
 
 export const show_trie_using_d3 = (() => {
-// Convert your Map-based trie into a D3-friendly object
+  // Convert your Map-based trie into a D3-friendly object
   function trieToHierarchy(rootTrie) {
     function nodeToObj(label, node) {
       return {
@@ -1030,8 +1030,8 @@ export const show_trie_using_d3 = (() => {
         term: node?.term ?? 0,
         children: node?.children
           ? Array.from(node.children.entries(), ([tok, child]) =>
-              nodeToObj(tok, child)
-            )
+            nodeToObj(tok, child)
+          )
           : []
       };
     }
@@ -1055,8 +1055,8 @@ export const show_trie_using_d3 = (() => {
     const root = d3.hierarchy(data).eachBefore(
       (
         (i = 0) =>
-        (d) =>
-          (d.index = i++)
+          (d) =>
+            (d.index = i++)
       )()
     );
     const nodes = root.descendants();
@@ -1139,8 +1139,7 @@ export const show_trie_using_d3 = (() => {
           .reverse()
           .map((a) => a.data.name)
           .join(" / ")}\n` +
-        `uprn=${d.data.uprn ?? 0}  count=${d.data.cnt}  terminal=${
-          d.data.term ? "yes" : "no"
+        `uprn=${d.data.uprn ?? 0}  count=${d.data.cnt}  terminal=${d.data.term ? "yes" : "no"
         }`
     );
 
@@ -1191,13 +1190,16 @@ ANNEX 5 RAINBOW ROAD ABBOTS LANGLEY
 MY LONG BUSINESS NAME 9 RAINBOW ROAD ABBOTS LANGLEY`;
 
 export function createAddressListInput() {
-  const el = Inputs.textarea({value: initial_list_of_addresses, rows: 20, resize: 'vertical', spellcheck: false});
-  const textarea = el.querySelector('textarea'); textarea.style.maxHeight = 'none'; textarea.style.setProperty('font-size','0.8rem','important'); textarea.style.setProperty('line-height','1rem','important'); return el;
+  const el = Inputs.textarea({ value: initial_list_of_addresses, rows: 20, resize: 'vertical', spellcheck: false });
+  const textarea = el.querySelector('textarea'); textarea.style.maxHeight = 'none'; textarea.style.setProperty('font-size', '0.8rem', 'important'); textarea.style.setProperty('line-height', '1rem', 'important'); return el;
 }
 export function createMessyAddressInput() {
-  const el = Inputs.text({label:'Lookup an address', value:'CORNER SHOP 1 RAINBOW ROAD EXTRA ABBOTS LANGLEY HERTS UK', width:800, spellcheck:false});
-  const input = el.querySelector('input'); input.style.setProperty('font-size','0.8rem','important'); input.style.setProperty('line-height','1rem','important'); return el;
+  const el = Inputs.text({ label: 'Lookup an address', value: 'CORNER SHOP 1 RAINBOW ROAD EXTRA ABBOTS LANGLEY HERTS UK', width: 800, spellcheck: false });
+  const input = el.querySelector('input'); input.style.setProperty('font-size', '0.8rem', 'important'); input.style.setProperty('line-height', '1rem', 'important'); return el;
 }
-export function buildAddressTrie(text) { const lines=text.split('\\n').map(d=>d.trim()).filter(Boolean).map((address,i)=>({uprn:i+1,address})); return buildReverseTrie(lines); }
-export function renderAddressTrace(address,trie) { return show_highlighted_trie_using_d3(address,trie); }
-export function renderExampleTrie() { const lines=hard_coded_addresses.split('\\n').map(d=>d.trim()).filter(Boolean).map((address,i)=>({uprn:i+1,address})); return show_trie_using_d3(buildReverseTrie(lines)); }
+function parseAddressRows(text) {
+  return text.split(/\r?\n/).map(d => d.trim()).filter(Boolean).map((address, i) => ({ uprn: i + 1, address }));
+}
+export function buildAddressTrie(text) { return buildReverseTrie(parseAddressRows(text)); }
+export function renderAddressTrace(address, trie) { return show_highlighted_trie_using_d3(address, trie); }
+export function renderExampleTrie() { return show_trie_using_d3(buildReverseTrie(parseAddressRows(hard_coded_addresses))); }

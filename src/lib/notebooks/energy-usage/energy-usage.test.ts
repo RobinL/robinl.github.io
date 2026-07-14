@@ -1,5 +1,6 @@
 import { JSDOM } from 'jsdom';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import * as Inputs from '@observablehq/inputs';
 import {
   calculateBathKwh,
   calculateDrivingKwh,
@@ -12,6 +13,7 @@ import {
   calculateStuffKwh,
 } from './calculations';
 import { renderBreakdownChart, renderSummaryText, renderTreemap, renderUnitChart } from './charts';
+import { createHeatingControls } from './controls';
 
 describe('energy usage calculations', () => {
   it('preserves the published defaults for travel', () => {
@@ -104,5 +106,31 @@ describe('energy usage rendering', () => {
     expect(summary.textContent).toContain('average power consumption');
     expect(treemap.querySelectorAll('rect')).toHaveLength(2);
     expect(treemap.querySelectorAll('title')).toHaveLength(2);
+  });
+});
+
+describe('energy usage controls', () => {
+  it('shows readable heating-unit labels', () => {
+    const window = new JSDOM().window;
+    vi.stubGlobal('document', window.document);
+    vi.stubGlobal('Node', window.Node);
+    vi.stubGlobal('NodeList', window.NodeList);
+    vi.stubGlobal('HTMLCollection', window.HTMLCollection);
+
+    try {
+      const control = createHeatingControls(
+        Inputs as unknown as Parameters<typeof createHeatingControls>[0],
+        window.document
+      );
+      const options = Array.from(control.querySelectorAll('option')).map((option) => option.textContent);
+
+      expect(options).toEqual([
+        'kwh',
+        'Imperial units (100s of cubic feet)',
+        'Metric units',
+      ]);
+    } finally {
+      vi.unstubAllGlobals();
+    }
   });
 });
