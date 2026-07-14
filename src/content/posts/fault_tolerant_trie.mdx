@@ -12,6 +12,17 @@ import NotebookCell from '../../components/notebook-kit/NotebookCell.jsx';
 
 # Address matching using a fault tolerant trie
 
+<aside class="post-alert" role="note" aria-label="Methodology update">
+  <strong>Methodology update:</strong> Further testing on real-world data showed that trie-based address matching was less effective than we had hoped.
+
+  We couldn't find a set of fault-tolerance rules that worked better than probabilistic approaches:
+  - Permissive fault-tolerance rules matched more addresses but were less accurate than Splink-based fuzzy matching,
+  - Stricter rules achieved high precision only for a small number of records beyond exact string matching. The number was so small it didn't justify the additional complexity of the trie-based approach.
+
+  I have left this blog post up because it's possible an extension to the base methodology could make a breakthrough in terms of accuracy.
+
+</aside>
+
 A data structure known as a `trie` offers a powerful tool for address matching.  It exploits the hierarchical nature of addresses, whereby tokens (words) in the address are typically represented in a specific to general order geographically.
 
 For example, consider the following addresses:
