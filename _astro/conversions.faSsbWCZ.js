@@ -1,1 +1,0 @@
-function e(t,r){if(t===0)return 0;const o=Math.floor(Math.log10(Math.abs(t))),a=10**(r-o-1);return Math.round(t*a)/a}function n(t){return 2**t}function s(t){const r=n(t);return r/(1+r)}function c(t){return t/(1-t)}function i(t){return Math.log2(t)}function u(t){return i(c(t))}function h(t,r){return t/r}export{c as a,n as b,u as c,h as d,i as m,s as p,e as r};
