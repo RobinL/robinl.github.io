@@ -19,9 +19,9 @@ import InteractiveCallout from '../../components/probabilistic/InteractiveCallou
 
 ## Aims
 
-This is part one of a series of interactive articles that aim to provide an introduction to the theory of probabilistic record linkage and deduplication.
+This is part one of an interactive introduction to the theory of probabilistic record linkage and deduplication.
 
-In this article I provide a high-level introduction to the <DefinitionToolTip term="fellegi-sunter" text="Fellegi-Sunter"/> framework and an interactive example of a linkage model.
+In this first article I provide a high-level introduction to the <DefinitionToolTip term="fellegi-sunter" text="Fellegi-Sunter"/> framework and an interactive example of a linkage model.
 
 Subsequent articles explore the theory in more depth.
 
@@ -41,15 +41,15 @@ Record linkage can be done within datasets (deduplication), between datasets (li
 
 Linkage is 'probabilistic' in the sense that it subject to uncertainty and relies on the balance of evidence. For instance, in a large dataset, observing that two records match on the full name `John Smith` provides some evidence that these two records may refer to the same person, but this evidence is inconclusive because it's possible there are two different `John Smith`s.
 
-More broadly,  it is often impossible to classify pairs of records as matches or non-matches beyond any doubt. Instead, the aim of probabilisitic record linkage is to quantify the probability that a pair of records refer to the same entity by considering evidence in favour and against a match and weighting it appropriately.
+More broadly,  it is often impossible to classify pairs of records as matches or non-matches beyond any doubt. Instead, the aim of probabilisitic record linkage is to quantify likelihood that a pair of records refer to the same entity by considering evidence in favour and against a match and weighting it appropriately.
 
-The most common type of probabilistic record linkage model is called the Fellegi-Sunter model.
+The most common set up for a probabilistic record linkage model is called the Fellegi-Sunter model.
 
 We start with a <DefinitionToolTip term="prior" />, which represents the probability that two records drawn at random are a match. We then compare the two records, increasing the match probability where information in the record matches, and decreasing it when information differs.
 
 The amount we increase and decrease the match probability is determined by the '<DefinitionToolTip term="partial_match_weight" />s' of the model.
 
-For example, a match on postcode gives us more evidence in favour of a match on gender, since the latter is much more likely to occur by chance.
+For example, a match on postcode gives us more evidence in favour of a match than a match on gender, since the latter is much more likely to occur by chance.
 
 The final prediction is a simple calculation:  we sum up <DefinitionToolTip term="partial_match_weight" />s to compute a final match weight, which is then converted into a probability.
 
@@ -72,6 +72,10 @@ Let's take a look at an example of a simple Fellegi-Sunter model to calculate ma
     The final estimated match probability is shown in the rightmost bar.  Note that the y axis on the right converts match weight into probability.
 
     <NotebookCell cellId={5} />
+
+    Finally, an important note of caution regarding probabilities: the Fellegi Sunter model tends to do a good job of producing an ordinal score that tells us how much the two records match: higher scores mean better matches.  However, the numeric probabilities produced by the model are often poor estimates of the true probability of a match due to some of the statistical assumptions made by the model.  As such, I recommend working with the match weights produced by the model, rather than converting them to probabilities.
+
+
 
     In the next article, we will look at partial match weights in great depth.
 

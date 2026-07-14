@@ -226,8 +226,19 @@ export function addModelParametersToComparisonVectors(
 
 export function settingsTable(settings: ModelSettings): Array<Array<string | number | null>> {
   const rows: Array<Array<string | number | null>> = [[
-    'Column', 'Scenario', 'Comparison Vector Value (γ)', 'M Prob', 'U Prob', 'Bayes Factor', 'Partial Match Weight (ω)',
+    'Comparison', 'Comparison Level', 'Comparison Vector Value (γ)', 'm probability', 'u probability', 'Bayes Factor', 'Partial Match Weight (ω)',
   ]];
+  const priorProbability = settings.probability_two_random_records_match;
+  const priorBayesFactor = bayesFactorFromMandU(priorProbability, 1 - priorProbability);
+  rows.push([
+    'Prior',
+    `Starting match probability = ${priorProbability}`,
+    null,
+    null,
+    null,
+    priorBayesFactor,
+    matchWeightFromBayesFactor(priorBayesFactor),
+  ]);
   for (const comparison of addComparisonVectorValues(settings).comparisons) {
     for (const level of comparison.comparison_levels) {
       if (level.is_null_level) continue;

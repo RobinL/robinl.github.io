@@ -17,9 +17,9 @@ import InteractiveCallout from '../../components/probabilistic/InteractiveCallou
 
 # Computing the Fellegi Sunter model
 
-The previous article showed how we could derive a mathematical representation of the Fellegi-Sunter model.
+The previous article constructed a mathematical representation of the Fellegi-Sunter model.
 
-This article contains a step-by-step demonstration of how we use this mathematical model to compute predictions from data.
+This article contains a step-by-step demonstration of how we use this model to compute predictions from data.
 
 ## Objective of the Model
 
@@ -29,7 +29,7 @@ The aim of the model is to compute a prediction of which records match. This pre
 
 ## Computing the prediction step by step
 
-    We begin with some data. In this example we will attempt to link but not deduplicate these records.
+    We begin with some data. In this example we will attempt to link but not deduplicate records from these two tables.
 
     <InteractiveCallout>The following two input tables are interactive!  Edit the values and all the calculations in the rest of this article will update.</InteractiveCallout>
 
@@ -48,7 +48,7 @@ The aim of the model is to compute a prediction of which records match. This pre
     <NotebookCell cellId={5} className="observableTableWithScrollbar"/>
     <p class="table-note">Table scrolls right →</p>
 
-    At first glance, it may seem challenging to turn this table of text into a numeric prediction.  But this can be achieved using the concepts of <DefinitionToolTip term="scenario" />s and <DefinitionToolTip term="partial_match_weight" />s <a href="/partial_match_weights/">introduced earlier in this tutorial</a>.
+    At first glance, it may seem challenging to turn this table of text into a numeric prediction.  But this can be achieved using the concepts of <DefinitionToolTip term="comparison" text="comparisons"/> and <DefinitionToolTip term="partial_match_weight" />s <a href="/partial_match_weights/">introduced earlier in this tutorial</a>.
 
     Specifically, we define scenarios for each column and then use a lookup table to find the partial match weights.
 
@@ -57,9 +57,9 @@ The aim of the model is to compute a prediction of which records match. This pre
 
     <NotebookCell cellId={6} className="observableTableWithScrollbar"/>
 
-    Note the 'comparison vector value' column in this table.  This is an integer value that identifies the scenario within the column. We will use it to help us look up the correct partial match weights.
+    Note the 'comparison vector value' column in this table.  This is an integer value that identifies the comparison level within the comparison. We will use it to help us look up the correct partial match weights.
 
-    We then proceed by computing which scenario is <DefinitionToolTip term="activate" />d for each pairwise record comparison, and representing this using the comparison vector value.  We use the gamma symbol (γ) to refer to the comparison vector value.
+    We then proceed by computing which <DefinitionToolTip term="comparison_level" text="comparison level" /> is <DefinitionToolTip term="activate" />d for each pairwise record <DefinitionToolTip term="comparison" text="comparison" />, and representing this using the comparison vector value.  We use the gamma symbol (γ) to refer to the comparison vector value.
 
 
 
@@ -70,7 +70,7 @@ The aim of the model is to compute a prediction of which records match. This pre
 
 <p class="table-note">Table scrolls right →</p>
 
-    Now that we've used the text values to compute the comparison vector value, we no longer need it.  What remains are known as the comparison vectors for each pairwise comparison:
+    Now that we've used the text values to compute the comparison vector values, we no longer need the original text values. What remains are known as the comparison vectors for each pairwise comparison.  To help you see what's going on, I have annotated the comparison vector values with the corresponding partial match weights in brackets, which we will use in the next step.
 
     <NotebookCell cellId={8} />
 
@@ -92,18 +92,11 @@ The aim of the model is to compute a prediction of which records match. This pre
     <p class="table-note">Table scrolls right →</p>
 
 
-
-
-
-
-
-
-
-
-
-
-
 </NotebookCellProvider>
+
+This concludes our introduction to the maths of the Fellegi Sunter model.
+
+In the final three articles in the tutorial, we zoom out a bit to get a better intuitive understanding of why this approach works well.
 
 
 [^1]:In real applications, we would typically use [blocking](https://moj-analytical-services.github.io/splink/topic_guides/blocking/blocking_rules.html?h=blocking#blocking) to reduce the number of record comparisons.

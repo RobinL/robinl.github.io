@@ -590,6 +590,11 @@ button {
   font-size: 0.85rem;
 }
 
+.notebook-kit-scope .editable-record-table th,
+.notebook-kit-scope .editable-record-table td {
+  padding: 0 0.25rem;
+}
+
 .observablehq input[type='number'],
 .observablehq input[type='text'],
 .observablehq input[type='password'],
@@ -754,6 +759,43 @@ button {
 .definition-term:hover .definition-tooltip,
 .definition-term:focus .definition-tooltip {
   display: block;
+}
+
+.definition-paragraph,
+.definition-list,
+.definition-blockquote,
+.definition-preformatted {
+  display: block;
+}
+
+.definition-paragraph + .definition-paragraph,
+.definition-list + .definition-paragraph,
+.definition-paragraph + .definition-list,
+.definition-list + .definition-list,
+.definition-blockquote + .definition-paragraph,
+.definition-preformatted + .definition-paragraph {
+  margin-top: 0.5rem;
+}
+
+.definition-list {
+  padding-left: 1.25rem;
+}
+
+.definition-list-item {
+  display: list-item;
+}
+
+.definition-list > .definition-list-item {
+  list-style-type: disc;
+}
+
+.definition-blockquote {
+  border-left: 2px solid var(--line);
+  padding-left: 0.5rem;
+}
+
+.definition-preformatted {
+  overflow-x: auto;
 }
 
 .vega-chart {

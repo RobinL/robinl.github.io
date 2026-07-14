@@ -1,0 +1,1 @@
+Jaro-Winkler similarity measures how similar two strings are, giving more weight to matching prefixes.  It is a good similarity metric to use for names.
