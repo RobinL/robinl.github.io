@@ -39,6 +39,31 @@ const analyticsHosts = ["www.robinlinacre.com","robinlinacre.com"];
 </ul>
 <p>It is up to the modeller to define the comparison levels and the resultant partial match weights they wish to estimate.</p>
 <h3 id="example--defining-comparison-levels-for-a-first-name-column"><a class="heading-anchor" href="#example--defining-comparison-levels-for-a-first-name-column">Example:  Defining comparison levels for a first name column</a></h3>
+<p>As a reminder, here is the example data we are working with:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>first_name</th><th>surname</th><th>postcode</th><th>gender</th></tr></thead><tbody><tr><td>Robin</td><td>Linacre</td><td>W1A 1AA</td><td>Female</td></tr><tr><td>Robyn</td><td>Linacre</td><td>W1A 1AA</td><td>Male</td></tr></tbody></table>
 <p>For first name, we could define the following three comparison levels.</p>
 <ol>
 <li>Exact match: First names are identical</li>
@@ -80,7 +105,7 @@ const analyticsHosts = ["www.robinlinacre.com","robinlinacre.com"];
 <h2 id="understanding-the-partial-match-weight-chart-and-waterfall-chart"><a class="heading-anchor" href="#understanding-the-partial-match-weight-chart-and-waterfall-chart">Understanding the partial match weight chart and waterfall chart</a></h2>
 <p>Let’s take a look at an example record comparison, and see how the partial match weights are used.</p>
 <div class="interactive-callout" role="alert"><div class="interactive-callout-inner"><div><svg class="interactive-callout-icon" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path fill="currentColor" d="M224 96l16-32 32-16-32-16-16-32-16 32-32 16 32 16 16 32zM80 160l26.66-53.33L160 80l-53.34-26.67L80 0 53.34 53.33 0 80l53.34 26.67L80 160zm352 128l-26.66 53.33L352 368l53.34 26.67L432 448l26.66-53.33L512 368l-53.34-26.67L432 288zm70.62-193.77L417.77 9.38C411.53 3.12 403.34 0 395.15 0c-8.19 0-16.38 3.12-22.63 9.38L9.38 372.52c-12.5 12.5-12.5 32.76 0 45.25l84.85 84.85c6.25 6.25 14.44 9.37 22.62 9.37 8.19 0 16.38-3.12 22.63-9.37l363.14-363.15c12.5-12.48 12.5-32.75 0-45.24zM359.45 203.46l-50.91-50.91 86.6-86.6 50.91 50.91-86.6 86.6z"></path></svg></div><div><p>You can edit the data in the below table to see how the calculation changes</p></div></div></div>
-<astro-island uid="299oVq" prefix="r35" component-url="/_astro/NotebookCellProvider.C9gUvgH1.js" component-export="default" renderer-url="/_astro/client.Ca2KYLWg.js" props="{&quot;notebook&quot;:[0,&quot;partial-match-weights&quot;]}" ssr client="visible" opts="{&quot;name&quot;:&quot;NotebookCellProvider&quot;,&quot;value&quot;:true}" await-children><div class="observable-scope notebook-kit-scope"><astro-slot><div class="observable-cell notebook-kit-cell" data-notebook-cell-id="2"></div><p>The first stage is to calculate which comparison levels apply for each column.  For example, are the first names an exact match, a fuzzy match, or neither?</p><div class="observable-cell notebook-kit-cell" data-notebook-cell-id="4"></div><p>In the below chart, I reproduce the partial match weights chart, but with the activated partial match weights highlighted.</p><div class="observable-cell notebook-kit-cell" data-notebook-cell-id="5"></div><p>The activated (selected) partial match weights can then be plotted in a waterfall chart, which represents how they are summed up to compute the final match weight:</p><div class="observable-cell notebook-kit-cell" data-notebook-cell-id="6"></div><p>Alternatively we can represent the calculation of overall match weight as a sum:</p><div class="observable-cell notebook-kit-cell" data-notebook-cell-id="7"></div><p>The final match weight is a measure of the similarity of the two records.</p></astro-slot></div><!--astro:end--></astro-island>
+<astro-island uid="299oVq" prefix="r35" component-url="/_astro/NotebookCellProvider.B9zsxkw6.js" component-export="default" renderer-url="/_astro/client.Ca2KYLWg.js" props="{&quot;notebook&quot;:[0,&quot;partial-match-weights&quot;]}" ssr client="visible" opts="{&quot;name&quot;:&quot;NotebookCellProvider&quot;,&quot;value&quot;:true}" await-children><div class="observable-scope notebook-kit-scope"><astro-slot><div class="observable-cell notebook-kit-cell" data-notebook-cell-id="2"></div><p>The first stage is to calculate which comparison levels apply for each column.  For example, are the first names an exact match, a fuzzy match, or neither?</p><div class="observable-cell notebook-kit-cell" data-notebook-cell-id="4"></div><p>In the below chart, I reproduce the partial match weights chart, but with the activated partial match weights highlighted.</p><div class="observable-cell notebook-kit-cell" data-notebook-cell-id="5"></div><p>The activated (selected) partial match weights can then be plotted in a waterfall chart, which represents how they are summed up to compute the final match weight:</p><div class="observable-cell notebook-kit-cell" data-notebook-cell-id="6"></div><p>Alternatively we can represent the calculation of overall match weight as a sum:</p><div class="observable-cell notebook-kit-cell" data-notebook-cell-id="7"></div><p>The final match weight is a measure of the similarity of the two records.</p></astro-slot></div><!--astro:end--></astro-island>
 <h2 id="next-steps"><a class="heading-anchor" href="#next-steps">Next steps</a></h2>
 <p>We now have a good qualitative understanding of the meaning of partial match weights.</p>
 <p>In the next article we explore how they are calculated, and how to interpret their values.</p>
