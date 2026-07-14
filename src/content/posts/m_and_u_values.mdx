@@ -22,16 +22,14 @@ import movement_spec from "./m_and_u_probabilities/bf_movement_spec.json"
 
 The previous article showed how partial match weights are used to compute a prediction of whether two records match.
 
-However, partial match weights are not estimated directly.  They are made up of two parameters known as the `m` and the `u` probabilities.
+However, partial match weights are not estimated directly - instead they are derived from two parameters known as the `m` and the `u` probabilities.
 
-These probabilities are key to enabling estimation of partial match weights.
-
-The `m` and `u` probabilities also have intuitive interpretations that allow us to understand linkage models and diagnose problems.
+In addition to being essential for estimating match weights, the `m` and `u` probabilities have intuitive interpretations that allow us to understand linkage models and diagnose problems.
 
 In this article, we will:
-- Define explain `m` and `u` probabilities
-- Explain how they relate to Bayes Factors, and why Bayes Factors are easier to interpret
-- Show why we then translate Bayes Factors into partial match weights, for ease of computation.
+- Define and explain `m` and `u` probabilities
+- Explain how they relate to Bayes Factors, and why Bayes Factors have an intuitive explanation
+- Show why we then translate Bayes Factors into partial match weights, for ease of computation
 
 ##  Motivating example
 
