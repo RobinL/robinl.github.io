@@ -1,8 +1,8 @@
 import type { ImageMetadata } from 'astro';
 
+import arithmeticAnnihilationImage from '../assets/projects/arithmetic_annihilation.png';
 import beeLettersImage from '../assets/projects/bee_letters.jpeg';
 import breakoutMathsImage from '../assets/projects/breakout_maths.png';
-import collageCardMakerImage from '../assets/projects/collage_card_maker.png';
 import letterConstellationsImage from '../assets/projects/letter_constellations.png';
 import letterpathsImage from '../assets/projects/letterpaths.png';
 import mathsGameProblemGeneratorImage from '../assets/projects/maths-game-problem-generator.png';
@@ -10,9 +10,9 @@ import mathsVsMonstersImage from '../assets/projects/maths_vs_monsters.jpeg';
 import numberLanesImage from '../assets/projects/number_lanes.webp';
 import splinkImage from '../assets/projects/splink.webp';
 import ukAddressMatcherImage from '../assets/projects/uk_address_matcher.webp';
+import arithmeticAnnihilationDescription from '../content/projects/arithmetic-annihilation.md';
 import beeLettersDescription from '../content/projects/bee-letters.md';
 import breakoutMathsDescription from '../content/projects/breakout-maths.md';
-import collageCardMakerDescription from '../content/projects/collage-card-maker.md';
 import letterConstellationsDescription from '../content/projects/letter-constellations.md';
 import letterpathsDescription from '../content/projects/letterpaths.md';
 import mathsGameProblemGeneratorDescription from '../content/projects/maths-game-problem-generator.md';
@@ -55,13 +55,6 @@ export const projects: Project[] = [
     image: ukAddressMatcherImage,
   },
   {
-    name: 'Collage Card Maker',
-    description: collageCardMakerDescription,
-    liveUrl: 'https://www.robinlinacre.com/collage_card_maker/',
-    githubUrl: 'https://github.com/RobinL/collage_card_maker',
-    image: collageCardMakerImage,
-  },
-  {
     name: 'Bee Letters',
     description: beeLettersDescription,
     liveUrl: 'https://www.robinlinacre.com/bee_letters/',
@@ -81,6 +74,13 @@ export const projects: Project[] = [
     liveUrl: 'https://www.robinlinacre.com/letterpaths',
     githubUrl: 'https://github.com/RobinL/letterpaths',
     image: letterpathsImage,
+  },
+  {
+    name: 'Arithmetic Annihilation',
+    description: arithmeticAnnihilationDescription,
+    liveUrl: 'https://rupertlinacre.com/arithmetic_annihilation/',
+    githubUrl: 'https://github.com/RupertLinacre/arithmetic_annihilation',
+    image: arithmeticAnnihilationImage,
   },
   {
     name: 'Maths vs Monsters',
