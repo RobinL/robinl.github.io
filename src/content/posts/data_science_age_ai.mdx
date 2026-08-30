@@ -217,13 +217,17 @@ In the example, I wondered whether the concept of ‘[distinguishing tokens](htt
 	loading="lazy"
 />
 
-In this example, I gave the agent the above picture of the concept and a short prompt. It implemented all the logic to derive the feature and then ran our benchmarking suite to determine whether it improved accuracy without diminishing inference speed and file size too much.
+In this example, I gave the agent the above picture of the concept and a short prompt. It implemented all the logic to derive the feature and then ran our benchmarking suite to determine whether it improved accuracy without diminishing inference speed and file size too much.  It resulted in an umabiguous improvement in accuracy, and the PR is [here](https://github.com/moj-analytical-services/uk_address_matcher/pull/444).
 
 ![Precision-recall curve comparing address matching approaches](./data_science_age_ai/precision-recall-comparison.png)
 
-This is another nice example of a small valuable change to the code that results from the agent doing a large amount of evidence gathering and verification on our behalf - the PR is [here](https://github.com/moj-analytical-services/uk_address_matcher/pull/444).
+This is another nice example of a small valuable change to the code that results from the agent doing a large amount of evidence gathering and verification on our behalf.  I should add we have done many other similar experiments which have failed!
 
 ## Example 6: Letterpaths and putting yourself in the agentic loop
+
+I’ve been working on is a cursive handwriting library for my kids that can help power educational apps.  This is a very visual piece of work where everything depends on the shapes of the letters and the joins between them.   And LLMs, so far at least, are pretty weak at this.
+
+We can see this by comparing two prompts:  in the first, we ask a frontier model to generate geometry for the the word ‘cursive’.  It fails miserably.  The second is the final result of putting a human in the loop.
 
 <div className="letterpaths-demo-comparison">
 	<figure>
@@ -257,9 +261,7 @@ This is another nice example of a small valuable change to the code that results
 	</figure>
 </div>
 
-I’ve been working on is a cursive handwriting library for my kids that can help power educational apps.  This is a very visual piece of work where everything depends on the shapes of the letters and the joins between them.   And LLMs, so far at least, are pretty weak at this.
 
-We can see this by comparing two prompts:  in the first, we ask a frontier model to generate geometry for the the word ‘cursive’.  It fails miserably.  The second is the final result of putting a human in the loop.
 
 So this one image is a pretty good summary of why everything goes wrong if we can’t build verification into our work.
 
@@ -267,14 +269,7 @@ The inability of the LLM distinguish good images from bad images breaks the agen
 
 So the trick is to put the human into the loop as efficiently as possible.  Often we can use AI to reduce verification work the human has to do to the absolute minimum.  In this example, I built a range of throw apps, including a [letter bezier curve editor](https://www.robinlinacre.com/letterpaths/editor.html), [a join analyser](https://www.robinlinacre.com/letterpaths/join_stats/), [a kerning editor](https://www.robinlinacre.com/letterpaths/kerning_editor/), to put myself in the verification loop. You can read more in [a separate blog post](https://www.robinlinacre.com/letterpaths_llms_good_even_when_bad/).
 
-<a
-	className="post-image-link"
-	href="https://www.robinlinacre.com/letterpaths/editor.html"
-	target="_blank"
-	rel="noopener noreferrer"
->
-	<img src={letterEditorImage.src} alt="Letterpaths single-letter editor" loading="lazy" />
-</a>
+
 
 A second example of putting a human in the loop is using AI to visualise and understand an algorithm - which I put to good use in understanding the properties of [fault tolerant tries](https://www.robinlinacre.com/fault_tolerant_trie/) for address matching.
 
