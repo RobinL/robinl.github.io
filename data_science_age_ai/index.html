@@ -1,0 +1,175 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Data Science in the Age of AI | Robin Linacre&#39;s blog</title><meta name="description" content="Reflections on how AI is changing data science workflows"><link rel="canonical" href="https://www.robinlinacre.com/data_science_age_ai/"><link rel="icon" href="/favicon.png" type="image/png"><meta property="og:title" content="Data Science in the Age of AI | Robin Linacre's blog"><meta property="og:description" content="Reflections on how AI is changing data science workflows"><meta property="og:type" content="article"><meta property="og:url" content="https://www.robinlinacre.com/data_science_age_ai/"><meta property="article:published_time" content="2026-08-30T00:00:00.000Z"><meta name="twitter:card" content="summary"><script>(function(){const googleAnalyticsId = "G-94373ZKHEE";
+const analyticsHosts = ["www.robinlinacre.com","robinlinacre.com"];
+
+      if (analyticsHosts.includes(window.location.hostname)) {
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function gtag() {
+          window.dataLayer.push(arguments);
+        };
+        window.gtag('js', new Date());
+        window.gtag('config', googleAnalyticsId, { anonymize_ip: true });
+
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(googleAnalyticsId);
+        document.head.appendChild(script);
+      }
+    })();</script><link rel="stylesheet" href="/_astro/BaseLayout.L9IzkdeF.css"></head> <body> <div class="site-shell"> <header class="site-header"> <div class="site-header-row"> <a href="/" class="wordmark shimmer-text">&gt;robinlinacre</a> <nav class="header-nav" aria-label="Main navigation"> <a class="responsive-nav-link" href="/about" aria-label="About"> <span class="nav-text">About</span> <span class="nav-icon" aria-hidden="true"> <svg viewBox="0 0 512 512"> <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"></path> </svg> </span> </a> <a class="responsive-nav-link nav-projects" href="/projects/" aria-label="Projects"> <span class="nav-text">Projects</span> <span class="nav-icon" aria-hidden="true"> <svg viewBox="0 0 448 512"> <path d="M160 80c0 32.8-19.7 61-48 73.3v205.4c28.3 12.3 48 40.5 48 73.3c0 44.2-35.8 80-80 80S0 476.2 0 432c0-32.8 19.7-61 48-73.3V153.3C19.7 141 0 112.8 0 80C0 35.8 35.8 0 80 0s80 35.8 80 80zm288 0c0 32.8-19.7 61-48 73.3V208c0 44.2-35.8 80-80 80H160v-64h160c8.8 0 16-7.2 16-16v-54.7C307.7 141 288 112.8 288 80c0-44.2 35.8-80 80-80s80 35.8 80 80zM80 104a24 24 0 1 0 0-48a24 24 0 1 0 0 48zm288 0a24 24 0 1 0 0-48a24 24 0 1 0 0 48zM80 456a24 24 0 1 0 0-48a24 24 0 1 0 0 48z"></path> </svg> </span> </a> <a class="responsive-nav-link" href="/probabilistic_linkage/" aria-label="Probabilistic record linkage"> <span class="nav-text">Record linkage</span> <span class="nav-icon" aria-hidden="true"> <img src="/images/splink_icon.png" alt="" class="linkage-icon" width="200" height="200" loading="eager"> </span> </a> <a class="icon-link" href="https://twitter.com/robinlinacre" rel="noopener noreferrer" target="_blank" aria-label="Twitter"> <svg viewBox="0 0 512 512" aria-hidden="true"> <path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"></path> </svg> <span class="sr-only">Twitter</span> </a> <a class="icon-link nav-github" href="https://github.com/robinl" rel="noopener noreferrer" target="_blank" aria-label="GitHub"> <svg viewBox="0 0 496 512" aria-hidden="true"> <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path> </svg> <span class="sr-only">GitHub</span> </a> <a class="icon-link" href="https://www.linkedin.com/in/robinlinacre" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn"> <svg viewBox="0 0 448 512" aria-hidden="true"> <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"></path> </svg> <span class="sr-only">LinkedIn</span> </a> <a class="icon-link nav-bluesky" href="https://bsky.app/profile/robinlinacre.bsky.social" rel="noopener noreferrer" target="_blank" aria-label="Bluesky"> <svg viewBox="0 0 24 24" aria-hidden="true"> <path d="M12 11.3884C11.0942 9.62673 8.62833 6.34423 6.335 4.7259C4.13833 3.17506 3.30083 3.4434 2.75167 3.69256C2.11583 3.9784 2 4.95506 2 5.52839C2 6.10339 2.315 10.2367 2.52 10.9276C3.19917 13.2076 5.61417 13.9776 7.83917 13.7309C4.57917 14.2142 1.68333 15.4017 5.48083 19.6292C9.65833 23.9542 11.2058 18.7017 12 16.0392C12.7942 18.7017 13.7083 23.7651 18.4442 19.6292C22 16.0392 19.4208 14.2142 16.1608 13.7309C18.3858 13.9784 20.8008 13.2076 21.48 10.9276C21.685 10.2376 22 6.10256 22 5.52923C22 4.95423 21.8842 3.97839 21.2483 3.6909C20.6992 3.44256 19.8617 3.17423 17.665 4.72423C15.3717 6.34506 12.9058 9.62756 12 11.3884Z"></path> </svg> <span class="sr-only">Bluesky</span> </a> </nav> </div> <hr class="site-rule"> </header> <main>  <article class="prose">  <p class="post-meta"> Originally posted: 2026-08-30.   View source code for this page <a href="https://github.com/RobinL/robinl.github.io/blob/dev/src/content/posts/data_science_age_ai.mdx" target="_blank" rel="noopener noreferrer">here.</a> </p>   <style>
+.post-image-link {
+	display: block;
+	margin: 1.5rem 0;
+}
+
+.post-image-link img {
+	display: block;
+	width: 100%;
+}
+
+.post-image-half {
+	display: block;
+	width: 50%;
+	margin: 1.5rem auto;
+}
+
+.post-image-two-thirds {
+	display: block;
+	width: 66%;
+	margin: 1.5rem auto;
+}
+
+.letterpaths-demo-comparison {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+	margin: 0 0 1rem;
+}
+
+.letterpaths-demo-comparison figure {
+	margin: 0;
+	width: 300px;
+	max-width: 100%;
+}
+
+.letterpaths-demo-comparison figcaption {
+	margin: 0.5rem 0 0;
+	color: #1f1f1f;
+	font-size: 0.9rem;
+	font-weight: 700;
+	line-height: 1.3;
+	text-align: center;
+}
+
+.letterpaths-demo-comparison img,
+.letterpaths-demo-comparison video {
+	width: 100%;
+	max-width: 100%;
+	display: block;
+	border-radius: 8px;
+	background: #f5f2eb;
+}
+
+@media (max-width: 600px) {
+	.post-image-half,
+	.post-image-two-thirds {
+		width: 100%;
+	}
+}
+
+@media (min-width: 720px) {
+	.letterpaths-demo-comparison {
+		flex-direction: row;
+		justify-content: center;
+		align-items: stretch;
+	}
+
+	.letterpaths-demo-comparison figure {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+	}
+}
+</style>
+<h1 id="data-science-in-the-age-of-ai"><a class="heading-anchor" href="#data-science-in-the-age-of-ai">Data Science in the Age of AI</a></h1>
+<p>Data scientists apply the best tools and technology to maximise the value of data.  I’ve been in the profession for over a decade, and in retrospect it’s surprising how slowly things changed over most of that period.  The tools evolved, but ultimately my day-to-day work looked similar in 2013 and 2023.</p>
+<p>The rise of LLMs has been the biggest shakeup to the profession that I have experienced.  The work has changed radically.  I used to spend most of my time programming, but in the last year I’ve barely written a single line of code.  Despite this, my coding abilities remain as valuable as ever.</p>
+<h2 id="how-our-job-has-changed"><a class="heading-anchor" href="#how-our-job-has-changed">How our job has changed</a></h2>
+<p>How has AI changed our role? <a href="https://mrocklin.spicytakes.org/">Paraphrasing</a> <a href="https://matthewrocklin.com/ai-zealotry/">Matt Rocklin</a>: <strong>Our job is increasingly to construct feedback systems that guide AI to good solutions, not to write code ourselves.</strong></p>
+<p>Such feedback systems are crucial to the effective use of AI: they make minimising slop and hallucinations more a matter of skill than luck and enable us to have greater confidence in AI generated code.</p>
+<p>Luckily, data scientists are well placed to build these feedback systems because the underlying skills are already familiar:  we already combine data and code to build predictive models, generate and review evidence during model training, and build metrics to quantify how well our models are working.</p>
+<p>Let’s take a look at what this looks like in practice, via a series of real-world examples that aim to illustrate the most effective ways I have found to use agents.</p>
+<p>In these examples, pay attention to the interplay of two elements that enable the agent to provide feedback to itself:</p>
+<ul>
+<li>How the agent is able to generate new task-specific evidence (not in its training data) usually by running code.</li>
+<li>How the agent verifies it is on the right track</li>
+</ul>
+<p>The clearer the evidence, the more likely that verification will be successful.</p>
+<h2 id="example-1-profiling-code-and-identifying-bottlenecks"><a class="heading-anchor" href="#example-1-profiling-code-and-identifying-bottlenecks">Example 1: Profiling code and identifying bottlenecks</a></h2>
+<p>My main project is <a href="http://github.com/moj-analytical-services/splink">Splink</a>, a Python library for record linkage that has over 20,000 lines of code.</p>
+<p>I gave the agent an open-ended prompt to profile the runtime of Splink code and find optimisations to make the code run faster without changing the results.</p>
+<p>I asked it to try different options until it could find one that required only small changes to the code for a large benefit.  It went away for an hour and did the kinds of things I would do: profiling, analysing the flamegraph and identifying issues.</p>
+<p>It came back and <a href="https://github.com/moj-analytical-services/splink/pull/3162">found a 25% speedup in the Python</a> part, with only 15 additional lines of code.</p>
+<p>This is the kind of agentic work I like best: a short prompt results in the agent doing lots of work, but then the final outcome is a small, focussed change.</p>
+<p>In this example, the evidence being generated by the agent is (1) the results of the profiling and (2) the results of benchmarking to measure speed improvements. The verification is that Splink’s test suite passes.</p>
+<h2 id="example-2-upgrading-examples-and-documentation-from-splink-v4-to-v5"><a class="heading-anchor" href="#example-2-upgrading-examples-and-documentation-from-splink-v4-to-v5">Example 2: Upgrading examples and documentation from Splink v4 to v5</a></h2>
+<p>We’re working on version 5 of Splink, which is due to be released soon.  We have lots of example code written in the old version that needs upgrading. This is a fiddly task since some code is in snippets in docstrings and Markdown documentation.  I estimate this would have taken over a week of work to do by hand.</p>
+<p>In this example I instructed the agent to gather evidence by looking at each PR to Splink v5, so it could generate <a href="https://gist.github.com/RobinL/c6d56a27d8f83c40b6b09643c0fa5d14">a document</a> summarising the changes needed to the code. I then asked it to use this document as a guide to upgrading the code.</p>
+<p>The verification was straightforward: did the code using Splink v5 give the same answer as Splink v4?</p>
+<h2 id="example-3-porting-code-from-one-language-to-another"><a class="heading-anchor" href="#example-3-porting-code-from-one-language-to-another">Example 3: Porting code from one language to another</a></h2>
+<p>I ported the <a href="https://commons.apache.org/proper/commons-codec/apidocs/org/apache/commons/codec/language/DoubleMetaphone.html?utm_source=chatgpt.com">DoubleMetaphone function from Apache Commons</a> (Java) to C++ so it can be used in a DuckDB extension. This is straightforward to verify because the Java function has a test suite: we just need to ensure all tests pass.  In addition, I got the agent to generate DoubleMetaphone encodings for thousands of words using the Java function and asked it to verify that the C++ port it wrote gave exactly the same result.</p>
+<p>A more impressive demonstration of the power of agents is that I asked one to port Splink to the web browser using DuckDB WASM, something I estimate would have been at least a month’s work.  It was able to do this with fewer than 10 prompts.  You can find the result <a href="https://www.robinlinacre.com/splink_in_browser/">here</a>. Whilst heavily experimental, this is already useful because it provides an interactive GUI for the user to explore the results, which is great for learning about how Splink works.</p>
+<a class="post-image-link post-image-half" href="https://www.robinlinacre.com/splink_in_browser/" target="_blank" rel="noopener noreferrer"><img src="/_astro/splink-javascript-browser.BArAZR_w.png" alt="Splink running in a web browser" loading="lazy"/></a>
+<h2 id="example-4-simulation"><a class="heading-anchor" href="#example-4-simulation">Example 4: Simulation</a></h2>
+<p>I’ve been building a <a href="https://rupertlinacre.com/arithmetic_annihilation/">two player tower defence game</a> for my son, with a twist:  to build gun towers and monsters you have to solve mental arithmetic problems.</p>
+<a class="post-image-link" href="https://rupertlinacre.com/arithmetic_annihilation/" target="_blank" rel="noopener noreferrer"><img src="/_astro/arithmetic-annihilation-self-play.C5qYae4e.png" alt="Arithmetic Annihilation tower defence game" loading="lazy"/></a>
+<p>A key problem in this kind of game is balance.  You don’t want one gun or one strategy to dominate everything else.  But balancing the game is hard, with 7 types of gun, each with 16 upgrades.</p>
+<p>I got the agent to gather evidence by playing 1,000 games against itself, calculating statistics on the strength of each gun after each play, and rebalancing until no strategy was completely dominant.</p>
+<p>This is another example of my favourite type of agentic work: a simple prompt results in a huge amount of work.  The agent had to build a computer player capable of self-play and then run lots of CPU intensive scripts and analyse the result. But the final change to the game code was tiny: just changing the damage constants on each gun.</p>
+<h2 id="example-5-semi-autonomous-research"><a class="heading-anchor" href="#example-5-semi-autonomous-research">Example 5: Semi-autonomous research</a></h2>
+<h3 id="learning-a-new-sounds-like-function"><a class="heading-anchor" href="#learning-a-new-sounds-like-function">Learning a new ‘sounds-like’ function</a></h3>
+<p>In this example, I used agents to complete a research project to see if we could use machine learning to improve on DoubleMetaphone and Soundex. These are functions widely used in record linkage to identify whether two words with different spellings may sound the same.</p>
+<p>An ideal function would have two important properties, as shown in the following image:</p>
+<img class="post-image-two-thirds" src="/_astro/soundex-example.D0ws8BVB.png" alt="How Soundex handles names that sound the same or different" loading="lazy"/>
+<ul>
+<li>If the names sound the same, the code should match exactly.</li>
+<li>If the names sound different, the code must be different.</li>
+</ul>
+<p>The question I had is whether we could learn a new function that would outperform DoubleMetaphone.  Rather than hand coding the rules, the idea was to let the computer optimise them based on data.</p>
+<p>I directed the agent to start by collecting as much data as possible on that things that sound the same: pairs of words that should share the same code and pairs that should not.  For instance, one source was a machine-readable dictionary with pronunciation guides. The agent could use it to create pairs that ‘sound the same’ and pairs that ‘sound different’, with a training and test set. Similarly, I got it to find lists of place names in other countries with different transliterations.</p>
+<p>I then set constraints: we were looking to learn a set of rules that could be expressed with simple control logic, expressible in SQL to optimise accuracy.</p>
+<p>Guiding it over the course of about 20 prompts, the agent was able to complete this research project for me, replacing perhaps two or more weeks of human work.  It discovered a function that substantially outperformed Soundex, and marginally outperformed DoubleMetaphone.</p>
+<p>In that sense, it was a failure - it was not a sufficient improvement to justify adoption.  But I learned a lot:  that Soundex is a poor classifier compared with DoubleMetaphone, and that there is an upper bound on accuracy due to inherent ambiguity in pronunciation.</p>
+<h3 id="improving-uk_address_matcher"><a class="heading-anchor" href="#improving-uk_address_matcher">Improving <code>uk_address_matcher</code></a></h3>
+<p>A second example of semi-autonomous research involved improving the accuracy of <a href="https://github.com/moj-analytical-services/uk_address_matcher">uk_address_matcher</a>, our free geocoder.</p>
+<p>We have hundreds of thousands of rows of labelled data and so every time we come up with an idea for a new feature we can engineer, or a new data cleaning rule, we can ask the agent to do the work for us end to end.</p>
+<p>In the example, I wondered whether the concept of ‘<a href="https://www.robinlinacre.com/address_matching/#3--discriminating-tokens-amongst-neighbouring-addresses">distinguishing tokens</a>’ in an address could be used to improve accuracy.</p>
+<img class="post-image-half" src="/_astro/distinguishing.DGh76bBR.png" alt="Distinguishing tokens in neighbouring addresses" loading="lazy"/>
+<p>In this example, I gave the agent the above picture of the concept and a short prompt. It implemented all the logic to derive the feature and then ran our benchmarking suite to determine whether it improved accuracy without reducing inference speed or increasing file size too much.  It resulted in an unambiguous improvement in accuracy, and the PR is <a href="https://github.com/moj-analytical-services/uk_address_matcher/pull/444">here</a>.</p>
+<p><img src="/_astro/precision-recall-comparison.D-3rVRvL_Z1sRa9.webp" alt="Precision-recall curve comparing address matching approaches" loading="lazy" decoding="async" width="1470" height="776"></p>
+<p>Of course, we need to be careful the AI is not overfitting here.  Human judgement was also important to this example: the feature makes intuitive sense as an important signal, increasing my confidence that it can genuinely increase accuracy.</p>
+<p>This is another nice example of a small valuable change to the code that results from the agent doing a large amount of evidence gathering and verification on our behalf.  I should add that we have done many other similar experiments which have failed!</p>
+<h2 id="example-6-letterpaths-and-putting-yourself-in-the-agentic-loop"><a class="heading-anchor" href="#example-6-letterpaths-and-putting-yourself-in-the-agentic-loop">Example 6: Letterpaths and putting yourself in the agentic loop</a></h2>
+<p>I’ve been working on a cursive handwriting library for my kids that can help power educational apps.  This is a very visual piece of work where everything depends on the shapes of the letters and the joins between them.   LLMs, so far at least, are pretty weak at this.</p>
+<p>We can see this by comparing two prompts:  in the first, we ask a frontier model to generate geometry for the word ‘cursive’.  It fails miserably.  The second is the final result of putting a human in the loop.</p>
+<div class="letterpaths-demo-comparison"><figure><img src="/letterpaths_llms_good_even_when_bad/cursive_joined_handwriting.svg" alt="The word cursive rendered as joined handwriting" loading="lazy"/><figcaption>Bad: LLM only (GPT-5.5)</figcaption></figure><figure><a href="https://www.robinlinacre.com/letterpaths/guided_tracing/?word=cursive&#38;offsetArrowLanes=0" aria-label="Open the guided tracing demo"><video autoPlay loop muted playsInline preload="metadata" poster="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo-poster.webp" style="cursor:pointer" aria-label="Screen recording showing the letterpaths interface"><source src="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo.webm" type="video/webm"/><source src="/letterpaths_llms_good_even_when_bad/letterpaths_llms_visual-demo.mp4" type="video/mp4"/></video></a><figcaption>Good: Human in the loop</figcaption></figure></div>
+<p>This image is a pretty good summary of why everything goes wrong if we can’t build verification into our work.</p>
+<p>The inability of the LLM to distinguish good cursive handwriting from bad cursive handwriting breaks the agentic loop.  It therefore cannot give itself feedback, and you end up with the slop shown in the LLM-only image.</p>
+<p>So the trick is to put the human into the loop as efficiently as possible.  Often we can use AI to reduce the verification work the human has to do to the absolute minimum.  In this example, I built a range of throwaway apps, including a <a href="https://www.robinlinacre.com/letterpaths/editor.html">letter bezier curve editor</a>, <a href="https://www.robinlinacre.com/letterpaths/join_stats/">a join analyser</a>, and <a href="https://www.robinlinacre.com/letterpaths/kerning_editor/">a kerning editor</a>, to put myself in the verification loop. You can read more in <a href="https://www.robinlinacre.com/letterpaths_llms_good_even_when_bad/">a separate blog post</a>.</p>
+<p>A second example of putting a human in the loop is using AI to visualise and understand an algorithm, an approach I put to good use in understanding the properties of <a href="https://www.robinlinacre.com/fault_tolerant_trie/">fault-tolerant tries</a> for address matching.</p>
+<h2 id="the-agentic-future"><a class="heading-anchor" href="#the-agentic-future">The agentic future</a></h2>
+<p>Where is all this headed?  The rate of improvement of capabilities means it’s impossible to know long term.</p>
+<p>But in the short term - over the next year or two I think the trend will be towards longer running and more numerous agents:</p>
+<ul>
+<li>Cloud agents will become the norm, making it easier to run multiple agents in separate disposable environments.</li>
+<li>This results in a stronger sandbox, reducing the need for approvals, and hence allowing long-running autonomous work</li>
+<li>Always-on agents will become more common, triaging bug reports, and conducting long-running research projects such as optimising the accuracy of machine learning models</li>
+<li>Agents will become better at managing memory and context, remembering past experiments, and project conventions and preferences.</li>
+</ul>
+<p>The result is that individual data scientists will increasingly be managing a team of agents running simultanously.</p>
+<h2 id="summing-up"><a class="heading-anchor" href="#summing-up">Summing up</a></h2>
+<p>I find this all in equal parts worrying and exciting.  But stepping back, programming was always the means rather than the end. The value of data scientists remains in our creativity and judgement: understanding business problems, translating them into technical implementations, and working iteratively with our customers towards better solutions.</p>
+<p>As implementation gets cheaper, we will have to accept that the business will legitimately expect us to deliver more, faster.  If the new technical skill is building a tight agentic feedback loop, the bigger-picture skill for data scientists will be to also accelerate the feedback loop with our customers, giving them more valuable products more quickly.</p>   </article>  </main> <footer class="site-footer"> <hr class="site-rule"> <p><a href="/">Back home</a></p> <p>
+This site is built using <a href="https://observablehq.com">Observable HQ</a> and
+<a href="https://astro.build">Astro</a>. Source code
+<a href="https://github.com/RobinL/robinl.github.io/">here</a>.
+<a href="/thanks/">Say thanks!</a> </p> </footer> </div> </body></html>
