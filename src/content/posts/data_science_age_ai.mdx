@@ -9,7 +9,6 @@ pageWidth: "prose"
 
 import arithmeticAnnihilationImage from './data_science_age_ai/arithmetic-annihilation-self-play.png';
 import distinguishingImage from './data_science_age_ai/distinguishing.png';
-import letterEditorImage from './data_science_age_ai/letterpaths-letter-editor.png';
 import soundexImage from './data_science_age_ai/soundex-example.png';
 import splinkBrowserImage from './data_science_age_ai/splink-javascript-browser.png';
 
@@ -100,9 +99,9 @@ The rise of LLMs has been the biggest shakeup to the profession that I have expe
 
 ## How our job has changed
 
-How has AI changed our role? [Paraphrasing](https://mrocklin.spicytakes.org/) Matt Rocklin: Our job is now to construct feedback systems that guide AI to good solutions, not to write code ourselves.
+How has AI changed our role? [Paraphrasing](https://mrocklin.spicytakes.org/) [Matt Rocklin](https://matthewrocklin.com/ai-zealotry/): **Our job is increasingly to construct feedback systems that guide AI to good solutions, not to write code ourselves.**
 
-Such feedback systems are crucial to the effective use of AI: they make minimising slop and hallucinations more a matter of skill than luck and enable us to trust AI generated code.
+Such feedback systems are crucial to the effective use of AI: they make minimising slop and hallucinations more a matter of skill than luck and enable us to have greater confidence in AI generated code.
 
 Luckily, data scientists are well placed to build these feedback systems because the underlying skills are already familiar:  we already combine data and code to build predictive models, generate and review evidence during model training, and build metrics to quantify how well our models are working.
 
@@ -110,7 +109,7 @@ Let’s take a look at what this looks like in practice, via a series of real-wo
 
 In these examples, pay attention to the interplay of two elements that enable the agent to provide feedback to itself:
 
-- How the agent is able to generate new evidence - not in its training data -  usually by running code.
+- How the agent is able to generate new task-specific evidence (not in its training data) usually by running code.
 - How the agent verifies it is on the right track
 
 The clearer the evidence, the more likely that verification will be successful.
@@ -177,7 +176,7 @@ This is another example of my favourite type of agentic work: a simple prompt re
 
 In this example, I used agents to complete a research project to see if we could use machine learning to improve on DoubleMetaphone and Soundex. These are functions widely used in record linkage to identify whether two words with different spellings may sound the same.
 
-These functions need two important properties, as shown in the following image:
+An ideal function would have two important properties, as shown in the following image:
 
 <img
 	className="post-image-two-thirds"
@@ -192,11 +191,11 @@ These functions need two important properties, as shown in the following image:
 
 The question I had is whether we could learn a new function that would outperform DoubleMetaphone.  Rather than hand coding the rules, the idea was to let the computer optimise them based on data.
 
-I directed the agent to start by collecting as much data as possible on that things sound the same: pairs of words that should share the same code and pairs that should not.  For instance, one source was a machine-readable dictionary with pronunciation guides. The agent could use it to create pairs that ‘sound the same’ and pairs that ‘sound different’. Similarly, I got it to find lists of place names in other countries with different transliterations.
+I directed the agent to start by collecting as much data as possible on that things that sound the same: pairs of words that should share the same code and pairs that should not.  For instance, one source was a machine-readable dictionary with pronunciation guides. The agent could use it to create pairs that ‘sound the same’ and pairs that ‘sound different’, with a training and test set. Similarly, I got it to find lists of place names in other countries with different transliterations.
 
 I then set constraints: we were looking to learn a set of rules that could be expressed with simple control logic, expressible in SQL to optimise accuracy.
 
-In about 20 prompts, the agent was able to complete this research project for me, replacing perhaps two or more weeks of human work.  It discovered a function that substantially outperformed Soundex, and marginally outperformed DoubleMetaphone.
+Guiding it over the course of about 20 prompts, the agent was able to complete this research project for me, replacing perhaps two or more weeks of human work.  It discovered a function that substantially outperformed Soundex, and marginally outperformed DoubleMetaphone.
 
 In that sense, it was a failure - it was not a sufficient improvement to justify adoption.  But I learned a lot:  that Soundex is a poor classifier compared with DoubleMetaphone, and that there is an upper bound on accuracy due to inherent ambiguity in pronunciation.
 
@@ -218,6 +217,8 @@ In the example, I wondered whether the concept of ‘[distinguishing tokens](htt
 In this example, I gave the agent the above picture of the concept and a short prompt. It implemented all the logic to derive the feature and then ran our benchmarking suite to determine whether it improved accuracy without reducing inference speed or increasing file size too much.  It resulted in an unambiguous improvement in accuracy, and the PR is [here](https://github.com/moj-analytical-services/uk_address_matcher/pull/444).
 
 ![Precision-recall curve comparing address matching approaches](./data_science_age_ai/precision-recall-comparison.png)
+
+Of course, we need to be careful the AI is not overfitting here.  Human judgement was also important to this example: the feature makes intuitive sense as an important signal, increasing my confidence that it can genuinely increase accuracy.
 
 This is another nice example of a small valuable change to the code that results from the agent doing a large amount of evidence gathering and verification on our behalf.  I should add that we have done many other similar experiments which have failed!
 
@@ -263,7 +264,7 @@ We can see this by comparing two prompts:  in the first, we ask a frontier model
 
 This image is a pretty good summary of why everything goes wrong if we can’t build verification into our work.
 
-The inability of the LLM to distinguish good images from bad images breaks the agentic loop.  It therefore cannot give itself feedback, and you end up with the slop shown in the LLM-only image.
+The inability of the LLM to distinguish good cursive handwriting from bad cursive handwriting breaks the agentic loop.  It therefore cannot give itself feedback, and you end up with the slop shown in the LLM-only image.
 
 So the trick is to put the human into the loop as efficiently as possible.  Often we can use AI to reduce the verification work the human has to do to the absolute minimum.  In this example, I built a range of throwaway apps, including a [letter bezier curve editor](https://www.robinlinacre.com/letterpaths/editor.html), [a join analyser](https://www.robinlinacre.com/letterpaths/join_stats/), and [a kerning editor](https://www.robinlinacre.com/letterpaths/kerning_editor/), to put myself in the verification loop. You can read more in [a separate blog post](https://www.robinlinacre.com/letterpaths_llms_good_even_when_bad/).
 
@@ -278,11 +279,11 @@ Where is all this headed?  The rate of improvement of capabilities means it’s 
 But in the short term - over the next year or two I think the trend will be towards longer running and more numerous agents:
 
 - Cloud agents will become the norm, making it easier to run multiple agents in separate disposable environments.
-- This results in a much stronger sandbox, dramatically reducing the need for approvals, and hence allowing long-running autonomous work
+- This results in a stronger sandbox, reducing the need for approvals, and hence allowing long-running autonomous work
 - Always-on agents will become more common, triaging bug reports, and conducting long-running research projects such as optimising the accuracy of machine learning models
 - Agents will become better at managing memory and context, remembering past experiments, and project conventions and preferences.
 
-The result is that individual data scientist will increasingly be managing a team of agents running simultanously.
+The result is that individual data scientists will increasingly be managing a team of agents running simultanously.
 
 ## Summing up
 
