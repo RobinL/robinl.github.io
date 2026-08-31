@@ -103,7 +103,7 @@ The rise of LLMs has been the biggest shakeup to the profession that I have expe
 
 How has AI changed our role? [Paraphrasing](https://mrocklin.spicytakes.org/) [Matt Rocklin](https://matthewrocklin.com/ai-zealotry/): **Our job is increasingly to construct feedback systems that guide AI to good solutions, not to write code ourselves.**
 
-Such feedback systems are crucial to the effective use of AI:  They are our main defence against slop and hallucinations, making reliable results a matter of skill rather than luck.
+Such feedback systems are crucial to the effective use of AI:  they are our main defence against slop and hallucinations, making reliable results a matter of skill rather than luck.
 
 Luckily, data scientists are well placed to build these feedback systems because the underlying skills are familiar:  building solutions has always been an iterative process of designing and running experiments and evaluating performance.  The change is that we now need to design this structure in a way that enables it to be delegated to agents.
 
@@ -227,7 +227,7 @@ In this example, I gave the agent the above picture of the concept and a short p
 
 ![Precision-recall curve comparing address matching approaches](./data_science_age_ai/precision-recall-comparison.png)
 
-Of course, we need to be careful the AI is not overfitting here.  Human judgement was also important to this example: by looking at real-world examples of true and false positives, I could see feature makes intuitive sense as an important signal, increasing my confidence that it can genuinely increase accuracy.
+Of course, we need to be careful the AI is not overfitting here.  Human judgement was also important to this example: by reviewing real-world examples of true and false positives, I could see the feature makes intuitive sense as an important signal, increasing my confidence that it can genuinely increase accuracy.
 
 This is another nice example of a small valuable change to the code that results from the agent doing a large amount of evidence gathering and verification on our behalf.  I should add that we have done many other similar experiments which have failed!
 
@@ -288,7 +288,7 @@ But in the short term - over the next year or two - I think the trend will be to
 - Cloud agents will become the norm, making it easier to run multiple agents in separate disposable environments[^work].
 - This results in a stronger sandbox, reducing the need for approvals, and hence allowing longer-running autonomous work
 - Always-on agents will become more common, triaging bug reports, and conducting long-running research projects such as optimising the accuracy of machine learning models
-- Agents will become better at managing memory and context, remembering much more about the full history of a project: past experiments, successess, failures, and project conventions and preferences.
+- Agents will become better at managing memory and context, remembering much more about the full history of a project: past experiments, successes, failures, and project conventions and preferences.
 
 [^work]:I really like ChatGPT Work for this (the [Cloud version](https://simonwillison.net/2026/Aug/30/understanding-chatgpt-work/)).  I prefer the interface to an IDE for many tasks and think the application is a good indication of the direction of travel for tooling.
 
@@ -298,5 +298,5 @@ The result is that individual data scientists will increasingly be managing a te
 
 I find this all in equal parts worrying and exciting.  But stepping back, programming was always the means rather than the end. The value of data scientists remains in our creativity and judgement: understanding business problems, translating them into technical implementations, and working iteratively with our customers towards better solutions.
 
-As implementation gets cheaper, we will have to accept that the business will legitimately expect us to deliver more and faster.  If the new technical skill is building tight agentic feedback loops, the bigger-picture skill for data scientists will be to also accelerate the feedback loop with our customers, so we can deliver more valuable products more quickly.
+As implementation gets cheaper, we will have to accept that the business will legitimately expect us to deliver more, faster.  If the new technical skill is building tight agentic feedback loops, the bigger-picture skill for data scientists will be to also accelerate the feedback loop with our customers, so we can deliver more valuable products more quickly.
 
