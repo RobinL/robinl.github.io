@@ -109,15 +109,14 @@ Luckily, data scientists are well placed to design these loops because the under
 
 The feedback system itself rarely has to be explicitly developed[^verification]: AI agents are already very good at establishing a verification loop without further instruction.  The skill is translating the problem into tasks of appropriate size based on the best feedback loop we can think of.  **The stronger the feedback loop, the larger the task we can safely delegate.**
 
-[^verification]: For instance, agents will run your unit test suite without being told to, they'll attempt to view images of output an interpret them and iterate and so on.
+[^verification]: For instance, agents will run your unit test suite without being told to, they'll design a website then view it as an image to see if it look good, and so on.
 
 Let’s take a look at what this looks like in practice, via a series of real-world examples that aim to illustrate the most effective ways I have found to use agents.
 
-In these examples, pay attention to the interplay of three elements of the feedback loop:
+In these examples, pay attention to the interplay of two elements of the feedback loop:
 
-- How the agent is able to generate new task-specific evidence (not in its training data) usually by running code.
+- How the agent is able to generate new task-specific evidence (not in its training data), usually by running code.
 - How the agent verifies it is on the right track
-- How strong the feedback is
 
 
 
