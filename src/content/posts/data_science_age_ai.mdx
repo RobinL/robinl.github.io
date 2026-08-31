@@ -101,7 +101,9 @@ The rise of LLMs has been the biggest shakeup to the profession that I have expe
 
 ## How our job has changed
 
-How has AI changed our role? **Our job is increasingly to guide AI to good solutions, not to write code ourselves.**  The challenge is to translate problems into feedback loops that reliably steer agents in the right direction.
+How has AI changed our role? **Our job is increasingly to guide AI to good solutions, not to write code ourselves.**[^matt]  The challenge is to translate problems into feedback loops that reliably steer agents in the right direction.
+
+[^matt]: This is a paraphrase of ideas discussed in Matt Rocklin's [AI Zealotry](https://matthewrocklin.com/ai-zealotry/#feedback) post.
 
 These feedback loops are crucial to the effective use of AI:  they are our main defence against slop and hallucinations, making reliable results a matter of skill rather than luck.
 
@@ -109,9 +111,9 @@ Luckily, data scientists are well placed to design these loops because the under
 
 The feedback system itself rarely has to be explicitly developed[^verification]: AI agents are already very good at establishing a verification loop without further instruction.  The skill is translating the problem into tasks of appropriate size based on the best feedback loop we can think of.  **The stronger the feedback loop, the larger the task we can safely delegate.**
 
-[^verification]: For instance, agents will run your unit test suite without being told to, they'll design a website then view it as an image to see if it look good, and so on.
+[^verification]: For instance, agents will run your unit test suite without being told to, they'll design a website then view it as an image to see if it looks good, and so on.
 
-Let’s take a look at what this looks like in practice, via a series of real-world examples that aim to illustrate the most effective ways I have found to use agents.
+Let’s take a look at what this looks like in practice, via a series of real-world examples that aim to illustrate the most effective ways I have found to use agents, ranging from simple performance improvements through to semi-autonomous research projects.
 
 In these examples, pay attention to the interplay of two elements of the feedback loop:
 
@@ -294,6 +296,7 @@ But in the short term - over the next year or two - I think the trend will be to
 - This results in a stronger sandbox, reducing the need for approvals, and hence allowing longer-running autonomous work
 - Always-on agents will become more common, triaging bug reports, and conducting long-running research projects such as optimising the accuracy of machine learning models
 - Agents will become better at managing memory and context, remembering much more about the full history of a project: past experiments, successes, failures, and project conventions and preferences.
+- Agents will become better and understanding intent and recognising when they are off track or need input from the user
 
 [^work]:I really like ChatGPT Work for this (the [Cloud version](https://simonwillison.net/2026/Aug/30/understanding-chatgpt-work/)).  I prefer the interface to an IDE for many tasks and think the application is a good indication of the direction of travel for tooling.
 
