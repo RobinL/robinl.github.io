@@ -101,18 +101,24 @@ The rise of LLMs has been the biggest shakeup to the profession that I have expe
 
 ## How our job has changed
 
-How has AI changed our role? [Paraphrasing](https://mrocklin.spicytakes.org/) [Matt Rocklin](https://matthewrocklin.com/ai-zealotry/): **Our job is increasingly to construct feedback systems that guide AI to good solutions, not to write code ourselves.**
+How has AI changed our role? **Our job is increasingly to guide AI to good solutions, not to write code ourselves.**  The challenge is to translate problems into feedback loops that reliably steer agents in the right direction.
 
-Such feedback systems are crucial to the effective use of AI:  they are our main defence against slop and hallucinations, making reliable results a matter of skill rather than luck.
+These feedback loops are crucial to the effective use of AI:  they are our main defence against slop and hallucinations, making reliable results a matter of skill rather than luck.
 
-Luckily, data scientists are well placed to build these feedback systems because the underlying skills are familiar:  building solutions has always been an iterative process of designing and running experiments and evaluating performance.  The change is that we now need to design this structure in a way that enables it to be delegated to agents.
+Luckily, data scientists are well placed to design these loops because the underlying skills are familiar:  building solutions has always been an iterative process of running experiments and rigorously evaluating performance.
+
+The feedback system itself rarely has to be explicitly developed[^verification]: AI agents are already very good at establishing a verification loop without further instruction.  The skill is translating the problem into tasks of appropriate size based on the best feedback loop we can think of.  **The stronger the feedback loop, the larger the task we can safely delegate.**
+
+[^verification]: For instance, agents will run your unit test suite without being told to, they'll attempt to view images of output an interpret them and iterate and so on.
 
 Let’s take a look at what this looks like in practice, via a series of real-world examples that aim to illustrate the most effective ways I have found to use agents.
 
-In these examples, pay attention to the interplay of two elements that enable the agent to provide feedback to itself:
+In these examples, pay attention to the interplay of three elements of the feedback loop:
 
 - How the agent is able to generate new task-specific evidence (not in its training data) usually by running code.
 - How the agent verifies it is on the right track
+- How strong the feedback is
+
 
 
 ## Example 1: Profiling code and identifying bottlenecks
