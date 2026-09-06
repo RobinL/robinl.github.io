@@ -99,7 +99,7 @@ const analyticsHosts = ["www.robinlinacre.com","robinlinacre.com"];
 <p>This new skill emphasises judgement and critical thinking. At a higher level, though, our job remains the same. Whether we write the code ourselves or guide an agent, the crucial element is understanding what we’re aiming for and knowing what good looks like.</p>
 <h2 id="feedback-loops"><a class="heading-anchor" href="#feedback-loops">Feedback loops</a></h2>
 <p>Luckily, data scientists are well placed to design these loops because the underlying skills are familiar:  building solutions has always been an iterative process of running experiments and rigorously evaluating performance.</p>
-<p>The feedback system itself rarely has to be explicitly developed<sup><a href="#user-content-fn-verification" id="user-content-fnref-verification" data-footnote-ref aria-describedby="footnote-label">3</a></sup>: AI agents are already very good at establishing a verification loop without further instruction.  The skill is translating the problem into tasks of appropriate size based on the best feedback loop we can think of.  <strong>The stronger the feedback loop, the larger the task we can safely delegate.</strong></p>
+<p>The feedback system itself rarely has to be explicitly developed: AI agents will already seek feedback without being asked - they will run tests, write new ones, inspect outputs and investigate failures. Our role is in judging whether the feedback is a good measure of success, and translating the problem into tasks of appropriate size based on the best feedback loop we can think of. <strong>The stronger the feedback loop, the larger the task we can safely delegate.</strong></p>
 <p>Let’s take a look at what this looks like in practice, via a series of real-world examples that aim to illustrate the most effective ways I have found to use agents, ranging from simple performance improvements through to semi-autonomous research projects.</p>
 <p>In these examples, pay attention to the interplay of two elements of the feedback loop:</p>
 <ul>
@@ -131,7 +131,7 @@ const analyticsHosts = ["www.robinlinacre.com","robinlinacre.com"];
 <a class="post-image-link" href="https://rupertlinacre.com/arithmetic_annihilation/" target="_blank" rel="noopener noreferrer"><img src="/_astro/arithmetic-annihilation-self-play.C5qYae4e.png" alt="Arithmetic Annihilation tower defence game" loading="lazy"/></a>
 <p>A key problem in this kind of game is balance.  You don’t want one gun or one strategy to dominate.  But balancing the game is hard, with 7 types of gun, each with 16 upgrades.</p>
 <p>I got the agent to gather evidence by playing 1,000 games against itself, calculating statistics on the strength of each gun after each play, and rebalancing until no strategy was completely dominant.</p>
-<p>This is another example of my favourite type of agentic work: a simple prompt results in a huge amount of work.  The agent had to build a computer player capable of self-play and then run lots of CPU intensive scripts and analyse the result. But the final change to the game code was tiny: just changing the damage constants on each gun<sup><a href="#user-content-fn-maze" id="user-content-fnref-maze" data-footnote-ref aria-describedby="footnote-label">4</a></sup>.</p>
+<p>This is another example of my favourite type of agentic work: a simple prompt results in a huge amount of work.  The agent had to build a computer player capable of self-play and then run lots of CPU intensive scripts and analyse the result. But the final change to the game code was tiny: just changing the damage constants on each gun<sup><a href="#user-content-fn-maze" id="user-content-fnref-maze" data-footnote-ref aria-describedby="footnote-label">3</a></sup>.</p>
 <h2 id="example-5-semi-autonomous-research"><a class="heading-anchor" href="#example-5-semi-autonomous-research">Example 5: Semi-autonomous research</a></h2>
 <h3 id="learning-a-new-sounds-like-function"><a class="heading-anchor" href="#learning-a-new-sounds-like-function">Learning a new ‘sounds-like’ function</a></h3>
 <p>In this example, I used agents to complete a research project to see if we could use machine learning to improve on DoubleMetaphone and Soundex. These are functions widely used in record linkage to identify whether two words with different spellings may sound the same.</p>
@@ -167,7 +167,7 @@ const analyticsHosts = ["www.robinlinacre.com","robinlinacre.com"];
 <p>Where is all this headed?  The rate of improvement of capabilities means it’s impossible to know long term.</p>
 <p>But in the short term - over the next year or two - I think the trend will be towards longer running and more numerous agents:</p>
 <ul>
-<li>Cloud agents will become the norm, making it easier to run multiple agents in separate disposable environments<sup><a href="#user-content-fn-work" id="user-content-fnref-work" data-footnote-ref aria-describedby="footnote-label">5</a></sup>.</li>
+<li>Cloud agents will become the norm, making it easier to run multiple agents in separate disposable environments<sup><a href="#user-content-fn-work" id="user-content-fnref-work" data-footnote-ref aria-describedby="footnote-label">4</a></sup>.</li>
 <li>This results in a stronger sandbox, reducing the need for approvals, and hence allowing longer-running autonomous work</li>
 <li>Always-on agents will become more common, triaging bug reports, and conducting long-running research projects such as optimising the accuracy of machine learning models</li>
 <li>Agents will become better at managing memory and context, remembering much more about the full history of a project: past experiments, successes, failures, and project conventions and preferences.</li>
@@ -186,14 +186,11 @@ const analyticsHosts = ["www.robinlinacre.com","robinlinacre.com"];
 <li id="user-content-fn-matt">
 <p>This is a paraphrase of ideas discussed in Matt Rocklin’s <a href="https://matthewrocklin.com/ai-zealotry/#feedback">AI Zealotry</a> post. <a href="#user-content-fnref-matt" data-footnote-backref aria-label="Back to reference 2" class="data-footnote-backref">↩</a></p>
 </li>
-<li id="user-content-fn-verification">
-<p>For instance, agents will run your unit test suite without being told to, they’ll design a website then view it as an image to see if it looks good, and so on. <a href="#user-content-fnref-verification" data-footnote-backref aria-label="Back to reference 3" class="data-footnote-backref">↩</a></p>
-</li>
 <li id="user-content-fn-maze">
-<p>Of course, this wasn’t perfect - the agent didn’t find more advanced strategies that break the game, such as building a ‘maze’ of walls. <a href="#user-content-fnref-maze" data-footnote-backref aria-label="Back to reference 4" class="data-footnote-backref">↩</a></p>
+<p>Of course, this wasn’t perfect - the agent didn’t find more advanced strategies that break the game, such as building a ‘maze’ of walls. <a href="#user-content-fnref-maze" data-footnote-backref aria-label="Back to reference 3" class="data-footnote-backref">↩</a></p>
 </li>
 <li id="user-content-fn-work">
-<p>I really like ChatGPT Work for this (the <a href="https://simonwillison.net/2026/Aug/30/understanding-chatgpt-work/">Cloud version</a>).  I prefer the interface to an IDE for many tasks and think the application is a good indication of the direction of travel for tooling. <a href="#user-content-fnref-work" data-footnote-backref aria-label="Back to reference 5" class="data-footnote-backref">↩</a></p>
+<p>I really like ChatGPT Work for this (the <a href="https://simonwillison.net/2026/Aug/30/understanding-chatgpt-work/">Cloud version</a>).  I prefer the interface to an IDE for many tasks and think the application is a good indication of the direction of travel for tooling. <a href="#user-content-fnref-work" data-footnote-backref aria-label="Back to reference 4" class="data-footnote-backref">↩</a></p>
 </li>
 </ol>
 </section>   </article>  </main> <footer class="site-footer"> <hr class="site-rule"> <p><a href="/">Back home</a></p> <p>
