@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { categoryLabels, shortCategoryLabels, site } from '../lib/site';
 import { formatDateIso } from '../lib/dates';
 import { postSlug } from '../lib/content';
+import { latestProjects } from '../lib/projects';
 
 const postEntries = await getCollection(
   'posts',
@@ -58,7 +59,6 @@ const sections = [
 
 <BaseLayout title={site.title} description={site.description}>
 
-
   <section class="filter-row" aria-label="Post filters">
     <span class="filter-label">Filter:</span>
     <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">All</button>
@@ -71,6 +71,7 @@ const sections = [
 
   <div id="post-sections">
     {sections.map((section) => (
+      <>
       <section class="post-list-section" data-section={section.key}>
         <h2>{section.title}</h2>
         {section.key === 'probabilistic_linkage' && (
@@ -85,6 +86,18 @@ const sections = [
           </div>
         ))}
       </section>
+      {section.key === 'latest' && (
+        <section class="post-list-section" data-section="latest-projects" aria-labelledby="latest-projects-heading">
+          <h2 id="latest-projects-heading">Latest <a href="/projects/">projects</a></h2>
+          {latestProjects.map((project) => (
+            <div>
+              {project.date && <><time datetime={project.date}>{project.date}</time>: </>}
+              <a href={project.liveUrl ?? project.githubUrl}>{project.name}</a>
+            </div>
+          ))}
+        </section>
+      )}
+      </>
     ))}
   </div>
 </BaseLayout>

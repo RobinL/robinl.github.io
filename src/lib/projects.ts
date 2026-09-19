@@ -4,6 +4,7 @@ import agilePriceForecastImage from '../assets/projects/agile-price-forecast.png
 import arithmeticAnnihilationImage from '../assets/projects/arithmetic_annihilation.png';
 import beeLettersImage from '../assets/projects/bee_letters.jpeg';
 import breakoutMathsImage from '../assets/projects/breakout_maths.png';
+import buslensImage from '../assets/projects/buslens.png';
 import keepItGoingImage from '../assets/projects/keep-it-going.png';
 import letterConstellationsImage from '../assets/projects/letter_constellations.png';
 import letterpathsImage from '../assets/projects/letterpaths.png';
@@ -16,6 +17,7 @@ import agilePriceForecastDescription from '../content/projects/agile-price-forec
 import arithmeticAnnihilationDescription from '../content/projects/arithmetic-annihilation.md';
 import beeLettersDescription from '../content/projects/bee-letters.md';
 import breakoutMathsDescription from '../content/projects/breakout-maths.md';
+import buslensDescription from '../content/projects/buslens.md';
 import keepItGoingDescription from '../content/projects/keep-it-going.md';
 import letterConstellationsDescription from '../content/projects/letter-constellations.md';
 import letterpathsDescription from '../content/projects/letterpaths.md';
@@ -29,6 +31,7 @@ type ProjectDescription = typeof beeLettersDescription;
 
 interface ProjectBase {
   name: string;
+  date?: string;
   description: ProjectDescription;
   image: ImageMetadata;
 }
@@ -81,12 +84,14 @@ export const projects: Project[] = [
   },
   {
     name: 'Agile Price Forecast',
+    date: '2026-09-18',
     description: agilePriceForecastDescription,
     liveUrl: 'https://www.robinlinacre.com/agile-price-forecast/',
     image: agilePriceForecastImage,
   },
   {
     name: 'Keep It Going',
+    date: '2026-09-13',
     description: keepItGoingDescription,
     liveUrl: 'https://rupertlinacre.com/keep_it_going/',
     image: keepItGoingImage,
@@ -97,6 +102,13 @@ export const projects: Project[] = [
     liveUrl: 'https://rupertlinacre.com/arithmetic_annihilation/',
     githubUrl: 'https://github.com/RupertLinacre/arithmetic_annihilation',
     image: arithmeticAnnihilationImage,
+  },
+  {
+    name: 'Buslens',
+    date: '2026-08-26',
+    description: buslensDescription,
+    liveUrl: 'https://rupertlinacre.com/buslens/',
+    image: buslensImage,
   },
   {
     name: 'Maths vs Monsters',
@@ -126,3 +138,7 @@ export const projects: Project[] = [
     image: mathsGameProblemGeneratorImage,
   },
 ];
+
+export const latestProjects = [...projects]
+  .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
+  .slice(0, 3);
