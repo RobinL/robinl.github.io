@@ -1,8 +1,11 @@
 import type { ImageMetadata } from 'astro';
 
+import agilePriceForecastImage from '../assets/projects/agile-price-forecast.png';
 import arithmeticAnnihilationImage from '../assets/projects/arithmetic_annihilation.png';
 import beeLettersImage from '../assets/projects/bee_letters.jpeg';
 import breakoutMathsImage from '../assets/projects/breakout_maths.png';
+import buslensImage from '../assets/projects/buslens.png';
+import keepItGoingImage from '../assets/projects/keep-it-going.png';
 import letterConstellationsImage from '../assets/projects/letter_constellations.png';
 import letterpathsImage from '../assets/projects/letterpaths.png';
 import mathsGameProblemGeneratorImage from '../assets/projects/maths-game-problem-generator.png';
@@ -10,9 +13,12 @@ import mathsVsMonstersImage from '../assets/projects/maths_vs_monsters.jpeg';
 import numberLanesImage from '../assets/projects/number_lanes.webp';
 import splinkImage from '../assets/projects/splink.webp';
 import ukAddressMatcherImage from '../assets/projects/uk_address_matcher.webp';
+import agilePriceForecastDescription from '../content/projects/agile-price-forecast.md';
 import arithmeticAnnihilationDescription from '../content/projects/arithmetic-annihilation.md';
 import beeLettersDescription from '../content/projects/bee-letters.md';
 import breakoutMathsDescription from '../content/projects/breakout-maths.md';
+import buslensDescription from '../content/projects/buslens.md';
+import keepItGoingDescription from '../content/projects/keep-it-going.md';
 import letterConstellationsDescription from '../content/projects/letter-constellations.md';
 import letterpathsDescription from '../content/projects/letterpaths.md';
 import mathsGameProblemGeneratorDescription from '../content/projects/maths-game-problem-generator.md';
@@ -25,6 +31,7 @@ type ProjectDescription = typeof beeLettersDescription;
 
 interface ProjectBase {
   name: string;
+  date?: string;
   description: ProjectDescription;
   image: ImageMetadata;
 }
@@ -76,11 +83,32 @@ export const projects: Project[] = [
     image: letterpathsImage,
   },
   {
+    name: 'Agile Price Forecast',
+    date: '2026-09-18',
+    description: agilePriceForecastDescription,
+    liveUrl: 'https://www.robinlinacre.com/agile-price-forecast/',
+    image: agilePriceForecastImage,
+  },
+  {
+    name: 'Keep It Going',
+    date: '2026-09-13',
+    description: keepItGoingDescription,
+    liveUrl: 'https://rupertlinacre.com/keep_it_going/',
+    image: keepItGoingImage,
+  },
+  {
     name: 'Arithmetic Annihilation',
     description: arithmeticAnnihilationDescription,
     liveUrl: 'https://rupertlinacre.com/arithmetic_annihilation/',
     githubUrl: 'https://github.com/RupertLinacre/arithmetic_annihilation',
     image: arithmeticAnnihilationImage,
+  },
+  {
+    name: 'Buslens',
+    date: '2026-08-26',
+    description: buslensDescription,
+    liveUrl: 'https://rupertlinacre.com/buslens/',
+    image: buslensImage,
   },
   {
     name: 'Maths vs Monsters',
@@ -110,3 +138,7 @@ export const projects: Project[] = [
     image: mathsGameProblemGeneratorImage,
   },
 ];
+
+export const latestProjects = [...projects]
+  .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
+  .slice(0, 3);
