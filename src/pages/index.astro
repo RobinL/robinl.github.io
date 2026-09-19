@@ -90,9 +90,9 @@ const sections = [
         <section class="post-list-section" data-section="latest-projects" aria-labelledby="latest-projects-heading">
           <h2 id="latest-projects-heading">Latest <a href="/projects/">projects</a></h2>
           {latestProjects.map((project) => (
-            <div>
-              {project.date && <><time datetime={project.date}>{project.date}</time>: </>}
-              <a href={project.liveUrl ?? project.githubUrl}>{project.name}</a>
+            <div class="post-list-row">
+              <div class="post-list-date">{formatDateIso(project.date)}</div>
+              <div><a href={project.liveUrl ?? project.githubUrl}>{project.name}</a></div>
             </div>
           ))}
         </section>
