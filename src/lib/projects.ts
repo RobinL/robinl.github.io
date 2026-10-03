@@ -5,6 +5,7 @@ import arithmeticAnnihilationImage from '../assets/projects/arithmetic_annihilat
 import beeLettersImage from '../assets/projects/bee_letters.jpeg';
 import breakoutMathsImage from '../assets/projects/breakout_maths.png';
 import buslensImage from '../assets/projects/buslens.png';
+import collageCardMakerImage from '../assets/projects/collage_card_maker.png';
 import keepItGoingImage from '../assets/projects/keep-it-going.png';
 import letterConstellationsImage from '../assets/projects/letter_constellations.png';
 import letterpathsImage from '../assets/projects/letterpaths.png';
@@ -18,6 +19,7 @@ import arithmeticAnnihilationDescription from '../content/projects/arithmetic-an
 import beeLettersDescription from '../content/projects/bee-letters.md';
 import breakoutMathsDescription from '../content/projects/breakout-maths.md';
 import buslensDescription from '../content/projects/buslens.md';
+import collageCardMakerDescription from '../content/projects/collage-card-maker.md';
 import keepItGoingDescription from '../content/projects/keep-it-going.md';
 import letterConstellationsDescription from '../content/projects/letter-constellations.md';
 import letterpathsDescription from '../content/projects/letterpaths.md';
@@ -60,6 +62,13 @@ export const projects: Project[] = [
     description: ukAddressMatcherDescription,
     githubUrl: 'https://github.com/RobinL/uk_address_matcher',
     image: ukAddressMatcherImage,
+  },
+  {
+    name: 'Collage Card Maker',
+    description: collageCardMakerDescription,
+    liveUrl: 'https://www.robinlinacre.com/collage_card_maker/',
+    githubUrl: 'https://github.com/RobinL/collage_card_maker',
+    image: collageCardMakerImage,
   },
   {
     name: 'Bee Letters',
