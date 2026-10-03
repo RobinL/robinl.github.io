@@ -34,6 +34,7 @@ export default defineConfig({
         !page.endsWith('/relative_costs_llms_vscode/') && !page.endsWith('/qlp/'),
       // These apps are hosted separately, so Astro cannot discover their routes.
       customPages: [
+        'https://www.robinlinacre.com/collage_card_maker/',
         'https://www.robinlinacre.com/letterpaths/',
         'https://www.robinlinacre.com/agile-price-forecast/',
         'https://www.robinlinacre.com/bee_letters/',
