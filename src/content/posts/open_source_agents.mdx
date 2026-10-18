@@ -1,0 +1,31 @@
+---
+title: "Using AI agents effectively without trusting them"
+description: "How open source enables effective use of AI agents in government"
+postDate: "2026-10-19"
+category: "data"
+codeUrl: "https://github.com/RobinL/robinl.github.io/blob/dev/src/content/posts/open_source_agents.mdx"
+pageWidth: "prose"
+---
+import Subtitle from '../../components/probabilistic/Subtitle.jsx';
+
+# Using AI agents effectively without trusting them
+
+<Subtitle>How open source helps us make the most of AI agents</Subtitle>
+
+As they become more capable, the most valuable use cases of AI agents increasingly require them to work autonomously for hours without constant manual approvals.
+
+But AI agents [cannot be trusted](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/) with sensitive data or access to production infrastructure.  We can use sandboxes for isolation, but that only helps if we know what we can safely put in the sandbox.
+
+Luckily in government [we already have a well-established](https://www.gov.uk/guidance/ai-open-code-and-vulnerability-risk-in-the-public-sector), practical solution that fits the problem very well: open source. This provides the firebreak that's needed: if all that goes into a clean, isolated sandbox is code that's already openly available on the internet, we can safely allow the agent to work autonomously.
+
+In my experience, this is surprisingly valuable.  We can get a long way with things like:
+- Bug fixes
+- Performance profiling and optimisation
+- Building experimental new features
+- Understanding complex systems and how they interact
+
+AI companies clearly recognise that many of the most valuable use cases of agents involve them operating autonomously within isolated environments.  That's a big reason for the recent trend towards providing these environments as part of services like Codex Cloud/ChatGPT Work and Claude Cowork.
+
+With these sandboxes, the user must decide exactly what information and permissions to give to the agent.  But for closed-source codebases, this can be a very time-consuming problem to solve.  What parts of the code are sensitive, and how can we find out without reviewing every line?  That's what makes open source especially valuable: development teams have been doing this job continuously throughout the development process.
+
+Of course, there are cases where the agent really does need access to sensitive information, and we should simultaneously be trying to solve that problem.  But open source has an enduring advantage of simplicity: when new models are released, we can safely put them to work on public codebases.
