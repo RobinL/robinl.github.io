@@ -36,6 +36,7 @@ export default defineConfig({
       customPages: [
         'https://www.robinlinacre.com/collage_card_maker/',
         'https://www.robinlinacre.com/letterpaths/',
+        'https://www.robinlinacre.com/letterpaths/magic_pencil/',
         'https://www.robinlinacre.com/agile-price-forecast/',
         'https://www.robinlinacre.com/bee_letters/',
         'https://www.robinlinacre.com/letter_constellations/',
